@@ -1,11 +1,5 @@
-/web/target
-/rest/target
-/repository/target
-/process/target
-/configuration/target
-/batch/target
-/common/target
-/repository/metamodel
-/rest/.settings/org.eclipse.m2e.core.prefs
-/web/.settings/org.eclipse.m2e.core.prefs
 /repository/database/model/yqyl.mwb.bak
+target
+metamodel
+.svn
+org.eclipse.m2e.core.prefs
