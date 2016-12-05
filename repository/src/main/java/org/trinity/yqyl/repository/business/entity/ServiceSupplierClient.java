@@ -4,9 +4,7 @@ package org.trinity.yqyl.repository.business.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -82,12 +80,6 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
     @OneToMany(mappedBy = "serviceSupplierClient")
     private List<ServiceSupplierClientAuditing> auditings;
 
-    // bi-directional many-to-many association to UserGroup
-    @ElementCollection
-    @CollectionTable(name = "service_supplier_client_image", joinColumns = @JoinColumn(name = "service_supplier_client_id"))
-    @Column(name = "uuid")
-    private List<String> images;
-
     // bi-directional many-to-one association to Account
     @ManyToOne
     private Account account;
@@ -146,10 +138,6 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
 
     public String getEmail() {
         return this.email;
-    }
-
-    public List<String> getImages() {
-        return images;
     }
 
     public String getLogo() {
@@ -251,10 +239,6 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
 
     public void setEmail(final String email) {
         this.email = email;
-    }
-
-    public void setImages(final List<String> images) {
-        this.images = images;
     }
 
     public void setLogo(final String logo) {

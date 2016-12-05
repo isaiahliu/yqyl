@@ -4,7 +4,9 @@ package org.trinity.yqyl.repository.business.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,6 +38,12 @@ public class ServiceInfo extends AbstractAuditableEntity implements Serializable
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "Service_PK_IdGenerator")
     @TableGenerator(name = "Service_PK_IdGenerator", table = "id_table", pkColumnName = "type", pkColumnValue = "Service_PK", valueColumnName = "value", initialValue = 1, allocationSize = 1)
     private Long id;
+
+    // bi-directional many-to-many association to UserGroup
+    @ElementCollection
+    @CollectionTable(name = "service_info_image", joinColumns = @JoinColumn(name = "service_info_id"))
+    @Column(name = "uuid")
+    private List<String> images;
 
     private String description;
 
@@ -109,6 +117,10 @@ public class ServiceInfo extends AbstractAuditableEntity implements Serializable
         return image;
     }
 
+    public List<String> getImages() {
+        return images;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -173,6 +185,10 @@ public class ServiceInfo extends AbstractAuditableEntity implements Serializable
 
     public void setImage(final String image) {
         this.image = image;
+    }
+
+    public void setImages(final List<String> images) {
+        this.images = images;
     }
 
     public void setName(final String name) {

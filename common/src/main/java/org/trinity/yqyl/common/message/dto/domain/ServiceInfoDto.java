@@ -1,5 +1,7 @@
 package org.trinity.yqyl.common.message.dto.domain;
 
+import java.util.List;
+
 import org.trinity.common.dto.domain.AbstractBusinessDto;
 import org.trinity.common.dto.object.LookupDto;
 
@@ -18,12 +20,18 @@ public class ServiceInfoDto extends AbstractBusinessDto {
     private ServiceInfoStasticDto stastic;
     private ServiceCategoryDto serviceCategory;
 
+    private List<String> images;
+
     public String getDescription() {
         return description;
     }
 
     public String getImage() {
         return image;
+    }
+
+    public List<String> getImages() {
+        return images;
     }
 
     public int getMonthlyProposalOrderCount() {
@@ -68,6 +76,10 @@ public class ServiceInfoDto extends AbstractBusinessDto {
 
     public void setImage(final String image) {
         this.image = image;
+    }
+
+    public void setImages(final List<String> images) {
+        this.images = images;
     }
 
     public void setMonthlyProposalOrderCount(final int monthlyProposalOrderCount) {

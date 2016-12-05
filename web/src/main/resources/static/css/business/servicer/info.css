@@ -84,7 +84,11 @@ div.info div.details div.tab div.tabTitle img {
 
 div.info div.details div.tab div.tabContent {
 	padding-left: 5px;
+}
+
+div.info div.details div.tab div.tabContent div.inlineItem{
 	margin-top: 8px;
+	display: inline-block;
 }
 
 div.info div.details div.tab div.tabContent span {

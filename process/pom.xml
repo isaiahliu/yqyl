@@ -4,8 +4,7 @@
 	<parent>
 		<groupId>org.trinity.yqyl</groupId>
 		<artifactId>yqyl</artifactId>
-		<version>${version}</version>
-		<relativePath>../pom.xml</relativePath>
+		<version>0.0.1-DEV</version>
 	</parent>
 	<artifactId>process</artifactId>
 	<name>yqyl-process</name>

@@ -7,8 +7,7 @@
 </script>
 
 <div class="info">
-	<div class="applicationStep ng-hide" ng-if="!serviceSupplierClient"
-		ng-show="step=='ANNOUNCEMENT1'">
+	<div class="applicationStep ng-hide" ng-if="!serviceSupplierClient" ng-show="step=='ANNOUNCEMENT1'">
 		<div class="title">#label("SERVICE_SUPPLIER_ANNOUNCEMENT_1")</div>
 		<textarea ng-readonly="true">#info("SERVICE_SUPPLIER_ANNOUNCEMENT_1")</textarea>
 		<div class="accept">
@@ -18,8 +17,7 @@
 			<button ng-show="announcementAgreed1" ng-click="accept()">#button("NEXT")</button>
 		</div>
 	</div>
-	<div class="applicationStep ng-hide" ng-if="!serviceSupplierClient"
-		ng-show="step=='ANNOUNCEMENT2'">
+	<div class="applicationStep ng-hide" ng-if="!serviceSupplierClient" ng-show="step=='ANNOUNCEMENT2'">
 		<div class="title">#label("SERVICE_SUPPLIER_ANNOUNCEMENT_2")</div>
 		<textarea ng-readonly="true">#info("SERVICE_SUPPLIER_ANNOUNCEMENT_2")</textarea>
 		<div class="accept">
@@ -29,21 +27,13 @@
 			<button ng-show="announcementAgreed2" ng-click="registerSupplier()">#button("NEXT")</button>
 		</div>
 	</div>
-	<div style="padding: 15px; height: 80px;"
-		class="block headerBlock ng-hide" ng-show="serviceSupplierClient">
-		<span
-			style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("USER_INFO")
-			({{serviceSupplierClient.status.message}})</span> <a
-			href="javascript:void(0)" ng-if="!audited&&!auditing"
-			ng-click="cancel()"><span>#button("CANCEL")</span></a> <a
-			href="javascript:void(0)" ng-if="!auditing" ng-click="save()"><span>#button("SAVE")</span></a>
-		<a href="javascript:void(0)" ng-if="!audited&&!auditing"
-			ng-click="apply()"><span>#button("APPLY")</span></a> <a
-			href="javascript:void(0)" ng-if="auditing"
-			ng-click="auditingCancel()"><span>#button("CANCEL")</span></a> <a
-			href="javascript:void(0)" ng-if="auditing&&!audited"
-			ng-click="auditingApply()"><span>#button("PASS_AUDIT")</span></a> <a
-			href="javascript:void(0)" ng-if="auditing&&!audited"
+	<div style="padding: 15px; height: 80px;" class="block headerBlock ng-hide" ng-show="serviceSupplierClient">
+		<span style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("USER_INFO")
+			({{serviceSupplierClient.status.message}})</span> <a href="javascript:void(0)" ng-if="!audited&&!auditing" ng-click="cancel()"><span>#button("CANCEL")</span></a>
+		<a href="javascript:void(0)" ng-if="!auditing" ng-click="save()"><span>#button("SAVE")</span></a> <a href="javascript:void(0)"
+			ng-if="!audited&&!auditing" ng-click="apply()"><span>#button("APPLY")</span></a> <a href="javascript:void(0)" ng-if="auditing"
+			ng-click="auditingCancel()"><span>#button("CANCEL")</span></a> <a href="javascript:void(0)" ng-if="auditing&&!audited"
+			ng-click="auditingApply()"><span>#button("PASS_AUDIT")</span></a> <a href="javascript:void(0)" ng-if="auditing&&!audited"
 			ng-click="auditingReject()"><span>#button("DENY_AUDIT")</span></a>
 	</div>
 	<div class="block" style="background: #f1f1f1; padding: 15px;">
@@ -55,20 +45,16 @@
 				<div class="tabContent">
 					<div class="left">
 						<div class="image">
-							<img
-								style="min-width: 200px; min-height: 200px; width: 200px; height: 200px;"
-								ng-src="{{logoUrl}}" />
+							<img style="min-width: 200px; min-height: 200px; width: 200px; height: 200px;" ng-src="{{logoUrl}}" />
 						</div>
-						<input type="file" ng-if="!audited&&!auditing"
-							upload-logo="uploadLogo" />
+						<input type="file" ng-if="!audited&&!auditing" upload-logo="uploadLogo" />
 					</div>
 					<div class="right">
 						<div>
 							<span>#label("COMPANY_DESCRIPTION")</span>
 						</div>
 						<!-- <div text-angular ng-model="serviceSupplierClient.description"></div> -->
-						<textarea ng-model="serviceSupplierClient.description"
-							ng-disabled="auditing" ng-readonly="auditing"></textarea>
+						<textarea ng-model="serviceSupplierClient.description" ng-disabled="auditing" ng-readonly="auditing"></textarea>
 					</div>
 				</div>
 			</div>
@@ -77,38 +63,34 @@
 					<img src="/static/images/icon/blue_block.png" /> <span>#label("SUPPLIER_INFO")</span>
 				</div>
 				<div class="tabContent">
-					<span>#label("COMPANY_NAME")</span> <input
-						ng-model="serviceSupplierClient.name"
-						ng-readonly="audited||auditing" ng-disabled="audited||auditing" />
-					<span>#label("COMPANY_TYPE")</span> <input disabled
-						ng-show="audited||auditing" ng-readonly="true"
-						ng-model="serviceSupplierClient.type.message" /> <select
-						ng-hide="audited||auditing"
-						ng-model="serviceSupplierClient.type.code"
-						ng-options="companyType.code as companyType.message for companyType in companyTypes"></select>
-					<span>#label("SERVICE_REGION")</span> <input
-						ng-model="serviceSupplierClient.region"
-						ng-readonly="audited||auditing" ng-disabled="audited||auditing" />
-					<span>#label("CONTACT")</span> <input
-						ng-model="serviceSupplierClient.contact" ng-disabled="auditing"
-						ng-readonly="auditing" />
+					<div class="inlineItem">
+						<span>#label("COMPANY_NAME")</span> <input ng-model="serviceSupplierClient.name" ng-readonly="audited||auditing"
+							ng-disabled="audited||auditing" /> <span>#label("COMPANY_TYPE")</span> <input disabled ng-show="audited||auditing"
+							ng-readonly="true" ng-model="serviceSupplierClient.type.message" /> <select ng-hide="audited||auditing"
+							ng-model="serviceSupplierClient.type.code" ng-options="companyType.code as companyType.message for companyType in companyTypes"></select>
+					</div>
+					<div class="inlineItem">
+						<span>#label("SERVICE_REGION")</span> <input ng-model="serviceSupplierClient.region" ng-readonly="audited||auditing"
+							ng-disabled="audited||auditing" /> <span>#label("CONTACT")</span> <input ng-model="serviceSupplierClient.contact"
+							ng-disabled="auditing" ng-readonly="auditing" />
+					</div>
 				</div>
 				<div class="tabContent">
-					<span>#label("CATEGORIES")</span> <input style="width: 540px;"
-						ng-disabled="audited||auditing"
-						ng-model="serviceSupplierClient.categories"
-						ng-readonly="audited||auditing" />
+					<div class="inlineItem">
+						<span>#label("CATEGORIES")</span> <input style="width: 540px;" ng-disabled="audited||auditing"
+							ng-model="serviceSupplierClient.categories" ng-readonly="audited||auditing" />
+					</div>
 				</div>
 				<div class="tabContent">
-					<span>#label("PHONE_NO")</span> <input
-						ng-model="serviceSupplierClient.contactPhone"
-						ng-disabled="auditing" ng-readonly="auditing" /><span>#label("EMAIL")</span>
-					<input ng-model="serviceSupplierClient.email"
-						ng-disabled="auditing" ng-readonly="auditing" /> <span>#label("SERVICE_PHONE_NO")</span>
-					<input ng-model="serviceSupplierClient.servicePhone"
-						ng-disabled="auditing" ng-readonly="auditing" /> <span>#label("ADDRESS")</span>
-					<input ng-model="serviceSupplierClient.address"
-						ng-disabled="auditing" ng-readonly="auditing" />
+					<div class="inlineItem">
+						<span>#label("PHONE_NO")</span> <input ng-model="serviceSupplierClient.contactPhone" ng-disabled="auditing" ng-readonly="auditing" /><span>#label("EMAIL")</span>
+						<input ng-model="serviceSupplierClient.email" ng-disabled="auditing" ng-readonly="auditing" />
+					</div>
+					<div class="inlineItem">
+						<span>#label("SERVICE_PHONE_NO")</span> <input ng-model="serviceSupplierClient.servicePhone" ng-disabled="auditing"
+							ng-readonly="auditing" /> <span>#label("ADDRESS")</span> <input ng-model="serviceSupplierClient.address" ng-disabled="auditing"
+							ng-readonly="auditing" />
+					</div>
 				</div>
 			</div>
 			<div class="tab">
@@ -116,24 +98,19 @@
 					<img src="/static/images/icon/blue_block.png" /> <span>#label("SUPPLIER_ACCOUNT_INFO")</span>
 				</div>
 				<div class="tabContent">
-					<span>#label("ACCOUNT_BANK")</span> <input
-						ng-show="audited||auditing" ng-readonly="true" disabled
-						ng-model="serviceSupplierClient.bankAccount.bank.message" /> <select
-						ng-hide="audited||auditing"
-						ng-model="serviceSupplierClient.bankAccount.bank.code"
-						ng-options="bank.code as bank.message for bank in banks"></select>
-					<span>#label("ACCOUNT_NAME")</span> <input
-						ng-model="serviceSupplierClient.bankAccount.clientName"
-						ng-readonly="audited||auditing" ng-disabled="audited||auditing" />
-					<span>#label("BANK_ACCOUNT")</span> <input
-						ng-model="serviceSupplierClient.bankAccount.account"
-						ng-disabled="audited||auditing" ng-readonly="audited||auditing" />
-					<span>#label("ACCOUNT_TYPE")</span> <input
-						ng-show="audited||auditing" ng-readonly="true" disabled
-						ng-model="serviceSupplierClient.bankAccount.type.message" /> <select
-						ng-if="!audited&&!auditing"
-						ng-model="serviceSupplierClient.bankAccount.type.code"
-						ng-options="accountType.code as accountType.message for accountType in accountTypes"></select>
+					<div class="inlineItem">
+						<span>#label("ACCOUNT_BANK")</span> <input ng-show="audited||auditing" ng-readonly="true" disabled
+							ng-model="serviceSupplierClient.bankAccount.bank.message" /> <select ng-hide="audited||auditing"
+							ng-model="serviceSupplierClient.bankAccount.bank.code" ng-options="bank.code as bank.message for bank in banks"></select> <span>#label("ACCOUNT_NAME")</span>
+						<input ng-model="serviceSupplierClient.bankAccount.clientName" ng-readonly="audited||auditing" ng-disabled="audited||auditing" />
+					</div>
+					<div class="inlineItem">
+						<span>#label("BANK_ACCOUNT")</span> <input ng-model="serviceSupplierClient.bankAccount.account" ng-disabled="audited||auditing"
+							ng-readonly="audited||auditing" /> <span>#label("ACCOUNT_TYPE")</span> <input ng-show="audited||auditing" ng-readonly="true"
+							disabled ng-model="serviceSupplierClient.bankAccount.type.message" /> <select ng-if="!audited&&!auditing"
+							ng-model="serviceSupplierClient.bankAccount.type.code"
+							ng-options="accountType.code as accountType.message for accountType in accountTypes"></select>
+					</div>
 				</div>
 			</div>
 
@@ -142,63 +119,46 @@
 					<img src="/static/images/icon/blue_block.png" /> <span>#label("SERVICER_MARTERIAL")</span>
 				</div>
 				<div class="tabContent images">
-					<span class="key">#label("COMPANY_LICENSE")</span> <input
-						ng-readonly="audited||auditing"
-						ng-model="serviceSupplierClient.material.licenseNo"
-						ng-disabled="audited||auditing" /> <a target="_blank"
-						ng-href="{{licenseUrl}}"><img ng-class="ng-hide"
-						ng-show="licenseUrl" ng-class="ng-hide" ng-show="licenseUrl"
-						alt="#label('NOT_UPLOADED')" ng-src="{{licenseUrl}}"></a> <input
-						type="file" class="upload" ng-if="!audited&&!auditing"
-						upload-photo="uploadLicense" /> <span class="key">#label("COMPANY_CORPORATE_CHECKING")</span>
-					<input ng-readonly="audited||auditing"
-						ng-disabled="audited||auditing"
-						ng-model="serviceSupplierClient.material.corporateCheckingNo" />
-					<a target="_blank" ng-href="{{corporateCheckingUrl}}"><img
-						ng-class="ng-hide" ng-show="corporateCheckingUrl"
-						alt="#label('NOT_UPLOADED')" ng-src="{{corporateCheckingUrl}}"></a>
-					<input type="file" class="upload" ng-if="!audited&&!auditing"
-						upload-photo="uploadCorporateChecking" /> <span class="key">#label("COMPANY_CONTRACT")</span>
-					<input ng-readonly="audited||auditing"
-						ng-disabled="audited||auditing"
-						ng-model="serviceSupplierClient.material.contractNo" /> <a
-						target="_blank" ng-href="{{contractUrl}}"><img
-						ng-class="ng-hide" ng-show="contractUrl"
-						alt="#label('NOT_UPLOADED')" ng-src="{{contractUrl}}"></a> <input
-						type="file" class="upload" ng-if="!audited&&!auditing"
-						upload-photo="uploadContract" />
-				</div>
-				<div class="tabContent images">
-					<span class="key">#label("COMPANY_APPLICATION")</span> <input
-						ng-readonly="audited||auditing" ng-disabled="audited||auditing"
-						ng-model="serviceSupplierClient.material.applicationNo" /> <a
-						target="_blank" ng-href="{{applicationUrl}}"><img
-						ng-class="ng-hide" ng-show="applicationUrl"
-						alt="#label('NOT_UPLOADED')" ng-src="{{applicationUrl}}"></a> <input
-						type="file" class="upload" ng-if="!audited&&!auditing"
-						upload-photo="uploadApplication" /> <span class="key">#label("COMPANY_BUSINESS_LICENSE")</span>
-					<input ng-readonly="audited||auditing"
-						ng-disabled="audited||auditing"
-						ng-model="serviceSupplierClient.material.businessLicenseNo" /> <a
-						target="_blank" ng-href="{{businessLicenseUrl}}"><img
-						ng-class="ng-hide" ng-show="businessLicenseUrl"
-						alt="#label('NOT_UPLOADED')" ng-src="{{businessLicenseUrl}}"></a>
-					<input type="file" class="upload" ng-if="!audited&&!auditing"
-						upload-photo="uploadBusinessLicense" /> <span class="key">#label("COMPANY_BUSINESS_CERTIFICATE")</span>
-					<input ng-readonly="audited||auditing"
-						ng-disabled="audited||auditing"
-						ng-model="serviceSupplierClient.material.businessCertificateNo" />
-					<a target="_blank" ng-href="{{businessCertificateUrl}}"><img
-						ng-class="ng-hide" ng-show="businessCertificateUrl"
-						alt="#label('NOT_UPLOADED')" ng-src="{{businessCertificateUrl}}"></a>
-					<input type="file" class="upload" ng-if="!audited&&!auditing"
-						upload-photo="uploadBusinessCertificate" />
+					<div class="inlineItem">
+						<span class="key">#label("COMPANY_LICENSE")</span> <input ng-readonly="audited||auditing"
+							ng-model="serviceSupplierClient.material.licenseNo" ng-disabled="audited||auditing" /> <a target="_blank" ng-href="{{licenseUrl}}"><img
+							ng-class="ng-hide" ng-show="licenseUrl" ng-class="ng-hide" ng-show="licenseUrl" alt="#label('NOT_UPLOADED')" ng-src="{{licenseUrl}}"></a>
+						<input type="file" class="upload" ng-if="!audited&&!auditing" upload-photo="uploadLicense" />
+					</div>
+					<div class="inlineItem">
+						<span class="key">#label("COMPANY_CORPORATE_CHECKING")</span> <input ng-readonly="audited||auditing" ng-disabled="audited||auditing"
+							ng-model="serviceSupplierClient.material.corporateCheckingNo" /> <a target="_blank" ng-href="{{corporateCheckingUrl}}"><img
+							ng-class="ng-hide" ng-show="corporateCheckingUrl" alt="#label('NOT_UPLOADED')" ng-src="{{corporateCheckingUrl}}"></a> <input
+							type="file" class="upload" ng-if="!audited&&!auditing" upload-photo="uploadCorporateChecking" />
+					</div>
+					<div class="inlineItem">
+						<span class="key">#label("COMPANY_CONTRACT")</span> <input ng-readonly="audited||auditing" ng-disabled="audited||auditing"
+							ng-model="serviceSupplierClient.material.contractNo" /> <a target="_blank" ng-href="{{contractUrl}}"><img ng-class="ng-hide"
+							ng-show="contractUrl" alt="#label('NOT_UPLOADED')" ng-src="{{contractUrl}}"></a> <input type="file" class="upload"
+							ng-if="!audited&&!auditing" upload-photo="uploadContract" />
+					</div>
+					<div class="inlineItem">
+						<span class="key">#label("COMPANY_APPLICATION")</span> <input ng-readonly="audited||auditing" ng-disabled="audited||auditing"
+							ng-model="serviceSupplierClient.material.applicationNo" /> <a target="_blank" ng-href="{{applicationUrl}}"><img
+							ng-class="ng-hide" ng-show="applicationUrl" alt="#label('NOT_UPLOADED')" ng-src="{{applicationUrl}}"></a> <input type="file"
+							class="upload" ng-if="!audited&&!auditing" upload-photo="uploadApplication" />
+					</div>
+					<div class="inlineItem">
+						<span class="key">#label("COMPANY_BUSINESS_LICENSE")</span> <input ng-readonly="audited||auditing" ng-disabled="audited||auditing"
+							ng-model="serviceSupplierClient.material.businessLicenseNo" /> <a target="_blank" ng-href="{{businessLicenseUrl}}"><img
+							ng-class="ng-hide" ng-show="businessLicenseUrl" alt="#label('NOT_UPLOADED')" ng-src="{{businessLicenseUrl}}"></a> <input
+							type="file" class="upload" ng-if="!audited&&!auditing" upload-photo="uploadBusinessLicense" />
+					</div>
+					<div class="inlineItem">
+						<span class="key">#label("COMPANY_BUSINESS_CERTIFICATE")</span> <input ng-readonly="audited||auditing" ng-disabled="audited||auditing"
+							ng-model="serviceSupplierClient.material.businessCertificateNo" /> <a target="_blank" ng-href="{{businessCertificateUrl}}"><img
+							ng-class="ng-hide" ng-show="businessCertificateUrl" alt="#label('NOT_UPLOADED')" ng-src="{{businessCertificateUrl}}"></a> <input
+							type="file" class="upload" ng-if="!audited&&!auditing" upload-photo="uploadBusinessCertificate" />
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="buttonGroup ng-hide" ng-show="serviceSupplierClient">
-
-		</div>
+		<div class="buttonGroup ng-hide" ng-show="serviceSupplierClient"></div>
 	</div>
 </div>
 

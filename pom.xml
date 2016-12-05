@@ -6,7 +6,7 @@
 		<artifactId>parent</artifactId>
 		<version>1.0-RELEASE</version>
 	</parent>
-	<version>${version}</version>
+	<version>0.0.1-DEV</version>
 	<groupId>org.trinity.yqyl</groupId>
 	<artifactId>yqyl</artifactId>
 	<packaging>pom</packaging>
@@ -58,11 +58,6 @@
 				<version>${trinity-framework}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.trinity.framework</groupId>
-				<artifactId>framework</artifactId>
-				<version>${trinity-framework}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.trinity.framework.springboot</groupId>
 				<artifactId>batch</artifactId>
 				<version>${trinity-framework}</version>
@@ -97,8 +92,7 @@
 	</dependencies>
 
 	<properties>
-		<trinity-framework>1.0-DEV</trinity-framework>
-		<version>0.0.1-DEV</version>
+		<trinity-framework>1.0-RELEASE</trinity-framework>
 	</properties>
 	<build>
 		<pluginManagement>

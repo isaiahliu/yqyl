@@ -33,6 +33,7 @@ public class ServiceInfoConverter extends AbstractLookupSupportObjectConverter<S
         SERVICE_CATEGORY,
         MONTHLY_INFO,
         STASTIC,
+        IMAGES,
         NA;
     }
 
@@ -101,7 +102,8 @@ public class ServiceInfoConverter extends AbstractLookupSupportObjectConverter<S
         case STASTIC:
             copyRelationship(source::getServiceInfoStastic, target::setStastic, serviceInfoStasticConverter, relationshipExpression);
             break;
-
+        case IMAGES:
+            copyObject(source::getImages, target::getImages, target::setImages, CopyPolicy.SOURCE_IS_NOT_NULL);
         default:
             break;
         }
