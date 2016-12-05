@@ -1,0 +1,121 @@
+div.info {
+	padding: 1px 0 0 250px;
+}
+
+div.info div.block {
+	border: 1px solid #cccccc;
+}
+
+div.info div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+}
+div.info div.applicationStep {
+	text-align: center;
+}
+
+div.info div.applicationStep div.title, div.info div.applicationStep div.next
+	{
+	text-align: center;
+}
+
+div.info div.applicationStep textarea {
+	width: 600px;
+	height: 400px;
+	display: block;
+	margin: 10px auto;
+}
+
+div.info div.applicationStep div.accept {
+	text-align: left;
+	margin: 10px auto;
+	width: 600px;
+}
+
+div.info div.details  div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.info div.details div.left {
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+}
+
+div.info div.details div.tab div.tabContent div.left input {
+	margin-left: 40px;
+	margin-right: 0px;
+	width: 65px;
+}
+
+div.info div.details div.right {
+	display: inline-block;
+	vertical-align: top;
+	width: 600px;
+}
+
+div.info div.details div.right  textarea {
+	width: 600px;
+	height: 240px;
+}
+
+div.info div.details div.image {
+	padding: 20px;
+}
+
+div.info div.details div.tab {
+	padding: 10px 20px 10px 20px;
+	background: white;
+	margin-bottom: 20px;
+}
+
+div.info div.details div.tab div.tabTitle {
+	padding: 5px 10px;
+}
+
+div.info div.details div.tab div.tabTitle img {
+	width: 14px;
+	height: 14px;
+}
+
+div.info div.details div.tab div.tabContent {
+	padding-left: 5px;
+	margin-top: 8px;
+}
+
+div.info div.details div.tab div.tabContent span {
+	display: inline-block;
+	width: 80px;
+}
+
+div.info div.details div.tab div.tabContent input, div.info div.details div.tab div.tabContent select
+	{
+	min-width: 200px;
+	margin-right: 50px;
+}
+
+div.info div.details div.tab div.images input {
+	margin-right: 0;
+}
+
+div.info  div.buttonGroup {
+	padding-left: 300px;
+}
+
+div.info div.details div.tab div.tabContent input.upload {
+	min-width: 68px;
+	width: 68px;
+	display: inline;
+	margin-right: 70px;
+}
+
+div.info div.details div.tab div.tabContent img {
+	max-width: 25px;
+	min-width: 25px;
+	max-height: 25px;
+	min-height: 25px;
+}

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: hihome.user
+  cloud:
+    config:
+      uri: http://localhost:60823
+      name: hihome.user
+      env: dev
+eureka: 
+  instance: 
+    nonSecurePort: 50001
+  client: 
+    serviceUrl: 
+      defaultZone: http://localhost:60824/eureka/

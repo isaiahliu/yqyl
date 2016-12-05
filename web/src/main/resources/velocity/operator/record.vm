@@ -1,0 +1,7 @@
+#parse("/velocity/operator/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/operator/record.css"></link>
+
+<div class="record">record</div>
+
+<script src="/static/js/business/operator/record.js"></script>

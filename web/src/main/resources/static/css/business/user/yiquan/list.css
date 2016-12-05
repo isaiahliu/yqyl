@@ -1,0 +1,25 @@
+div.list {
+	margin-left: 200px;
+}
+
+div.list div.block {
+	width: 1000px;
+	border: 1px solid #cccccc;
+}
+
+div.content table {
+	width: 960px;
+}
+
+div.content table td {
+	border: 1px solid #dddddd;
+}
+
+
+div.content table thead td {
+	background: #f0f0f0;
+}
+
+div.content div.operations a {
+	margin-right: 5px;
+}

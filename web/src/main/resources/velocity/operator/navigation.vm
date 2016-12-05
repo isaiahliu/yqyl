@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="/static/css/business/operator/navigation.css"></link>
+
+<div class="subNavBar navBar">
+	<ul>
+		<li><a href="/operator/answer"><div
+					class="navBarItem #if($currentPage=='ANSWER')selected #end">
+					<span>#button("OPERATOR_ANSWER")</span>
+				</div></a></li>
+		<li><a href="/operator/complaint"><div
+					class="navBarItem #if($currentPage=='COMPLAINT')selected #end">
+					<span>#button("OPERATOR_COMPLAINT")</span>
+				</div></a></li>
+		<li><a href="/operator/record"><div
+					class="navBarItem #if($currentPage=='RECORD')selected #end">
+					<span>#button("OPERATOR_RECORD")</span>
+				</div></a></li>
+	</ul>
+</div>

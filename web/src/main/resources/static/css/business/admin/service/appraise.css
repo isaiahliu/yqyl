@@ -1,0 +1,32 @@
+div.appraise {
+	padding: 10px 0px 0px 280px;
+}
+
+div.appraise div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.appraise div.filter span {
+	display: inline-block;
+	margin-right: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.appraise div.filter input, div.appraise div.filter select {
+	margin-left: 5px;
+}
+
+div.appraise table {
+	margin-top: 20px;
+	width: 900px;
+}
+
+div.appraise table thead td {
+	background-color: rgba(215, 215, 215, 1)
+}
+
+div.appraise table td {
+	border: 1px solid;
+}

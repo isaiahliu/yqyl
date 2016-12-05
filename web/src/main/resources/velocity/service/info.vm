@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="/static/css/business/service/info.css"></link>
+
+<script type="text/javascript">
+	layoutApp.value("serviceSupplierClientId", ${serviceSupplierClientId});
+</script>
+<div class="info">
+	<div>
+		<div class="image">
+			<img alt="#label('NOT_UPLOADED')" ng-src="/ajax/content/image/{{imageBar.selectedImage}}" />
+			<div class="imageBar ng-hide" ng-show="serviceSupplierClient.images">
+				<div style="display: inline-block; width: 21px;">
+					<a href="javascript:void(0)" ng-click="imageBar.previous()"><span>&lt;</span></a>
+				</div>
+				<div style="display: inline-block; width: 200px;">
+					<a class="ng-hide smallImage" ng-show="($index>=$parent.imageBar.pageIndex*4)&&($index<($parent.imageBar.pageIndex+1)*4)"
+						ng-repeat="image in serviceSupplierClient.images" href="javascript:void(0)" ng-click="imageBar.selectedImage=image"><img
+						alt="{{$index}}" ng-src="/ajax/content/image/{{image}}" /></a>
+				</div>
+				<div style="display: inline-block; width: 21px; text-align: right;">
+					<a href="javascript:void(0)" ng-click="imageBar.next()"><span>&gt;</span></a>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="title ng-hide" ng-show="serviceSupplierClient">{{serviceSupplierClient.name}}</div>
+			<div class="cardItem">
+				<span class="key">#label("SALES_PRICE") : </span> <span ng-show="selectedService" class="value ng-hide">{{selectedService.price|currency:'￥'}}</span>
+				<span ng-show="selectedService.paymentType.code=='H'" class="ng-hide"> / #label("OCLOCK")</span> <span
+					ng-show="selectedService.paymentType.code=='F'" class="ng-hide"> / #label("OTIME")</span>
+			</div>
+			<div class="cardItem">
+				<span class="key">#label("SERVICE_CATEGORY") : </span> <select ng-model="selectedService"
+					ng-options="service.name for service in services"></select>
+			</div>
+			<div class="cardItem  appraise">
+				<span class="key">#label("APPRAISE") : </span> #readonlyRateBar("selectedService.stastic.appraiseAvg")
+			</div>
+
+			<div class="cardItem">
+				#if(${authentication.token.authenticated})
+				<button ng-click="apply()">#button("ORDER_NOW")</button>
+				#else
+				<div>
+					<span>#info("LOGIN_BEFORE_ORDERING")</span>
+				</div>
+				<button ng-click="login()">#button("LOGIN")</button>
+				#end
+			</div>
+		</div>
+	</div>
+	<div class="detail">
+		<div class="tab">
+			<ul>
+				<li ng-class="{selected:status=='desc'}"><a href="javascript:void(0)" ng-click="status='desc'"><div>
+							<span>#label("COMPANY_DESCRIPTION")</span>
+						</div></a></li>
+				<li ng-class="{selected:status=='cate'}"><a href="javascript:void(0)" ng-click="status='cate'"><div>
+							<span>#label("COMPANY_SERVICE_CATEGORY")</span>
+						</div></a></li>
+				<li ng-class="{selected:status=='appr'}"><a href="javascript:void(0)" ng-click="status='appr'"><div>
+							<span>#label("COMPANY_APPRAISE")</span>
+						</div></a></li>
+			</ul>
+		</div>
+		<div class="tabPage">
+			<div ng-show="status=='desc'">
+				<div class="text">
+					<span ng-bind-html="serviceSupplierClient.description"></span>
+				</div>
+			</div>
+			<div class='ng-hide' ng-show="status=='cate'">
+				<table>
+					<thead>
+						<tr>
+							<td align="center">#label("SERVICE_CATEGORY")</td>
+							<td align="center">#label("SERVICE_PRICE")</td>
+							<td align="center">#label("SERVICE_DESCRIPTION")</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="serviceInfo in services">
+							<td align="center">{{serviceInfo.name}}</td>
+							<td align="center"><span>{{serviceInfo.price}}</span><span ng-show="serviceInfo.paymentType.code=='H'" class="ng-hide"> /
+									#label("OCLOCK")</span> <span ng-show="serviceInfo.paymentType.code=='F'" class="ng-hide"> / #label("OTIME")</span></td>
+							<td align="center">{{serviceInfo.description}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class='ng-hide' ng-show="status=='appr'">
+				<div class="title">#info("COMPANY_ORDERED_1"){{pagingData.itemCount}}#info("COMPANY_ORDERED_2")</div>
+				<table>
+					<thead>
+						<tr>
+							<td align="center">#label("SERVICE_RECEIVER")</td>
+							<td align="center">#label("SERVICE_CATEGORY")</td>
+							<td align="center">#label("APPRAISE")</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="appraise in appraises">
+							<td align="center"><span>{{appraise.serviceOrder.username}}</span></td>
+							<td align="center"><span>{{appraise.serviceOrder.serviceInfo.serviceCategory.name}} </span></td>
+							<td align="center"><span>{{appraise.comment}}</span></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="paging">
+					<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
+						class="pagination-sm" boundary-links="true" ng-change="searchOrders()" first-text='#label("FIRST_PAGE")'
+						last-text='#label("LAST_PAGE")' previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'></pagination>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/service/info.js"></script>

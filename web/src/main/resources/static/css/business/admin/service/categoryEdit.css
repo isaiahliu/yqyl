@@ -1,0 +1,45 @@
+div.categoryEdit {
+	padding: 10px 0px 0px 280px;
+}
+
+div.categoryEdit div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.categoryEdit ul {
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+div.categoryEdit ul li {
+	text-decoration: none;
+	margin-top: 5px;
+}
+
+div.categoryEdit ul li span.disabledCategory {
+	text-decoration: line-through;
+}
+
+div.categoryEdit ul li span.name, div.categoryEdit ul li input {
+	display: inline-block;
+}
+
+div.categoryEdit ul li span.name {
+	min-width: 150px;
+	line-height: 22px;
+}
+
+div.categoryEdit ul li input {
+	min-width: 150px;
+	padding: 0px;
+	margin-right: 5px;
+}
+
+div.categoryEdit ul li a {
+	margin-left: 20px;
+}
+
+div.categoryEdit ul li.add a {
+	margin-left: 0px;
+}

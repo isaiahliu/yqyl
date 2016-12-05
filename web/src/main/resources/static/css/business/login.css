@@ -1,0 +1,104 @@
+div.login {
+	width: 1000px;
+	height: 440px;
+	margin-left: 100px;
+	margin-top: 50px;
+}
+
+div.login img.logo {
+	width: 600px;
+	height: 440px;
+}
+
+div.login td.tab {
+	text-align: center;
+	width: 200px;
+	height: 52px;
+}
+
+div.login td.tabSelected span {
+	color: white;
+}
+
+div.login td.tabUnselected span {
+	color: #333333;
+}
+
+div.login td.tabSelected {
+	background-color: #fd6a15;
+}
+
+div.login td.tabUnselected {
+	background-color: #f5f5f5;
+}
+
+div.login td.tab div {
+	text-align: center;
+	width: 200px;
+	height: 52px;
+}
+
+div.login td.tab a {
+	line-height: 52px;
+	text-decoration: none;
+}
+
+div.login td {
+	border: solid 1px #777777;
+}
+
+div.login div.line input {
+	height: 36px;
+	width: 284px;
+}
+
+div.login div.loginTab {
+	padding-top: 20px;
+}
+
+div.login div.loginTab div.line input {
+	padding-left: 30px;
+}
+
+div.login div.line input.check {
+	height: 12px;
+	width: 14px;
+	padding-left: 0;
+}
+
+div.login div.line input.rd {
+	height: 12px;
+	width: 14px;
+	padding-left: 0;
+}
+
+div.login div.line img.logo {
+	position: absolute;
+	margin: 5px 0 0 5px;
+	height: 27px;
+	width: 19px;
+}
+
+div.login div.line {
+	text-align: center;
+	margin: 20px 0px 0px 0px;
+}
+
+div.login div.registerTab div.line span {
+	display: inline-block;
+	min-width: 70px;
+	text-align: right;
+	margin-right: 10px;
+}
+
+div.login button {
+	height: 36px;
+}
+
+div.login button.btn-login {
+	width: 284px;
+}
+
+div.content table {
+	margin: auto;
+}

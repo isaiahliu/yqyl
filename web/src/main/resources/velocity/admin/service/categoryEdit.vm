@@ -1,0 +1,48 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet"
+	href="/static/css/business/admin/service/categoryEdit.css"></link>
+
+<script type="text/javascript">
+	layoutApp.value("categoryId",#if(${categoryId}) ${categoryId} #else 0 #end);
+</script>
+
+<div class="categoryEdit">
+	<div class="title">#label("SERVICE_CATEGORY")</div>
+	<ul>
+		<li ng-repeat="category in categories">
+			<div>
+				<span class="name"
+					ng-class="{'D': 'disabledCategory'}[category.status.code]"
+					ng-show="!category.editing">{{category.name}}</span> <input
+					class="ng-hide" ng-show="category.editing"
+					ng-model="category.newValue" /><a href="javascript:void(0)"
+					class="ng-hide" ng-click="ok(category)" ng-show="category.editing"><span>#button("OK")</span></a><a
+					class="ng-hide" href="javascript:void(0)"
+					ng-click="cancel(category)" ng-show="category.editing"><span>#button("CANCEL")</span></a><a
+					href="javascript:void(0)" ng-click="edit(category)"
+					ng-show="!category.editing"><span>#button("EDIT")</span></a><a
+					class="ng-hide" href="javascript:void(0)"
+					ng-click="active(category)"
+					ng-show="!category.editing && category.status.code=='D'"><span>#button("ACTIVE")</span></a><a
+					class="ng-hide" href="javascript:void(0)"
+					ng-click="disable(category)"
+					ng-show="!category.editing && category.status.code=='A'"><span>#button("DISABLE")</span></a><a
+					class="ng-hide" href="javascript:void(0)"
+					ng-click="remove(category)"
+					ng-show="!category.editing && category.id==0"><span>#button("DELETE")</span></a>
+			</div>
+		</li>
+		<li class="add">
+			<div>
+				<a href="javascript:void(0)" ng-click="add()"> <span>#button("ADD")</span></a>
+			</div>
+		</li>
+	</ul>
+	<div>
+		<button ng-click="apply()">#button("APPLY")</button>
+		<button ng-click="back()">#button("CANCEL")</button>
+	</div>
+</div>
+
+<script src="/static/js/business/admin/service/categoryEdit.js"></script>

@@ -1,0 +1,41 @@
+div.service {
+	padding: 10px 0px 0px 280px;
+}
+
+div.service div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.service div.filter span {
+	display: inline-block;
+	margin-right: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.service div.filter input, div.service div.filter select {
+	margin-left: 5px;
+}
+
+div.service table {
+	margin-top: 20px;
+	width: 900px;
+}
+
+div.service table thead td {
+	background-color: rgba(215, 215, 215, 1)
+}
+
+div.service table td {
+	border: 1px solid;
+}
+
+div.service table td.image {
+	padding: 5px;
+}
+
+div.service table td img {
+	width: 100px;
+	height: 100px;
+}

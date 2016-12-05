@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="/static/css/business/login.css"></link>
+
+<div class="tableView login">
+	<div>
+		<div>
+			<table>
+				<tr>
+					<td rowspan="2"><img class="logo" alt="Login"
+						src="/static/images/pic/login.jpg" /></td>
+					<td class="tab"
+						ng-class="{true: 'tabUnselected', false: 'tabSelected'}[isReg]"><a
+						href="javascript:void(0)" ng-click="isReg=false"><div>
+								<span>#label("LOGIN")</span>
+							</div></a></td>
+					<td class="tab"
+						ng-class="{true: 'tabSelected', false: 'tabUnselected'}[isReg]"><a
+						href="javascript:void(0)" ng-click="isReg=true"><div>
+								<span>#label("REGISTER")</span>
+							</div></a></td>
+				</tr>
+				<tr>
+					<td colspan="2" valign="top">
+						<div class="loginTab" ng-show="!isReg">
+							<div class="line">
+								<img class="logo" src="/static/images/logo/user.png" /> <input
+									ng-model="loginData.username" placeholder='#label("USERNAME")' />
+							</div>
+							<div class="line">
+								<img class="logo" src="/static/images/logo/password.png" /> <input
+									type="password" ng-model="loginData.password"
+									ng-keydown="loginKeydown($event)"
+									placeholder='#label("PASSWORD")' />
+							</div>
+							<div class="line">
+								<button class="btn-login" ng-click="login()">#button("LOGIN")</button>
+							</div>
+							<div class="line">
+								<input class="check" type="checkbox" ng-model="rememberUsername" />
+								<span
+									style="font-size: 14px; color: #333333; display: inline-block; width: 140px; text-align: left;">#label("REMEMBER_USERNAME")</span>
+								<span style="font-size: 14px; color: #333333;">#label("FORGET_PASSWORD")</span>
+								<a href="javascript:void(0)" ng-click="isReg=true"><span
+									style="font-size: 14px; color: #fd6a15;">#label("REGISTER")</span></a>
+							</div>
+						</div>
+						<div class="registerTab ng-hide" ng-show="isReg">
+							<div class="line">
+								<span>#label("PHONE")</span> <input
+									ng-model="registerData.cellphone" placeholder='#info("PHONE")' />
+							</div>
+							<div class="line">
+								<span>#label("VERIFY_CODE")</span> <input
+									ng-model="registerData.verifyCode" style="width: 150px;" />
+								<button style="width: 130px;" ng-click="registerVerify()"
+									ng-hide="verifyCodeSent">#button("SEND_VERIFY_CODE")</button>
+								<button
+									style="width: 130px; color: #cccccc; background-color: #333333;"
+									disabled class="ng-hide" ng-show="verifyCodeSent">#button("SENT_VERIFY_CODE")</button>
+							</div>
+							<div class="line">
+								<span>#label("I_AM")</span> <input class="rd" name="userType"
+									type="radio" ng-value="false" ng-model="registerData.servicer" />
+								<span>#label("PERSONAL_USER")</span> <input name="userType"
+									class="rd" type="radio" ng-value="true"
+									ng-model="registerData.servicer" /> <span>#label("SERVICER")</span>
+							</div>
+							<div class="line">
+								<span>#label("USERNAME")</span> <input
+									ng-model="registerData.username"
+									placeholder='#info("USERNAME")' />
+							</div>
+							<div class="line">
+								<span>#label("PASSWORD")</span> <input type="password"
+									ng-model="registerData.password"
+									placeholder='#info("PASSWORD")' />
+							</div>
+							<div class="line">
+								<span>#label("REPEAT_PASSWORD")</span> <input type="password"
+									ng-model="repeatPassword" ng-keydown="registerKeydown($event)"
+									placeholder='#info("REPEAT_PASSWORD")' />
+							</div>
+							<div class="line">
+								<button class="btn-login" ng-click="register()">#button("REGISTER")</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/login.js"></script>

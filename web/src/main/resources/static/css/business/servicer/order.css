@@ -1,0 +1,72 @@
+div.order {
+	padding: 10px 0px 0px 280px;
+}
+
+div.order div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.order div.filter span {
+	display: inline-block;
+	margin-right: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.order div.filter input, div.order div.filter select {
+	margin-left: 5px;
+}
+
+div.order table {
+	margin-top: 20px;
+	width: 900px;
+}
+
+div.order table thead td {
+	background-color: rgba(215, 215, 215, 1);
+	border: 1px solid;
+}
+
+div.order table td {
+	border: 1px solid;
+	font-size: small;
+	padding: 2px 5px;
+}
+
+div.order table tbody tr.edit td {
+	border: none;
+	background-color: #f5f5f5;
+}
+
+div.order table tbody {
+	border: 1px solid;
+}
+
+div.order table td button {
+	font-size: small;
+	min-width: 50px;
+	height: 25px;
+}
+
+div.order table td.image {
+	padding: 5px;
+}
+
+div.order table td img {
+	width: 100px;
+	height: 100px;
+}
+
+span.uploadControl {
+	overflow: hidden;
+	display: inline-block;
+}
+
+span.uploadControl input {
+	position: absolute;
+	z-index: 100;
+	opacity: 0;
+	width: 30px;
+	height: 18px;
+}

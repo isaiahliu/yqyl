@@ -1,0 +1,52 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/userinfo.css"></link>
+
+<div class="userinfo">
+	<div style="padding: 15px;" class="block">
+		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("USER_INFO")</span>
+		<button style="float: right; height: 33px; width: 150px; border-radius: 2px; background: #8ab563" ng-click="addFamilyMember()">#button("ADD_FAMILY_MEMBER")</button>
+	</div>
+	<div style="padding: 15px 20px; text-align: center;" class="block">
+		<table>
+			<thead>
+				<tr>
+					<td align="center" width="200px"><div>
+							<span>#label("FAMILY_MEMBER_RELATIONSHIP")</span>
+						</div></td>
+					<td align="center" width="200px"><div>
+							<span>#label("NAME")</span>
+						</div></td>
+					<td align="center" width="200px"><div>
+							<span>#label("CONTACT_METHOD")</span>
+						</div></td>
+					<td align="center" width="320px"><div>
+							<span>#label("OPERATION")</span>
+						</div></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="ng-hide" ng-show="members" ng-repeat="member in members">
+					<td align="center"><div>
+							<span>{{member.familyRelationship.message}}</span>
+						</div></td>
+					<td align="center"><div>
+							<span>{{member.nickname}}</span> <span ng-hide="member.status.code=='P'">(#label("VERIFIED"))</span>
+						</div></td>
+					<td align="center"><div>
+							<span>{{member.cellphoneNo}}</span>
+						</div></td>
+					<td align="center"><div class="operations">
+							<a href="javascript:void(0)"><span>#button("VIEW")</span></a> <a ng-href="/user/realname/{{member.id}}"><span>#button("REALNAME_VERIFY")</span></a>
+							<a ng-href="/user/userinfo/{{member.id}}"><span>#button("EDIT")</span></a> <a href="javascript:void(0)" ng-click="disable(member)"><span>#button("DISABLE_CLIENT")</span></a>
+						</div></td>
+				</tr>
+				<tr class="ng-hide" ng-show="modeUpdate">
+					<td class="add" align="center" colspan="3"><a href="javascript:void(0)" ng-click="addNew()"><div>#button("ADD_NEW")</div></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script src="/static/js/business/user/userinfo.js"></script>

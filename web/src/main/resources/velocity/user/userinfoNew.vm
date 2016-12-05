@@ -1,0 +1,29 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/userinfoNew.css"></link>
+
+<div class="userinfoNew">
+	<div style="padding: 15px;" class="block">
+		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("USER_INFO")</span>
+	</div>
+	<div class="block">
+		<div class="blockHeader">
+			<img src="/static/images/icon/green_block.png" /> <span>#label("NEW_SERVICE_RECEIVER_CLIENT")</span>
+		</div>
+		<div class="blockContent" style="padding: 15px 20px; text-align: center;">
+			<div>
+				<span>#label('NAME') : </span> <input style="width: 200px;" ng-model="client.name" />
+			</div>
+			<div style="margin: 20px 0">
+				<span>#label('RELATIONSHIP') : </span> <select style="width: 200px;" ng-model="client.familyRelationship.code"
+					ng-options="relationship.code as relationship.message for relationship in relationships"></select>
+			</div>
+			<div>
+				<button ng-click="apply()">#button("APPLY")</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<script src="/static/js/business/user/userinfoNew.js"></script>

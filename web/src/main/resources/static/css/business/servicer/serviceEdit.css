@@ -1,0 +1,46 @@
+div.serviceEdit {
+	padding: 10px 0px 0px 280px;
+}
+
+div.serviceEdit div.left {
+	float: left;
+	width: 300px;
+	text-align: center;
+}
+
+div.serviceEdit div.right {
+	float: left;
+	width: 400px;
+}
+
+div.image {
+	width: 250px;
+	heigth: 250px;
+	float: left;
+	background-color: rgba(215, 215, 215, 1);
+	margin: 0px 20px 0px 20px;
+}
+
+div.image img {
+	background-color: white;
+	margin: 20px;
+	width: 210px;
+	height: 210px;
+	max-height: 210px;
+	max-width: 210px;
+}
+
+div.serviceEdit div.right span {
+	display: inline-block;
+	margin-top: 10px;
+	width: 80px;
+}
+
+div.serviceEdit div.right button {
+	margin-top: 20px;
+}
+
+div.serviceEdit div.right select {
+	min-width: 150px;
+	'
+}

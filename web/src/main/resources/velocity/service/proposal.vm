@@ -1,0 +1,70 @@
+<link rel="stylesheet" href="/static/css/business/service/proposal.css"></link>
+
+<script type="text/javascript">
+	layoutApp.value("selectedServiceInfos", #if(${selectedServiceInfos})${selectedServiceInfos}#else{}#end);
+	layoutApp.value("serviceSupplierClientId", #if(${serviceSupplierClientId})${serviceSupplierClientId} #else 0 #end);
+	layoutApp.value("orderId", #if(${orderId})${orderId}#else 0 #end);
+</script>
+<div class="proposal">
+	<div class="image">
+		<img />
+	</div>
+	<div class="card">
+		<div class="title">{{serviceSupplierClient.name}}</div>
+		<div class="cardItem">
+			<span class="key">#label("COMPANY_ADDRESS")</span><span class="value">{{serviceSupplierClient.address}}</span>
+		</div>
+	</div>
+	<div class="categorySelect">
+		<span class="key">#label("SELECTED_CATEGORY")</span> <span
+			ng-repeat="serviceInfo in services" class="value"><input
+			type="radio" name="serviceRadio" ng-value="serviceInfo"
+			ng-model="$parent.selectedServiceInfo" />{{serviceInfo.serviceCategory.name}}</span>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<td class="key" align="center"><span>#label("SERVICE_NAME")</span></td>
+				<td class="value" align="center"><span>{{selectedServiceInfo.serviceCategory.name}}</span></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="key" align="center"><span>#label("SERVICE_TIME")</span></td>
+				<td class="value" align="center"><input type="text"
+					placeholder="YYYY/MM/DD" ui-date="dateOptions"
+					ng-model="selectedServiceInfo.order.serviceDate" /> <select
+					ng-model="selectedServiceInfo.order.serviceHour"
+					ng-options="hour as hour for hour in hours"></select><span>#label("OCLOCK")</span></td>
+			</tr>
+			<tr>
+				<td class="key" align="center"><span>#label("SERVICE_RECEIVER")</span></td>
+				<td class="value" align="center"><select
+					ng-model="selectedServiceInfo.order.defaultMember"
+					ng-options="member as member.name for member in members"></select></td>
+			</tr>
+			<tr>
+				<td class="key" align="center"><span>#label("SERVICE_ADDRESS")</span></td>
+				<td class="value" align="center"><textarea class="newInfo"
+						placeholder="{{selectedServiceInfo.order.defaultMember.address}}"
+						ng-model="selectedServiceInfo.order.customAddress"></textarea></td>
+			</tr>
+			<tr>
+				<td class="key" align="center"><span>#label("PHONE_NO")</span></td>
+				<td class="value" align="center"><input class="newInfo"
+					ng-model="selectedServiceInfo.order.customPhoneNo"
+					placeholder="{{selectedServiceInfo.order.defaultMember.cellphoneNo}}" /></td>
+			</tr>
+			<tr>
+				<td align="center"><span>#label("EXPECTED_PRICE")</span></td>
+				<td align="center"><span>{{selectedServiceInfo.price}}/#label("HOUR")</span></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="submit">
+		<button ng-click="apply()">#button("APPLY")</button>
+		<button ng-click="cancel()">#button("CANCEL")</button>
+	</div>
+</div>
+
+<script src="/static/js/business/service/proposal.js"></script>

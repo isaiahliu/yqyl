@@ -1,0 +1,27 @@
+div.orderEdit {
+	padding: 10px 0px 0px 280px;
+}
+
+div.orderEdit div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.orderEdit table {
+	width: 500px;
+	margin-left: 50px;
+}
+
+div.orderEdit table td {
+	border: solid 1px black;
+}
+
+div.orderEdit table td.key {
+	width: 150px;
+	background: rgba(121, 121, 121, 1);
+	color: white;
+}
+
+div.orderEdit div.members select {
+	min-width: 200px;
+}

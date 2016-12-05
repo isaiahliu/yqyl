@@ -1,0 +1,78 @@
+div.navBar ul.homePagePopList {
+	left: 175px;
+	top: 155px;
+}
+
+div.navBar ul.homeEndowmentPopList {
+	left: 655px;
+	top: 155px;
+}
+
+div.navBar ul.pensionIndustryPopList {
+	left: 775px;
+	top: 155px;
+}
+
+div.navBar ul.talentTrainingPopList {
+	left: 1015px;
+	top: 155px;
+}
+
+div.navBar div.advertisement {
+	width: 1200px;
+	padding: 20px 0px;
+	height: 110px;
+	text-align: justify;
+}
+
+div.navBar div.advertisement img.logo {
+	width: 204px;
+	height: 70px;
+	left: 10px;
+}
+
+div.navBar div.advertisement img.advertisement {
+	width: 220px;
+	height: 50px;
+	right: 10px;
+	float: right;
+}
+
+div.navBar div.advertisement input.searchBox {
+	width: 400px;
+	line-height: 32px;
+	border: solid 3px #4a9900;
+	font-size: 16px;
+	padding-left: 40px;
+}
+
+div.navBar div.advertisement button.searchButton {
+	width: 80px;
+	height: 40px;
+	background: #4a9900;
+	color: #ffffff;
+	font-size: 16px;
+	border-radius: 0;
+}
+
+div.navBar div.advertisement button.publishButton {
+	width: 100px;
+	height: 40px;
+	background: #fd6a15;
+	font-size: 16px;
+	color: #ffffff;
+	border-radius: 0;
+}
+
+div.navBar div.navBarItems li.selectedNavBarItem {
+	list-style-type: none;
+	float: left;
+	height: 45px;
+	width: 175px;
+}
+
+div.navBar div.navBarItems li.selectedNavBarItem div {
+	background: #4a9900;
+	height: 45px;
+	width: 175px;
+}

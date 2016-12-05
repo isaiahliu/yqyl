@@ -1,0 +1,59 @@
+div.order {
+	margin-left: 200px;
+}
+
+div.order div.block {
+	width: 1000px;
+	border: 1px solid #cccccc;
+}
+
+div.order table {
+	width: 970px;
+	margin: auto;
+}
+
+div.order table td {
+	font-size: small;
+}
+
+div.order table thead td {
+	background-color: #f0f0f0;
+	height: 40px;
+}
+
+div.order table tbody td {
+	padding: 10px 0;
+}
+
+div.order table td span {
+	font-size: 16px;
+}
+
+div.order table tbody tr {
+	border-bottom: 1px solid #cccccc;
+}
+
+div.order div.orderPic img {
+	width: 54px;
+	height: 54px;
+}
+
+div.order div.orderItem div.orderPic img {
+	border: solid 1px;
+	width: 70px;
+	height: 70px;
+}
+
+div.order div.orderItem div.orderInfo {
+	padding: 5px;
+}
+
+div.order div.orderPaging {
+	text-align: center;
+}
+
+div.order table td button {
+	font-size: small;
+	height: 25px;
+	min-width: 50px;
+}

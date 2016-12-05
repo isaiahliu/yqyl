@@ -1,0 +1,32 @@
+div.permission {
+	padding: 10px 0px 0px 280px;
+}
+
+div.permission div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.permission div.filter span {
+	display: inline-block;
+	margin-right: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.permission div.filter input, div.permission div.filter select {
+	margin-left: 5px;
+}
+
+div.permission table {
+	margin-top: 20px;
+	width: 900px;
+}
+
+div.permission table thead td {
+	background-color: rgba(215, 215, 215, 1);
+}
+
+div.permission table td {
+	border: 1px solid;
+}

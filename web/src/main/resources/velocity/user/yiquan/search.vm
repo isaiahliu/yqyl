@@ -1,0 +1,48 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/yiquan/search.css"></link>
+
+<div class="search">
+	<div style="padding: 15px;" class="block">
+		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("SERVICER_TRANSACTION")</span>
+	</div>
+	<div style="padding: 15px 20px; text-align: center;" class="block">
+		<div class="filter" style="text-align: left;">
+			<input type="checkbox" ng-model="filter.enableFrom" /> <span>#label("DATE")</span> <input type="text" placeholder="YYYY/MM/DD"
+				ui-date="dateOptions" ng-model="filter.from" /> <input type="checkbox" ng-model="filter.enableTo" /> <span>#label("TO")</span> <input
+				type="text" placeholder="YYYY/MM/DD" ui-date="dateOptions" ng-model="filter.to" /> <span style="margin-left: 10px;">#label("YIQUAN_NO")</span>
+			<select ng-model="filter.yiquanId"><option value="">#label("ALL")</option>
+				<option value="{{yiquan.id}}" ng-repeat="yiquan in yiquans">{{yiquan.code}}</option></select>
+			<button style="margin: 15px 0" ng-click="search()">#button("SEARCH")</button>
+		</div>
+		<table style="min-height: 100px;">
+			<thead>
+				<tr>
+					<td align="center">#label("TRANSACTION_ID")</td>
+					<td align="center">#label("YIQUAN_NO")</td>
+					<td align="center">#label("TRANSACTION_TIME")</td>
+					<td align="center">#label("TRANSACTION_AMOUNT")</td>
+					<td align="center">#label("TRANSACTION_TYPE")</td>
+				</tr>
+			</thead>
+			<tbody class="ng-hide" ng-show="accountPostings">
+				<tr ng-repeat="accountPosting in accountPostings">
+					<td align="center">{{accountPosting.transaction.id}}</td>
+					<td align="center">{{accountPosting.yiquan.code}}</td>
+					<td align="center">{{accountPosting.transaction.timestamp|date:'yyyy/MM/dd HH:mm:ss'}}</td>
+					<td align="center">{{accountPosting.amount|currency:"￥"}}</td>
+					<td align="center">{{accountPosting.transaction.type.message}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<div style="text-align: center;">
+			<div class="paging ng-hide" ng-show="pagingData">
+				<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
+					class="pagination-sm" boundary-links="true" ng-change="search()" first-text='#label("FIRST_PAGE")' last-text='#label("LAST_PAGE")'
+					previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'></pagination>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/user/yiquan/search.js"></script>

@@ -1,0 +1,41 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/yiquan/list.css"></link>
+
+<div class="list">
+	<div style="padding: 15px;" class="block">
+		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("YIQUAN_BIND")</span>
+	</div>
+	<div style="padding: 15px 20px; text-align: center;" class="block">
+		<table>
+			<thead>
+				<tr>
+					<td align="center" width="200px"><div>
+							<span>#label("INDEX")</span>
+						</div></td>
+					<td align="center" width="200px"><div>
+							<span>#label("NAME")</span>
+						</div></td>
+					<td align="center" width="200px"><div>
+							<span>#label("YIQUAN_NO")</span>
+						</div></td>
+					<td align="center" width="320px"><div>
+							<span>#label("OPERATION")</span>
+						</div></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-show="members" class="ng-hide" ng-repeat="member in members">
+					<td align="center"><span>{{$index+1}}</span></td>
+					<td align="center"><span>{{member.name}}</span><span ng-show="member.status.code=='P'">(#label("NOT_REALNAME_VERIFIED"))</span></td>
+					<td align="center"><span ng-show="member.yiquan">{{member.yiquan.code}}</span><span ng-hide="member.yiquan">#label("NOT_BINDED")</span></td>
+					<td align="center"><a ng-hide="member.status.code=='P'" ng-href="/user/yiquan/bind/{{member.id}}"><span
+							ng-show="member.status.code=='R'&&!member.yiquan">#button("BIND")</span><span ng-show="member.status.code=='R'&&member.yiquan">#button("VIEW")</span></a>
+						<a ng-show="member.status.code=='P'" ng-href="/user/realname/{{member.id}}"><span>#button("REALNAME_VERIFY")</span></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script src="/static/js/business/user/yiquan/list.js"></script>

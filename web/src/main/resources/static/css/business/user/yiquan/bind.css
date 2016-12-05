@@ -1,0 +1,41 @@
+div.bind {
+	margin-left: 200px;
+}
+
+div.bind div.block {
+	width: 1000px;
+	border: 1px solid #cccccc;
+}
+
+div.content table {
+	width: 560px;
+	margin: auto;
+}
+
+div.bind table td {
+	padding: 5px;
+}
+
+div.bind table td span {
+	font-size: 14px;
+}
+
+div.bind img {
+	max-height: 100px;
+	max-width: 200px;
+}
+
+div.bind table td.key {
+	width: 150px;
+}
+
+div.bind div.buttons {
+	width: 840px;
+	margin-top: 30px;
+	text-align: center;
+}
+
+div.bind table td.value input, div.bind table td.value select {
+	width: 300px;
+	font-size: 14px;
+}

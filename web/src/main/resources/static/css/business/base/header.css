@@ -1,0 +1,48 @@
+div.header, div.footer {
+	background-color: #F5F5F5;
+}
+
+div.header {
+	height: 32px;
+}
+
+div.header span {
+	line-height: 32px;
+}
+
+div.header span.title {
+	font-style: italic;
+	font-size: large;
+	font-weight: bold;
+}
+
+div.header span.city {
+	
+}
+
+div.header ul {
+	padding-left: 0px;
+}
+
+div.header li div {
+	height: 32px;
+}
+
+div.header div.headerBar, div.content {
+	margin: 0 auto;
+	width: 1200px;
+}
+
+div.header div.left {
+	float: left;
+}
+
+div.header div.right {
+	float: right;
+}
+
+div.header li {
+	list-style-type: none;
+	float: left;
+	margin-left: 10px;
+}

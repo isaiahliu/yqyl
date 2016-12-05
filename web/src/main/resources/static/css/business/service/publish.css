@@ -1,0 +1,12 @@
+div.publish {
+	margin-left: 70px;
+	width: 1100px;
+}
+
+div.publish table {
+	margin: auto;
+}
+
+div.publish table td input, div.publish table td textarea {
+	min-width: 400px;
+}

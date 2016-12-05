@@ -1,0 +1,7 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/admin/receiver.css"></link>
+
+<div class="receiver">receiver</div>
+
+<script src="/static/js/business/admin/receiver.js"></script>

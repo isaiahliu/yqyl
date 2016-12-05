@@ -1,0 +1,71 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/health.css"></link>
+
+<div class="health">
+	<div class="members">
+		<span>家庭成员</span> <select ng-model="selectedMember">
+			<option ng-repeat="member in members" value="{{member.id}}">{{member.name}}</option>
+		</select>
+	</div>
+	<table class="ng-hide" ng-show="selectedMember">
+		<tbody>
+			<tr>
+				<td align="center" class="key"><span>#label("HEIGHT")</span></td>
+				<td align="center" class="value"><span>{{healthData.height}}</span> <span ng-show="healthData.height">cm</span></td>
+			</tr>
+			<tr>
+				<td align="center" class="key"><span>#label("WEIGHT")</span></td>
+				<td align="center" class="value"><span>{{healthData.weight}}</span> <span ng-show="healthData.height">kg</span></td>
+			</tr>
+			<tr>
+				<td align="center" class="key"><span>#label("BLOOD_PRESSURE")</span></td>
+				<td align="center" class="value"><span>{{healthData.systolicPressure}}</span><span ng-show="healthData.height">/</span><span>{{healthData.diastolicPressure}}
+						<span ng-show="healthData.height">mmHg</span></td>
+			</tr>
+			<tr>
+				<td align="center" class="key"><span>#label("BLOOD_TYPE")</span></td>
+				<td align="center" class="value"><span>{{healthData.bloodType}}</span></td>
+			</tr>
+			<tr>
+				<td align="center" class="key"><span>#label("BLOOD_SUGER")</span></td>
+				<td align="center" class="value"><span>{{healthData.bloodSugar}}</span></td>
+			</tr>
+			<tr>
+				<td align="center" class="key"><span>#label("BLOOD_FAT")</span></td>
+				<td align="center" class="value"><span>{{healthData.bloodFat}}</span></td>
+			</tr>
+			<tr>
+				<td align="center" class="key"><span>#label("HEART_RATE")</span></td>
+				<td align="center" class="value"><span>{{healthData.heartRate}}</span></td>
+			</tr>
+			<tr>
+				<td align="center" class="key"><span>#label("ALLERGIC_HISTORY")</span></td>
+				<td align="center" class="value"><span>{{healthData.allergicHistory}}</span></td>
+			</tr>
+			<tr class="ng-hide" ng-show="viewMore">
+				<td align="center" class="key"><span>#label("RECENT_DISEASE")</span></td>
+				<td align="center" class="value"><span>{{healthData.other}}</span></td>
+			</tr>
+			<tr class="ng-hide" ng-show="viewMore">
+				<td align="center" class="key"><span>#label("FAMILY_HISTORY")</span></td>
+				<td align="center" class="value"><span>{{healthData.familyHistory}}</span></td>
+			</tr>
+			<tr class="ng-hide" ng-show="viewMore">
+				<td align="center" class="key"><span>#label("SMOKER_AGE")</span></td>
+				<td align="center" class="value"><span>{{healthData.smokerAge.message}}</span></td>
+			</tr>
+			<tr class="ng-hide" ng-show="viewMore">
+				<td align="center" class="key"><span>#label("DRINKER_FREQUENCY")</span></td>
+				<td align="center" class="value"><span>{{healthData.drinkerFrequency.message}}</span></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="buttons ng-hide" ng-show="selectedMember">
+		<button ng-click="viewMore=true" ng-show="!viewMore">#button("VIEW_MORE")</button>
+		<button class="ng-hide" ng-click="viewMore=false" ng-show="viewMore">#button("COLLAPSE")</button>
+		<button ng-click="bookPhysicalExamination()">#button("BOOK_PHYSICAL_EXAMINATION")</button>
+	</div>
+</div>
+
+<script src="/static/js/business/user/health.js"></script>

@@ -1,0 +1,45 @@
+div.topup {
+	margin-left: 200px;
+}
+
+div.topup div.block {
+	width: 1000px;
+	border: 1px solid #cccccc;
+}
+
+div.content table {
+	width: 360px;
+	margin: auto;
+}
+
+div.topup table td {
+	padding: 5px;
+}
+
+div.topup table td span {
+	font-size: 14px;
+}
+
+div.topup img {
+	max-height: 100px;
+	max-width: 200px;
+}
+
+div.topup table td.key {
+	width: 150px;
+}
+
+div.topup div.buttons {
+	width: 840px;
+	margin-top: 30px;
+	text-align: center;
+}
+
+div.topup table td input, div.topup table td select {
+	width: 240px;
+	font-size: 14px;
+}
+
+div.topup table td input.radioBox {
+	width: 20px;
+}

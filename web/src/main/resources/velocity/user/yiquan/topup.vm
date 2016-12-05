@@ -1,0 +1,48 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/yiquan/topup.css"></link>
+
+<div class="topup">
+	<div style="padding: 15px;" class="block">
+		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("MY_YIQUAN")</span>
+	</div>
+	<div style="padding: 15px 20px; text-align: center;" class="block">
+		<table class="ng-hide" ng-show="clients">
+			<tr>
+				<td>#label("USER_RECEIVER")</td>
+				<td><select ng-model="selectedCode">
+						<option value="">#label("OTHER")</option>
+						<option ng-repeat="client in clients" value="{{client.yiquan.code}}">{{client.name}}</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td>#label("YIQUAN_NO")</td>
+				<td><span ng-show="selectedCode">{{selectedCode}}</span> <input ng-hide="selectedCode" ng-model="customCode" /></td>
+			</tr>
+			<tr>
+				<td>#label("TOPUP_AMOUNT")</td>
+				<td><input ng-model="topUpAmount" /></td>
+			</tr>
+			<tr>
+				<td valign="top">#label("PAYMENT_METHOD")</td>
+				<td><div style="margin-bottom: 10px;">
+						<input class="radioBox" type="radio" name="paymentMethod" ng-model="paymentMethod" ng-value="'bank'" /> <img
+							src="/static/images/icon/bank.jpg" /> <span>#label("BANK")</span>
+					</div>
+					<div style="margin-bottom: 10px;">
+						<input class="radioBox" type="radio" name="paymentMethod" ng-model="paymentMethod" ng-value="'alipay'" /> <img
+							src="/static/images/icon/alipay.jpg" /> <span>#label("ALIPAY")</span>
+					</div>
+					<div style="margin-bottom: 10px;">
+						<input class="radioBox" type="radio" name="paymentMethod" ng-model="paymentMethod" ng-value="'wechat'" /> <img
+							src="/static/images/icon/wechat.jpg" /> <span>#label("WECHAT")</span>
+					</div></td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2"><button ng-click="apply()">#button("TOPUP")</button></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<script src="/static/js/business/user/yiquan/topup.js"></script>

@@ -1,0 +1,5 @@
+<link rel="stylesheet" href="/static/css/business/home.css"></link>
+#title("HOME")
+<div class="home"></div>
+
+<script src="/static/js/business/home.js"></script>

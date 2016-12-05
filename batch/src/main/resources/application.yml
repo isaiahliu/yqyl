@@ -1,0 +1,28 @@
+logging: 
+  level: DEBUG
+spring:
+  profiles: 
+    active: '@profileActive@'
+  batch: 
+    job: 
+      enabled: false
+  datasource: 
+    url: ${args.datasource.url:jdbc:mysql://58.58.116.68:8099/yqyl_business}
+    username: ${args.datasource.username:dev}
+    password: ${args.datasource.password:!QAZ2wsx}
+    driverClassName: com.mysql.jdbc.Driver
+  jpa: 
+    database: MYSQL
+    show-sql: true
+    hibernate: 
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties: 
+      hibernate: 
+        dialect: org.hibernate.dialect.MySQL5Dialect
+      
+---
+spring: 
+  profiles: qa
+args:
+  datasource: 
+    url: jdbc:mysql://localhost:8099/yqyl_business

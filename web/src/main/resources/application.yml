@@ -1,0 +1,33 @@
+server:
+  port: 8090
+logging:
+  level: DEBUG
+security:
+  basic: 
+    enabled: false
+spring:
+  profiles: 
+    active: '@profileActive@'
+  messages:
+    basename: message/resource,message/error
+    cache-seconds: ${args.messages.cache-seconds:5}
+  velocity: 
+    resourceLoaderPath: classpath:/velocity/
+    checkTemplateLocation: true
+    suffix: .vm
+    properties: 
+      #configurations from org.apache.velocity.runtime.RuntimeConstants
+      layoutUrl: base/layout.vm 
+      velocimacro.permissions.allow.inline.to.replace.global: true 
+      velocimacro.library: /velocity/base/macro.vm
+rest:
+  server: ${args.rest.server:http://localhost:8091}
+      
+---
+spring: 
+  profiles: qa
+args: 
+  messages: 
+    cache-seconds: -1
+  rest:
+    server: http://localhost:8091

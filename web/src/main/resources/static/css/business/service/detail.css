@@ -1,0 +1,60 @@
+div.detail {
+	margin-left: 200px;
+}
+
+div.detail div.block {
+	width: 1000px;
+	border: 1px solid #cccccc;
+}
+
+div.detail div.block div.subBlock {
+	background: #f6f6f6;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
+
+div.submit {
+	text-align: center;
+}
+
+div.detail div.title {
+	font-weight: bold;
+	background: rgba(215, 215, 215, 1);
+	padding: 5px 0 5px 50px;
+}
+
+div.detail div.level1 {
+	height: 36px;
+	line-height: 36px;
+	border-bottom: 1px solid #cccccc;
+	padding-left: 20px;
+}
+
+div.detail div.level1 img {
+	height: 14px;
+	width: 14px;
+	margin: 0 10px 4px 0;
+}
+
+div.detail div.level2 {
+	padding-left: 50px;
+	margin: 10px 0;
+}
+
+div.detail div.level2 span.key {
+	display: inline-block;
+	width: 130px;
+}
+
+div.detail table td {
+	font-size: 14px;
+}
+
+div.detail table.operations td {
+	padding: 10px 0;
+}
+
+div.appraise img {
+	width: 25px;
+	heigth: 25px;
+}

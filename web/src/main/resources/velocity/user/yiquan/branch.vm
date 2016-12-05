@@ -1,0 +1,41 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/yiquan/branch.css"></link>
+
+<div class="branch">
+	<div style="padding: 15px;" class="block">
+		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("YIQUAN_BRANCH")</span>
+	</div>
+	<div style="padding: 15px 20px; text-align: center;" class="block">
+		<div class="filter" style="text-align: left;">
+			<span>#label("SERVICE_SUPPLIER_CLIENT_NAME")</span> <input ng-model="filter.name" /> <span>#label("ADDRESS")</span> <input
+				ng-model="filter.address" />
+			<button style="margin: 15px 0" ng-click="search()">#button("SEARCH")</button>
+		</div>
+		<table style="min-height: 100px;">
+			<thead>
+				<tr>
+					<td align="center">#label("SERVICE_SUPPLIER_CLIENT_NAME")</td>
+					<td align="center">#label("ADDRESS")</td>
+					<td align="center">#label("CONTACT_METHOD")</td>
+				</tr>
+			</thead>
+			<tbody class="ng-hide" ng-show="servicers">
+				<tr ng-repeat="servicer in servicers">
+					<td align="center">{{servicer.name}}</td>
+					<td align="center">{{servicer.address}}</td>
+					<td align="center">{{servicer.contactPhone}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<div style="text-align: center;">
+			<div class="paging ng-hide" ng-show="pagingData">
+				<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
+					class="pagination-sm" boundary-links="true" ng-change="search()" first-text='#label("FIRST_PAGE")' last-text='#label("LAST_PAGE")'
+					previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'></pagination>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/user/yiquan/branch.js"></script>

@@ -1,0 +1,60 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet"
+	href="/static/css/business/admin/service/order.css"></link>
+
+<div class="order">
+	<div class="title">#label("SERVICE_ORDER_MANAGEMENT")</div>
+	<div class="filter">
+		<span>#label("TIME")<input type="text" placeholder="YYYY/MM/DD"
+			ui-date="dateOptions" ng-model="filterData.serviceTime"
+			style="width: 100px;" />
+		</span> <span>#label("USER_ID")<input ng-model="filterData.username"
+			style="width: 80px;" /></span> <span>#label("SERVICE_SUPPLIER_ID")<input
+			style="width: 80px;" ng-model="filterData.supplierId" /></span> <span>#label("SERVICE_ORDER_ID")<input
+			style="width: 80px;" ng-model="filterData.orderId" /></span> <span>#label("SERVICE_ORDER_STATUS")<select
+			ng-model="filterData.status"><option
+					ng-repeat="status in orderStatusLookups" ng-value="status.code">{{status.message}}</option>
+				<option value="">#label("ALL")</option>
+		</select></span>
+	</div>
+	<div style="text-align: center;">
+		<button ng-click="searchOrders()">#button("SEARCH")</button>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<td align="center"><span>#label("INDEX")</span></td>
+				<td align="center"><span>#label("USER_ID")</span></td>
+				<td align="center"><span>#label("SERVICE_ORDER_ID")</span></td>
+				<td align="center"><span>#label("SERVICE_ORDER_TIME")</span></td>
+				<td align="center"><span>#label("SERVICE_ORDER_SETTLED_TIME")</span></td>
+				<td align="center"><span>#label("SERVICE_ORDER_STATUS")</span></td>
+				<td align="center"><span>#label("OPERATION")</span></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="order in orders">
+				<td align="center"><span>{{order.id}}</span></td>
+				<td align="center"><span>{{order.username}}</span></td>
+				<td align="center"><span>{{order.id}}</span></td>
+				<td align="center"><span>{{order.serviceDate|date:'yyyy/MM/dd'}}
+						{{order.serviceHour}}:00</span></td>
+				<td align="center"><span>{{order.settledTime|date:'yyyy/MM/dd HH:mm:ss'}}</span></td>
+				<td align="center"><span>{{order.status.message}}</span></td>
+				<td align="center"><span><button>aaa</button></span></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="paging" style="text-align: center;">
+		<pagination total-items="pagingData.itemCount"
+			ng-model="pagingData.pageIndex" max-size="10"
+			items-per-page="pagingData.pageSize" class="pagination-sm"
+			boundary-links="true" ng-change="searchOrders()"
+			first-text='#label("FIRST_PAGE")' last-text='#label("LAST_PAGE")'
+			previous-text='#label("PREVIOUS_PAGE")'
+			next-text='#label("NEXT_PAGE")'></pagination>
+	</div>
+</div>
+
+<script src="/static/js/business/admin/service/order.js"></script>

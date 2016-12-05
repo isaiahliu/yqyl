@@ -1,0 +1,7 @@
+#parse("/velocity/operator/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/operator/answer.css"></link>
+
+<div class="answer">answer</div>
+
+<script src="/static/js/business/operator/answer.js"></script>

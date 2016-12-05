@@ -1,0 +1,79 @@
+<link rel="stylesheet" href="/static/css/business/service/overview.css"></link>
+
+<div class="overview">
+	<div class="filter">
+		<div class="title">
+			<a href="/service/search"><span>#label("ALL_CATEGORIES")</span></a>
+		</div>
+		<div class="categoryItem ng-hide"
+			ng-show="$index<4 || $parent.showAllCategories"
+			ng-repeat="category in categories">
+			<ul ng-mouseenter="expand=true" ng-mouseleave="expand=false">
+				<li class="category"><a
+					ng-href="/service/search#?parentCategory={{category.id}}"><span>{{category.name}}</span>
+				</a></li>
+				<li class="subCategory ng-hide" ng-show="expand"><a
+					ng-href="/service/search#?category={{subCategory.id}}"
+					ng-repeat="subCategory in category.serviceSubCategories"
+					ng-if="subCategory.status.code=='A'"><span>{{subCategory.name}}</span></a></li>
+			</ul>
+		</div>
+		<div class="categoryItem ng-hide"
+			ng-show="categories.length>4&&!showAllCategories">
+			<ul>
+				<li class="category"><a href="javascript:void(0)"
+					ng-click="showAllCategories=true"><span>#label("EXPAND_ALL")</span>
+				</a></li>
+			</ul>
+		</div>
+		<div class="categoryItem ng-hide"
+			ng-show="categories.length>4&&showAllCategories">
+			<ul>
+				<li class="category"><a href="javascript:void(0)"
+					ng-click="showAllCategories=false"><span>#label("COLLAPSE")</span>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="advertisement">
+		<img src="/static/images/pic/advertisement.jpg" />
+	</div>
+	<div class="categories">
+		<div class="ng-hide" ng-repeat="category in categories"
+			ng-class="'category ng-hide category_' + $index % 4"
+			ng-show="category.services">
+			<div class="title">
+				<a ng-href="/service/search#?parentCategory={{category.id}}"><span
+					class="key">{{category.name}}</span></a> <span class="value"
+					ng-repeat="subCategory in category.serviceSubCategories"> <span
+					ng-hide="$index==0">|</span> <a
+					ng-href="/service/search#?category={{subCategory.id}}"><span>{{subCategory.name}}</span></a>
+				</span>
+			</div>
+			<div class="separator"></div>
+			<div class="services">
+				<div class="service" ng-repeat="service in category.services">
+					<div>
+						<a ng-href="/service/info/{{service.serviceSupplierClient.id}}"><img
+							alt="#label('NOT_UPLOADED')"
+							ng-src="/ajax/content/image/{{service.image}}" /></a>
+					</div>
+					<div class="description">
+						<div class="left">
+							<a ng-href="/service/info/{{service.serviceSupplierClient.id}}">
+								<span class="name">{{service.name}}</span>
+							</a>
+						</div>
+						<div class="right">
+							<span class="priceLabel">#label("PRICE")</span> <span
+								class="price">{{service.price|currency:"￥"}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<script src="/static/js/business/service/overview.js"></script>

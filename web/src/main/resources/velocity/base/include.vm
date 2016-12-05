@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="/static/css/lib/jquery/jquery-ui.css"></link>
+<link rel="stylesheet"
+	href="/static/css/lib/angularjs/angular-ui-tree.min.css"></link>
+<link rel="stylesheet"
+	href="/static/css/lib/bootstrap/bootstrap.min.css"></link>
+<link rel="stylesheet prefetch"
+	href="/static/css/lib/bootstrap/font-awesome.min.css"></link>
+#if($platform=='SERVICER')
+<link rel="stylesheet" href="/static/css/general_servicer.css"></link>
+#else
+<link rel="stylesheet" href="/static/css/general.css"></link>
+#end
+<link rel="stylesheet prefetch"
+	href="/static/css/lib/angularjs/textAngular.css" media="screen"></link>
+
+<script src="/static/js/lib/jquery/jquery.js"></script>
+<script src="/static/js/lib/jquery/jquery-ui.min.js"></script>
+<script src="/static/js/lib/angularjs/angular.min.js"></script>
+<script src="/static/js/lib/angularjs/textAngular-rangy.min.js"></script>
+<script src="/static/js/lib/angularjs/textAngular-sanitize.min.js"></script>
+<script src="/static/js/lib/angularjs/textAngular.min.js"></script>
+<script src="/static/js/lib/angularjs/date.js"></script>
+<script src="/static/js/lib/angularjs/ui-bootstrap-tpls.js"></script>
+<script src="/static/js/lib/angularjs/angular-ui-tree.min.js"></script>
+<script src="/static/js/lib/angularjs/angular-cookies.min.js"></script>

@@ -1,0 +1,7 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/admin/role.css"></link>
+
+<div class="role">role</div>
+
+<script src="/static/js/business/admin/role.js"></script>

@@ -1,0 +1,33 @@
+div.health {
+	margin-left: 200px;
+}
+
+div.content table {
+	width: 840px;
+}
+
+div.health table td {
+	border: solid 1px black;
+}
+
+div.health table td.key {
+	width: 150px;
+	background: rgba(121, 121, 121, 1);
+	color: white;
+}
+
+div.health div.buttons {
+	width: 840px;
+	margin-top: 30px;
+	text-align: center;
+	margin-top: 30px;
+}
+
+div.health div.members {
+	margin-bottom: 20px;
+	font-size: large;
+}
+
+div.health div.members select {
+	min-width: 200px;
+}

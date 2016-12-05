@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/static/css/business/user/navigation.css"></link>
+
+<div class="subNavBar navBar userBar">
+	<ul>
+		<li style="margin: 0; background: #fd6a15;"><span style="color: #ffffff; font-size: 16px;" class="title">#label("USER_CENTER")</span></li>
+		<li><a href="/user/order"><div class="navBarItem #if($currentPage=='ORDER')selected #end">
+					<img src="/static/images/logo/user_order.png" /> <span>#button("MY_ORDER")</span>
+				</div></a></li>
+		<li><a href="/user/userinfo"><div class="navBarItem #if($currentPage=='INFO')selected #end">
+					<img src="/static/images/logo/user_info.png" /> <span>#button("USER_INFO")</span>
+				</div></a></li>
+		<li><a href="/user/password"><div class="navBarItem #if($currentPage=='PASSWORD')selected #end">
+					<img src="/static/images/logo/user_password.png" /> <span>#button("USER_PASSWORD_CHANGE")</span>
+				</div></a></li>
+		<li><a href="/user/yiquan"><div class="navBarItem #if($currentPage=='YIQUAN')selected #end">
+					<img src="/static/images/logo/user_yiquan.png" /> <span>#button("MY_YIQUAN")</span>
+				</div></a></li>
+		<li><a href="/user/yiquan/list"><div
+					class="#if($currentPage!='YIQUAN')ng-hide#end navBarSubItem #if($currentSubPage=='BIND')subSelected #end">
+					<span>#button("YIQUAN_BIND")</span>
+				</div></a></li>
+		<li><a href="/user/yiquan/topup"><div
+					class="#if($currentPage!='YIQUAN')ng-hide#end navBarSubItem #if($currentSubPage=='TOPUP')subSelected #end">
+					<span>#button("YIQUAN_TOPUP")</span>
+				</div></a></li>
+		<li><a href="/user/yiquan/search"><div
+					class="#if($currentPage!='YIQUAN')ng-hide#end navBarSubItem #if($currentSubPage=='SEARCH')subSelected #end">
+					<span>#button("YIQUAN_SEARCH")</span>
+				</div></a></li>
+		<li><a href="/user/yiquan/branch"><div
+					class="#if($currentPage!='YIQUAN')ng-hide#end navBarSubItem #if($currentSubPage=='BRANCH')subSelected #end">
+					<span>#button("YIQUAN_BRANCH")</span>
+				</div></a></li>
+		<li><a href="/user/volunteer"><div class="navBarItem #if($currentPage=='VOLUNTEER')selected #end">
+					<img src="/static/images/logo/user_volunteer.png" /> <span>#button("ALLOWANCE_SUPPLIER_VERIFY")</span>
+				</div></a></li>
+	</ul>
+</div>
+
+<script src="/static/js/business/user/navigation.js"></script>

@@ -1,0 +1,29 @@
+div.category {
+	padding: 10px 0px 0px 280px;
+}
+
+div.category div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.category div.filter {
+	margin-top: 20px;
+}
+
+div.category table {
+	margin-top: 20px;
+	width: 900px;
+}
+
+div.category table thead td {
+	background-color: rgba(215, 215, 215, 1)
+}
+
+div.category table td {
+	border: 1px solid;
+}
+
+div.category span.disabledCategory {
+	text-decoration: line-through;
+}

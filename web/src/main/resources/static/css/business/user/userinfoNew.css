@@ -1,0 +1,34 @@
+div.userinfoNew {
+	margin-left: 200px;
+}
+
+div.userinfoNew div.block {
+	width: 1000px;
+	border: 1px solid #cccccc;
+}
+
+div.userinfoNew div.block div.blockHeader {
+	padding: 10px 15px;
+	border-bottom: solid 1px #dddddd;
+	text-align: left;
+}
+
+div.content table {
+	width: 960px;
+}
+
+div.content table td {
+	border: solid 1px #dddddd;
+}
+
+div.content table thead td {
+	background: #f0f0f0;
+}
+
+div.content div.operations a {
+	margin-right: 5px;
+}
+
+div.content table tbody td.add div {
+	color: white;
+}

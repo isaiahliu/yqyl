@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="/static/css/business/base/header.css"></link>
+
+<div class="header" ng-controller="headerController">
+	<div class="headerBar">
+		<div class="left">
+			<ul>
+				<li><img style="height: 20px;"
+					src="/static/images/logo/favorite.jpg" /></li>
+				<li style="margin-left: 5px;"><a href="javascript:void(0);"
+					onclick="window.external.AddFavorite('','')"><span>#label("FAVORITE")</span></a></li>
+				<li style="margin-left: 10px;"><span>|</span></li>
+				<li><div>
+						<a href="/home"><span>#info("WELCOME")</span></a>
+					</div></li> #if(${authentication}) #if(${authentication.token.authenticated})
+				#else
+				<li><div>
+						<a href="/login"><span> #button("LOGIN_REGISTER")</span></a>
+					</div></li> #end #end
+			</ul>
+
+		</div>
+		<div class="right">
+			<ul>
+				<li><div>
+						<img src="/static/images/logo/city.png" /> <span>#label("SWITCH_CITY")</span>
+						<select><option>泰安市</option></select>
+					</div></li> #if(${authentication}) #if(${authentication.token.authenticated})
+				<li><div>
+						<span>#label("WELCOME"), ${authentication.token.username}</span>
+					</div></li>
+				<li><div>
+						<span><a href="/user">#label("USER_CENTER")</a></span>
+					</div></li>
+				<li><div>
+						<span><a href="javascript:void(0)" ng-click="logout()">#label("LOGOUT")</a></span>
+					</div></li> #end #end
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/base/header.js"></script>
+

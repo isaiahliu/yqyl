@@ -1,0 +1,238 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/userinfoEdit.css"></link>
+
+<script type="text/javascript">
+	layoutApp.value("clientId", #if(${clientId})${clientId}#else 0 #end);
+</script>
+
+<div class="userinfoEdit">
+	<div style="padding: 15px;" class="block">
+		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("USER_INFO")</span> <a style="float: right;"
+			href="/user/userinfo"><span>#label("BACK_TO_LIST")</span></a>
+	</div>
+	<div class="block">
+		<div class="blockHeader">
+			<img src="/static/images/icon/green_block.png" /> <span>#label("GENERAL_INFO")</span> <a style="float: right;" href="javascript:void(0)"
+				ng-click="saveClient()" ng-show="editingClient" class="ng-hide"><span>#button("SAVE")</span></a> <a href="javascript:void(0)"
+				ng-hide="editingClient" ng-click="editingClient=true" style="float: right;"><img src="/static/images/icon/edit2.png" /></a>
+		</div>
+		<div class="blockContent ng-hide" ng-show="client" style="padding: 15px 20px; text-align: center;">
+			<table>
+				<tr>
+					<td class="key"><span>#label("USER_NAME")</span></td>
+					<td class="value"><span ng-hide="editingClient">{{client.nickname}}</span><input class="ng-hide" ng-show="editingClient"
+						ng-model="client.nickname" /></td>
+					<td class="key"><span>#label("REALNAME")</span></td>
+					<td class="value"><span ng-show="client.status.code=='R' || !editingClient">{{client.name}}</span><input class="ng-hide"
+						ng-hide="client.status.code=='R'||!editingClient" ng-model="client.name" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("DOB")</span></td>
+					<td class="value"><span ng-hide="editingClient">{{client.dob|date:'yyyy-MM-dd'}}</span><input class="ng-hide"
+						ng-show="editingClient" ui-date="dateOptions" ng-model="client.dob" /></td>
+					<td class="key"><span>#label("GENDER")</span></td>
+					<td class="value"><span ng-hide="editingClient">{{client.gender.message}}</span><select class="ng-hide" ng-show="editingClient"
+						ng-model="client.gender.code" ng-options="gender.code as gender.message for gender in genders"></select></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("EMAIL")</span></td>
+					<td class="value"><span ng-hide="editingClient">{{client.email}}</span><input class="ng-hide" ng-show="editingClient"
+						ng-model="client.email" /></td>
+					<td class="key"><span>#label("PHONE")</span></td>
+					<td class="value"><span ng-hide="editingClient">{{client.cellphoneNo}}</span><input class="ng-hide" ng-show="editingClient"
+						ng-model="client.cellphoneNo" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("HOMEPHONE")</span></td>
+					<td class="value"><span ng-hide="editingClient">{{client.homephoneNo}}</span><input class="ng-hide" ng-show="editingClient"
+						ng-model="client.homephoneNo" /></td>
+					<td class="key"><span>#label("REGION")</span></td>
+					<td class="value"><span ng-hide="editingClient">{{client.region}}</span><input class="ng-hide" ng-show="editingClient"
+						ng-model="client.region" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("EMERGENCY_CONTACT")</span></td>
+					<td class="value"><span ng-hide="editingClient">{{client.emergencyContact}}</span><input class="ng-hide" ng-show="editingClient"
+						ng-model="client.emergencyContact" /></td>
+					<td class="key"><span>#label("EMERGENCY_CONTACT_PHONE")</span></td>
+					<td class="value"><span ng-hide="editingClient">{{client.emergencyContactNo}}</span><input class="ng-hide" ng-show="editingClient"
+						ng-model="client.emergencyContactNo" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("ADDRESS")</span></td>
+					<td class="value"><span ng-hide="editingClient">{{client.address}}</span><input class="ng-hide" ng-show="editingClient"
+						ng-model="client.address" /></td>
+					<td class="key"><span>#label("REGISTRY_DATE")</span></td>
+					<td class="value"><span>{{client.registryDate|date:'yyyy-MM-dd'}}</span></td>
+				</tr>
+
+			</table>
+		</div>
+	</div>
+	<div class="block">
+		<div class="blockHeader">
+			<img src="/static/images/icon/green_block.png" /> <span>#label("HEALTH_INFORMATION")</span> <a style="float: right;"
+				href="javascript:void(0)" ng-click="saveHealthInfo()" ng-show="editingHealthInfo" class="ng-hide"><span>#button("SAVE")</span></a> <a
+				href="javascript:void(0)" ng-hide="editingHealthInfo" ng-click="editingHealthInfo=true" style="float: right;"><img
+				src="/static/images/icon/edit2.png" /></a>
+		</div>
+		<div class="blockContent ng-hide" ng-show="client.healthInformation" style="padding: 15px 20px; text-align: center;">
+			<table>
+				<tr>
+					<td class="key"><span>#label("HEALTH_STATUS")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.healthStatus}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.healthStatus" /></td>
+					<td class="key"><span>#label("HEARING_STATUS")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.hearingStatus}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.hearingStatus" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("VISUAL_ACUITY")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.visualAcuity}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.visualAcuity" /></td>
+					<td class="key"><span>#label("SELF_CARE_STATUS")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.selfCareStatus}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.selfCareStatus" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("INTELLECTUAL_CONDITION")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.intellectualCondition}}</span><input
+						class="ng-hide" ng-show="editingHealthInfo" ng-model="client.healthInformation.intellectualCondition" /></td>
+					<td class="key"><span>#label("ACTION_CAPACITY")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.actionCapacity}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.actionCapacity" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("TRIP_MODE")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.tripMode}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.tripMode" /></td>
+					<td class="key"><span>#label("MEDICAL_HISTORY")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.medicalHistory}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.medicalHistory" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("HEIGHT")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.height}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.height" /></td>
+					<td class="key"><span>#label("WEIGHT")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.weight}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.weight" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("BLOOD_TYPE")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.bloodType}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.bloodType" /></td>
+					<td class="key"><span>#label("BLOOD_PRESSURE")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.bloodPressure}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.bloodPressure" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("BLOOD_SUGAR")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.bloodSugar}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.bloodSugar" /></td>
+					<td class="key"><span>#label("BLOOD_FAT")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.bloodFat}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.bloodFat" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("HEART_RATE")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.heartRate}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.heartRate" /></td>
+					<td class="key"><span>#label("PULSE")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.pulse}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.pulse" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("RECENT_MEDICAL")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.recentMedical}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.recentMedical" /></td>
+					<td class="key"><span>#label("ALLERGEN")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.allergen}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.allergen" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("OTHER")</span></td>
+					<td class="value"><span ng-hide="editingHealthInfo">{{client.healthInformation.other}}</span><input class="ng-hide"
+						ng-show="editingHealthInfo" ng-model="client.healthInformation.other" /></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="blockHeader">
+			<img src="/static/images/icon/green_block.png" /> <span>#label("INTEREST")</span> <a style="float: right;" href="javascript:void(0)"
+				ng-click="saveInterest()" ng-show="editingInterest" class="ng-hide"><span>#button("SAVE")</span></a> <a href="javascript:void(0)"
+				ng-hide="editingInterest" ng-click="editingInterest=true" style="float: right;"><img src="/static/images/icon/edit2.png" /></a>
+		</div>
+		<div class="blockContent ng-hide" ng-show="client.interest" style="padding: 15px 20px; text-align: center;">
+			<table>
+				<tr>
+					<td class="key"><span>#label("LITERATURE")</span></td>
+					<td class="value"><span ng-hide="editingInterest">{{client.interest.literature}}</span><input class="ng-hide"
+						ng-show="editingInterest" ng-model="client.interest.literature" /></td>
+					<td class="key"><span>#label("SPORT")</span></td>
+					<td class="value"><span ng-hide="editingInterest">{{client.interest.sport}}</span><input class="ng-hide" ng-show="editingInterest"
+						ng-model="client.interest.sport" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("OTHER_INTEREST")</span></td>
+					<td class="value"><span ng-hide="editingInterest">{{client.interest.otherInterest}}</span><input class="ng-hide"
+						ng-show="editingInterest" ng-model="client.interest.otherInterest" /></td>
+					<td class="key"><span>#label("CLUB")</span></td>
+					<td class="value"><span ng-hide="editingInterest">{{client.interest.club}}</span><input class="ng-hide" ng-show="editingInterest"
+						ng-model="client.interest.club" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("CLUB_ACTIVITY")</span></td>
+					<td class="value"><span ng-hide="editingInterest">{{client.interest.clubActivity}}</span><input class="ng-hide"
+						ng-show="editingInterest" ng-model="client.interest.clubActivity" /></td>
+					<td class="key"><span>#label("CLUB_ROLE")</span></td>
+					<td class="value"><span ng-hide="editingInterest">{{client.interest.clubRole}}</span><input class="ng-hide"
+						ng-show="editingInterest" ng-model="client.interest.clubRole" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("OTHER")</span></td>
+					<td class="value"><span ng-hide="editingInterest">{{client.interest.other}}</span><input class="ng-hide" ng-show="editingInterest"
+						ng-model="client.interest.other" /></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="blockHeader">
+			<img src="/static/images/icon/green_block.png" /> <span>#label("OTHER")</span> <a style="float: right;" href="javascript:void(0)"
+				ng-click="saveOther()" ng-show="editingOther" class="ng-hide"><span>#button("SAVE")</span></a> <a href="javascript:void(0)"
+				ng-hide="editingOther" ng-click="editingOther=true" style="float: right;"><img src="/static/images/icon/edit2.png" /></a>
+		</div>
+		<div class="blockContent ng-hide" ng-show="client.other" style="padding: 15px 20px; text-align: center;">
+			<table>
+				<tr>
+					<td class="key"><span>#label("NATIONALITY")</span></td>
+					<td class="value"><span ng-hide="editingOther">{{client.other.nationality}}</span><input class="ng-hide" ng-show="editingOther"
+						ng-model="client.other.nationality" /></td>
+					<td class="key"><span>#label("EDUCATION")</span></td>
+					<td class="value"><span ng-hide="editingOther">{{client.other.education}}</span><input class="ng-hide" ng-show="editingOther"
+						ng-model="client.other.education" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("FAITH")</span></td>
+					<td class="value"><span ng-hide="editingOther">{{client.other.faith}}</span><input class="ng-hide" ng-show="editingOther"
+						ng-model="client.other.faith" /></td>
+					<td class="key"><span>#label("PLACE_OF_BIRTH")</span></td>
+					<td class="value"><span ng-hide="editingOther">{{client.other.placeOfBirth}}</span><input class="ng-hide" ng-show="editingOther"
+						ng-model="client.other.placeOfBirth" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("OTHER")</span></td>
+					<td class="value"><span ng-hide="editingOther">{{client.other.other}}</span><input class="ng-hide" ng-show="editingOther"
+						ng-model="client.other.other" /></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/user/userinfoEdit.js"></script>

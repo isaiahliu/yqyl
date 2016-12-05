@@ -1,0 +1,43 @@
+div.appraise {
+	margin-left: 200px;
+}
+
+div.appraise div.block {
+	width: 1000px;
+	border: 1px solid #cccccc;
+}
+
+div.appraise div.detail {
+	display: inline-block;
+	height: 100px;
+	margin-left: 30px;
+}
+
+div.appraise div.detail div {
+	height: 30px;
+}
+
+div.appraise div.detail div span.key {
+	display: inline-block;
+	width: 80px;
+}
+
+div.appraise div.appraiseLine {
+	margin-top: 10px;
+}
+
+div.appraise div.appraiseLine span.key {
+	width: 80px;
+	display: inline-block;
+}
+
+div.appraise div.appraiseLine img {
+	width: 21px;
+	height: 21px;
+}
+
+div.appraise button {
+	width: 100px;
+	height: 30px;
+	border-radius: 5px;
+}

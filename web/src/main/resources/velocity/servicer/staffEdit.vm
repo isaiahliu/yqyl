@@ -1,0 +1,66 @@
+#parse("/velocity/servicer/navigation.vm")
+
+<link rel="stylesheet"
+	href="/static/css/business/servicer/staffEdit.css"></link>
+<script type="text/javascript">
+	layoutApp.value("staffId", ${staffId});
+</script>
+<div class="staffEdit">
+	<div class="left">
+		<div class="image">
+			<img ng-src="{{imageUrl}}" />
+		</div>
+		<input style="margin-left: 50px" type="file" class="ng-hide"
+			ng-show="staff.photo" custom-on-change="selectImage" />
+		<button ng-click="uploadPhoto()" class="ng-hide" ng-show="staff.photo"
+			ng-if="staff.photo">#button("UPLOAD_PHOTO")</button>
+	</div>
+	<div class="right">
+		<div class="ng-hide" ng-show="staff.id" ng-if="staff.id">
+			<span>#label("ID")</span><span>{{staff.id}}</span>
+		</div>
+		<div>
+			<span>#label("NAME")</span><input ng-model="staff.name" />
+		</div>
+		<div>
+			<span>#label("DOB")</span><input type="text" placeholder="YYYY/MM/DD"
+				ui-date="dateOptions" ng-model="staff.dob" />
+		</div>
+		<div>
+			<span>#label("PHONE_NO")</span><input
+				ng-model="staff.phoneNo" />
+		</div>
+		<div>
+			<span>#label("CREDENTIAL_NO")</span><input
+				ng-model="staff.identityCard" />
+		</div>
+		<div>
+			<span>#label("SERVICE_STAFF_RATE")</span><input
+				ng-model="staff.comment" />
+		</div>
+		<div>
+			<span>#label("SERVICE_CATEGORY")</span><span><div
+					class="ng-hide categoryTree" ng-show="categories" ui-tree>
+					<ol class="root" ui-tree-nodes="" ng-model="categories">
+						<li ng-repeat="category in categories" ui-tree-node>
+							<div ui-tree-handle>{{category.name}}</div>
+							<ol ui-tree-nodes="" ng-model="category.serviceSubCategories">
+								<li ng-repeat="subCategory in category.serviceSubCategories"
+									ui-tree-node>
+									<div ui-tree-handle>
+										<input type="checkbox" ng-model="subCategory.checked" /> <span>{{subCategory.name}}</span>
+									</div>
+								</li>
+							</ol>
+						</li>
+					</ol>
+				</div></span>
+		</div>
+		<div>
+			<button ng-click="apply()">#button("APPLY")</button>
+			<button ng-click="back()">#button("BACK")</button>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/servicer/staffEdit.js"></script>

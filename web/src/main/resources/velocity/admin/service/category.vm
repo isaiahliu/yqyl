@@ -1,0 +1,40 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet"
+	href="/static/css/business/admin/service/category.css"></link>
+
+<div class="category">
+	<div class="title">#label("SERVICE_CATEGORY_MANAGEMENT")</div>
+	<div class="filter">
+		<span style="margin-right: 20px">#label("CATEGORY_NAME")</span><input
+			ng-model="name" style="width: 300px" />
+		<button style="margin-left: 10px" ng-click="search()">#button("SEARCH")</button>
+		<button style="margin-left: 10px" ng-click="edit()">#button("EDIT_SERVICE_CATEGORY")</button>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<td align="center"><span>#label("INDEX")</span></td>
+				<td align="center"><span>#label("SERVICE_CATEGORY_TYPE")</span></td>
+				<td align="center"><span>#label("SERVICE_SUB_CATEGORY_TYPE")</span></td>
+				<td align="center"><span>#label("STATUS")</span></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="ng-hide" ng-show="categories"
+				ng-repeat="category in categories">
+				<td align="center"><span>{{category.id}}</span></td>
+				<td align="center"><a
+					href="/admin/service/category/edit/{{category.id}}"><span
+						ng-class="{'D': 'disabledCategory'}[category.status.code]">{{category.name}}</span></a></td>
+				<td align="center"><span
+					ng-class="{'D': 'disabledCategory'}[subCategory.status.code]"
+					ng-repeat="subCategory in category.serviceSubCategories">{{subCategory.name}}
+				</span></td>
+				<td align="center"><span>{{category.status.message}}</span></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<script src="/static/js/business/admin/service/category.js"></script>

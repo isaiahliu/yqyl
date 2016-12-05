@@ -1,0 +1,21 @@
+div.auditing {
+	padding: 10px 0px 0px 280px;
+}
+
+div.auditing div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.auditing table {
+	margin-top: 20px;
+	width: 900px;
+}
+
+div.auditing table thead td {
+	background-color: rgba(215, 215, 215, 1)
+}
+
+div.auditing table td {
+	border: 1px solid;
+}

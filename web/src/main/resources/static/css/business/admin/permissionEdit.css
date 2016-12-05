@@ -1,0 +1,24 @@
+div.permissionEdit {
+	padding: 10px 0px 0px 280px;
+}
+
+div.permissionEdit div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.permissionEdit div.accessrightTree {
+	margin-top: 5px;
+	min-width: 200px;
+	display: inline-block;
+	border: solid 1px rgba(215, 215, 215, 1);
+	padding: 5px;
+}
+
+div.permissionEdit div.accessrightTree ol.root {
+	padding-left: 0px;
+}
+
+div.permissionEdit div.accessrightTree ol li {
+	list-style: none;
+}

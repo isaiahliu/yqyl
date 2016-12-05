@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="/static/css/business/service/publish.css"></link>
+
+<div class="publish">
+	<table>
+		<tbody>
+			<tr>
+				<td align="center">#label("TIME")</td>
+				<td><input style="min-width: 100px;" type="text"
+					placeholder="YYYY/MM/DD" ui-date="dateOptions"
+					ng-model="serviceDate" /> <select ng-model="serviceHour"
+					ng-options="hour as hour for hour in hours"></select> <span>#label("OCLOCK")</span></td>
+			</tr>
+			<tr>
+				<td align="center">#label("SERVICE_COMMENT")</td>
+				<td><textarea ng-model="comment"></textarea></td>
+			</tr>
+			<tr>
+				<td align="center">#label("SERVICE_ADDRESS")</td>
+				<td><input ng-model="address" /></td>
+			</tr>
+			<tr>
+				<td align="center">#label("PRICE")</td>
+				<td><input ng-model="price" /></td>
+			</tr>
+			<tr>
+				<td align="center">#label("CONTACT_METHOD")</td>
+				<td><input ng-model="phone" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><div class="apply" align="center">
+						<button ng-click="apply()">#button("APPLY")</button>
+					</div></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<script src="/static/js/business/service/publish.js"></script>

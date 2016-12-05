@@ -1,0 +1,109 @@
+#parse("/velocity/servicer/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/servicer/orderEdit.css"></link>
+
+<script type="text/javascript">
+	layoutApp.value("serviceOrderId", ${serviceOrderId});
+</script>
+
+<div class="orderEdit">
+	<table>
+		<tr>
+			<td align="center" class="key"><span>#label("SERVICE_ORDER_ID")</span></td>
+			<td align="center" class="value"><div class="ng-hide" ng-show="order">
+					<span>{{order.id}}</span>
+				</div></td>
+		</tr>
+		<tr>
+			<td align="center" class="key"><span>#label("ASSIGNMENT")</span></td>
+			<td align="center" class="value"><div class="ng-hide" ng-show="order">
+					<div class="ng-hide" ng-hide="order.status.code=='U'||order.status.code=='G'">
+						<span>#label("ASSIGNED")</span>
+					</div>
+					<div class="ng-hide" ng-show="order.status.code=='U'||order.status.code=='G'">
+						<span>#label("NOT_ASSIGNED")</span>
+					</div>
+				</div></td>
+		</tr>
+		<tr>
+			<td align="center" class="key"><span>#label("SERVICE_RECEIVER_NAME")</span></td>
+			<td align="center" class="value"><div class="ng-hide" ng-show="order">
+					<span>{{order.username}}</span>
+				</div></td>
+		</tr>
+		<tr>
+			<td align="center" class="key"><span>#label("SERVICE_TIME")</span></td>
+			<td align="center" class="value"><div class="ng-hide" ng-show="order">
+					<div ng-show="order.status.code=='P'||order.status.code=='S'">
+						<span>{{order.serviceDate | date:'yyyy-MM-dd'}} {{order.serviceHour}}:00</span>
+					</div>
+					<div ng-hide="order.status.code=='P'||order.status.code=='S'">
+						<input style="width: 110px;" type="text" placeholder="YYYY/MM/DD" ui-date="dateOptions" ng-model="order.serviceDate" /> <select
+							ng-model="order.serviceHour" ng-options="hour as hour for hour in hours"></select><span>#label("OCLOCK")</span>
+					</div>
+				</div>
+		</tr>
+		<tr>
+			<td align="center" class="key"><span>#label("SERVICE_ADDRESS")</span></td>
+			<td align="center" class="value">
+				<div class="ng-hide" ng-show="order">
+					<span ng-show="order.status.code=='P'||order.status.code=='S'">{{order.address}}</span> <input
+						ng-hide="order.status.code=='P'||order.status.code=='S'" ng-model="order.address" />
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" class="key"><span>#label("SERVICE_CATEGORY")</span></td>
+			<td align="center" class="value">
+				<div class="ng-hide" ng-show="order">
+					<span ng-hide="order.status.code=='G'">{{order.serviceInfo.name}}</span> <select style="min-width: 180px;"
+						ng-show="order.status.code=='G'" ng-model="order.serviceInfo" ng-options="service.name for service in services"></select>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" class="key"><span>#label("PHONE_NO")</span></td>
+			<td align="center" class="value"><div class="ng-hide" ng-show="order">
+					<span ng-show="order.status.code=='P'||order.status.code=='S'">{{order.phone}}</span><input
+						ng-hide="order.status.code=='P'||order.status.code=='S'" ng-model="order.phone" />
+				</div></td>
+		</tr>
+		<tr>
+			<td align="center" class="key"><span>#label("PRICE")</span></td>
+			<td align="center" class="value"><div class="ng-hide" ng-show="order">
+					<span ng-show="order.status.code=='P'||order.status.code=='S'">{{order.price}}</span><input
+						ng-hide="order.paymentMethod.code=='F'||order.status.code=='P'||order.status.code=='S'" ng-model="order.price" />
+				</div></td>
+		</tr>
+		<tr class="ng-hide" ng-show="order.status.code=='I'||order.status.code=='P'||order.status.code=='S'">
+			<td align="center" class="key"><span>#label("RECEIPT")</span></td>
+			<td align="center" class="value"><div class="ng-hide" ng-show="order">
+					<span ng-show="order.receipt">#label("RECEIPT_UPLOADED")</span><span ng-hide="order.receipt">#label("RECEIPT_NOT_UPLOADED")</span>
+				</div></td>
+		</tr>
+		<tr class="ng-hide" ng-show="order.status.code=='I'||order.status.code=='P'||order.status.code=='S'">
+			<td align="center" class="key"><span>#label("RECEIPT_NO")</span></td>
+			<td align="center" class="value"><div class="ng-hide" ng-show="order">
+					<input />
+				</div></td>
+		</tr>
+		<tr>
+			<td align="center" class="key"><span>#label("STATUS")</span></td>
+			<td align="center" class="value"><div class="ng-hide" ng-show="order">
+					<span>{{order.status.message}}</span>
+				</div></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="border: none;">
+				<div style="text-align: center;">
+					<button class="ng-hide" ng-show="order.status.code!='P'&&order.status.code!='S'" ng-if="order.status.code!='P'&&order.status.code!='S'"
+						ng-click="apply()">#button("APPLY")</button>
+					<button ng-click="back()">#button("BACK")</button>
+				</div>
+			</td>
+		</tr>
+	</table>
+
+</div>
+
+<script src="/static/js/business/servicer/orderEdit.js"></script>

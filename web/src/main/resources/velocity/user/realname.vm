@@ -1,0 +1,58 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/realname.css"></link>
+
+<script type="text/javascript">
+	layoutApp.value("clientId", #if(${clientId})${clientId}#else 0 #end);
+</script>
+
+<div class="realname">
+	<div style="padding: 15px;" class="block">
+		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("USER_INFO")</span> <a style="float: right;"
+			href="/user/userinfo"><span>#label("BACK_TO_LIST")</span></a>
+	</div>
+	<div style="padding: 15px;" class="block">
+		<img src="/static/images/icon/green_block.png" style="width: 15px; height: 15px; margin-bottom: 2px;"> <span>#label("REALNAME_VERIFY")</span>
+	</div>
+	<div style="padding: 15px 20px; text-align: center;" class="block ng-hide" ng-show="client">
+		<table>
+			<tbody>
+				<tr>
+					<td class="key"><span>#label("NAME")</span></td>
+					<td class="value"><span class="ng-hide" ng-show="verified">{{client.name}}</span> <input class="ng-hide" ng-show="!verified"
+						ng-model="client.name" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("CREDENTIAL_TYPE")</span></td>
+					<td class="value"><span class="ng-hide" ng-show="verified">{{client.credentialType.message}}</span><select class="ng-hide"
+						ng-show="!verified" ng-model="client.credentialType.code"
+						ng-options="credentialType.code as credentialType.message for credentialType in credentialTypes"></select></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("CREDENTIAL_NO")</span></td>
+					<td class="value"><span class="ng-hide" ng-show="verified">{{client.identityCard}}</span><input class="ng-hide"
+						ng-show="!verified" ng-model="client.identityCard" /></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("UPLOAD_CREDENTIAL_COPY")</span></td>
+					<td class="value"><div>
+							<img class="ng-hide" ng-show="client.identityCardCopy" ng-src="{{credentialCopyUrl}}" />
+						</div>
+						<div>
+							<input style="display: inline-block; width: 220px;" type="file" ng-show="!verified" custom-on-change="selectCredentialCopy" />
+							<button style="display: inline-block;" ng-show="!verified" ng-click="upload()">#button("UPLOAD")</button>
+						</div></td>
+				</tr>
+				<tr>
+					<td class="key"><span>#label("VERIFY_STATUS")</span></td>
+					<td class="value"><span class="ng-hide" ng-show="verified">#label("VERIFIED")</span><span class="ng-hide" ng-hide="verified">#label("NOT_VERIFIED")</span></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="buttons ng-hide" ng-show="!verified">
+			<button ng-click="apply()">#button("APPLY")</button>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/user/realname.js"></script>

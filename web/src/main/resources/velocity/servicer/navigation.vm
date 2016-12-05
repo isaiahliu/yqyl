@@ -1,0 +1,56 @@
+#if($security.hasAccessRightByName("SUPPLIER", false))
+#parse("/velocity/servicer/requirementCatcher.vm") #end
+
+<link rel="stylesheet"
+	href="/static/css/business/servicer/navigation.css"></link>
+
+<div class="subNavBar navBar" ng-controller="subNavigatorController">
+	<ul>
+		<li><div style="height: 80px; border-bottom: 1px solid #cccccc;">
+				<span style="line-height: 80px; color: #0a7ef9; font-size: 20px;">${authentication.token.username}
+					#label("SERVICER")</span>
+			</div></li>
+		<li><a href="/servicer/info">
+				<div class="navBarItem">
+					<span>#button("SERVICER_INFO")</span>
+				</div>
+		</a></li> #if($security.hasAccessRightByName("SUPPLIER", false))
+		<li><a href="/servicer/service">
+				<div class="navBarItem #if($currentPage=='SERVICE')selected #end">
+					<span>#button("SERVICER_SERVICE")</span>
+				</div>
+		</a></li>
+		<li><a href="/servicer/order"><div
+					class="navBarItem #if($currentPage=='ORDER')selected #end">
+					<span>#button("SERVICER_ORDER")</span>
+				</div></a></li>
+		<li><a href="/servicer/staff"><div
+					class="navBarItem #if($currentPage=='STAFF')selected #end">
+					<span>#button("SERVICER_STAFF")</span>
+				</div></a></li>
+		<li><a href="/servicer/transaction"><div
+					class="navBarItem #if($currentPage=='TRANSACTION')selected #end">
+					<span>#button("SERVICER_TRANSACTION")</span>
+				</div></a></li>
+		<li><a href="/servicer/training"><div
+					class="navBarItem #if($currentPage=='TRAINING')selected #end">
+					<span>#button("SERVICER_TRAINING")</span>
+				</div></a></li> #end
+		<li><a href="/servicer/auditing">
+				<div class="navBarItem">
+					<span>#button("AUDITING_SEARCH")</span>
+				</div>
+		</a></li>
+	</ul>
+	<ul class="popList infoPopList ng-hide" ng-mouseenter="showInfo=true"
+		ng-mouseleave="showInfo=false" ng-show="showInfo">
+		<li><a href="/servicer/info"><div>
+					<span>#button("SERVICER_GENERAL_INFO")</span>
+				</div></a></li>
+		<li><a href="/servicer/info/material"><div>
+					<span>#button("SERVICER_APTITUDE")</span>
+				</div></a></li>
+	</ul>
+</div>
+
+<script src="/static/js/business/servicer/navigation.js"></script>

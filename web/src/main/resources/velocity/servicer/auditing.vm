@@ -1,0 +1,27 @@
+#parse("/velocity/servicer/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/servicer/auditing.css"></link>
+
+<div class="auditing">
+	<div class="title">#label("SERVICE_SUPPLIER_AUDITING_SEARCHING")</div>
+	<table>
+		<thead>
+			<tr>
+				<td align="center"><span>#label("MODIFY_TIME")</span></td>
+				<td align="center"><span>#label("AUDITING_TYPE")</span></td>
+				<td align="center"><span>#label("OPERATOR")</span></td>
+				<td align="center"><span>#label("COMMENT")</span></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="ng-hide" ng-show="auditings" ng-repeat="auditing in auditings">
+				<td align="center"><span>{{auditing.timestamp|date:"yyyy/MM/dd HH:mm:ss"}}</span></td>
+				<td align="center"><span>{{auditing.type.message}}</span></td>
+				<td align="center"><span>{{auditing.operator}}</span></td>
+				<td align="center"><span>{{auditing.comment}}</span></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<script src="/static/js/business/servicer/auditing.js"></script>

@@ -1,0 +1,33 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/admin/permissionEdit.css"></link>
+
+<script type="text/javascript">
+	layoutApp.value("userId",#if(${userId}) ${userId} #else 0 #end);
+</script>
+
+<script type="text/ng-template" id="tree_render">
+<div ui-tree-handle>
+	<input type="checkbox" ng-model="accessright.checked" ng-change="change(accessright, false)" ng-hide="accessright.hide"/>
+	<input type="checkbox" disabled="disabled" checked="checked" ng-show="accessright.hide"/>
+	<span>{{accessright.message}}</span>
+</div>
+<ol ui-tree-nodes="" ng-model="accessright.children" >
+	<li ng-repeat="accessright in accessright.children" ui-tree-node ng-include="'tree_render'" ng-readonly="$parent.accessright.checked">
+	</li>
+</ol>
+</script>
+<div class="permissionEdit">
+	<div class="title">#label("PERMISSION_MANAGEMENT")</div>
+	<div class="ng-hide accessrightTree" ng-show="accessrights" ui-tree>
+		<ol class="root" ui-tree-nodes="" ng-model="accessrights">
+			<li ng-repeat="accessright in accessrights" ui-tree-node ng-include="'tree_render'"></li>
+		</ol>
+	</div>
+	<div style="margin-top: 10px;">
+		<button class="ng-hide" ng-show="accessrights" ng-click="apply()">#button("APPLY")</button>
+		<button ng-click="back()">#button("CANCEL")</button>
+	</div>
+</div>
+
+<script src="/static/js/business/admin/permissionEdit.js"></script>

@@ -1,0 +1,7 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/admin/news.css"></link>
+
+<div class="news">news</div>
+
+<script src="/static/js/business/admin/news.js"></script>

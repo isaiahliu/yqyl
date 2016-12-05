@@ -1,0 +1,52 @@
+div.userinfoEdit {
+	margin-left: 200px;
+}
+
+div.userinfoEdit div.block {
+	width: 1000px;
+	border: 1px solid #cccccc;
+}
+
+div.userinfoEdit div.block div.blockHeader {
+	padding: 10px 15px;
+	border-bottom: solid 1px #dddddd;
+	text-align: left;
+}
+
+div.userinfoEdit div.block div.blockHeader img {
+	height: 14px;
+	width: 14px;
+	margin-bottom: 3px;
+}
+
+div.userinfoEdit div.block div.blockContent table {
+	width: 800px;
+	margin: auto;
+}
+
+div.userinfoEdit div.block div.blockContent table td {
+	padding: 5px 0;
+}
+
+div.userinfoEdit div.block div.blockContent table td.key {
+	width: 120px;
+	text-align: right;
+	font-weight: bold;
+}
+
+div.userinfoEdit div.block div.blockContent table  td.value {
+	padding-left: 10px;
+	width: 280px;
+}
+
+div.userinfoEdit div.block div.blockContent table td span {
+	font-size: 14px;
+	line-height: 29px;
+}
+
+div.userinfoEdit div.block div.blockContent table td input, div.userinfoEdit div.block div.blockContent table td select
+	{
+	line-height: 23px;
+	font-size: 14px;
+	width: 260px;
+}

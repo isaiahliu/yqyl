@@ -1,0 +1,167 @@
+div.search {
+	width: 1200px;
+	overflow: hidden;
+}
+
+div.filter {
+	width: 220;
+	border: 1px solid #cccccc;
+	float: left;
+}
+
+div.filter ul {
+	padding: 0;
+	margin-bottom: 0;
+}
+
+div.filter li {
+	list-style-type: none;
+}
+
+div.filter li.category div {
+	height: 38px;
+	background: #eeeeee;
+	vertical-align: middle;
+	line-height: 38px;
+}
+
+div.filter li.category div img {
+	height: 24px;
+	width: 24px;
+	margin: 7px;
+}
+
+div.filter li.category div span {
+	color: #333333;
+	font-size: 14px;
+}
+
+div.filter li.subCategory {
+	width: 220;
+	padding: 10px 20px 10px 25px;
+}
+
+div.filter li.subCategory div {
+	display: inline-block;
+	margin: 5px;
+}
+
+div.filter li.subCategory div a span {
+	color: #333333;
+}
+
+div.services {
+	float: left;
+	margin-left: 10px;
+	width: 970px;
+	min-height: 200px;
+	border: 1px #cccccc solid;
+	padding: 20px;
+}
+
+div.services div.bar table {
+	width: 100%;
+}
+
+div.services div.bar td div {
+	height: 35px;
+	line-height: 35px;
+}
+
+div.services div.bar td.barItem div {
+	border: 1px #cccccc solid;
+	width: 110px;
+}
+
+div.services div.bar td.barItem {
+	width: 110px;
+}
+
+div.services div.bar td span {
+	color: #666666;
+}
+
+div.services div.result {
+	padding: 50px 10px 0 10px;
+}
+
+div.services div.image {
+	border: 1px solid #cccccc;
+}
+
+div.services div.result div.service {
+	display: inline-block;
+	margin: 0px 20px 20px 0px;
+}
+
+div.services div.result div.orderNow {
+	text-align: center;
+	height: 32px;
+	line-height: 32px;
+	background: #fd6a15;
+}
+
+div.services div.result div.orderNow span {
+	color: #ffffff;
+	font: 14px;
+	display: block;
+}
+
+div.services div.result div.service img {
+	height: 160px;
+	width: 280px;
+	border: 0px;
+}
+
+div.services div.result div.service div.description {
+	width: 280px;
+}
+
+div.services div.result div.service div.description div.line {
+	text-overflow: ellipsis;
+	height: 25px;
+	margin-bottom: 5px;
+}
+
+div.services div.result div.service div.description div.line span {
+	line-height: 25px;
+	max-width: 150px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+div.services div.result div.service div.description div.line span.key {
+	color: #333333;
+	font-size: 14px;
+}
+
+div.services div.result div.service div.description div.line span.value
+	{
+	color: #666666;
+	font-size: 14px;
+}
+
+div.services div.result div.service div.description div.line span.price
+	{
+	color: #fd6a15;
+	font-size: 14px;
+}
+
+div.services div.result div.service div.description div.appraise {
+	vertical-align: middle;
+}
+
+div.services div.result div.service div.description div.appraise img {
+	height: 20px;
+	width: 20px;
+	margin-bottom: 5px;
+}
+
+div.services div.result div.service div.description div.name span {
+	color: #4a9900;
+	font-size: 18px;
+}
+
+div.services div.paging {
+	text-align: center;
+}

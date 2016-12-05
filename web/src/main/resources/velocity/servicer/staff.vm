@@ -1,0 +1,62 @@
+#parse("/velocity/servicer/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/servicer/staff.css"></link>
+
+<div class="staff">
+	<div class="title">#label("SERVICE_SUPPLIER_STAFF_MANAGEMENT")</div>
+	<div class="filter">
+		<span>#label("STAFF_ID")<input ng-model="filterData.id"
+			style="width: 80px;" /></span> <span>#label("STAFF_NAME")<input
+			ng-model="filterData.name" style="width: 80px;" /></span>
+		<button ng-click="searchStaffs()">#button("SEARCH")</button>
+		<button ng-click="newStaff()">#button("NEW_STAFF")</button>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<td align="center"><span>#label("ID")</span></td>
+				<td align="center"><span>#label("PHOTO")</span></td>
+				<td align="center"><span>#label("NAME")</span></td>
+				<td align="center"><span>#label("PHONE_NO")</span></td>
+				<td align="center"><span>#label("SERVICE_STAFF_RATE")</span></td>
+				<td align="center"><span>#label("AGE")</span></td>
+				<td align="center"><span>#label("CREDENTIAL_NO")</span></td>
+				<td align="center"><span>#label("SERVICE_CATEGORY")</span></td>
+				<td align="center"><span>#label("OPERATION")</span></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="ng-hide" ng-show="staffs" ng-repeat="staff in staffs">
+				<td align="center"><a
+					ng-href="/servicer/staff/edit/{{staff.id}}"><span>{{staff.id}}</span></a></td>
+				<td align="center"><img
+					ng-src="/ajax/content/image/{{staff.photo}}" /></td>
+				<td align="center"><span>{{staff.name}}</span></td>
+				<td align="center"><span>{{staff.phoneNo}}</span></td>
+				<td align="center"><span>{{staff.comment}}</span></td>
+				<td align="center"><span>{{staff.age}}</span></td>
+				<td align="center"><span>{{staff.identityCard}}</span></td>
+				<td align="center"><span
+					ng-repeat="category in staff.serviceCategories">{{category.name}}<br /></span></td>
+				<td align="center"><button ng-show="staff.status.code == 'A'"
+						ng-click="$parent.away(staff)"
+						style="font-size: small; width: 50px; height: 30px; min-width: 50px;">#button("AWAY_FROM_WORK")</button>
+					<button ng-show="staff.status.code == 'F'"
+						ng-click="$parent.back(staff)"
+						style="font-size: small; width: 50px; height: 30px; min-width: 50px;">#button("BACK_TO_WORK")</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="paging" style="text-align: center;">
+		<pagination total-items="pagingData.itemCount"
+			ng-model="pagingData.pageIndex" max-size="10"
+			items-per-page="pagingData.pageSize" class="pagination-sm"
+			boundary-links="true" ng-change="searchStaffs()"
+			first-text='#label("FIRST_PAGE")' last-text='#label("LAST_PAGE")'
+			previous-text='#label("PREVIOUS_PAGE")'
+			next-text='#label("NEXT_PAGE")'></pagination>
+	</div>
+</div>
+
+<script src="/static/js/business/servicer/staff.js"></script>

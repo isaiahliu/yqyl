@@ -1,0 +1,7 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/yiquan/point.css"></link>
+
+<div class="point">point</div>
+
+<script src="/static/js/business/user/yiquan/point.js"></script>

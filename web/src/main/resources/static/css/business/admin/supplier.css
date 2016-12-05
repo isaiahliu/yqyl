@@ -1,0 +1,32 @@
+div.supplier {
+	padding: 10px 0px 0px 280px;
+}
+
+div.supplier div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.supplier div.filter span {
+	display: inline-block;
+	margin-right: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.supplier div.filter input, div.supplier div.filter select {
+	margin-left: 5px;
+}
+
+div.supplier table {
+	margin-top: 20px;
+	width: 900px;
+}
+
+div.supplier table thead td {
+	background-color: rgba(215, 215, 215, 1)
+}
+
+div.supplier table td {
+	border: 1px solid;
+}

@@ -1,0 +1,135 @@
+div.info {
+	
+}
+
+div.image {
+	width: 250px;
+	height: 300px;
+	float: left;
+}
+
+div.image img {
+	background-color: white;
+	height: 250px;
+	width: 250px;
+}
+
+div.image a.smallImage {
+	
+}
+
+div.image a.smallImage img {
+	height: 40px;
+	width: 40px;
+	margin: 5px;
+}
+
+div.image div.imageBar {
+	height: 50px;
+}
+
+div.card {
+	margin-left: 270px;
+	height: 300px;
+}
+
+div.card div.title {
+	font-size: 22px;
+	font-weight: bold;
+}
+
+div.card div.cardItem {
+	margin-top: 15px;
+}
+
+div.card div.cardItem span.key {
+	margin-right: 16px;
+}
+
+div.card div.cardItem span.value {
+	color: #fd6a15;
+}
+
+div.card div.appraise img {
+	width: 23px;
+	height: 23px;
+}
+
+div.card div.category {
+	height: 50px;
+}
+
+div.card button {
+	margin-top: 15px;
+	width: 120px;
+	height: 40px;
+	font-size: 16px;
+	border-radius: 5px;
+}
+
+div.detail {
+	border: solid 1px #cccccc;
+}
+
+div.tab {
+	height: 60px;
+}
+
+div.detail div.tab ul {
+	list-style-type: none;
+	padding-left: 0px;
+	margin: 0;
+}
+
+div.detail div.tab ul li {
+	float: left;
+}
+
+div.detail div.tab ul li a {
+	text-decoration: none;
+}
+
+div.detail div.tab ul li div {
+	text-align: center;
+	height: 50px;
+	width: 200px;
+	line-height: 50px;
+	border: solid 1px #cccccc;
+	color: black;
+}
+
+div.detail div.tab ul li.selected {
+	background-color: #fd6a15;
+}
+
+div.detail div.tab ul li.selected span{
+	color: #ffffff;
+}
+
+div.detail div.tabPage {
+	padding: 20px 10px;
+	min-height: 300px;
+}
+
+div.detail div.tabPage div.title {
+	font-size: large;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+div.detail div.tabPage div.paging {
+	text-align: center;
+}
+
+div.detail div.tabPage table {
+	margin: auto;
+}
+
+div.detail div.tabPage table td {
+	width: 330px;
+	border: solid 1px;
+}
+
+div.detail div.tabPage table thead td {
+	background-color: rgba(215, 215, 215, 1);
+}

@@ -1,0 +1,26 @@
+div.footer div.navBar span {
+	color: black;
+	line-height: 80px;
+}
+
+div.footer div.navBar img.QRCode {
+	height: 90px;
+	width: 90px;
+}
+
+div.footer {
+	margin-top: 30px;
+	bottom: 0px;
+	text-align: center;
+	width: 100%;
+	height: 100px;
+	padding: 10px 100px;
+}
+
+div.footer div.navBar li.navBarItem {
+	margin-right: 50px;
+}
+
+div.footer div.navBar li.navBarItem span {
+	font-size: medium;
+}

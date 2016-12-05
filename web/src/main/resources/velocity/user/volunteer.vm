@@ -1,0 +1,7 @@
+#parse("/velocity/user/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/user/volunteer.css"></link>
+
+<div class="volunteer">volunteer</div>
+
+<script src="/static/js/business/user/volunteer.js"></script>

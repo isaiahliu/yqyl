@@ -1,0 +1,24 @@
+div.subNavBar {
+	
+}
+
+div.navBar ul.infoPopList {
+	position: absolute;
+	top: 20px;
+	left: 160px;
+	width: 120px;
+}
+
+div.navBar ul.infoPopList li {
+	margin-left: 10px;
+}
+
+div.navBar ul.infoPopList li div {
+	background-color: white;
+	
+}
+
+div.navBar ul.infoPopList li div span {
+	line-height: 25px;
+	color: black;
+}

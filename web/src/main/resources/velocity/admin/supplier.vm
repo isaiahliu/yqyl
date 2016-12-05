@@ -1,0 +1,46 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/admin/supplier.css"></link>
+
+<div class="supplier">
+	<div class="title">#label("SERVICE_SUPPLIER_MANAGEMENT")</div>
+	<div class="filter">
+		<span>#label("SERVICE_SUPPLIER_CLIENT_NAME")<input
+			style="width: 80px;" ng-model="filterData.supplierName" /></span> <span>#label("SERVICE_SUPPLIER_ID")<input
+			style="width: 80px;" ng-model="filterData.supplierId" /></span>
+		<button ng-click="searchSuppliers()">#button("SEARCH")</button>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<td align="center"><span>#label("SERVICE_SUPPLIER_ID")</span></td>
+				<td align="center"><span>#label("SERVICE_SUPPLIER_CLIENT_NAME")</span></td>
+				<td align="center"><span>#label("AUDIT")</span></td>
+				<td align="center"><span>#label("DEVICE")</span></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="ng-hide" ng-show="suppliers"
+				ng-repeat="supplier in suppliers">
+				<td align="center"><a ng-href="/admin/supplier/{{supplier.id}}"><span>{{supplier.id}}</span></a></td>
+				<td align="center"><span>{{supplier.name}}</span></td>
+				<td align="center"><span ng-if="supplier.status.code=='P'"><button
+							ng-click="audit(supplier)">#button("AUDIT")</button></span><span
+					ng-if="supplier.status.code=='A'">#label("AUDITED")</span></td>
+				<td align="center"><span><button
+							ng-if="supplier.status.code=='A'">#button("VIEW_DEVICE")</button></span></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="paging" style="text-align: center;">
+		<pagination total-items="pagingData.itemCount"
+			ng-model="pagingData.pageIndex" max-size="10"
+			items-per-page="pagingData.pageSize" class="pagination-sm"
+			boundary-links="true" ng-change="searchSuppliers()"
+			first-text='#label("FIRST_PAGE")' last-text='#label("LAST_PAGE")'
+			previous-text='#label("PREVIOUS_PAGE")'
+			next-text='#label("NEXT_PAGE")'></pagination>
+	</div>
+</div>
+
+<script src="/static/js/business/admin/supplier.js"></script>

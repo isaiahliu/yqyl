@@ -1,0 +1,121 @@
+html {
+	font-family: "Microsoft YaHei" ! important;
+}
+
+a, a span {
+	color: #097ffa;
+}
+
+body {
+	margin: 0px;
+}
+
+button {
+	min-height: 30px;
+	min-width: 80px;
+	border-radius: 5px;
+	background: #097ffa;
+	color: #ffffff;
+	border: none;
+}
+
+div.content {
+	min-height: 600;
+}
+
+div.content table th {
+	border-bottom: 1px solid gray;
+}
+
+div.content textarea {
+	resize: none;
+	height: 200px;
+	width: 400px;
+}
+
+div.navBar {
+	text-align: center;
+}
+
+div.navBar div.navBarItems ul {
+	display: inline-block;
+	background: #097ffa;
+	color: #ffffff;
+	height: 45px;
+	padding: 0;
+}
+
+div.navBar a {
+	text-decoration: none;
+}
+
+div.navBar li.navBarItem {
+	list-style-type: none;
+	float: left;
+}
+
+div.navBar li div {
+	width: 250px;
+	height: 45px;
+}
+
+div.navBar li span {
+	color: #ffffff;
+	line-height: 45px;
+	font-size: 18px;
+}
+
+div.navBar li.navBarItem {
+	width: auto;
+	height: 45px;
+	display: inline-block;
+}
+
+div.navBar ul.popList {
+	position: absolute;
+	padding: 0px;
+	z-index: 99;
+	background: #097ffa;
+}
+
+div.navBar ul.popList li {
+	list-style-type: none;
+	margin-top: 7px;
+}
+
+div.navBar div.selected {
+	border-bottom: 1px blue solid;
+}
+
+div.subNavBar {
+	float: left;
+	width: 250px;
+}
+
+div.subNavBar ul {
+	padding-left: 0px;
+	width: 250px;
+	border: solid 1px #cccccc;
+	height: 100%;
+}
+
+div.subNavBar li {
+	list-style-type: none;
+}
+
+div.subNavBar li div.navBarItem {
+	border-bottom: solid 1px #d0e0f0;
+}
+
+div.subNavBar li div span {
+	color: #333333;
+}
+
+div.errorBar {
+	width: 100%;
+	text-align: center;
+	margin: 5px 0;
+	padding: 3px 0;
+	margin-bottom: 5px;
+	background: #d0d0d0;
+}

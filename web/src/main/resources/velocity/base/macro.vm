@@ -1,0 +1,17 @@
+#macro(message $key)${messageResolver.getMessage($key)}#end 
+
+#macro(label $key)#message("LABEL.$key")#end 
+
+#macro(button $key)#message("BUTTON.$key")#end 
+
+#macro(title $key)<title>#message("TITLE.$key")</title>#end 
+
+#macro(info $key)#message("INFO.$key")#end
+
+#macro(readonlyRateControl $name $rate)<img class="ng-hide" ng-show="$name>=$rate" src="/static/images/icon/rate_filled.png"><img class="ng-hide" ng-hide="$name>=$rate" src="/static/images/icon/rate_empty.png">#end 
+
+#macro(readonlyRateBar $name) #readonlyRateControl($name, 1) #readonlyRateControl($name, 2) #readonlyRateControl($name, 3) #readonlyRateControl($name, 4) #readonlyRateControl($name, 5) #end
+
+#macro(rateControl $name $rate)<span class="rate ng-hide" ng-mouseenter="updateTemp$name($rate)" ng-mouseleave="recover$name()" ng-click="update$name()" ng-show="temp$name"><img class="ng-hide" ng-show="temp$name>=$rate" src="/static/images/icon/rate_filled.png"><img class="ng-hide" ng-hide="temp$name>=$rate" src="/static/images/icon/rate_empty.png"></span>#end 
+	
+#macro(rateBar $name) #rateControl($name, 1) #rateControl($name, 2) #rateControl($name, 3) #rateControl($name, 4) #rateControl($name, 5)#end

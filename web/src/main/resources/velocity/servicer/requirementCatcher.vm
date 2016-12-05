@@ -1,0 +1,14 @@
+<link rel="stylesheet"
+	href="/static/css/business/servicer/requirementCatcher.css"></link>
+
+<div class="requirementCatcher"
+	ng-controller="requirementCatcherController">
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+	</ul>
+</div>
+
+<script src="/static/js/business/servicer/requirementCatcher.js"></script>

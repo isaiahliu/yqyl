@@ -1,0 +1,39 @@
+div.staff {
+	padding: 10px 0px 0px 280px;
+}
+
+div.staff div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.staff div.filter span {
+	display: inline-block;
+	margin-right: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.staff div.filter input, div.staff div.filter select {
+	margin-left: 5px;
+}
+
+div.staff table {
+	margin-top: 20px;
+	width: 900px;
+}
+
+div.staff table thead td {
+	background-color: rgba(215, 215, 215, 1)
+}
+
+div.staff table td {
+	border: 1px solid;
+}
+
+div.staff table td img {
+	min-width: 80px;
+	min-height: 80px;
+	max-width: 80px;
+	max-height: 80px;
+}
