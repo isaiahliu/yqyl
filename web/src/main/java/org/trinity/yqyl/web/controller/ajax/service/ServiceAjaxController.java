@@ -61,7 +61,6 @@ public class ServiceAjaxController extends AbstractRestController {
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public @ResponseBody ServiceInfoResponse ajaxUpdateServiceInfo(@RequestBody final ServiceInfoRequest request) throws IException {
         request.getData().forEach(item -> {
-            item.setImage(null);
             if (item.getStatus() != null) {
                 if (!ServiceStatus.ACTIVE.getMessageCode().equals(item.getStatus().getCode())) {
                     item.getStatus().setCode(ServiceStatus.OFFLINE.getMessageCode());

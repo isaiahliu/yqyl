@@ -60,9 +60,9 @@
 				<div class="tabContent">
 					<div ng-repeat="image in serviceInfo.images">
 						<a ng-href="/ajax/content/image/{{image}}" target="_blank"><img ng-src="/ajax/content/image/{{image}}" /></a> <a
-							href="javascript:void(0)" ng-click="deletePhoto($index)"><span>#button("DELETE")</span></a> <input
-							style="width: 15px; height: 15px; margin-right: 5px;" type="radio" name="mainImage" ng-model="$parent.serviceInfo.image" ng-value="image" />
-						<span>#label("MAIN_IMAGE")</span>
+							style="margin: 0 20px;" href="javascript:void(0)" ng-click="deletePhoto($index)"><span style="display: inline;">#button("DELETE")</span></a>
+						<input style="width: 15px; height: 15px; margin-right: 5px;" type="radio" name="mainImage" ng-model="$parent.serviceInfo.image"
+							ng-value="image" /> <span>#label("MAIN_IMAGE")</span>
 					</div>
 					<div class="ng-hide" ng-show="serviceInfo.images.length<6">
 						<input type="file" style="display: inline-block;" custom-on-change="selectImage" />

@@ -126,6 +126,10 @@ public class ServiceInfoProcessController
 
         final String uuid = contentProcessController.create();
 
+        if (serviceInfo.getImages().isEmpty()) {
+            serviceInfo.setImage(uuid);
+        }
+
         serviceInfo.getImages().add(uuid);
 
         getDomainEntityRepository().save(serviceInfo);
@@ -157,11 +161,15 @@ public class ServiceInfoProcessController
             throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
         }
 
-        if (uuid.equals(serviceInfo.getImage())) {
-            serviceInfo.setImage(null);
-        }
-
         serviceInfo.getImages().remove(uuid);
+
+        if (uuid.equals(serviceInfo.getImage())) {
+            if (serviceInfo.getImages().isEmpty()) {
+                serviceInfo.setImage(null);
+            } else {
+                serviceInfo.setImage(serviceInfo.getImages().get(0));
+            }
+        }
 
         getDomainEntityRepository().save(serviceInfo);
     }
