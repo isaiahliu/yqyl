@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.persistence.criteria.Predicate;
@@ -19,19 +18,20 @@ import org.trinity.process.converter.IObjectConverter.CopyPolicy;
 import org.trinity.yqyl.common.message.dto.domain.ServiceCategoryDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceInfoDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceInfoSearchingDto;
+import org.trinity.yqyl.common.message.exception.ErrorMessage;
 import org.trinity.yqyl.common.message.lookup.AccessRight;
-import org.trinity.yqyl.common.message.lookup.RecordStatus;
 import org.trinity.yqyl.common.message.lookup.ServiceStatus;
+import org.trinity.yqyl.common.message.lookup.SystemAttributeKey;
 import org.trinity.yqyl.process.controller.base.AbstractAutowiredCrudProcessController;
+import org.trinity.yqyl.process.controller.base.IContentProcessController;
 import org.trinity.yqyl.process.controller.base.IServiceInfoProcessController;
-import org.trinity.yqyl.repository.business.dataaccess.IContentRepository;
+import org.trinity.yqyl.process.controller.base.ISystemAttributeProcessController;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceCategoryRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceInfoRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceInfoStasticRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceOrderRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceSupplierClientRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IUserRepository;
-import org.trinity.yqyl.repository.business.entity.Content;
 import org.trinity.yqyl.repository.business.entity.ServiceCategory;
 import org.trinity.yqyl.repository.business.entity.ServiceInfo;
 import org.trinity.yqyl.repository.business.entity.ServiceInfoStastic;
@@ -44,167 +44,202 @@ import org.trinity.yqyl.repository.business.entity.User_;
 
 @Service
 public class ServiceInfoProcessController
-		extends AbstractAutowiredCrudProcessController<ServiceInfo, ServiceInfoDto, ServiceInfoSearchingDto, IServiceInfoRepository>
-		implements IServiceInfoProcessController {
+        extends AbstractAutowiredCrudProcessController<ServiceInfo, ServiceInfoDto, ServiceInfoSearchingDto, IServiceInfoRepository>
+        implements IServiceInfoProcessController {
 
-	@Autowired
-	private IObjectConverter<ServiceCategory, ServiceCategoryDto> serviceCategoryConverter;
+    @Autowired
+    private IObjectConverter<ServiceCategory, ServiceCategoryDto> serviceCategoryConverter;
 
-	@Autowired
-	private IServiceOrderRepository serviceOrderRepository;
+    @Autowired
+    private IServiceOrderRepository serviceOrderRepository;
 
-	@Autowired
-	private IUserRepository userRepository;
+    @Autowired
+    private IUserRepository userRepository;
 
-	@Autowired
-	private IServiceCategoryRepository serviceCategoryRepository;
+    @Autowired
+    private IServiceCategoryRepository serviceCategoryRepository;
 
-	@Autowired
-	private IServiceSupplierClientRepository serviceSupplierClientRepository;
+    @Autowired
+    private IServiceSupplierClientRepository serviceSupplierClientRepository;
 
-	@Autowired
-	private IServiceInfoStasticRepository serviceInfoStasticRepository;
+    @Autowired
+    private IServiceInfoStasticRepository serviceInfoStasticRepository;
 
-	@Autowired
-	private IContentRepository contentRepository;
+    @Autowired
+    private ISystemAttributeProcessController systemAttributeProcessController;
 
-	@Override
-	@Transactional(rollbackOn = IException.class)
-	public List<ServiceInfoDto> addAll(final List<ServiceInfoDto> data) throws IException {
-		for (final ServiceInfoDto dto : data) {
-			final ServiceInfo entity = getDomainObjectConverter().convertBack(dto);
-			final ServiceSupplierClient serviceSupplierClient = userRepository
-					.findOneByUsername(getSecurityUtil().getCurrentToken().getUsername()).getServiceSupplierClient();
+    @Autowired
+    private IContentProcessController contentProcessController;
 
-			if (dto.getServiceSupplierClient() != null && dto.getServiceSupplierClient().getId() != null
-					&& dto.getServiceSupplierClient().getId() > 0
-					&& dto.getServiceSupplierClient().getId() != serviceSupplierClient.getUserId()) {
-				getSecurityUtil().checkAccessRight(AccessRight.OPERATOR);
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public List<ServiceInfoDto> addAll(final List<ServiceInfoDto> data) throws IException {
+        for (final ServiceInfoDto dto : data) {
+            final ServiceInfo entity = getDomainObjectConverter().convertBack(dto);
+            final ServiceSupplierClient serviceSupplierClient = userRepository
+                    .findOneByUsername(getSecurityUtil().getCurrentToken().getUsername()).getServiceSupplierClient();
 
-				entity.setServiceSupplierClient(serviceSupplierClientRepository.findOne(dto.getServiceSupplierClient().getId()));
-			} else {
-				entity.setServiceSupplierClient(serviceSupplierClient);
-			}
+            if (dto.getServiceSupplierClient() != null && dto.getServiceSupplierClient().getId() != null
+                    && dto.getServiceSupplierClient().getId() > 0
+                    && dto.getServiceSupplierClient().getId() != serviceSupplierClient.getUserId()) {
+                getSecurityUtil().checkAccessRight(AccessRight.OPERATOR);
 
-			final Content content = new Content();
-			content.setContent(new byte[0]);
-			content.setStatus(RecordStatus.ACTIVE);
-			content.setUuid(UUID.randomUUID().toString());
-			contentRepository.save(content);
+                entity.setServiceSupplierClient(serviceSupplierClientRepository.findOne(dto.getServiceSupplierClient().getId()));
+            } else {
+                entity.setServiceSupplierClient(serviceSupplierClient);
+            }
 
-			entity.setImage(content.getUuid());
+            if (dto.getServiceCategory() != null && dto.getServiceCategory().getId() != null && dto.getServiceCategory().getId() > 0) {
+                entity.setServiceCategory(serviceCategoryRepository.findOne(dto.getServiceCategory().getId()));
+            }
 
-			if (dto.getServiceCategory() != null && dto.getServiceCategory().getId() != null && dto.getServiceCategory().getId() > 0) {
-				entity.setServiceCategory(serviceCategoryRepository.findOne(dto.getServiceCategory().getId()));
-			}
+            getDomainEntityRepository().save(entity);
 
-			getDomainEntityRepository().save(entity);
+            final ServiceInfoStastic serviceInfoStastic = new ServiceInfoStastic();
+            serviceInfoStastic.setServiceInfoId(entity.getId());
+            serviceInfoStastic.setServiceInfo(entity);
+            serviceInfoStastic.setAppraiseAvg(0d);
+            serviceInfoStastic.setAppraiseCount(0l);
+            serviceInfoStastic.setOrderCount(0l);
 
-			final ServiceInfoStastic serviceInfoStastic = new ServiceInfoStastic();
-			serviceInfoStastic.setServiceInfoId(entity.getId());
-			serviceInfoStastic.setServiceInfo(entity);
-			serviceInfoStastic.setAppraiseAvg(0d);
-			serviceInfoStastic.setAppraiseCount(0l);
-			serviceInfoStastic.setOrderCount(0l);
+            serviceInfoStasticRepository.save(serviceInfoStastic);
 
-			serviceInfoStasticRepository.save(serviceInfoStastic);
+            getDomainObjectConverter().convert(entity, dto, CopyPolicy.TARGET_IS_NULL);
+        }
 
-			getDomainObjectConverter().convert(entity, dto, CopyPolicy.TARGET_IS_NULL);
-		}
+        return data;
+    }
 
-		return data;
-	}
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public String addImage(final Long entityId) throws IException {
+        final ServiceInfo serviceInfo = getDomainEntityRepository().findOne(entityId);
+        if (!serviceInfo.getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
+            throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
+        }
+        final String value = systemAttributeProcessController.getValue(SystemAttributeKey.MAX_SERVICE_INFO_IMAGES);
+        final int maxSize = Integer.parseInt(value);
 
-	@Override
-	@Transactional(rollbackOn = IException.class)
-	public void delete(final Long id) throws IException {
-		final ServiceInfo serviceInfo = getDomainEntityRepository().findOne(id);
+        if (serviceInfo.getImages().size() >= maxSize) {
+            throw getExceptionFactory().createException(ErrorMessage.EXCEED_ALLOWED_SIZE);
+        }
 
-		final String username = serviceInfo.getServiceSupplierClient().getUser().getUsername();
+        final String uuid = contentProcessController.create();
 
-		if (!username.equals(getSecurityUtil().getCurrentToken().getUsername())) {
-			getSecurityUtil().checkAccessRight(AccessRight.OPERATOR);
-		}
+        serviceInfo.getImages().add(uuid);
 
-		serviceInfo.setStatus(ServiceStatus.DISABLED);
+        getDomainEntityRepository().save(serviceInfo);
 
-		getDomainEntityRepository().save(serviceInfo);
-	}
+        return uuid;
+    }
 
-	@Override
-	@Transactional(rollbackOn = IException.class)
-	public List<ServiceInfoDto> getMe(final ServiceInfoSearchingDto dto) throws IException {
-		final String username = getSecurityUtil().getCurrentToken().getUsername();
-		final Specification<ServiceInfo> specification = (root, query, cb) -> {
-			final List<Predicate> predicates = new ArrayList<>();
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public void delete(final Long id) throws IException {
+        final ServiceInfo serviceInfo = getDomainEntityRepository().findOne(id);
 
-			predicates.add(cb.equal(root.join(ServiceInfo_.serviceSupplierClient).join(ServiceSupplierClient_.user).get(User_.username),
-					username));
+        final String username = serviceInfo.getServiceSupplierClient().getUser().getUsername();
 
-			if (dto.getId() != null) {
-				predicates.add(cb.equal(root.get(ServiceInfo_.id), dto.getId()));
-			}
+        if (!username.equals(getSecurityUtil().getCurrentToken().getUsername())) {
+            getSecurityUtil().checkAccessRight(AccessRight.OPERATOR);
+        }
 
-			if (dto.getName() != null) {
-				predicates.add(cb.like(root.get(ServiceInfo_.name), "%" + dto.getName() + "%"));
-			}
+        serviceInfo.setStatus(ServiceStatus.DISABLED);
 
-			return cb.and(predicates.toArray(new Predicate[0]));
-		};
-		final Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.MONTH, -1);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
+        getDomainEntityRepository().save(serviceInfo);
+    }
 
-		final Date fromDate = calendar.getTime();
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public void deleteImage(final Long entityId, final String uuid) throws IException {
+        final ServiceInfo serviceInfo = getDomainEntityRepository().findOne(entityId);
+        if (!serviceInfo.getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
+            throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
+        }
 
-		return getDomainEntityRepository().findAll(specification).stream().map(item -> {
-			final ServiceInfoDto result = getDomainObjectConverter().convert(item);
+        if (uuid.equals(serviceInfo.getImage())) {
+            serviceInfo.setImage(null);
+        }
 
-			final Specification<ServiceOrder> appraiseSpecification = (root, query, cb) -> {
-				final List<Predicate> predicates = new ArrayList<>();
+        serviceInfo.getImages().remove(uuid);
 
-				predicates.add(cb.equal(root.join(ServiceOrder_.serviceInfo).get(ServiceInfo_.id), item.getId()));
+        getDomainEntityRepository().save(serviceInfo);
+    }
 
-				predicates.add(cb.greaterThanOrEqualTo(root.get(ServiceOrder_.proposalTime), fromDate));
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public List<ServiceInfoDto> getMe(final ServiceInfoSearchingDto dto) throws IException {
+        final String username = getSecurityUtil().getCurrentToken().getUsername();
+        final Specification<ServiceInfo> specification = (root, query, cb) -> {
+            final List<Predicate> predicates = new ArrayList<>();
 
-				return cb.and(predicates.toArray(new Predicate[0]));
-			};
+            predicates.add(cb.equal(root.join(ServiceInfo_.serviceSupplierClient).join(ServiceSupplierClient_.user).get(User_.username),
+                    username));
 
-			final List<ServiceOrder> orders = serviceOrderRepository.findAll(appraiseSpecification);
+            if (dto.getId() != null) {
+                predicates.add(cb.equal(root.get(ServiceInfo_.id), dto.getId()));
+            }
 
-			result.setMonthlyProposalOrderCount(orders.size());
+            if (dto.getName() != null) {
+                predicates.add(cb.like(root.get(ServiceInfo_.name), "%" + dto.getName() + "%"));
+            }
 
-			result.setMonthlyRate(orders.stream().map(order -> (order.getAppraise() == null) ? null : order.getAppraise().getAttitudeRate())
-					.filter(rate -> rate != null).collect(Collectors.averagingDouble(rate -> rate)));
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, -1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
-			final ServiceCategory subCategory = item.getServiceCategory();
-			final ServiceCategoryDto subCategoryDto = serviceCategoryConverter.convert(subCategory);
-			subCategoryDto.setParent(serviceCategoryConverter.convert(subCategory.getParent()));
+        final Date fromDate = calendar.getTime();
 
-			result.setServiceCategory(subCategoryDto);
-			return result;
-		}).collect(Collectors.toList());
-	}
+        return getDomainEntityRepository().findAll(specification).stream().map(item -> {
+            final ServiceInfoDto result = getDomainObjectConverter().convert(item);
 
-	@Override
-	protected boolean canAccessAllStatus() {
-		return getSecurityUtil().hasAccessRight(AccessRight.SERVICE_SUPPLIER)
-				|| getSecurityUtil().hasAccessRight(AccessRight.ADMINISTRATOR);
-	}
+            final Specification<ServiceOrder> appraiseSpecification = (root, query, cb) -> {
+                final List<Predicate> predicates = new ArrayList<>();
 
-	@Override
-	protected boolean canAccessScopeAll() {
-		return true;
-	}
+                predicates.add(cb.equal(root.join(ServiceOrder_.serviceInfo).get(ServiceInfo_.id), item.getId()));
 
-	@Override
-	protected void updateRelationshipFields(final ServiceInfo entity, final ServiceInfoDto dto) {
-		if (dto.getServiceCategory() != null && dto.getServiceCategory().getId() != null && dto.getServiceCategory().getId() > 0) {
-			entity.setServiceCategory(serviceCategoryRepository.findOne(dto.getServiceCategory().getId()));
-		}
-	}
+                predicates.add(cb.greaterThanOrEqualTo(root.get(ServiceOrder_.proposalTime), fromDate));
+
+                return cb.and(predicates.toArray(new Predicate[0]));
+            };
+
+            final List<ServiceOrder> orders = serviceOrderRepository.findAll(appraiseSpecification);
+
+            result.setMonthlyProposalOrderCount(orders.size());
+
+            result.setMonthlyRate(orders.stream().map(order -> (order.getAppraise() == null) ? null : order.getAppraise().getAttitudeRate())
+                    .filter(rate -> rate != null).collect(Collectors.averagingDouble(rate -> rate)));
+
+            final ServiceCategory subCategory = item.getServiceCategory();
+            final ServiceCategoryDto subCategoryDto = serviceCategoryConverter.convert(subCategory);
+            subCategoryDto.setParent(serviceCategoryConverter.convert(subCategory.getParent()));
+
+            result.setServiceCategory(subCategoryDto);
+            return result;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    protected boolean canAccessAllStatus() {
+        return getSecurityUtil().hasAccessRight(AccessRight.SERVICE_SUPPLIER)
+                || getSecurityUtil().hasAccessRight(AccessRight.ADMINISTRATOR);
+    }
+
+    @Override
+    protected boolean canAccessScopeAll() {
+        return true;
+    }
+
+    @Override
+    protected void updateRelationshipFields(final ServiceInfo entity, final ServiceInfoDto dto) {
+        if (dto.getServiceCategory() != null && dto.getServiceCategory().getId() != null && dto.getServiceCategory().getId() > 0) {
+            entity.setServiceCategory(serviceCategoryRepository.findOne(dto.getServiceCategory().getId()));
+        }
+    }
 }

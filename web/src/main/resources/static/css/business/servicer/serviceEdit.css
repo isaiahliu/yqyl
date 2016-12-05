@@ -1,5 +1,19 @@
 div.serviceEdit {
-	padding: 10px 0px 0px 280px;
+	padding: 1px 0 0 250px;
+}
+
+div.serviceEdit div.block {
+	border: 1px solid #cccccc;
+}
+
+div.serviceEdit div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+div.serviceEdit div.headerBlock {
+	border-bottom: none;
 }
 
 div.serviceEdit div.left {
@@ -41,6 +55,63 @@ div.serviceEdit div.right button {
 }
 
 div.serviceEdit div.right select {
-	min-width: 150px;
-	'
+	
+}
+
+div.serviceEdit div.details div.tab {
+	padding: 10px 20px 10px 20px;
+	background: white;
+	margin-bottom: 20px;
+}
+
+div.serviceEdit div.details div.tab div.tabTitle {
+	padding: 5px 10px;
+}
+
+div.serviceEdit div.details div.tab div.tabTitle img {
+	width: 14px;
+	height: 14px;
+}
+
+div.serviceEdit div.details div.tab div.tabContent {
+	padding-left: 5px;
+}
+
+div.serviceEdit div.details div.tab div.tabContent div.inlineItem {
+	margin-top: 8px;
+	display: inline-block;
+}
+
+div.serviceEdit div.details div.tab div.tabContent span {
+	display: inline-block;
+	width: 80px;
+}
+
+div.serviceEdit div.details div.tab div.tabContent input, div.serviceEdit div.details div.tab div.tabContent select
+	{
+	width: 160px;
+	height: 26px;
+	margin-right: 50px;
+}
+
+div.serviceEdit div.details div.tab div.images input {
+	margin-right: 0;
+}
+
+div.serviceEdit  div.buttonGroup {
+	padding-left: 300px;
+}
+
+div.serviceEdit div.details div.tab div.tabContent input.upload {
+	min-width: 68px;
+	width: 68px;
+	display: inline;
+	margin-right: 70px;
+}
+
+div.serviceEdit div.details div.tab div.tabContent img {
+	max-width: 50px;
+	min-width: 50px;
+	max-height: 50px;
+	min-height: 50px;
 }

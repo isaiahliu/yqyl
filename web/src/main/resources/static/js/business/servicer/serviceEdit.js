@@ -9,6 +9,8 @@ layoutApp.directive('customOnChange', function() {
 });
 
 layoutApp.controller('contentController', function($scope, $http, $window, errorHandler, serviceInfoId) {
+	$scope.serviceInfoId = serviceInfoId;
+
 	$http({
 		method : "GET",
 		url : "/ajax/common/lookup/PMMTHD"
@@ -53,37 +55,41 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		}
 	}
 
-	if (serviceInfoId > 0) {
-		$http({
-			method : "GET",
-			url : "/ajax/service/me?id=" + serviceInfoId
-		}).success(function(response) {
-			$scope.serviceInfo = response.data[0];
-			$scope.serviceInfo.active = $scope.serviceInfo.status.code == 'A'
-			$scope.populateSubCategory();
-			if ($scope.serviceInfo.image != undefined && $scope.serviceInfo.image != null) {
-				$scope.imageUrl = "/ajax/content/image/" + $scope.serviceInfo.image;
-			}
-		}).error(function(response) {
-			errorHandler($scope, response);
-		});
-	} else {
-		$scope.serviceInfo = {
-			name : "",
-			price : "",
-			status : {
-				code : 'A'
-			},
-			serviceCategory : {
-				id : null,
-				parent : {
-					id : null
+	$scope.getServiceInfo = function() {
+		if ($scope.serviceInfoId > 0) {
+			$http({
+				method : "GET",
+				url : "/ajax/service?id=" + $scope.serviceInfoId + "&rsexp=images,serviceCategory[parent]"
+			}).success(function(response) {
+				$scope.serviceInfo = response.data[0];
+				$scope.serviceInfo.active = $scope.serviceInfo.status.code == 'A'
+				$scope.populateSubCategory();
+				if ($scope.serviceInfo.image != undefined && $scope.serviceInfo.image != null) {
+					$scope.imageUrl = "/ajax/content/image/" + $scope.serviceInfo.image;
 				}
-			}
-		};
+			}).error(function(response) {
+				errorHandler($scope, response);
+			});
+		} else {
+			$scope.serviceInfo = {
+				name : "",
+				price : "",
+				status : {
+					code : 'A'
+				},
+				serviceCategory : {
+					id : null,
+					parent : {
+						id : null
+					}
+				}
+			};
 
-		$scope.serviceInfo.active = true;
-	}
+			$scope.serviceInfo.active = true;
+		}
+	};
+
+	$scope.getServiceInfo();
 
 	$scope.selectImage = function(event) {
 		if (event.target.files.length > 0) {
@@ -98,14 +104,26 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		fd.append("IMAGE", $scope.newImage);
 		$http({
 			method : "POST",
-			url : "/ajax/service/" + serviceInfoId + "/upload",
+			url : "/ajax/service/" + $scope.serviceInfoId + "/upload",
 			transformRequest : angular.identity,
 			headers : {
 				'Content-Type' : undefined
 			},
 			data : fd
 		}).success(function(response) {
-			$scope.imageUrl = '/ajax/content/image/' + $scope.serviceInfo.image + "?ticks=" + new Date().getTime();
+			$scope.serviceInfo.images.push(response.data[0]);
+		}).error(function(response) {
+			errorHandler($scope, response);
+		});
+	};
+
+	$scope.deletePhoto = function(index) {
+		var uuid = $scope.serviceInfo.images[index];
+		$http({
+			method : "DELETE",
+			url : "/ajax/service/" + $scope.serviceInfoId + "/" + uuid,
+		}).success(function(response) {
+			$scope.serviceInfo.images.splice(index, 1);
 		}).error(function(response) {
 			errorHandler($scope, response);
 		});
@@ -114,7 +132,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	$scope.apply = function() {
 		$scope.serviceInfo.status.code = $scope.serviceInfo.active ? 'A' : 'O';
 
-		if (serviceInfoId > 0) {
+		if ($scope.serviceInfoId > 0) {
 			$http({
 				method : "PUT",
 				url : "/ajax/service/",
@@ -122,7 +140,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 					data : [ $scope.serviceInfo ]
 				}
 			}).success(function(response) {
-				$window.location.href = "/servicer/service"
+				$window.location.href = "/servicer/service";
 			}).error(function(response) {
 				errorHandler($scope, response);
 			});
@@ -134,7 +152,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 					data : [ $scope.serviceInfo ]
 				}
 			}).success(function(response) {
-				$window.location.href = "/servicer/service"
+				$window.location.href = "/servicer/service/edit/" + response.data[0].id;
 			}).error(function(response) {
 				errorHandler($scope, response);
 			});

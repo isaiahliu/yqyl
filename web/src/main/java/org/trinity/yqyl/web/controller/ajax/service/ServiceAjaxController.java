@@ -30,39 +30,6 @@ public class ServiceAjaxController extends AbstractRestController {
     @Autowired
     private IRestfulServiceUtil restfulServiceUtil;
 
-    @RequestMapping(value = "/{entityId}/upload", method = RequestMethod.POST)
-    public ResponseEntity<DefaultResponse> ajaxChangePassword(@PathVariable("entityId") final Long entityId,
-            final MultipartHttpServletRequest request) throws IException {
-
-        final DefaultResponse response = new DefaultResponse();
-        if (request.getFileNames().hasNext()) {
-            try {
-                final ServiceInfoSearchingDto searchingDto = new ServiceInfoSearchingDto();
-                searchingDto.setId(entityId);
-                final ServiceInfoResponse serviceSupplierClientResponse = restfulServiceUtil.callRestService(Url.SERVICE_INFO_ME, null,
-                        null, searchingDto, ServiceInfoResponse.class);
-
-                final String uuid = serviceSupplierClientResponse.getData().get(0).getImage();
-
-                final ContentRequest contentRequest = new ContentRequest();
-
-                final InputStream stream = request.getFile("IMAGE").getInputStream();
-                final byte[] bytes = new byte[stream.available()];
-                stream.read(bytes);
-
-                final ContentDto dto = new ContentDto();
-                dto.setUuid(uuid);
-                dto.setContent(bytes);
-                contentRequest.getData().add(dto);
-
-                restfulServiceUtil.callRestService(Url.CONTENT_UPLOAD, null, contentRequest, null, ContentResponse.class);
-            } catch (final Exception e) {
-            }
-        }
-
-        return createResponseEntity(response);
-    }
-
     @RequestMapping(value = "", method = RequestMethod.POST)
     public @ResponseBody ServiceInfoResponse ajaxCreateServiceInfo(@RequestBody final ServiceInfoRequest request) throws IException {
         request.getData().forEach(item -> {
@@ -70,6 +37,15 @@ public class ServiceAjaxController extends AbstractRestController {
         });
 
         return restfulServiceUtil.callRestService(Url.SERVICE_INFO_NEW, null, request, null, ServiceInfoResponse.class);
+    }
+
+    @RequestMapping(value = "/{entityId}/{uuid}", method = RequestMethod.DELETE)
+    public ResponseEntity<DefaultResponse> ajaxDeleteImage(@PathVariable("entityId") final Long entityId,
+            @PathVariable("uuid") final String uuid) throws IException {
+        restfulServiceUtil.callRestService(Url.SERVICE_INFO_IMAGE_DELETE, String.join("/", String.valueOf(entityId), uuid), null, null,
+                ContentResponse.class);
+
+        return createResponseEntity();
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -93,5 +69,40 @@ public class ServiceAjaxController extends AbstractRestController {
             }
         });
         return restfulServiceUtil.callRestService(Url.SERVICE_INFO_UPDATE, null, request, null, ServiceInfoResponse.class);
+    }
+
+    @RequestMapping(value = "/{entityId}/upload", method = RequestMethod.POST)
+    public ResponseEntity<DefaultResponse> ajaxUploadImage(@PathVariable("entityId") final Long entityId,
+            final MultipartHttpServletRequest request) throws IException {
+
+        final DefaultResponse response = new DefaultResponse();
+        if (request.getFileNames().hasNext()) {
+            try {
+                final ServiceInfoSearchingDto searchingDto = new ServiceInfoSearchingDto();
+                searchingDto.setId(entityId);
+                final DefaultResponse serviceSupplierClientResponse = restfulServiceUtil.callRestService(Url.SERVICE_INFO_IMAGE_ADD,
+                        String.valueOf(entityId), null, null, DefaultResponse.class);
+
+                final String uuid = serviceSupplierClientResponse.getData().get(0);
+
+                final ContentRequest contentRequest = new ContentRequest();
+
+                final InputStream stream = request.getFile("IMAGE").getInputStream();
+                final byte[] bytes = new byte[stream.available()];
+                stream.read(bytes);
+
+                final ContentDto dto = new ContentDto();
+                dto.setUuid(uuid);
+                dto.setContent(bytes);
+                contentRequest.getData().add(dto);
+
+                restfulServiceUtil.callRestService(Url.CONTENT_UPLOAD, null, contentRequest, null, ContentResponse.class);
+
+                response.addData(uuid);
+            } catch (final Exception e) {
+            }
+        }
+
+        return createResponseEntity(response);
     }
 }

@@ -6,13 +6,16 @@ div.info div.block {
 	border: 1px solid #cccccc;
 }
 
+div.info div.headerBlock {
+	border-bottom: none;
+}
+
 div.info div.headerBlock a {
 	float: right;
 	margin-right: 10px;
 	line-height: 50px;
 }
 
-}
 div.info div.applicationStep {
 	text-align: center;
 }
@@ -86,7 +89,7 @@ div.info div.details div.tab div.tabContent {
 	padding-left: 5px;
 }
 
-div.info div.details div.tab div.tabContent div.inlineItem{
+div.info div.details div.tab div.tabContent div.inlineItem {
 	margin-top: 8px;
 	display: inline-block;
 }

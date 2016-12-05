@@ -27,7 +27,7 @@
 			<button ng-show="announcementAgreed2" ng-click="registerSupplier()">#button("NEXT")</button>
 		</div>
 	</div>
-	<div style="padding: 15px; height: 80px;" class="block headerBlock ng-hide" ng-show="serviceSupplierClient">
+	<div style="padding: 15px 15px 0 15px; height: 78px;" class="block headerBlock ng-hide" ng-show="serviceSupplierClient">
 		<span style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("USER_INFO")
 			({{serviceSupplierClient.status.message}})</span> <a href="javascript:void(0)" ng-if="!audited&&!auditing" ng-click="cancel()"><span>#button("CANCEL")</span></a>
 		<a href="javascript:void(0)" ng-if="!auditing" ng-click="save()"><span>#button("SAVE")</span></a> <a href="javascript:void(0)"
@@ -36,6 +36,8 @@
 			ng-click="auditingApply()"><span>#button("PASS_AUDIT")</span></a> <a href="javascript:void(0)" ng-if="auditing&&!audited"
 			ng-click="auditingReject()"><span>#button("DENY_AUDIT")</span></a>
 	</div>
+	<div class="tab ng-hide" ng-show="serviceSupplierClient" style="border: 1px solid #a1d0fe; margin: 0 15px;"></div>
+
 	<div class="block" style="background: #f1f1f1; padding: 15px;">
 		<div class="details ng-hide" ng-show="serviceSupplierClient">
 			<div class="tab">

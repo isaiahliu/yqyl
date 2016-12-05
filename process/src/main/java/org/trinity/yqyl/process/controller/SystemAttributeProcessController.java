@@ -24,6 +24,15 @@ public class SystemAttributeProcessController extends
         implements ISystemAttributeProcessController {
 
     @Override
+    public String getValue(final SystemAttributeKey key) throws IException {
+        final SystemAttribute entity = getDomainEntityRepository().findOneByKey(key);
+        if (entity != null) {
+            return entity.getValue();
+        }
+        return key.getDefaultValue();
+    }
+
+    @Override
     @Transactional(rollbackOn = IException.class)
     public void refreshAll() throws IException {
         final Iterable<SystemAttribute> allAttributes = getDomainEntityRepository().findAll();

@@ -91,6 +91,8 @@ public enum Url implements IHttpUrl {
     SERVICE_INFO_UPDATE(HttpMethod.PUT, Path.SERVICE_INFO),
     SERVICE_INFO_DELETE(HttpMethod.DELETE, Path.SERVICE_INFO),
     SERVICE_INFO_ME(HttpMethod.GET, Path.SERVICE_INFO, "me"),
+    SERVICE_INFO_IMAGE_ADD(HttpMethod.POST, Path.SERVICE_INFO, "image"),
+    SERVICE_INFO_IMAGE_DELETE(HttpMethod.DELETE, Path.SERVICE_INFO, "image"),
 
     PING(HttpMethod.GET, Path.COMMON, "ping");
     private static enum Path implements IUrl {

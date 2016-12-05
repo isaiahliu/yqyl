@@ -1,1 +1,8 @@
-<div style="text-align: center;">出错了!</div>
+<div style="text-align: center; padding-top: 100px;">
+	<div>
+		<img src="/static/images/pic/404.png" />
+	</div>
+	<div>
+		<a href="/"><span style="font-size: 16px;">#button("BACK_HOME")</span></a>
+	</div>
+</div>

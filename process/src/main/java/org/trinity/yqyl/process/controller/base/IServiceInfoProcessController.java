@@ -9,5 +9,9 @@ import org.trinity.yqyl.common.message.dto.domain.ServiceInfoSearchingDto;
 
 public interface IServiceInfoProcessController extends ICrudProcessController<ServiceInfoDto, ServiceInfoSearchingDto> {
 
+    String addImage(Long entityId) throws IException;
+
+    void deleteImage(Long entityId, String uuid) throws IException;
+
     List<ServiceInfoDto> getMe(ServiceInfoSearchingDto dto) throws IException;
 }
