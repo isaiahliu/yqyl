@@ -6,3 +6,5 @@
 /batch/target
 /common/target
 /repository/metamodel
+/rest/.settings/org.eclipse.m2e.core.prefs
+/web/.settings/org.eclipse.m2e.core.prefs
