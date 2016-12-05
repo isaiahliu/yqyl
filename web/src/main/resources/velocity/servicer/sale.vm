@@ -1,0 +1,7 @@
+#parse("/velocity/servicer/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/servicer/sale.css"></link>
+
+<div class="sale">sale</div>
+
+<script src="/static/js/business/servicer/sale.js"></script>

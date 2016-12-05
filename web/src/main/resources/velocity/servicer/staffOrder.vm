@@ -1,8 +1,9 @@
 #parse("/velocity/servicer/navigation.vm")
 
-<link rel="stylesheet" href="/static/css/business/servicer/staff.css"></link>
+<link rel="stylesheet"
+	href="/static/css/business/servicer/staffOrder.css"></link>
 
-<div class="staff">
+<div class="staffOrder">
 	<div style="padding: 15px 15px 0 15px; height: 78px;"
 		class="block headerBlock">
 		<span
@@ -84,4 +85,4 @@
 
 </div>
 
-<script src="/static/js/business/servicer/staff.js"></script>
+<script src="/static/js/business/servicer/staffOrder.js"></script>

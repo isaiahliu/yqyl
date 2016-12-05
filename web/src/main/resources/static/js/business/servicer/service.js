@@ -27,4 +27,6 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	$scope.editService = function(service) {
 		$window.location.href = "/servicer/service/edit/" + service.id;
 	};
+
+	$scope.searchServices();
 });

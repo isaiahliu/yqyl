@@ -1,0 +1,7 @@
+#parse("/velocity/servicer/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/servicer/afterSale.css"></link>
+
+<div class="afterSale">afterSale</div>
+
+<script src="/static/js/business/servicer/afterSale.js"></script>

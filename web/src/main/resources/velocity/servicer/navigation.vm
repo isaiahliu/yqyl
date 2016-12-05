@@ -11,7 +11,7 @@
 					#label("SERVICER")</span>
 			</div></li>
 		<li><a href="/servicer/info">
-				<div class="navBarItem">
+				<div class="navBarItem #if($currentPage=='INFO')selected #end">
 					<span>#button("SERVICER_INFO")</span>
 				</div>
 		</a></li> #if($security.hasAccessRightByName("SUPPLIER", false))
@@ -28,16 +28,36 @@
 					class="navBarItem #if($currentPage=='STAFF')selected #end">
 					<span>#button("SERVICER_STAFF")</span>
 				</div></a></li>
-		<li><a href="/servicer/transaction"><div
-					class="navBarItem #if($currentPage=='TRANSACTION')selected #end">
-					<span>#button("SERVICER_TRANSACTION")</span>
+		<li class="subItem"><a href="/servicer/staff"><div
+					class="navBarItem #if($currentSubPage=='INFO')selected #end">
+					<span>#button("GENERAL_INFO")</span>
+				</div></a></li>
+		<li class="subItem"><a href="/servicer/staffOrder"><div
+					class="navBarItem #if($currentSubPage=='ORDER')selected #end">
+					<span>#button("ASSIGNMENT_MANAGEMENT")</span>
 				</div></a></li>
 		<li><a href="/servicer/training"><div
 					class="navBarItem #if($currentPage=='TRAINING')selected #end">
 					<span>#button("SERVICER_TRAINING")</span>
-				</div></a></li> #end
+				</div></a></li>
+		<li><a href="/servicer/transaction"><div
+					class="navBarItem #if($currentPage=='TRANSACTION')selected #end">
+					<span>#button("SERVICER_TRANSACTION")</span>
+				</div></a></li>
+		<li><a href="/servicer/afterSale"><div
+					class="navBarItem #if($currentPage=='AFTER_SALE')selected #end">
+					<span>#button("AFTER_SALE")</span>
+				</div></a></li>
+		<li><a href="/servicer/operating"><div
+					class="navBarItem #if($currentPage=='OPERATING')selected #end">
+					<span>#button("OPERATING_MANAGEMENT")</span>
+				</div></a></li>
+		<li><a href="/servicer/sale"><div
+					class="navBarItem #if($currentPage=='SALE')selected #end">
+					<span>#button("SALE_MANAGEMENT")</span>
+				</div></a></li>#end
 		<li><a href="/servicer/auditing">
-				<div class="navBarItem">
+				<div class="navBarItem #if($currentPage=='AUDITING')selected #end">
 					<span>#button("AUDITING_SEARCH")</span>
 				</div>
 		</a></li>

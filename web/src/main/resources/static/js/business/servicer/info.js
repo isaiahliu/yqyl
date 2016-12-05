@@ -87,11 +87,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			method : "POST",
 			url : "/ajax/service/supplier/register"
 		}).success(function(response) {
-			if (response.data.length > 0) {
-				$scope.serviceSupplierClient = response.data[0];
-				$scope.logoUrl = "/ajax/content/image/" + $scope.serviceSupplierClient.logo;
-				$scope.audited = $scope.serviceSupplierClient.status.code == 'A' || $scope.serviceSupplierClient.status.code == 'D';
-			}
+			$window.location.reload();
 		}).error(function(response) {
 			errorHandler($scope, response);
 		});
@@ -149,8 +145,8 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	};
 	$scope.uploadBusinessCertificate = function(event) {
 		$scope.uploadPhoto(event, "businessCertificate", function() {
-			$scope.businessCertificateUrl = "/ajax/content/image/" + $scope.serviceSupplierClient.material.businessCertificateCopy + "?ticks="
-					+ new Date().getTime();
+			$scope.businessCertificateUrl = "/ajax/content/image/" + $scope.serviceSupplierClient.material.businessCertificateCopy
+					+ "?ticks=" + new Date().getTime();
 		});
 	};
 	$scope.uploadPhoto = function(event, file, urlHandler) {

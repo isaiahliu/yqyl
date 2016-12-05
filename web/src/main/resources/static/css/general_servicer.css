@@ -37,6 +37,22 @@ div.navBar {
 	text-align: center;
 }
 
+div.navBar div.selected {
+	background: #097ffa;
+}
+
+div.navBar li.subItem div.selected {
+	background: #e5f1fd;
+}
+
+div.navBar div.selected span {
+	color: white;
+}
+
+div.navBar li.subItem div.selected span {
+	color: black;
+}
+
 div.navBar div.navBarItems ul {
 	display: inline-block;
 	background: #097ffa;
@@ -59,10 +75,20 @@ div.navBar li div {
 	height: 45px;
 }
 
+div.navBar li.subItem div {
+	height: 35px;
+	padding-left: 50px;
+}
+
 div.navBar li span {
 	color: #ffffff;
 	line-height: 45px;
 	font-size: 18px;
+}
+
+div.navBar li.subItem span {
+	line-height: 35px;
+	font-size: 14px;
 }
 
 div.navBar li.navBarItem {

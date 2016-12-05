@@ -1,7 +1,7 @@
 <link rel="stylesheet"
 	href="/static/css/business/servicer/requirementCatcher.css"></link>
 
-<div class="requirementCatcher"
+<div class="requirementCatcher ng-hide"
 	ng-controller="requirementCatcherController">
 	<ul>
 		<li>1</li>

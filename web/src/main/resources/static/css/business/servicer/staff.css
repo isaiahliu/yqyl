@@ -1,5 +1,19 @@
 div.staff {
-	padding: 10px 0px 0px 280px;
+	padding: 1px 0 0 250px;
+}
+
+div.staff div.block {
+	border: 1px solid #cccccc;
+}
+
+div.staff div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+div.staff div.headerBlock {
+	border-bottom: none;
 }
 
 div.staff div.title {
@@ -7,33 +21,53 @@ div.staff div.title {
 	font-size: large;
 }
 
-div.staff div.filter span {
+div.staff div.details div.tab {
+	padding: 10px 20px 10px 20px;
+	background: white;
+	margin-bottom: 20px;
+}
+
+div.staff div.details div.tab div.tabTitle {
+	padding: 5px 10px;
+}
+
+div.staff div.details div.tab div.tabTitle img {
+	width: 14px;
+	height: 14px;
+}
+
+div.staff div.details div.tab div.tabContent {
+	padding-left: 5px;
+}
+
+div.staff div.details div.tab div.tabContent div.inlineItem {
+	margin-top: 8px;
 	display: inline-block;
-	margin-right: 20px;
-	margin-top: 5px;
-	margin-bottom: 5px;
 }
 
-div.staff div.filter input, div.staff div.filter select {
-	margin-left: 5px;
+div.staff div.details div.tab div.tabContent input, div.staff div.details div.tab div.tabContent select
+	{
+	width: 160px;
+	height: 26px;
+	margin-right: 50px;
 }
 
-div.staff table {
-	margin-top: 20px;
-	width: 900px;
+div.staff div.details div.tab div.tabContent img {
+	max-width: 50px;
+	min-width: 50px;
+	max-height: 50px;
+	min-height: 50px;
 }
 
-div.staff table thead td {
-	background-color: rgba(215, 215, 215, 1)
+div.staff div.details div.tab div.tabContent table {
+	width: 100%;
 }
 
-div.staff table td {
-	border: 1px solid;
+div.staff div.details div.tab div.tabContent table thead td {
+	background: #c7defd;
 }
 
-div.staff table td img {
-	min-width: 80px;
-	min-height: 80px;
-	max-width: 80px;
-	max-height: 80px;
+div.staff div.details div.tab div.tabContent table td {
+	border: 1px solid #7f7f7f;
+	padding: 10px 0;
 }
