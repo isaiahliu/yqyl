@@ -75,12 +75,19 @@ public class YiquanProcessController
         // TODO verify yiquan code, password, name, identity card from API.
         // TODO If verify fails, throw exception.
 
-        Yiquan yiquan = getDomainEntityRepository().findOneByCode(yiquanDto.getCode());
+        client.setYiquan(create(yiquanDto.getCode()));
+
+        serviceReceiverClientRepository.save(client);
+    }
+
+    @Override
+    public Yiquan create(final String yiquanCode) throws IException {
+        Yiquan yiquan = getDomainEntityRepository().findOneByCode(yiquanCode);
 
         if (yiquan == null) {
             final Account account = accountProcessController.createAccount();
             yiquan = new Yiquan();
-            yiquan.setCode(yiquanDto.getCode());
+            yiquan.setCode(yiquanCode);
             yiquan.setStatus(RecordStatus.ACTIVE);
             yiquan.setAccount(account);
             getDomainEntityRepository().save(yiquan);
@@ -99,10 +106,7 @@ public class YiquanProcessController
 
             accountTransactionProcessController.processTransaction(transaction);
         }
-
-        client.setYiquan(yiquan);
-
-        serviceReceiverClientRepository.save(client);
+        return yiquan;
     }
 
     @Override

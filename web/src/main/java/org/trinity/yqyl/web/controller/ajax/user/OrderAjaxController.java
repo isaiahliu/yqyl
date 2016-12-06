@@ -21,6 +21,7 @@ import org.trinity.yqyl.common.accessright.Authorize;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderOperationDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderSearchingDto;
+import org.trinity.yqyl.common.message.dto.request.PaymentRequest;
 import org.trinity.yqyl.common.message.dto.request.ServiceOrderRequest;
 import org.trinity.yqyl.common.message.dto.request.ServiceOrderRequirementRequest;
 import org.trinity.yqyl.common.message.dto.response.ServiceOrderRequirementResponse;
@@ -98,6 +99,13 @@ public class OrderAjaxController extends AbstractRestController {
     public ResponseEntity<ServiceOrderResponse> ajaxGetOrders(final ServiceOrderSearchingDto request) throws IException {
         final ServiceOrderResponse response = restfulServiceUtil.callRestService(Url.ORDER, null, null, request,
                 ServiceOrderResponse.class);
+
+        return createResponseEntity(response);
+    }
+
+    @RequestMapping(value = "/payment", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<DefaultResponse> ajaxPaymentOrder(@RequestBody final PaymentRequest request) throws IException {
+        final DefaultResponse response = restfulServiceUtil.callRestService(Url.ORDER_PAYMENT, null, request, null, DefaultResponse.class);
 
         return createResponseEntity(response);
     }

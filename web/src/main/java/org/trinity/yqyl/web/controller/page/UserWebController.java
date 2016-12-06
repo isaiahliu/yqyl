@@ -29,7 +29,7 @@ public class UserWebController extends AbstractResourceWebController {
     @RequestMapping(value = "/order/{entityId}", method = RequestMethod.GET)
     public ModelAndView orderDetailPage(@PathVariable("entityId") final Long entityId) throws IException {
         return createModelAndView("service/detail").addObject("orderId", entityId).addObject("mode", "receiver").addObject("currentPage",
-                "ORDER");
+                "SEARCH");
     }
 
     @RequestMapping(value = "/order/edit/{entityId}", method = RequestMethod.GET)
@@ -40,6 +40,11 @@ public class UserWebController extends AbstractResourceWebController {
     @RequestMapping(value = { "", "/order" }, method = RequestMethod.GET)
     public ModelAndView orderPage() throws IException {
         return createModelAndView("user/order").addObject("currentPage", "ORDER");
+    }
+
+    @RequestMapping(value = "/order/payment/{entityId}", method = RequestMethod.GET)
+    public ModelAndView orderPaymentPage(@PathVariable("entityId") final Long entityId) throws IException {
+        return createModelAndView("user/payment").addObject("orderId", entityId).addObject("currentPage", "ORDER");
     }
 
     @RequestMapping(value = "/password", method = RequestMethod.GET)

@@ -4,8 +4,9 @@ import org.trinity.common.exception.IException;
 import org.trinity.process.controller.ICrudProcessController;
 import org.trinity.yqyl.common.message.dto.domain.AccountTransactionDto;
 import org.trinity.yqyl.common.message.dto.domain.AccountTransactionSearchingDto;
+import org.trinity.yqyl.repository.business.entity.AccountTransaction;
 
 public interface IAccountTransactionProcessController
         extends ICrudProcessController<AccountTransactionDto, AccountTransactionSearchingDto> {
-    AccountTransactionDto processTransaction(AccountTransactionDto transaction) throws IException;
+    AccountTransaction processTransaction(AccountTransactionDto transaction) throws IException;
 }

@@ -1,0 +1,59 @@
+div.payment {
+	width: 1200px;
+	overflow: hidden;
+}
+
+div.payment div.block {
+	text-align: center;
+	border: 1px solid #cccccc;
+}
+
+div.categorySelect {
+	margin: 20px 0px 0px 40px;
+}
+
+div.payment div.block div.blockItem {
+	margin: 15px 0;
+}
+
+div.payment div.block div.blockItem span {
+	display: inline-block;
+	width: 100px;
+}
+
+div.payment div.block div.blockItem input, div.payment div.block div.blockItem select
+	{
+	width: 300px;
+}
+
+div.payment div.block div.blockItem select {
+	height: 26px;
+}
+
+div.payment table {
+	margin: 10px 0px 0px 40px;
+}
+
+div.payment table td {
+	border: solid 1px;
+}
+
+div.payment table td input.newInfo {
+	width: 350px;
+}
+
+div.payment table thead td {
+	background-color: rgba(215, 215, 215, 1)
+}
+
+div.payment table td.key {
+	width: 120px;
+}
+
+div.payment table td.value {
+	width: 400px;
+}
+
+div.submit {
+	margin: 20px 0px 0px 240px;
+}

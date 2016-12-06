@@ -39,7 +39,7 @@ public class AccountTransactionProcessController extends
 
     @Override
     @Transactional(rollbackOn = IException.class)
-    public AccountTransactionDto processTransaction(final AccountTransactionDto transactionDto) throws IException {
+    public AccountTransaction processTransaction(final AccountTransactionDto transactionDto) throws IException {
         final AccountTransaction accountTransaction = getDomainObjectConverter().convertBack(transactionDto);
 
         accountTransaction.setId(null);
@@ -71,6 +71,6 @@ public class AccountTransactionProcessController extends
             accountPostingRepository.save(accountPosting);
         }
 
-        return getDomainObjectConverter().convert(accountTransaction);
+        return accountTransaction;
     }
 }

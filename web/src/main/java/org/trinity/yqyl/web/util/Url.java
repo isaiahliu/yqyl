@@ -35,6 +35,7 @@ public enum Url implements IHttpUrl {
     ORDER_RELEASE(HttpMethod.POST, Path.ORDER, "release"),
     ORDER_TRANSACTION(HttpMethod.POST, Path.ORDER, "transaction"),
     ORDER_CANCEL(HttpMethod.POST, Path.ORDER, "cancel"),
+    ORDER_PAYMENT(HttpMethod.POST, Path.ORDER, "payment"),
     ORDER_REJECT_CANCEL(HttpMethod.POST, Path.ORDER, "rejectCancel"),
     ORDER_PRICE(HttpMethod.PUT, Path.ORDER, "price"),
 

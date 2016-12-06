@@ -19,6 +19,7 @@ import org.trinity.process.converter.IObjectConverter.CopyPolicy;
 import org.trinity.yqyl.common.message.dto.domain.AccountBalanceDto;
 import org.trinity.yqyl.common.message.dto.domain.AccountPostingDto;
 import org.trinity.yqyl.common.message.dto.domain.AccountTransactionDto;
+import org.trinity.yqyl.common.message.dto.domain.PaymentDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderOperationDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderSearchingDto;
@@ -34,7 +35,7 @@ import org.trinity.yqyl.common.message.lookup.TransactionType;
 import org.trinity.yqyl.process.controller.base.AbstractAutowiredCrudProcessController;
 import org.trinity.yqyl.process.controller.base.IAccountTransactionProcessController;
 import org.trinity.yqyl.process.controller.base.IServiceOrderProcessController;
-import org.trinity.yqyl.repository.business.dataaccess.IAccountTransactionRepository;
+import org.trinity.yqyl.process.controller.base.IYiquanProcessController;
 import org.trinity.yqyl.repository.business.dataaccess.IContentRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceInfoRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceInfoStasticRepository;
@@ -79,9 +80,6 @@ public class ServiceOrderProcessController
     private IAccountTransactionProcessController accountTransactionProcessController;
 
     @Autowired
-    private IAccountTransactionRepository accountTransactionRepository;
-
-    @Autowired
     private IServiceOrderRequirementRepository serviceOrderRequirementRepository;
 
     @Autowired
@@ -92,6 +90,9 @@ public class ServiceOrderProcessController
 
     @Autowired
     private IServiceInfoStasticRepository serviceInfoStasticRepository;
+
+    @Autowired
+    private IYiquanProcessController yiquanProcessController;
 
     @Override
     public List<ServiceOrderDto> cancelOrder(final List<ServiceOrderDto> data) {
@@ -222,6 +223,50 @@ public class ServiceOrderProcessController
     public int countUnprocessedOrders(final String username) throws IException {
         return getDomainEntityRepository().countUnprocessedOrders(userRepository.findOneByUsername(username),
                 new OrderStatus[] { OrderStatus.UNPROCESSED });
+    }
+
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public void onlinePayment(final PaymentDto payment) throws IException {
+        final ServiceOrder order = getDomainEntityRepository().findOne(payment.getOrderId());
+
+        if (!order.getUser().getUsername().equals(getCurrentUsername())) {
+            throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
+        }
+
+        if (order.getPaymentMethod() != PaymentMethod.ONLINE || order.getStatus() != OrderStatus.AWAITING_PAYMENT) {
+            return;
+        }
+
+        final String yiquanCode = payment.getYiquanCode();
+        // TODO validate yiquan code and password
+
+        final Yiquan yiquan = yiquanProcessController.create(yiquanCode);
+
+        final Double amount = order.getExpectedPaymentAmount();
+        order.setActualPaymentAmount(amount);
+
+        final AccountTransactionDto transaction = new AccountTransactionDto();
+        transaction.setType(new LookupDto(TransactionType.ORDER_PAYMENT));
+
+        AccountPostingDto accountPosting = new AccountPostingDto();
+        AccountBalanceDto accountBalance = new AccountBalanceDto();
+        accountBalance.setId(order.getServiceInfo().getServiceSupplierClient().getAccount().getBalances().stream()
+                .filter(item -> item.getCategory() == AccountCategory.YIQUAN).findAny().get().getId());
+        accountPosting.setBalance(accountBalance);
+        accountPosting.setAmount(amount);
+
+        accountPosting = new AccountPostingDto();
+        accountBalance = new AccountBalanceDto();
+        accountBalance.setId(yiquan.getAccount().getBalances().stream().filter(item -> item.getCategory() == AccountCategory.YIQUAN)
+                .findAny().get().getId());
+        accountPosting.setBalance(accountBalance);
+        accountPosting.setAmount(0 - amount);
+
+        transaction.getAccountPostings().add(accountPosting);
+
+        order.setAccountTransaction(accountTransactionProcessController.processTransaction(transaction));
+        order.setStatus(OrderStatus.UNPROCESSED);
     }
 
     @Override
@@ -416,7 +461,7 @@ public class ServiceOrderProcessController
             final AccountBalance toBalance = toAccount.getBalances().stream()
                     .filter(balance -> balance.getCategory() == AccountCategory.YIQUAN).findAny().get();
 
-            AccountTransactionDto transaction = new AccountTransactionDto();
+            final AccountTransactionDto transaction = new AccountTransactionDto();
             transaction.setCode(item.getTransaction().getCode());
             transaction.setType(new LookupDto(TransactionType.ORDER_PAYMENT));
 
@@ -434,9 +479,7 @@ public class ServiceOrderProcessController
             accountPosting.setAmount(amount);
             transaction.getAccountPostings().add(accountPosting);
 
-            transaction = accountTransactionProcessController.processTransaction(transaction);
-
-            entity.setAccountTransaction(accountTransactionRepository.findOne(transaction.getId()));
+            entity.setAccountTransaction(accountTransactionProcessController.processTransaction(transaction));
 
             entity.setExpectedPaymentAmount(amount);
             entity.setActualPaymentAmount(amount);
@@ -543,5 +586,4 @@ public class ServiceOrderProcessController
             entity.setServiceSupplierStaff(serviceSupplierStaffRepository.findOne(dto.getStaff().getId()));
         }
     }
-
 }

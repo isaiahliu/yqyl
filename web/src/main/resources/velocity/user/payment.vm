@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="/static/css/business/user/payment.css"></link>
+
+<script type="text/javascript">
+	layoutApp.value("orderId", #if(${orderId})${orderId} #else 0 #end);
+</script>
+<div class="payment">
+	<div class="title">
+		<span>#label("YOUR_POSITION") : </span> <a href="/service/search"><span>#button("ONLINE_SERVICE")</span></a> <span>></span> <a
+			href="javascript:void(0)"><span>#label("ORDER_PAYMENT_PAGE")</span></a>
+	</div>
+	<div class="block ng-hide" ng-show="order&&!awaitingPayment">
+		<div style="background: #f0f0f0; padding: 10px 0;">
+			<span ng-show="order.paymentMethod.code=='O'" style="font-size: 18px;">#info("PAID")</span> <span ng-hide="order.paymentMethod.code=='O'"
+				style="font-size: 18px;">#info("INCORRECT_PAYMENT_METHOD")</span>
+		</div>
+	</div>
+	<div class="block ng-hide" ng-show="awaitingPayment" ng-if="awaitingPayment">
+		<div style="background: #f0f0f0; padding: 10px 0;">
+			<span style="font-size: 18px;">#info("ONLINE_PAYMENT")</span>
+		</div>
+		<div class="blockItem">
+			<span>#label("PAYER")</span> <select ng-model="selectedMember" ng-options="member as member.name for member in members"></select>
+		</div>
+		<div class="blockItem">
+			<span>#label("YIQUAN_NO")</span> <input ng-if="!selectedMember.yiquan" ng-model="customYiquanNo"> <span
+				ng-if="selectedMember.yiquan" style="display: inline-block; width: 300px; text-align: left;">{{selectedMember.yiquan.code}}</span>
+		</div>
+		<div class="blockItem">
+			<span>#label("YIQUAN_PASSWORD")</span> <input ng-model="payment.yiquanPassword" type="password" />
+		</div>
+	</div>
+	<div class="block ng-hide" ng-show="order">
+		<div class="blockItem">
+			<span>#label("PRICE")</span> <span>{{order.expectedPaymentAmount|currency:'￥'}}</span>
+		</div>
+		<div class="blockItem">
+			<span>#label("PAYMENT_METHOD")</span> <span>{{order.paymentMethod.message}}</span>
+		</div>
+	</div>
+	<div class="block ng-hide" ng-show="order">
+		<div class="blockItem">
+			<button ng-click="apply()" ng-if="awaitingPayment">#button("APPLY")</button>
+			<button ng-click="cancel()">#button("BACK")</button>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/user/payment.js"></script>

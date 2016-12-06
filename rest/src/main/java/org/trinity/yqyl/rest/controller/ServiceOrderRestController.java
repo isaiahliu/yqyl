@@ -12,6 +12,7 @@ import org.trinity.yqyl.common.accessright.Authorize;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderSearchingDto;
 import org.trinity.yqyl.common.message.dto.request.OrderRequest;
+import org.trinity.yqyl.common.message.dto.request.PaymentRequest;
 import org.trinity.yqyl.common.message.dto.request.ServiceOrderRequest;
 import org.trinity.yqyl.common.message.dto.response.ServiceOrderResponse;
 import org.trinity.yqyl.common.message.lookup.AccessRight;
@@ -20,89 +21,97 @@ import org.trinity.yqyl.process.controller.base.IServiceOrderProcessController;
 @RestController
 @RequestMapping("/user/order")
 public class ServiceOrderRestController extends
-		AbstractApplicationAwareCrudRestController<ServiceOrderDto, ServiceOrderSearchingDto, IServiceOrderProcessController, OrderRequest, ServiceOrderResponse> {
+        AbstractApplicationAwareCrudRestController<ServiceOrderDto, ServiceOrderSearchingDto, IServiceOrderProcessController, OrderRequest, ServiceOrderResponse> {
 
-	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<ServiceOrderResponse> cancelOrder(@RequestBody final ServiceOrderRequest request)
-			throws IException {
-		final ServiceOrderResponse response = new ServiceOrderResponse();
-		response.addData(getDomainProcessController().cancelOrder(request.getData()));
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<ServiceOrderResponse> cancelOrder(@RequestBody final ServiceOrderRequest request)
+            throws IException {
+        final ServiceOrderResponse response = new ServiceOrderResponse();
+        response.addData(getDomainProcessController().cancelOrder(request.getData()));
 
-		return createResponseEntity(response);
-	}
+        return createResponseEntity(response);
+    }
 
-	@RequestMapping(value = "/price", method = RequestMethod.PUT)
-	@Authorize(AccessRight.SERVICE_SUPPLIER)
-	public @ResponseBody ResponseEntity<ServiceOrderResponse> changePrice(@RequestBody final ServiceOrderRequest request)
-			throws IException {
-		final ServiceOrderResponse response = new ServiceOrderResponse();
-		response.addData(getDomainProcessController().changePrice(request.getData()));
+    @RequestMapping(value = "/price", method = RequestMethod.PUT)
+    @Authorize(AccessRight.SERVICE_SUPPLIER)
+    public @ResponseBody ResponseEntity<ServiceOrderResponse> changePrice(@RequestBody final ServiceOrderRequest request)
+            throws IException {
+        final ServiceOrderResponse response = new ServiceOrderResponse();
+        response.addData(getDomainProcessController().changePrice(request.getData()));
 
-		return createResponseEntity(response);
-	}
+        return createResponseEntity(response);
+    }
 
-	@Override
-	public ResponseEntity<ServiceOrderResponse> getAll(final ServiceOrderSearchingDto request) throws IException {
-		final ResponseEntity<ServiceOrderResponse> response = super.getAll(request);
+    @Override
+    public ResponseEntity<ServiceOrderResponse> getAll(final ServiceOrderSearchingDto request) throws IException {
+        final ResponseEntity<ServiceOrderResponse> response = super.getAll(request);
 
-		if (request.isFetchUnprocessedCount()) {
-			response.getBody().addExtraData("unprocessedOrderCount",
-					getDomainProcessController().countUnprocessedOrders(request.getCurrentUsername()));
-		}
+        if (request.isFetchUnprocessedCount()) {
+            response.getBody().addExtraData("unprocessedOrderCount",
+                    getDomainProcessController().countUnprocessedOrders(request.getCurrentUsername()));
+        }
 
-		return response;
-	}
+        return response;
+    }
 
-	@RequestMapping(value = "/proposal", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<ServiceOrderResponse> proposeOrder(@RequestBody final ServiceOrderRequest request)
-			throws IException {
-		final ServiceOrderResponse response = new ServiceOrderResponse();
-		final ServiceOrderDto serviceOrderDto = request.getData().get(0);
-		response.addData(getDomainProcessController().proposeOrder(serviceOrderDto));
+    @RequestMapping(value = "/payment", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<DefaultResponse> paymentOrder(@RequestBody final PaymentRequest request) throws IException {
 
-		return createResponseEntity(response);
-	}
+        getDomainProcessController().onlinePayment(request.getPayment());
 
-	@RequestMapping(value = "/rejectCancel", method = RequestMethod.POST)
-	@Authorize(AccessRight.SERVICE_SUPPLIER)
-	public @ResponseBody ResponseEntity<ServiceOrderResponse> rejectCancelOrder(@RequestBody final ServiceOrderRequest request)
-			throws IException {
-		final ServiceOrderResponse response = new ServiceOrderResponse();
-		response.addData(getDomainProcessController().rejectCancelOrder(request.getData()));
+        return createResponseEntity();
+    }
 
-		return createResponseEntity(response);
-	}
+    @RequestMapping(value = "/proposal", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<ServiceOrderResponse> proposeOrder(@RequestBody final ServiceOrderRequest request)
+            throws IException {
+        final ServiceOrderResponse response = new ServiceOrderResponse();
+        final ServiceOrderDto serviceOrderDto = request.getData().get(0);
+        response.addData(getDomainProcessController().proposeOrder(serviceOrderDto));
 
-	@RequestMapping(value = "/release", method = RequestMethod.POST)
-	@Authorize(AccessRight.SERVICE_SUPPLIER)
-	public @ResponseBody ResponseEntity<DefaultResponse> releaseOrder(@RequestBody final ServiceOrderRequest request) throws IException {
-		getDomainProcessController().releaseOrder(request.getData());
+        return createResponseEntity(response);
+    }
 
-		return createResponseEntity(new DefaultResponse());
-	}
+    @RequestMapping(value = "/rejectCancel", method = RequestMethod.POST)
+    @Authorize(AccessRight.SERVICE_SUPPLIER)
+    public @ResponseBody ResponseEntity<ServiceOrderResponse> rejectCancelOrder(@RequestBody final ServiceOrderRequest request)
+            throws IException {
+        final ServiceOrderResponse response = new ServiceOrderResponse();
+        response.addData(getDomainProcessController().rejectCancelOrder(request.getData()));
 
-	@RequestMapping(value = "/transaction", method = RequestMethod.POST)
-	@Authorize(AccessRight.SERVICE_SUPPLIER)
-	public @ResponseBody ResponseEntity<ServiceOrderResponse> sendTxCode(@RequestBody final ServiceOrderRequest request) throws IException {
-		final ServiceOrderResponse response = new ServiceOrderResponse();
-		response.addData(getDomainProcessController().sendTxCode(request.getData()));
+        return createResponseEntity(response);
+    }
 
-		return createResponseEntity(response);
-	}
+    @RequestMapping(value = "/release", method = RequestMethod.POST)
+    @Authorize(AccessRight.SERVICE_SUPPLIER)
+    public @ResponseBody ResponseEntity<DefaultResponse> releaseOrder(@RequestBody final ServiceOrderRequest request) throws IException {
+        getDomainProcessController().releaseOrder(request.getData());
 
-	@RequestMapping(value = "/receipt", method = RequestMethod.PUT)
-	@Authorize(AccessRight.SERVICE_SUPPLIER)
-	public @ResponseBody ResponseEntity<DefaultResponse> uploadReceipt(@RequestBody final ServiceOrderRequest request) throws IException {
-		final DefaultResponse response = new DefaultResponse();
-		final ServiceOrderDto serviceOrderDto = request.getData().get(0);
-		response.addData(getDomainProcessController().uploadReceipt(serviceOrderDto));
+        return createResponseEntity(new DefaultResponse());
+    }
 
-		return createResponseEntity(response);
-	}
+    @RequestMapping(value = "/transaction", method = RequestMethod.POST)
+    @Authorize(AccessRight.SERVICE_SUPPLIER)
+    public @ResponseBody ResponseEntity<ServiceOrderResponse> sendTxCode(@RequestBody final ServiceOrderRequest request) throws IException {
+        final ServiceOrderResponse response = new ServiceOrderResponse();
+        response.addData(getDomainProcessController().sendTxCode(request.getData()));
 
-	@Override
-	protected ServiceOrderResponse createResponseInstance() {
-		return new ServiceOrderResponse();
-	}
+        return createResponseEntity(response);
+    }
+
+    @RequestMapping(value = "/receipt", method = RequestMethod.PUT)
+    @Authorize(AccessRight.SERVICE_SUPPLIER)
+    public @ResponseBody ResponseEntity<DefaultResponse> uploadReceipt(@RequestBody final ServiceOrderRequest request) throws IException {
+        final DefaultResponse response = new DefaultResponse();
+        final ServiceOrderDto serviceOrderDto = request.getData().get(0);
+        response.addData(getDomainProcessController().uploadReceipt(serviceOrderDto));
+
+        return createResponseEntity(response);
+    }
+
+    @Override
+    protected ServiceOrderResponse createResponseInstance() {
+        return new ServiceOrderResponse();
+    }
 
 }

@@ -1,5 +1,4 @@
-layoutApp.controller('contentController', function($scope, $http, $window, errorHandler, $filter,
-		serviceSupplierClientId) {
+layoutApp.controller('contentController', function($scope, $http, $window, errorHandler, $filter, serviceSupplierClientId) {
 	$scope.dateOptions = {
 		dateFormat : 'yy/mm/dd',
 	};
