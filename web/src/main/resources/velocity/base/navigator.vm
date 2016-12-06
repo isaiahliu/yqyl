@@ -4,11 +4,10 @@
 	<div class="advertisement">
 		<img class="logo" src="/static/images/logo/yqyl.jpg" />
 		<div style="display: inline-block; height: 40px; margin-left: 100px;">
-			<img
-				style="position: absolute; padding: 5px; height: 40px; width: 40px;"
-				src="/static/images/logo/search.png" /> <input class="searchBox"
-				placeholder="#label('INPUT_KEY_WORDS')" /><button class="searchButton"><span
-				style="line-height: 40px;">#button("SEARCH")</span></button>
+			<img style="position: absolute; padding: 5px; height: 40px; width: 40px;" src="/static/images/logo/search.png" /> <input
+				class="searchBox" ng-model="name" placeholder="#label('INPUT_KEY_WORDS')" /><button class="searchButton" ng-click="search()">
+				<span style="line-height: 40px;">#button("SEARCH")</span>
+			</button>
 			<button class="publishButton" ng-click="publish()">#button("PUBLISH_SERVICE")</button>
 		</div>
 		<img class="advertisement" src="/static/images/logo/advertisement.jpg" />
@@ -20,9 +19,7 @@
 					<span>#button("ONLINE_SERVICE")</span>
 				</div>#end
 			</li>
-			<li class="navBarItem"><a href="/home"><div
-						ng-mouseenter="showHomePage=true"
-						ng-mouseleave="showHomePage=false">
+			<li class="navBarItem"><a href="/home"><div ng-mouseenter="showHomePage=true" ng-mouseleave="showHomePage=false">
 						<span>#button("HOME")</span>
 					</div></a></li>
 			<li class="navBarItem"><a href="javascript:void(0)"><div>
@@ -34,29 +31,24 @@
 			<li class="navBarItem"><a href="javascript:void(0)"><div>
 						<span>#button("SENIOR_LIFE")</span>
 					</div></a></li>
-			<li class="navBarItem"><a href="javascript:void(0)"><div
-						ng-mouseenter="showHomeEndowment=true"
+			<li class="navBarItem"><a href="javascript:void(0)"><div ng-mouseenter="showHomeEndowment=true"
 						ng-mouseleave="showHomeEndowment=false">
 						<span>#button("HOME_ENDOWMENT")</span>
 					</div></a></li>
-			<li class="navBarItem"><a href="javascript:void(0)"><div
-						ng-mouseenter="showPensionIndustry=true"
+			<li class="navBarItem"><a href="javascript:void(0)"><div ng-mouseenter="showPensionIndustry=true"
 						ng-mouseleave="showPensionIndustry=false">
 						<span>#button("PENSION_INDUSTRY")</span>
 					</div></a></li>
 			<li class="navBarItem"><a href="/service"><div>
 						<span>#button("ONLINE_SERVICE")</span>
 					</div></a></li>
-			<li class="navBarItem"><a href="javascript:void(0)"><div
-						ng-mouseenter="showTalentTraining=true"
+			<li class="navBarItem"><a href="javascript:void(0)"><div ng-mouseenter="showTalentTraining=true"
 						ng-mouseleave="showTalentTraining=false">
 						<span>#button("TALENT_TRAINING")</span>
 					</div></a></li>
 		</ul>
 	</div>
-	<ul class="popList homePagePopList ng-hide"
-		ng-mouseenter="showHomePage=true" ng-mouseleave="showHomePage=false"
-		ng-show="showHomePage">
+	<ul class="popList homePagePopList ng-hide" ng-mouseenter="showHomePage=true" ng-mouseleave="showHomePage=false" ng-show="showHomePage">
 		<li><a href="/servicer"><div>
 					<span>#button("SERVICE_SUPPLIER_HOME")</span>
 				</div></a></li>
@@ -68,9 +60,8 @@
 				</div></a></li>
 	</ul>
 
-	<ul class="popList homeEndowmentPopList ng-hide"
-		ng-mouseenter="showHomeEndowment=true"
-		ng-mouseleave="showHomeEndowment=false" ng-show="showHomeEndowment">
+	<ul class="popList homeEndowmentPopList ng-hide" ng-mouseenter="showHomeEndowment=true" ng-mouseleave="showHomeEndowment=false"
+		ng-show="showHomeEndowment">
 		<li><a href="/service"><div>
 					<span>#button("HOUSE_KEEPING")</span>
 				</div></a></li>
@@ -84,9 +75,7 @@
 					<span>#button("MEDICAL_CARE")</span>
 				</div></a></li>
 	</ul>
-	<ul class="popList pensionIndustryPopList ng-hide"
-		ng-mouseenter="showPensionIndustry=true"
-		ng-mouseleave="showPensionIndustry=false"
+	<ul class="popList pensionIndustryPopList ng-hide" ng-mouseenter="showPensionIndustry=true" ng-mouseleave="showPensionIndustry=false"
 		ng-show="showPensionIndustry">
 		<li><a href="javascript:void(0)"><div>
 					<span>#button("PENSION_REAL_ESTATE")</span>
@@ -101,9 +90,8 @@
 					<span>#button("TOURISM_ENDOWMENT")</span>
 				</div></a></li>
 	</ul>
-	<ul class="popList talentTrainingPopList ng-hide"
-		ng-mouseenter="showTalentTraining=true"
-		ng-mouseleave="showTalentTraining=false" ng-show="showTalentTraining">
+	<ul class="popList talentTrainingPopList ng-hide" ng-mouseenter="showTalentTraining=true" ng-mouseleave="showTalentTraining=false"
+		ng-show="showTalentTraining">
 		<li><a href="javascript:void(0)"><div>
 					<span>#button("TRAINING_PLAN")</span>
 				</div></a></li>

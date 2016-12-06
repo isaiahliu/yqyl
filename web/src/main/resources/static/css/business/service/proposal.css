@@ -1,59 +1,33 @@
 div.proposal {
-	margin-left: 70px;
-	width: 1100px;
+	width: 1200px;
+	overflow: hidden;
 }
 
-div.image {
-	width: 150px;
-	height: 150px;
-	float: left;
-	background-color: rgba(215, 215, 215, 1);
-	margin: 0px 20px 0px 40px;
-}
-
-div.image img {
-	background-color: white;
-	margin: 10px;
-	width: 130px;
-	height: 130px;
-	max-height: 130px;
-	max-width: 130px;
-}
-
-div.card {
-	border: solid 1px;
-	background-color: rgba(215, 215, 215, 1);
-	margin-left: 200px;
-	height: 150px;
-	padding: 30px;
-}
-
-div.card div.title {
-	font-size: large;
-	font-weight: bold;
-}
-
-div.card div.cardItem {
-	margin-top: 25px;
-}
-
-div.card div.cardItem span.key {
-	font-weight: bold;
-	margin-right: 20px;
+div.proposal div.block {
+	text-align: center;
+	border: 1px solid #cccccc;
 }
 
 div.categorySelect {
 	margin: 20px 0px 0px 40px;
 }
 
-div.categorySelect span.key {
-	font-weight: bold;
-	font-size: large;
-	margin-right: 20px;
+div.proposal div.block div.blockItem {
+	margin: 15px 0;
 }
 
-div.categorySelect span.value {
-	margin-right: 10px;
+div.proposal div.block div.blockItem span {
+	display: inline-block;
+	width: 100px;
+}
+
+div.proposal div.block div.blockItem input, div.proposal div.block div.blockItem select
+	{
+	width: 300px;
+}
+
+div.proposal div.block div.blockItem select {
+	height: 26px;
 }
 
 div.proposal table {

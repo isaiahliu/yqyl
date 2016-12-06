@@ -24,6 +24,10 @@ layoutApp.controller('contentController', function($scope, $http, $window, $loca
 			ajaxUrl += "&parentCategoryId=" + $scope.parentCategoryId;
 		}
 
+		if ($scope.name != undefined && $scope.name != "") {
+			ajaxUrl += "&name=" + $scope.name;
+		}
+
 		switch ($scope.sorting.name) {
 		case 'sales':
 			ajaxUrl += "&customSortedBy=sales&customSortedDirection=" + ($scope.sorting.asc ? 'asc' : 'desc');
@@ -61,6 +65,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, $loca
 
 		$scope.parentCategoryId = $location.search().parentCategory;
 		$scope.categoryId = $location.search().category;
+		$scope.name = $location.search().name;
 
 		if ($scope.parentCategoryId != undefined || $scope.categoryId != undefined) {
 			for (var i = 0; i < $scope.categories.length; i++) {

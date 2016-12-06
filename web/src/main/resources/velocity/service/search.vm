@@ -49,7 +49,7 @@
 						</div></td>
 					<td align="center" class="barItem"><div>
 							<a href="javascript:void(0)" ng-click="modifySorting('timestamp')"><span>#label("PUBLISH_TIMESTAMP")</span></a> <img class="ng-hide"
-								ng-show="sorting.name=='timestamp' && sorting.asc" src="/static/images/icon/arrow_up.png" /><img class="ng-hide"
+								ng-show="sorting.name=='timestamp' && sorting.asc" src="/static/images/icon/arrow_up.png" /><imgclass="ng-hide"
 								ng-show="sorting.name=='timestamp' && !sorting.asc" src="/static/images/icon/arrow_down.png" />
 						</div></td>
 					<td align="center" class="info"><div class="ng-hide" ng-show="pagingData">
