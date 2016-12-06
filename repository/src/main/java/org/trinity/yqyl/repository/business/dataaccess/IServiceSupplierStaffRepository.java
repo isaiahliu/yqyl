@@ -35,6 +35,10 @@ public interface IServiceSupplierStaffRepository extends IJpaRepository<ServiceS
                 predicates.add(cb.like(root.get(ServiceSupplierStaff_.name), "%" + searchingDto.getName() + "%"));
             }
 
+            if (!StringUtils.isEmpty(searchingDto.getCode())) {
+                predicates.add(cb.like(root.get(ServiceSupplierStaff_.code), "%" + searchingDto.getCode() + "%"));
+            }
+
             if (!searchingDto.getStatus().isEmpty()) {
                 final In<StaffStatus> in = cb.in(root.get(ServiceSupplierStaff_.status));
                 searchingDto.getStatus().forEach(item -> in.value(LookupParser.parse(StaffStatus.class, item)));

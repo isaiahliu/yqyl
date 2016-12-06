@@ -1,61 +1,64 @@
 div.staffEdit {
-	padding: 10px 0px 0px 280px;
+	padding: 1px 0 0 250px;
 }
 
-div.staffEdit div.left {
-	float: left;
-	width: 300px;
-	text-align: center;
+div.staffEdit div.block {
+	border: 1px solid #cccccc;
 }
 
-div.staffEdit div.right {
+div.staffEdit div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+div.staffEdit div.headerBlock {
+	border-bottom: none;
+}
+
+div.staffEdit div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.staffEdit div.tab {
+	padding: 10px 20px 10px 20px;
+	background: white;
+	margin-bottom: 20px;
+}
+
+div.staffEdit div.tab div.tabTitle {
+	padding: 5px 10px;
+}
+
+div.staffEdit div.tab div.tabTitle img {
+	width: 14px;
+	height: 14px;
+}
+
+div.staffEdit div.tab div.tabContent {
+	padding-left: 5px;
+}
+
+div.staffEdit div.tab div.tabContent div.inlineItem {
+	margin-top: 8px;
 	display: inline-block;
-	width: 400px;
 }
 
-div.image {
-	width: 250px;
-	heigth: 250px;
-	float: left;
-	background-color: rgba(215, 215, 215, 1);
-	margin: 0px 20px 0px 20px;
+div.staffEdit div.tab div.tabContent input, div.staffEdit div.tab div.tabContent select
+	{
+	width: 160px;
+	height: 26px;
+	margin-right: 50px;
 }
 
-div.image img {
-	background-color: white;
-	margin: 20px;
-	width: 210px;
-	height: 210px;
-	max-height: 210px;
-	max-width: 210px;
+div.staffEdit div.tab div.tabContent img {
+	max-width: 100px;
+	min-width: 100px;
+	max-height: 100px;
+	min-height: 100px;
 }
 
-div.staffEdit div.right span {
-	display: inline-block;
-	margin-top: 10px;
-	width: 80px;
-}
-
-div.staffEdit div.right button {
-	margin-top: 20px;
-}
-
-div.staffEdit div.right select {
-	min-width: 150px;
-}
-
-div.staffEdit div.categoryTree {
-	margin-top: 5px;
-	min-width: 200px;
-	display: inline-block;
-	border: solid 1px rgba(215, 215, 215, 1);
-	padding: 5px;
-}
-
-div.staffEdit div.categoryTree ol.root {
-	padding-left: 0px;
-}
-
-div.staffEdit div.categoryTree ol li {
+div.staffEdit div.tab ol li {
 	list-style: none;
 }

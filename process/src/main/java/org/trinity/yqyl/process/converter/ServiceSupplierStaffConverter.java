@@ -42,6 +42,7 @@ public class ServiceSupplierStaffConverter extends AbstractLookupSupportObjectCo
     protected void convertBackInternal(final ServiceSupplierStaffDto source, final ServiceSupplierStaff target,
             final CopyPolicy copyPolicy) {
         copyObject(source::getId, target::getId, target::setId, copyPolicy);
+        copyObject(source::getCode, target::getCode, target::setCode, copyPolicy);
         copyObject(source::getComment, target::getComment, target::setComment, copyPolicy);
         copyObject(source::getDob, target::getDob, target::setDob, copyPolicy);
         copyObject(source::getIdentityCard, target::getIdentityCard, target::setIdentityCard, copyPolicy);
@@ -54,6 +55,7 @@ public class ServiceSupplierStaffConverter extends AbstractLookupSupportObjectCo
     @Override
     protected void convertInternal(final ServiceSupplierStaff source, final ServiceSupplierStaffDto target, final CopyPolicy copyPolicy) {
         copyObject(source::getId, target::getId, target::setId, copyPolicy);
+        copyObject(source::getCode, target::getCode, target::setCode, copyPolicy);
         copyObject(source::getComment, target::getComment, target::setComment, copyPolicy);
         copyObject(source::getDob, target::getDob, target::setDob, copyPolicy);
         copyObject(source::getIdentityCard, target::getIdentityCard, target::setIdentityCard, copyPolicy);

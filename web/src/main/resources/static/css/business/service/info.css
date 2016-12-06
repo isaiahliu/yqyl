@@ -102,7 +102,7 @@ div.detail div.tab ul li.selected {
 	background-color: #fd6a15;
 }
 
-div.detail div.tab ul li.selected span{
+div.detail div.tab ul li.selected span {
 	color: #ffffff;
 }
 
@@ -127,9 +127,9 @@ div.detail div.tabPage table {
 
 div.detail div.tabPage table td {
 	width: 330px;
-	border: solid 1px;
+	border: solid 1px #feb082;
 }
 
 div.detail div.tabPage table thead td {
-	background-color: rgba(215, 215, 215, 1);
+	background-color: #feb082;
 }

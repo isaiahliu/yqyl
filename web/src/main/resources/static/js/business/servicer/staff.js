@@ -5,7 +5,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	};
 
 	$scope.filterData = {
-		id : "",
+		code : "",
 		name : ""
 	};
 
@@ -15,8 +15,8 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		ajaxUrl += "&pageIndex=" + ($scope.pagingData.pageIndex - 1);
 		ajaxUrl += "&pageSize=" + $scope.pagingData.pageSize;
 
-		if ($scope.filterData.id != undefined && $scope.filterData.id != "") {
-			ajaxUrl += "&id=" + $scope.filterData.id;
+		if ($scope.filterData.code != undefined && $scope.filterData.code != "") {
+			ajaxUrl += "&code=" + $scope.filterData.code;
 		}
 
 		if ($scope.filterData.name != undefined && $scope.filterData.name != "") {
@@ -58,4 +58,8 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			errorHandler($scope, response);
 		});
 	};
+	$scope.edit = function(staff) {
+		$window.location.href = "/servicer/staff/edit/" + staff.id;
+	};
+	$scope.searchStaffs();
 });

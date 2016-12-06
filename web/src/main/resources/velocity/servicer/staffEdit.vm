@@ -1,64 +1,76 @@
 #parse("/velocity/servicer/navigation.vm")
 
-<link rel="stylesheet"
-	href="/static/css/business/servicer/staffEdit.css"></link>
+<link rel="stylesheet" href="/static/css/business/servicer/staffEdit.css"></link>
 <script type="text/javascript">
 	layoutApp.value("staffId", ${staffId});
 </script>
 <div class="staffEdit">
-	<div class="left">
-		<div class="image">
-			<img ng-src="{{imageUrl}}" />
-		</div>
-		<input style="margin-left: 50px" type="file" class="ng-hide"
-			ng-show="staff.photo" custom-on-change="selectImage" />
-		<button ng-click="uploadPhoto()" class="ng-hide" ng-show="staff.photo"
-			ng-if="staff.photo">#button("UPLOAD_PHOTO")</button>
+	<div style="padding: 15px 15px 0 15px; height: 78px;" class="block headerBlock">
+		<span style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("SERVICE_SUPPLIER_STAFF_MANAGEMENT")-#button("GENERAL_INFO")</span>
+		<a ng-click="apply()" href="javascript:void(0)" style="float: right;"><span>#button("SAVE")</span></a> <a ng-click="back()"
+			href="javascript:void(0)" style="float: right;"><span>#button("BACK")</span></a>
 	</div>
-	<div class="right">
-		<div class="ng-hide" ng-show="staff.id" ng-if="staff.id">
-			<span>#label("ID")</span><span>{{staff.id}}</span>
+	<div class="tab" style="border: 1px solid #a1d0fe; margin: 0 15px; padding: 0;"></div>
+
+	<div class="block" style="background: #f1f1f1; padding: 15px;">
+		<div class="tab">
+			<div class="tabTitle">
+				<img src="/static/images/icon/blue_block.png" /> <span>#label("STAFF_INFO")</span>
+			</div>
+			<div class="tabContent">
+				<div class="inlineItem">
+					<span>#label("STAFF_CODE")</span> <input ng-model="staff.code" />
+				</div>
+				<div class="inlineItem">
+					<span>#label("NAME")</span> <input ng-model="staff.name" />
+				</div>
+			</div>
 		</div>
-		<div>
-			<span>#label("NAME")</span><input ng-model="staff.name" />
+
+		<div class="tab ng-hide" ng-hide="newStaff">
+			<div class="tabTitle">
+				<img src="/static/images/icon/blue_block.png" /> <span>#label("GENERAL_INFO")</span>
+			</div>
+			<div class="tabContent">
+				<div style="text-align: center; width: 110px;">
+					<img ng-src="{{imageUrl}}" /> <input style="width: 65px; margin-right: 0; display: inline-block;" type="file" class="ng-hide"
+						ng-show="staff.photo" custom-on-change="selectImage" />
+				</div>
+				<div>
+					<div class="inlineItem">
+						<span>#label("DOB")</span> <input type="text" placeholder="YYYY/MM/DD" ui-date="dateOptions" ng-model="staff.dob" />
+					</div>
+					<div class="inlineItem">
+						<span>#label("PHONE_NO")</span> <input ng-model="staff.phoneNo" />
+					</div>
+					<div class="inlineItem">
+						<span>#label("CREDENTIAL_NO")</span> <input ng-model="staff.identityCard" />
+					</div>
+					<div class="inlineItem">
+						<span>#label("SERVICE_STAFF_RATE")</span> <input ng-model="staff.comment" />
+					</div>
+				</div>
+			</div>
 		</div>
-		<div>
-			<span>#label("DOB")</span><input type="text" placeholder="YYYY/MM/DD"
-				ui-date="dateOptions" ng-model="staff.dob" />
-		</div>
-		<div>
-			<span>#label("PHONE_NO")</span><input
-				ng-model="staff.phoneNo" />
-		</div>
-		<div>
-			<span>#label("CREDENTIAL_NO")</span><input
-				ng-model="staff.identityCard" />
-		</div>
-		<div>
-			<span>#label("SERVICE_STAFF_RATE")</span><input
-				ng-model="staff.comment" />
-		</div>
-		<div>
-			<span>#label("SERVICE_CATEGORY")</span><span><div
-					class="ng-hide categoryTree" ng-show="categories" ui-tree>
-					<ol class="root" ui-tree-nodes="" ng-model="categories">
-						<li ng-repeat="category in categories" ui-tree-node>
-							<div ui-tree-handle>{{category.name}}</div>
-							<ol ui-tree-nodes="" ng-model="category.serviceSubCategories">
-								<li ng-repeat="subCategory in category.serviceSubCategories"
-									ui-tree-node>
-									<div ui-tree-handle>
-										<input type="checkbox" ng-model="subCategory.checked" /> <span>{{subCategory.name}}</span>
-									</div>
-								</li>
-							</ol>
-						</li>
-					</ol>
-				</div></span>
-		</div>
-		<div>
-			<button ng-click="apply()">#button("APPLY")</button>
-			<button ng-click="back()">#button("BACK")</button>
+
+		<div class="tab ng-hide" ng-hide="newStaff">
+			<div class="tabTitle">
+				<img src="/static/images/icon/blue_block.png" /> <span>#label("SERVICE_CATEGORIES")</span>
+			</div>
+			<div class="ng-hide categoryTree" ng-show="categories" ui-tree>
+				<ol class="root" ui-tree-nodes="" ng-model="categories">
+					<li ng-repeat="category in categories" ui-tree-node>
+						<div ui-tree-handle>{{category.name}}</div>
+						<ol ui-tree-nodes="" ng-model="category.serviceSubCategories">
+							<li ng-repeat="subCategory in category.serviceSubCategories" ui-tree-node>
+								<div ui-tree-handle>
+									<input type="checkbox" ng-model="subCategory.checked" /> <span>{{subCategory.name}}</span>
+								</div>
+							</li>
+						</ol>
+					</li>
+				</ol>
+			</div>
 		</div>
 	</div>
 </div>

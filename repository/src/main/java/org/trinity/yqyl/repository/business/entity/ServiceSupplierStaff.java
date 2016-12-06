@@ -39,6 +39,8 @@ public class ServiceSupplierStaff extends AbstractAuditableEntity implements Ser
     @TableGenerator(name = "ServiceSupplierStaff_PK_IdGenerator", table = "id_table", pkColumnName = "type", pkColumnValue = "ServiceSupplierStaff_PK", valueColumnName = "value", initialValue = 1, allocationSize = 1)
     private Long id;
 
+    private String code;
+
     private String comment;
 
     @Temporal(TemporalType.DATE)
@@ -79,6 +81,10 @@ public class ServiceSupplierStaff extends AbstractAuditableEntity implements Ser
         serviceOrder.setServiceSupplierStaff(this);
 
         return serviceOrder;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public String getComment() {
@@ -130,6 +136,10 @@ public class ServiceSupplierStaff extends AbstractAuditableEntity implements Ser
         serviceOrder.setServiceSupplierStaff(null);
 
         return serviceOrder;
+    }
+
+    public void setCode(final String code) {
+        this.code = code;
     }
 
     public void setComment(final String comment) {

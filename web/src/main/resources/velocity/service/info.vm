@@ -25,8 +25,7 @@
 			<div class="title ng-hide" ng-show="serviceSupplierClient">{{serviceSupplierClient.name}}</div>
 			<div class="cardItem">
 				<span class="key">#label("SALES_PRICE") : </span> <span ng-show="selectedService" class="value ng-hide">{{selectedService.price|currency:'￥'}}</span>
-				<span ng-show="selectedService.paymentType.code=='H'" class="ng-hide"> / #label("OCLOCK")</span> <span
-					ng-show="selectedService.paymentType.code=='F'" class="ng-hide"> / #label("OTIME")</span>
+				<span class="ng-hide" ng-show="selectedService.paymentType"> / {{selectedService.paymentType.message}}</span>
 			</div>
 			<div class="cardItem">
 				<span class="key">#label("SERVICE_CATEGORY") : </span> <select ng-model="selectedService"
@@ -80,8 +79,8 @@
 					<tbody>
 						<tr ng-repeat="serviceInfo in services">
 							<td align="center">{{serviceInfo.name}}</td>
-							<td align="center"><span>{{serviceInfo.price}}</span><span ng-show="serviceInfo.paymentType.code=='H'" class="ng-hide"> /
-									#label("OCLOCK")</span> <span ng-show="serviceInfo.paymentType.code=='F'" class="ng-hide"> / #label("OTIME")</span></td>
+							<td align="center"><span>{{serviceInfo.price|currency:'￥'}}</span> <span class="ng-hide" ng-show="serviceInfo.paymentType">
+									/ {{serviceInfo.paymentType.message}}</span></td>
 							<td align="center">{{serviceInfo.description}}</td>
 						</tr>
 					</tbody>

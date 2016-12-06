@@ -10,6 +10,8 @@ public class ServiceSupplierStaffDto extends AbstractBusinessDto {
 
     private Date dob;
 
+    private String code;
+
     private String identityCard;
 
     private String name;
@@ -26,6 +28,10 @@ public class ServiceSupplierStaffDto extends AbstractBusinessDto {
 
     public Integer getAge() {
         return age;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public String getComment() {
@@ -62,6 +68,10 @@ public class ServiceSupplierStaffDto extends AbstractBusinessDto {
 
     public void setAge(final Integer age) {
         this.age = age;
+    }
+
+    public void setCode(final String code) {
+        this.code = code;
     }
 
     public void setComment(final String comment) {

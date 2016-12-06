@@ -71,12 +71,13 @@ div.navBar li.navBarItem {
 }
 
 div.navBar li div {
-	width: 250px;
+	width: 248px;
 	height: 45px;
 }
 
 div.navBar li.subItem div {
 	height: 35px;
+	width: 248px;
 	padding-left: 50px;
 }
 
@@ -122,6 +123,7 @@ div.subNavBar ul {
 	padding-left: 0px;
 	width: 250px;
 	border: solid 1px #cccccc;
+	border-bottom: none;
 	height: 100%;
 }
 

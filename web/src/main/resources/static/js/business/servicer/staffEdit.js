@@ -13,6 +13,8 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		dateFormat : 'yy/mm/dd',
 	};
 	if (staffId > 0) {
+		$scope.newStaff = false;
+
 		$http({
 			method : "GET",
 			url : "/ajax/service/supplier/staff?rsexp=serviceCategories&searchAllStatus=true&id=" + staffId
@@ -57,6 +59,8 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			phoneNo : ""
 		};
 
+		$scope.newStaff = true;
+
 		$http({
 			method : "GET",
 			url : "/ajax/service/category?status=A&rsexp=serviceSubCategories"
@@ -70,6 +74,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	$scope.selectImage = function(event) {
 		if (event.target.files.length > 0) {
 			$scope.newImage = event.target.files[0];
+			$scope.uploadPhoto();
 		} else {
 			$scope.newImage = {};
 		}
@@ -125,7 +130,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 					data : [ $scope.staff ]
 				}
 			}).success(function(response) {
-				$window.location.href = "/servicer/staff"
+				$window.location.href = "/servicer/staff/edit/" + response.data[0].id;
 			}).error(function(response) {
 				errorHandler($scope, response);
 			});
