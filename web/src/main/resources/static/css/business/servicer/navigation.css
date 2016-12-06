@@ -21,3 +21,23 @@ div.navBar ul.infoPopList li div span {
 	line-height: 25px;
 	color: black;
 }
+
+div.subNavBar img {
+	margin-bottom: 5px;
+}
+
+div.subNavBar img.selected {
+	display: none;
+}
+
+div.subNavBar img.unselected {
+	display: inline-block;
+}
+
+div.subNavBar div.selected img.selected {
+	display: inline-block;
+}
+
+div.subNavBar div.selected img.unselected {
+	display: none;
+}

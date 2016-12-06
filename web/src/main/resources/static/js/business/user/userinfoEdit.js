@@ -36,10 +36,12 @@ layoutApp.controller('contentController', function($scope, $http, $window, clien
 				data : [ $scope.client ]
 			}
 		}).success(function(response) {
-			for (var index = 0; index < $scope.genders.length; index++) {
-				if ($scope.client.gender.code == $scope.genders[index].code) {
-					$scope.client.gender.message = $scope.genders[index].message;
-					break;
+			if ($scope.client.gender != null) {
+				for (var index = 0; index < $scope.genders.length; index++) {
+					if ($scope.client.gender.code == $scope.genders[index].code) {
+						$scope.client.gender.message = $scope.genders[index].message;
+						break;
+					}
 				}
 			}
 

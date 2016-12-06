@@ -1,59 +1,93 @@
-#if($security.hasAccessRightByName("SUPPLIER", false)) #parse("/velocity/servicer/requirementCatcher.vm") #end
+#if($security.hasAccessRightByName("SUPPLIER", false))
+#parse("/velocity/servicer/requirementCatcher.vm") #end
 
-<link rel="stylesheet" href="/static/css/business/servicer/navigation.css"></link>
+<link rel="stylesheet"
+	href="/static/css/business/servicer/navigation.css"></link>
 
 <div class="subNavBar navBar" ng-controller="subNavigatorController">
 	<ul>
 		<li><div style="height: 80px; border-bottom: 1px solid #cccccc;">
-				<span style="line-height: 80px; color: #0a7ef9; font-size: 20px;">${authentication.token.username} #label("SERVICER")</span>
+				<span style="line-height: 80px; color: #0a7ef9; font-size: 20px;">${authentication.token.username}
+					#label("SERVICER")</span>
 			</div></li>
 		<li><a href="/servicer/info">
 				<div class="navBarItem #if($currentPage=='INFO')selected #end">
+					<img class="unselected" src="/static/images/icon/servicer/01-1.png" />
+					<img class="selected" src="/static/images/icon/servicer/01-2.png" />
 					<span>#button("SERVICER_INFO")</span>
 				</div>
 		</a></li> #if($security.hasAccessRightByName("SUPPLIER", false))
 		<li><a href="/servicer/service">
 				<div class="navBarItem #if($currentPage=='SERVICE')selected #end">
+					<img class="unselected" src="/static/images/icon/servicer/02-1.png" />
+					<img class="selected" src="/static/images/icon/servicer/02-2.png" />
 					<span>#button("SERVICER_SERVICE")</span>
 				</div>
 		</a></li>
-		<li><a href="/servicer/order"><div class="navBarItem #if($currentPage=='ORDER')selected #end">
+		<li><a href="/servicer/order"><div
+					class="navBarItem #if($currentPage=='ORDER')selected #end">
+					<img class="unselected" src="/static/images/icon/servicer/03-1.png" />
+					<img class="selected" src="/static/images/icon/servicer/03-2.png" />
 					<span>#button("SERVICER_ORDER")</span>
 				</div></a></li>
-		<li ng-mouseenter="expandStaff=true" ng-mouseleave="expandStaff=false"><a href="/servicer/staff"><div
+		<li ng-mouseenter="expandStaff=true" ng-mouseleave="expandStaff=false"><a
+			href="/servicer/staff"><div
 					class="navBarItem #if($currentPage=='STAFF')selected #end">
+					<img class="unselected" src="/static/images/icon/servicer/04-1.png" />
+					<img class="selected" src="/static/images/icon/servicer/04-2.png" />
 					<span>#button("SERVICER_STAFF")</span>
 				</div></a>
-			<ul style="height: auto; border: none;" #if($currentPage!='STAFF') class="ng-hide" ng-show="expandStaff" #end>
-				<li class="subItem"><a href="/servicer/staff"><div class="navBarItem #if($currentSubPage=='INFO')selected #end">
+			<ul style="height: auto; border: none;" #if($currentPage!='STAFF' )
+				class="ng-hide" ng-show="expandStaff" #end>
+				<li class="subItem"><a href="/servicer/staff"><div
+							class="navBarItem #if($currentSubPage=='INFO')selected #end">
 							<span>#button("GENERAL_INFO")</span>
 						</div></a></li>
-				<li class="subItem"><a href="/servicer/staffOrder"><div class="navBarItem #if($currentSubPage=='ORDER')selected #end">
+				<li class="subItem"><a href="/servicer/staffOrder"><div
+							class="navBarItem #if($currentSubPage=='ORDER')selected #end">
 							<span>#button("ASSIGNMENT_MANAGEMENT")</span>
 						</div></a></li>
 			</ul></li>
-		<li><a href="/servicer/training"><div class="navBarItem #if($currentPage=='TRAINING')selected #end">
+		<li><a href="/servicer/training"><div
+					class="navBarItem #if($currentPage=='TRAINING')selected #end">
+					<img class="unselected" src="/static/images/icon/servicer/05-1.png" />
+					<img class="selected" src="/static/images/icon/servicer/05-2.png" />
 					<span>#button("SERVICER_TRAINING")</span>
 				</div></a></li>
-		<li><a href="/servicer/transaction"><div class="navBarItem #if($currentPage=='TRANSACTION')selected #end">
+		<li><a href="/servicer/transaction"><div
+					class="navBarItem #if($currentPage=='TRANSACTION')selected #end">
+					<img class="unselected" src="/static/images/icon/servicer/06-1.png" />
+					<img class="selected" src="/static/images/icon/servicer/06-2.png" />
 					<span>#button("SERVICER_TRANSACTION")</span>
 				</div></a></li>
-		<li><a href="/servicer/afterSale"><div class="navBarItem #if($currentPage=='AFTER_SALE')selected #end">
+		<li><a href="/servicer/afterSale"><div
+					class="navBarItem #if($currentPage=='AFTER_SALE')selected #end">
+					<img class="unselected" src="/static/images/icon/servicer/08-1.png" />
+					<img class="selected" src="/static/images/icon/servicer/08-2.png" />
 					<span>#button("AFTER_SALE")</span>
 				</div></a></li>
-		<li><a href="/servicer/operating"><div class="navBarItem #if($currentPage=='OPERATING')selected #end">
+		<li><a href="/servicer/operating"><div
+					class="navBarItem #if($currentPage=='OPERATING')selected #end">
+					<img class="unselected" src="/static/images/icon/servicer/09-1.png" />
+					<img class="selected" src="/static/images/icon/servicer/09-2.png" />
 					<span>#button("OPERATING_MANAGEMENT")</span>
 				</div></a></li>
-		<li><a href="/servicer/sale"><div class="navBarItem #if($currentPage=='SALE')selected #end">
+		<li><a href="/servicer/sale"><div
+					class="navBarItem #if($currentPage=='SALE')selected #end">
+					<img class="unselected" src="/static/images/icon/servicer/10-1.png" />
+					<img class="selected" src="/static/images/icon/servicer/10-2.png" />
 					<span>#button("SALE_MANAGEMENT")</span>
 				</div></a></li>#end
 		<li><a href="/servicer/auditing">
 				<div class="navBarItem #if($currentPage=='AUDITING')selected #end">
+					<img class="unselected" src="/static/images/icon/servicer/07-1.png" />
+					<img class="selected" src="/static/images/icon/servicer/07-2.png" />
 					<span>#button("AUDITING_SEARCH")</span>
 				</div>
 		</a></li>
 	</ul>
-	<ul class="popList infoPopList ng-hide" ng-mouseenter="showInfo=true" ng-mouseleave="showInfo=false" ng-show="showInfo">
+	<ul class="popList infoPopList ng-hide" ng-mouseenter="showInfo=true"
+		ng-mouseleave="showInfo=false" ng-show="showInfo">
 		<li><a href="/servicer/info"><div>
 					<span>#button("SERVICER_GENERAL_INFO")</span>
 				</div></a></li>

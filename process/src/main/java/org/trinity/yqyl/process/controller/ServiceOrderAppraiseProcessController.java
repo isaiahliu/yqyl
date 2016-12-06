@@ -43,6 +43,7 @@ public class ServiceOrderAppraiseProcessController extends
 	@Override
 	@Transactional(rollbackOn = IException.class)
 	public List<ServiceOrderAppraiseDto> addAll(final List<ServiceOrderAppraiseDto> data) throws IException {
+		final Date now = new Date();
 		for (final ServiceOrderAppraiseDto dto : data) {
 			final ServiceOrder serviceOrder = serviceOrderRepository.findOne(dto.getId());
 
@@ -56,7 +57,7 @@ public class ServiceOrderAppraiseProcessController extends
 
 			final ServiceOrderAppraise serviceOrderAppraise = getDomainObjectConverter().convertBack(dto);
 			serviceOrderAppraise.setStatus(RecordStatus.ACTIVE);
-
+			serviceOrder.setSettledTime(now);
 			serviceOrder.setStatus(OrderStatus.SETTLED);
 
 			ServiceOrderOperation operation = new ServiceOrderOperation();
@@ -65,7 +66,7 @@ public class ServiceOrderAppraiseProcessController extends
 			operation.setOrderStatus(OrderStatus.SETTLED);
 			operation.setStatus(RecordStatus.ACTIVE);
 			operation.setServiceOrder(serviceOrder);
-			operation.setTimestamp(new Date());
+			operation.setTimestamp(now);
 
 			serviceOrderOperationRepository.save(operation);
 
@@ -75,7 +76,7 @@ public class ServiceOrderAppraiseProcessController extends
 			operation.setOrderStatus(OrderStatus.SETTLED);
 			operation.setStatus(RecordStatus.ACTIVE);
 			operation.setServiceOrder(serviceOrder);
-			operation.setTimestamp(new Date());
+			operation.setTimestamp(now);
 
 			serviceOrderOperationRepository.save(operation);
 

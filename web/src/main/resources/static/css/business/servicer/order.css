@@ -1,5 +1,19 @@
 div.order {
-	padding: 10px 0px 0px 280px;
+	padding: 1px 0 0 250px;
+}
+
+div.order div.block {
+	border: 1px solid #cccccc;
+}
+
+div.order div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+div.order div.headerBlock {
+	border-bottom: none;
 }
 
 div.order div.title {
@@ -7,31 +21,59 @@ div.order div.title {
 	font-size: large;
 }
 
-div.order div.filter span {
+div.order div.details div.tab {
+	padding: 10px 20px 10px 20px;
+	background: white;
+	margin-bottom: 20px;
+}
+
+div.order div.details div.tab div.tabTitle {
+	padding: 5px 10px;
+}
+
+div.order div.details div.tab div.tabTitle img {
+	width: 14px;
+	height: 14px;
+}
+
+div.order div.details div.tab div.tabContent {
+	padding-left: 5px;
+}
+
+div.order div.details div.tab div.tabContent div.inlineItem {
+	margin-top: 8px;
 	display: inline-block;
-	margin-right: 20px;
-	margin-top: 5px;
-	margin-bottom: 5px;
 }
 
-div.order div.filter input, div.order div.filter select {
-	margin-left: 5px;
+div.order div.details div.tab div.tabContent input, div.order div.details div.tab div.tabContent select
+	{
+	width: 160px;
+	height: 26px;
+	margin-right: 50px;
 }
 
-div.order table {
-	margin-top: 20px;
-	width: 900px;
+div.order div.details div.tab div.tabContent img {
+	max-width: 50px;
+	min-width: 50px;
+	max-height: 50px;
+	min-height: 50px;
 }
 
-div.order table thead td {
-	background-color: rgba(215, 215, 215, 1);
-	border: 1px solid;
+div.order div.details div.tab div.tabContent table {
+	width: 100%;
 }
 
-div.order table td {
-	border: 1px solid;
-	font-size: small;
-	padding: 2px 5px;
+div.order div.details div.tab div.tabContent table thead td {
+	background: #c7defd;
+}
+
+div.order div.details div.tab div.tabContent table td {
+	border: 1px solid #7f7f7f;
+	padding: 10px 0;
+}
+
+div.order div.details div.tab div.tabContent table td span {
+	font-size: 14px;
 }
 
 div.order table tbody tr.edit td {
@@ -39,13 +81,10 @@ div.order table tbody tr.edit td {
 	background-color: #f5f5f5;
 }
 
-div.order table tbody {
-	border: 1px solid;
-}
-
 div.order table td button {
 	font-size: small;
 	min-width: 50px;
+	min-height: 25px;
 	height: 25px;
 }
 

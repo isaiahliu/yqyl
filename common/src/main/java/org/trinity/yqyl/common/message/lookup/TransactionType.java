@@ -6,7 +6,8 @@ public enum TransactionType implements ILookupMessage<LookupType> {
     ORDER_PAYMENT("ORDER"),
     TOP_UP("TOPUP"),
     CLAIM("CLAIM"),
-    BIND("BIND");
+    BIND("BIND"),
+    REVERSE("REV");
 
     private final String messageCode;
 

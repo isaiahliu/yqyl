@@ -27,6 +27,7 @@ import org.trinity.yqyl.repository.business.entity.ServiceInfo_;
 import org.trinity.yqyl.repository.business.entity.ServiceOrder;
 import org.trinity.yqyl.repository.business.entity.ServiceOrder_;
 import org.trinity.yqyl.repository.business.entity.ServiceSupplierClient_;
+import org.trinity.yqyl.repository.business.entity.ServiceSupplierStaff_;
 import org.trinity.yqyl.repository.business.entity.User;
 import org.trinity.yqyl.repository.business.entity.User_;
 
@@ -112,6 +113,20 @@ public interface IServiceOrderRepository extends IJpaRepository<ServiceOrder, Se
 			if (!StringUtils.isEmpty(searchingDto.getPaymentMethod())) {
 				predicates.add(cb.equal(root.get(ServiceOrder_.paymentMethod),
 						LookupParser.parse(PaymentMethod.class, searchingDto.getPaymentMethod())));
+			}
+
+			if (searchingDto.isAssigned()) {
+				predicates.add(cb.isNotNull(root.get(ServiceOrder_.serviceSupplierStaff)));
+			}
+
+			if (!StringUtils.isEmpty(searchingDto.getStaffNo())) {
+				predicates.add(cb.like(root.join(ServiceOrder_.serviceSupplierStaff).get(ServiceSupplierStaff_.code),
+						"%" + searchingDto.getStaffNo() + "%"));
+			}
+
+			if (!StringUtils.isEmpty(searchingDto.getStaffName())) {
+				predicates.add(cb.like(root.join(ServiceOrder_.serviceSupplierStaff).get(ServiceSupplierStaff_.name),
+						"%" + searchingDto.getStaffName() + "%"));
 			}
 
 			return cb.and(predicates.toArray(new Predicate[0]));

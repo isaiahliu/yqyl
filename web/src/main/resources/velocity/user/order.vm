@@ -4,11 +4,14 @@
 <div class="order">
 	<div class="result ng-hide" ng-show="orders">
 		<div style="padding: 15px;" class="block">
-			<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("MY_ORDER")</span> <span
-				style="color: #333333; font-size: 16px;">#label("ALL_ORDERS") : </span> <span
-				style="color: #fd6a15; font-size: 16px; margin-right: 20px;">{{orderPaging.itemCount}}#label("ITEM")</span> <span
-				style="color: #333333; font-size: 16px;">#label("UNPROCESSED_ORDERS") : </span> <span style="color: #fd6a15; font-size: 16px;">{{unprocessedCount}}#label("ITEM")</span>
-			<select ng-model="filter.selectedStatus" style="float: right; height: 35px; border: 1px solid #cccccc; font-size: 16px;">
+			<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("MY_ORDER")</span>
+			<span style="color: #333333; font-size: 16px;">#label("ALL_ORDERS")
+				: </span> <span
+				style="color: #fd6a15; font-size: 16px; margin-right: 20px;">{{orderPaging.itemCount}}#label("ITEM")</span>
+			<span style="color: #333333; font-size: 16px;">#label("UNPROCESSED_ORDERS")
+				: </span> <span style="color: #fd6a15; font-size: 16px;">{{unprocessedCount}}#label("ITEM")</span>
+			<select ng-model="filter.selectedStatus"
+				style="float: right; height: 35px; border: 1px solid #cccccc; font-size: 16px;">
 				<option value="">#label("ALL_ORDERS")</option>
 				<option ng-repeat="status in statuses" value="{{status.code}}">{{status.message}}</option>
 			</select>
@@ -31,19 +34,34 @@
 					<tr ng-repeat="order in orders">
 						<td align="center"><span>{{$index+1}}</span></td>
 						<td align="center"><div class="orderPic">
-								<img alt="#label('NOT_UPLOADED')" ng-src="/ajax/content/image/{{order.serviceInfo.image}}" />
+								<img alt="#label('NOT_UPLOADED')"
+									ng-src="/ajax/content/image/{{order.serviceInfo.image}}" />
 							</div></td>
 						<td align="center"><span>{{order.id}}</span></td>
 						<td align="center"><span>{{order.serviceInfo.serviceCategory.name}}</span></td>
 						<td align="center"><span>{{order.price|currency:'￥'}}</span></td>
 						<td align="center"><span>{{order.status.message}}</span></td>
 						<td align="center">
-							<div ng-mouseenter="order.editing=true" ng-mouseleave="order.editing=false">
-								<img style="width: 23px; height: 21px;" src="/static/images/icon/edit.png" />
-								<div style="padding: 10px 20px; background: white; margin-left: 20px; position: absolute; border: 1px solid #cccccc;"
+							<div ng-mouseenter="order.editing=true"
+								ng-mouseleave="order.editing=false">
+								<img style="width: 23px; height: 21px;"
+									src="/static/images/icon/edit.png" />
+								<div
+									style="padding: 10px 20px; background: white; margin-left: 20px; position: absolute; border: 1px solid #cccccc;"
 									class="ng-hide" ng-show="order.editing">
-									<a class="ng-hide" href="javascript:void(0)" ng-show="order.status.code=='P'" ng-click="appraise(order.id)"><span>#button("ORDER_APPRAISE")</span></a>
-									<a href="javascript:void(0)" ng-show="order.status.code=='I'||order.status.code=='U'" ng-click="cancel(order)"><span>#button("ORDER_CANCEL")</span></a>
+									<div>
+										<a href="javascript:void(0)" ng-show="order.status.code=='P'"
+											ng-click="appraise(order.id)"><span>#button("ORDER_APPRAISE")</span></a>
+									</div>
+									<div>
+										<a ng-href="/user/order/payment/{{order.id}}"
+											ng-show="order.status.code=='A'"><span>#button("ORDER_PAYMENT")</span></a>
+									</div>
+									<div>
+										<a href="javascript:void(0)"
+											ng-show="order.status.code=='I'||order.status.code=='U'||(order.status.code=='A'&&order.paymentMethod.code=='O')"
+											ng-click="cancel(order)"><span>#button("ORDER_CANCEL")</span></a>
+									</div>
 								</div>
 							</div>
 
@@ -52,9 +70,13 @@
 					</tr>
 				</tbody>
 			</table>
-			<pagination total-items="orderPaging.itemCount" ng-model="orderPaging.pageIndex" max-size="10" items-per-page="orderPaging.pageSize"
-				class="pagination-sm" boundary-links="true" ng-change="populateOrders()" first-text='#label("FIRST_PAGE")'
-				last-text='#label("LAST_PAGE")' previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'></pagination>
+			<pagination total-items="orderPaging.itemCount"
+				ng-model="orderPaging.pageIndex" max-size="10"
+				items-per-page="orderPaging.pageSize" class="pagination-sm"
+				boundary-links="true" ng-change="populateOrders()"
+				first-text='#label("FIRST_PAGE")' last-text='#label("LAST_PAGE")'
+				previous-text='#label("PREVIOUS_PAGE")'
+				next-text='#label("NEXT_PAGE")'></pagination>
 		</div>
 	</div>
 </div>

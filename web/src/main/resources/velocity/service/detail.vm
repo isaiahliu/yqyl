@@ -1,4 +1,5 @@
-#parse("/velocity/user/navigation.vm")
+#if(${mode}=='supplier') #parse("/velocity/servicer/navigation.vm")
+#else #parse("/velocity/user/navigation.vm") #end
 
 <link rel="stylesheet" href="/static/css/business/service/detail.css"></link>
 
@@ -6,13 +7,15 @@
 layoutApp.value("serviceOrderId", ${orderId});
 layoutApp.value("mode", '${mode}');
 </script>
-
-<div class="detail ng-hide" ng-show="serviceOrder">
+<div class="detail ng-hide" ng-show="serviceOrder" #if(${mode}=='supplier') style="margin-left:250px;" #end >
 	<div style="padding: 15px;" class="block">
-		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("MY_ORDER")</span> <span
-			style="color: #333333; font-size: 16px;">#label("ORDER_ID") : </span> <span style="color: #fd6a15; font-size: 16px; margin-right: 20px;">{{serviceOrder.id}}</span>
-		<a class="ng-hide" style="float: right; line-height: 30px;" ng-show="mode=='receiver'" href="/user"><span>#label("BACK_TO_LIST")</span></a>
-		<a class="ng-hide" style="float: right; line-height: 30px;" ng-hide="mode=='receiver'" href="/servicer/order"><span>#label("BACK_TO_LIST")</span></a>
+		<span ng-hide="mode=='supplier'" style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("MY_ORDER")</span>
+		<span style="color: #333333; font-size: 16px;">#label("ORDER_ID")
+			: </span> <span style="color: #fd6a15; font-size: 16px; margin-right: 20px;">{{serviceOrder.id}}</span>
+		<a class="ng-hide" style="float: right; line-height: 30px;"
+			ng-show="mode=='receiver'" href="/user"><span>#label("BACK_TO_LIST")</span></a>
+		<a class="ng-hide" style="float: right; line-height: 30px;"
+			ng-hide="mode=='receiver'" href="/servicer/order"><span>#label("BACK_TO_LIST")</span></a>
 	</div>
 	<div style="padding: 15px 40px;" class="block">
 		<div class="subBlock">
@@ -26,33 +29,46 @@ layoutApp.value("mode", '${mode}');
 				<span class="key">#label("STATUS"): </span> <span class="value">{{serviceOrder.status.message}}</span>
 			</div>
 			<div class="level2">
-				<span class="key">#label("SERVICE_CATEGORY"): </span> <span class="value">{{serviceOrder.serviceInfo.name}}</span>
+				<span class="key">#label("SERVICE_CATEGORY"): </span> <span
+					class="value">{{serviceOrder.serviceInfo.name}}</span>
 			</div>
 			<div class="level2">
-				<span class="key">#label("SERVICE_SUPPLIER_CLIENT_NAME"): </span> <span class="value">{{serviceOrder.serviceInfo.serviceSupplierClient.name}}</span>
+				<span class="key">#label("SERVICE_SUPPLIER_CLIENT_NAME"): </span> <span
+					class="value">{{serviceOrder.serviceInfo.serviceSupplierClient.name}}</span>
 			</div>
 			<div class="level2">
-				<span class="key">#label("SERVICE_ADDRESS"): </span> <span class="value" ng-hide="modifying">{{serviceOrder.address}}</span> <input
-					class="ng-hide" ng-show="modifying" ng-model="serviceOrder.newAddress" />
+				<span class="key">#label("SERVICE_ADDRESS"): </span> <span
+					class="value" ng-hide="modifying">{{serviceOrder.address}}</span> <input
+					class="ng-hide" ng-show="modifying"
+					ng-model="serviceOrder.newAddress" />
 			</div>
 			<div class="level2">
-				<span class="key">#label("SERVICE_TIME"): </span> <span class="value" ng-hide="modifying">{{serviceOrder.serviceDate|date:'yyyy/MM/dd'}}</span>
-				<span ng-hide="modifying">{{serviceOrder.serviceHour}}:00</span> <input class="ng-hide" style="width: 120px;" ng-show="modifying"
-					type="text" placeholder="YYYY/MM/DD" ui-date="dateOptions" ng-model="serviceOrder.newServiceDate" /> <select class="ng-hide"
-					ng-show="modifying" ng-model="serviceOrder.newServiceHour" ng-options="hour as hour for hour in hours"></select> <span class="ng-hide"
-					ng-show="modifying">#label("OCLOCK")</span>
+				<span class="key">#label("SERVICE_TIME"): </span> <span
+					class="value" ng-hide="modifying">{{serviceOrder.serviceDate|date:'yyyy/MM/dd'}}</span>
+				<span ng-hide="modifying">{{serviceOrder.serviceHour}}:00</span> <input
+					class="ng-hide" style="width: 120px;" ng-show="modifying"
+					type="text" placeholder="YYYY/MM/DD" ui-date="dateOptions"
+					ng-model="serviceOrder.newServiceDate" /> <select class="ng-hide"
+					ng-show="modifying" ng-model="serviceOrder.newServiceHour"
+					ng-options="hour as hour for hour in hours"></select> <span
+					class="ng-hide" ng-show="modifying">#label("OCLOCK")</span>
 			</div>
 			<div class="level2">
-				<span class="key">#label("CONTACT_METHOD"): </span> <span class="value" ng-hide="modifying">{{serviceOrder.phone}}</span> <input
-					class="ng-hide" ng-show="modifying" ng-model="serviceOrder.newPhone" />
+				<span class="key">#label("CONTACT_METHOD"): </span> <span
+					class="value" ng-hide="modifying">{{serviceOrder.phone}}</span> <input
+					class="ng-hide" ng-show="modifying"
+					ng-model="serviceOrder.newPhone" />
 			</div>
 			<div class="level2">
-				<span class="key">#label("PAYMENT_METHOD"): </span> <span class="value">{{serviceOrder.paymentMethod.message}}</span>
+				<span class="key">#label("PAYMENT_METHOD"): </span> <span
+					class="value">{{serviceOrder.paymentMethod.message}}</span>
 			</div>
 			<div class="level2 ng-hide" ng-show="serviceOrder.status.code=='U'">
-				<button class="ng-hide" ng-hide="modifying" ng-click="prepareModify()">#button("MODIFY")</button>
+				<button class="ng-hide" ng-hide="modifying"
+					ng-click="prepareModify()">#button("MODIFY")</button>
 				<button class="ng-hide" ng-show="modifying" ng-click="applyModify()">#button("APPLY")</button>
-				<button class="ng-hide" ng-show="modifying" ng-click="cancelModify()">#button("CANCEL")</button>
+				<button class="ng-hide" ng-show="modifying"
+					ng-click="cancelModify()">#button("CANCEL")</button>
 			</div>
 		</div>
 		<div class="subBlock">
@@ -63,7 +79,8 @@ layoutApp.value("mode", '${mode}');
 				<table>
 					<tbody>
 						<tr>
-							<td width="300px"><span>#label("PRICE")</span> <span> {{serviceOrder.expectedPaymentAmount|currency:"￥"}}</span></td>
+							<td width="300px"><span>#label("PRICE")</span> <span>
+									{{serviceOrder.expectedPaymentAmount|currency:"￥"}}</span></td>
 							<td width="300px"><span>#label("DISCOUNT")</span> <span>{{0|currency:"￥"}}</span></td>
 							<td><span>#label("PAYMENT_AMOUNT")</span> <span>{{serviceOrder.actualPaymentAmount|currency:"￥"}}</span></td>
 						</tr>
@@ -79,11 +96,16 @@ layoutApp.value("mode", '${mode}');
 				<table class="operations">
 					<tbody>
 						<tr ng-repeat="operation in serviceOrder.operations">
-							<td width="50px"><img class="ng-hide" ng-show="$index<serviceOrder.operations.length-1" src="/static/images/icon/step.png" /> <img
-								class="ng-hide" ng-show="$index==serviceOrder.operations.length-1" src="/static/images/icon/current_step.png" /></td>
+							<td width="50px"><img class="ng-hide"
+								ng-show="$index<serviceOrder.operations.length-1"
+								src="/static/images/icon/step.png" /> <img class="ng-hide"
+								ng-show="$index==serviceOrder.operations.length-1"
+								src="/static/images/icon/current_step.png" /></td>
 							<td width="550px"><span>{{operation.operation.message}}</span></td>
-							<td width="200px"><span>{{operation.timestamp|date:'yyyy/MM/dd HH:mm'}}</span></td>
-							<td width="200px"><span>#label("OPERATOR") : {{operation.operator}}</span></td>
+							<td width="200px"><span>{{operation.timestamp|date:'yyyy/MM/dd
+									HH:mm'}}</span></td>
+							<td width="200px"><span>#label("OPERATOR") :
+									{{operation.operator}}</span></td>
 						</tr>
 					</tbody>
 				</table>
@@ -94,32 +116,41 @@ layoutApp.value("mode", '${mode}');
 				<img src="/static/images/icon/green_block.png"> <span>#label("SERVICE_ORDER_APPRAISE")</span>
 			</div>
 			<div class="level2 ng-hide" ng-show="serviceOrder.appraise">
-				<span class="key">#label("SERVICE_ATTITUDE_RATE")</span> #readonlyRateBar("serviceOrder.appraise.attitudeRate")
+				<span class="key">#label("SERVICE_ATTITUDE_RATE")</span>
+				#readonlyRateBar("serviceOrder.appraise.attitudeRate")
 			</div>
 			<div class="level2 ng-hide" ng-show="serviceOrder.appraise">
-				<span class="key">#label("SERVICE_QUALITY_RATE")</span> #readonlyRateBar("serviceOrder.appraise.qualityRate")
+				<span class="key">#label("SERVICE_QUALITY_RATE")</span>
+				#readonlyRateBar("serviceOrder.appraise.qualityRate")
 			</div>
 			<div class="level2 ng-hide" ng-show="serviceOrder.appraise">
-				<span class="key">#label("SERVICE_ON_TIME_RATE")</span> #readonlyRateBar("serviceOrder.appraise.onTimeRate")
+				<span class="key">#label("SERVICE_ON_TIME_RATE")</span>
+				#readonlyRateBar("serviceOrder.appraise.onTimeRate")
 			</div>
 			<div class="level2 ng-hide" ng-show="serviceOrder.appraise">
-				<span class="key">#label("SERVICE_STAFF_RATE")</span> #readonlyRateBar("serviceOrder.appraise.staffRate")
+				<span class="key">#label("SERVICE_STAFF_RATE")</span>
+				#readonlyRateBar("serviceOrder.appraise.staffRate")
 			</div>
 			<div class="level2 ng-hide" ng-show="serviceOrder.appraise">
 				<span class="key">#label("COMMENT")</span> <span>{{serviceOrder.appraise.comment}}</span>
 			</div>
 			<div class="level2 ng-hide" ng-show="serviceOrder.appraise">
-				<span class="key">#label("SUPPLIER_REPLY")</span> <span ng-show="serviceOrder.appraise.reply">{{serviceOrder.appraise.reply}}</span> <a
-					href="javascript:void(0)" ng-click="replying=true" ng-hide="mode!='supplier'||serviceOrder.appraise.reply||replying">#button("ADD")</a>
+				<span class="key">#label("SUPPLIER_REPLY")</span> <span
+					ng-show="serviceOrder.appraise.reply">{{serviceOrder.appraise.reply}}</span>
+				<a href="javascript:void(0)" ng-click="replying=true"
+					ng-hide="mode!='supplier'||serviceOrder.appraise.reply||replying">#button("ADD")</a>
 				<div style="display: inline-block;" ng-show="replying">
 					<textarea ng-model="serviceOrder.appraise.newReply"></textarea>
-					<br /> <a href="javascript:void(0)" ng-click="reply()">#button("APPLY")</a> <a href="javascript:void(0)" ng-click="replying=false">#button("CANCEL")</a>
+					<br /> <a href="javascript:void(0)" ng-click="reply()">#button("APPLY")</a>
+					<a href="javascript:void(0)" ng-click="replying=false">#button("CANCEL")</a>
 				</div>
 			</div>
 			<div class="level2 ng-hide" ng-hide="serviceOrder.appraise">#label("NOT_APPRAISED")</div>
 		</div>
 		<div class="submit">
-			<button ng-if="serviceOrder.status.code=='I' && serviceOrder.paymentMethod.code=='O'" ng-click="pay()">#button("ONLINE_PAY")</button>
+			<button
+				ng-if="serviceOrder.status.code=='I' && serviceOrder.paymentMethod.code=='O'"
+				ng-click="pay()">#button("ONLINE_PAY")</button>
 		</div>
 	</div>
 </div>

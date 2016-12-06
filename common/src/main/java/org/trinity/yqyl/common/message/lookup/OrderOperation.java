@@ -10,6 +10,7 @@ public enum OrderOperation implements ILookupMessage<LookupType> {
     PROCESSING("40"),
     CHANGE_PRICE("45"),
     PAYED("50"),
+    REVERSED("51"),
     RECEIPT_UPLOADED("55"),
     APPRAISED("60"),
     REPLYED("65"),

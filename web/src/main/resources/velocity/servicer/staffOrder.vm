@@ -22,7 +22,7 @@
 			</div>
 			<div class="tab" style="margin-top: 0;">
 				<div class="tabTitle" style="text-align: center;">
-					<span>#label("STAFF_ID")</span> <input ng-model="filterData.id"
+					<span>#label("STAFF_NO")</span> <input ng-model="filterData.id"
 						style="width: 200px; margin-right: 20px;" /> <span>#label("STAFF_NAME")</span>
 					<input ng-model="filterData.name"
 						style="width: 200px; margin-right: 20px;" />
@@ -35,37 +35,29 @@
 						<thead>
 							<tr>
 								<td align="center"><span>#label("ID")</span></td>
-								<td align="center"><span>#label("PHOTO")</span></td>
 								<td align="center"><span>#label("NAME")</span></td>
-								<td align="center"><span>#label("PHONE_NO")</span></td>
-								<td align="center"><span>#label("SERVICE_STAFF_RATE")</span></td>
-								<td align="center"><span>#label("AGE")</span></td>
-								<td align="center"><span>#label("CREDENTIAL_NO")</span></td>
-								<td align="center"><span>#label("SERVICE_CATEGORY")</span></td>
+								<td align="center"><span>#label("SERVICE_ORDER_ID")</span></td>
+								<td align="center"><span>#label("ASSIGNMENT_TIME")</span></td>
+								<td align="center"><span>#label("SERVICE_ORDER_SETTLED_TIME")</span></td>
+								<td align="center"><span>#label("STATUS")</span></td>
+								<td align="center"><span>#label("APPRAISE")</span></td>
 								<td align="center"><span>#label("OPERATION")</span></td>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="ng-hide" ng-show="staffs" ng-repeat="staff in staffs">
+							<tr class="ng-hide" ng-show="orders" ng-repeat="order in orders">
+								<td align="center"><span>{{order.staff.id}}</span></td>
+								<td align="center"><span>{{order.staff.name}}</span></td>
+								<td align="center"><span>{{order.id}}</span></td>
+								<td align="center"><span>{{order.approvalTime |
+										date:'yyyy-MM-dd HH:mm'}}</span></td>
+								<td align="center"><span>{{order.settledTime |
+										date:'yyyy-MM-dd HH:mm'}}</span></td>
+								<td align="center"><span ng-show="order.status.code=='I'">#label("ASSIGNING")</span><span
+									ng-hide="order.status.code=='I'">#label("COMPLETED")</span></td>
+								<td align="center"><span>{{order.appraise.staffRate}}</span></td>
 								<td align="center"><a
-									ng-href="/servicer/staff/edit/{{staff.id}}"><span>{{staff.id}}</span></a></td>
-								<td align="center"><img
-									ng-src="/ajax/content/image/{{staff.photo}}" /></td>
-								<td align="center"><span>{{staff.name}}</span></td>
-								<td align="center"><span>{{staff.phoneNo}}</span></td>
-								<td align="center"><span>{{staff.comment}}</span></td>
-								<td align="center"><span>{{staff.age}}</span></td>
-								<td align="center"><span>{{staff.identityCard}}</span></td>
-								<td align="center"><span
-									ng-repeat="category in staff.serviceCategories">{{category.name}}<br /></span></td>
-								<td align="center"><button
-									ng-show="staff.status.code == 'A'"
-									ng-click="$parent.away(staff)"
-									style="font-size: small; width: 50px; height: 30px; min-width: 50px;">#button("AWAY_FROM_WORK")</button>
-									<button ng-show="staff.status.code == 'F'"
-									ng-click="$parent.back(staff)"
-									style="font-size: small; width: 50px; height: 30px; min-width: 50px;">#button("BACK_TO_WORK")</button>
-								</td>
+									ng-href="/servicer/order/{{order.id}}">#button("VIEW")</a></td>
 							</tr>
 						</tbody>
 					</table>

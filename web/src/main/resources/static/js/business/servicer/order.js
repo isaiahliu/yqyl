@@ -33,11 +33,11 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	};
 
 	$scope.searchOrders = function() {
-		var ajaxUrl = "/ajax/user/order?searchScope=supplier&rsexp=serviceInfo[serviceCategory],transaction";
+		var ajaxUrl = "/ajax/user/order?searchScope=supplier&rsexp=serviceInfo[serviceCategory],transaction,user,staff";
 
 		ajaxUrl += "&pageIndex=" + ($scope.pagingData.pageIndex - 1);
 		ajaxUrl += "&pageSize=" + $scope.pagingData.pageSize;
-		ajaxUrl += "&sortedBy=id_desc";
+		ajaxUrl += "&sortedBy=serviceTime";
 		if ($scope.filterData.id != undefined && $scope.filterData.id != "") {
 			ajaxUrl += "&id=" + $scope.filterData.id;
 		}
@@ -192,6 +192,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			}
 		}).success(function(response) {
 			order.assigning = false;
+			order.staff = {};
 			order.status.code = 'I';
 			for (var i = 0; i < $scope.statuses.length; i++) {
 				if ($scope.statuses[i].code == 'I') {
@@ -256,4 +257,6 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	$scope.editPriceCancel = function(order) {
 		order.priceEditing = false;
 	};
+
+	$scope.searchOrders();
 });

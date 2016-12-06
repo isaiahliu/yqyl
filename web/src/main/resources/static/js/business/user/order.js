@@ -84,15 +84,13 @@ layoutApp
 					});
 
 					$scope.cancel = function(order) {
-						order.cancelling = true;
+						var reason = prompt("请输入取消原因", "");
+						if (reason != null) {
+							$scope.applyCancel(order, reason);
+						}
 					};
 
-					$scope.giveUpCancel = function(order) {
-						order.cancelReason = "";
-						order.cancelling = false;
-					};
-
-					$scope.applyCancel = function(order) {
+					$scope.applyCancel = function(order, reason) {
 						$http({
 							method : "POST",
 							url : "/ajax/user/order/cancel",
@@ -100,13 +98,12 @@ layoutApp
 								data : [ {
 									id : order.id,
 									operations : [ {
-										params : [ order.cancelReason ]
+										params : [ reason ]
 									} ]
 								} ]
 							}
 						}).success(function(response) {
 							order.status = response.data[0].status;
-							$scope.giveUpCancel(order);
 						}).error(function(response) {
 							errorHandler($scope, response);
 						});

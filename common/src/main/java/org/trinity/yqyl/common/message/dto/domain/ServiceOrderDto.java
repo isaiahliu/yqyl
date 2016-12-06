@@ -34,6 +34,8 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     private List<ServiceOrderOperationDto> operations;
 
+    private UserDto user;
+
     private byte[] receiptContent;
 
     public Double getActualPaymentAmount() {
@@ -118,6 +120,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
         return transaction;
     }
 
+    public UserDto getUser() {
+        return user;
+    }
+
     public void setActualPaymentAmount(final Double actualPaymentAmount) {
         this.actualPaymentAmount = actualPaymentAmount;
     }
@@ -195,6 +201,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public void setTransaction(final AccountTransactionDto transaction) {
         this.transaction = transaction;
+    }
+
+    public void setUser(final UserDto user) {
+        this.user = user;
     }
 
 }

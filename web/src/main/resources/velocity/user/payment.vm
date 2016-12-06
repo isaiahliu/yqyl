@@ -19,7 +19,7 @@
 			<span style="font-size: 18px;">#info("ONLINE_PAYMENT")</span>
 		</div>
 		<div class="blockItem">
-			<span>#label("PAYER")</span> <select ng-model="selectedMember" ng-options="member as member.name for member in members"></select>
+			<span>#label("PAYER")</span> <select ng-model="$parent.selectedMember" ng-options="member as member.name for member in members"></select>
 		</div>
 		<div class="blockItem">
 			<span>#label("YIQUAN_NO")</span> <input ng-if="!selectedMember.yiquan" ng-model="customYiquanNo"> <span
