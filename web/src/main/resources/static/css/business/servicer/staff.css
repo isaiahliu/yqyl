@@ -64,11 +64,11 @@ div.staff div.details div.tab div.tabContent table {
 }
 
 div.staff div.details div.tab div.tabContent table thead td {
-	font-size: 14px;
 	background: #c7defd;
 }
 
 div.staff div.details div.tab div.tabContent table td {
+	font-size: 14px;
 	border: 1px solid #7f7f7f;
 	padding: 10px 0;
 }

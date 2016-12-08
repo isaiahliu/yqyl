@@ -68,6 +68,7 @@ div.service div.details div.tab div.tabContent table thead td {
 }
 
 div.service div.details div.tab div.tabContent table td {
-	border: 1px solid #7f7f7f;
+	font-size: 14px;
 	padding: 10px 0;
+	border: 1px solid #7f7f7f;
 }
