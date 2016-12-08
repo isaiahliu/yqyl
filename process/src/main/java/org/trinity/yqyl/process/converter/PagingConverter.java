@@ -22,6 +22,10 @@ public class PagingConverter implements IObjectConverter<IPagingDto, Pageable> {
     private static final String SORTING_PATTERN = "(.+?)(_(asc|desc)){0,1}";
     private static final String SORTING_SPLITTER = ",";
 
+    private static final int MAX_PAGE_SIZE = 100;
+
+    private int maxPageSize = MAX_PAGE_SIZE;
+
     @Override
     public Pageable convert(IPagingDto source) {
         if (source == null) {
@@ -49,10 +53,16 @@ public class PagingConverter implements IObjectConverter<IPagingDto, Pageable> {
             }
         }
 
+        int pageSize = source.getPageSize();
+
+        if (pageSize > maxPageSize) {
+            pageSize = maxPageSize;
+        }
+
         if (orders.isEmpty()) {
-            return new PageRequest(source.getPageIndex(), source.getPageSize());
+            return new PageRequest(source.getPageIndex(), pageSize);
         } else {
-            return new PageRequest(source.getPageIndex(), source.getPageSize(), new Sort(orders));
+            return new PageRequest(source.getPageIndex(), pageSize, new Sort(orders));
         }
     }
 
@@ -80,5 +90,13 @@ public class PagingConverter implements IObjectConverter<IPagingDto, Pageable> {
     @Override
     public IPagingDto convertBack(final Pageable source, final IPagingDto target, final CopyPolicy copyPolicy) {
         return null;
+    }
+
+    public int getMaxPageSize() {
+        return maxPageSize;
+    }
+
+    public void setMaxPageSize(final int maxPageSize) {
+        this.maxPageSize = maxPageSize;
     }
 }

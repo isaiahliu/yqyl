@@ -2,6 +2,85 @@
 
 <link rel="stylesheet" href="/static/css/business/servicer/transaction.css"></link>
 
-<div class="transaction">transaction</div>
+<div class="transaction">
+	<div style="padding: 15px 15px 0 15px; height: 78px;" class="block headerBlock">
+		<span style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("VIEW_TRANSACTION")</span>
+	</div>
+	<div class="tab" style="border: 1px solid #a1d0fe; margin: 0 15px;"></div>
+
+	<div class="block" style="background: #f1f1f1; padding: 15px;">
+		<div class="details">
+			<div class="tab" style="background: #c7defd; margin-bottom: 0; height: 45px;">
+				<div class="tabTitle"></div>
+			</div>
+			<div class="tab" style="margin-top: 0;">
+				<div class="tabTitle">
+					<div class="inlineBlock">
+						<span>#label("TRANSACTION_DATE")</span> <input ng-model="filterData.fromDate" ui-date /> <span>#label("TO")</span> <input
+							ng-model="filterData.toDate" ui-date />
+					</div>
+					<div class="inlineBlock">
+						<span>#label("SERVICE_ORDER_ID")</span> <input ng-model="filterData.orderId" />
+					</div>
+					<div class="inlineBlock">
+						<span>#label("STAFF_NO")</span> <input ng-model="filterData.staffNo" />
+					</div>
+					<div class="inlineBlock">
+						<span>#label("PAYMENT_CODE")</span> <input ng-model="filterData.paymentCode" />
+					</div>
+					<div class="inlineBlock">
+						<button ng-click="searchTransactions()">#button("SEARCH")</button>
+					</div>
+				</div>
+			</div>
+			<div class="tab">
+				<div class="tabContent">
+					<table>
+						<thead>
+							<tr>
+								<td colspan="8" align="center"><span>#label("SUPPLIER_INCOME")</span></td>
+								<td colspan="3" align="center"><span>#label("PLATFORM_INCOME")</span></td>
+							</tr>
+							<tr>
+								<td align="center"><span>#label("SERVICE_ORDER_ID")</span></td>
+								<td align="center"><span>#label("INCOME_STATUS")</span></td>
+								<td align="center"><span>#label("TRANSACTION_TIME")</span></td>
+								<td align="center"><span>#label("PAYMENT_METHOD")</span></td>
+								<td align="center"><span>#label("DISCOUNT_AMOUNT")</span></td>
+								<td align="center"><span>#label("EXPECTED_AMOUNT")</span></td>
+								<td align="center"><span>#label("PAYMENT_AMOUNT")</span></td>
+								<td align="center"><span>#label("DRAWBACK_AMOUNT")</span></td>
+								<td align="center"><span>#label("CHARGE")</span></td>
+								<td align="center"><span>#label("OTHER_FEE")</span></td>
+								<td align="center"><span>#label("EXPECTED_PAYED_AMOUNT")</span></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="ng-hide" ng-show="orders" ng-repeat="order in orders">
+								<td align="center"><span>{{order.id}}</span></td>
+								<td align="center"><span ng-show="order.drawbackTransaction">#label("INCOME_DRAWBACK")</span><span
+									ng-hide="order.drawbackTransaction">#label("INCOME_RECEIVED")</span></td>
+								<td align="center"><span>{{order.paymentTransaction.timestamp|date:"yyyy/MM/dd HH:mm"}}</span></td>
+								<td align="center"><span>{{order.paymentMethod.message}}</span></td>
+								<td align="center"><span>{{0|currency:"￥"}}</span></td>
+								<td align="center"><span>{{order.expectedPaymentAmount|currency:"￥"}}</span></td>
+								<td align="center"><span>{{order.actualPaymentAmount|currency:"￥"}}</span></td>
+								<td align="center"><span ng-hide="order.drawbackTransaction">{{0|currency:"￥"}}</span><span ng-show="order.drawbackTransaction">{{order.actualPaymentAmount|currency:"￥"}}</span></td>
+								<td align="center"><span>{{0|currency:"￥"}}</span></td>
+								<td align="center"><span>{{0|currency:"￥"}}</span></td>
+								<td align="center"><span>{{0|currency:"￥"}}</span></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="paging" style="text-align: center;">
+						<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
+							class="pagination-sm" boundary-links="true" ng-change="searchTransactions()" first-text='#label("FIRST_PAGE")'
+							last-text='#label("LAST_PAGE")' previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'></pagination>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script src="/static/js/business/servicer/transaction.js"></script>

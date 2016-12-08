@@ -1,4 +1,4 @@
-layoutApp.controller('contentController', function($scope, $http, $window, errorHandler, $filter, serviceOrderId, mode) {
+layoutApp.controller('contentController', function($scope, $http, $window, errorHandler, serviceOrderId, mode) {
 	$scope.dateOptions = {
 		dateFormat : 'yy/mm/dd',
 	};
@@ -9,7 +9,9 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 
 	$scope.modifying = false;
 
-	var url = "/ajax/user/order/" + serviceOrderId + "?&rsexp=serviceInfo[serviceSupplierClient,serviceCategory],operations,appraise";
+	var url =
+			"/ajax/user/order/" + serviceOrderId
+					+ "?&rsexp=serviceInfo[serviceSupplierClient,serviceCategory],operations,appraise";
 
 	if (mode == 'receiver') {
 		url += "&searchScope=me";

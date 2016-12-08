@@ -3,26 +3,21 @@
 <link rel="stylesheet" href="/static/css/business/servicer/order.css"></link>
 
 <div class="order">
-	<div style="padding: 15px 15px 0 15px; height: 78px;"
-		class="block headerBlock">
-		<span
-			style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("SERVICE_ORDER_MANAGEMENT")</span>
+	<div style="padding: 15px 15px 0 15px; height: 78px;" class="block headerBlock">
+		<span style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("SERVICE_ORDER_MANAGEMENT")</span>
 	</div>
 	<div class="tab" style="border: 1px solid #a1d0fe; margin: 0 15px;"></div>
 
 	<div class="block" style="background: #f1f1f1; padding: 15px;">
 		<div class="details">
-			<div class="tab"
-				style="background: #c7defd; margin-bottom: 0; height: 45px;">
+			<div class="tab" style="background: #c7defd; margin-bottom: 0; height: 45px;">
 				<div class="tabTitle"></div>
 			</div>
 			<div class="tab" style="margin-top: 0;">
 				<div class="tabTitle" style="text-align: center;">
-					<span>#label("SERVICE_ORDER_ID")</span><input
-						style="margin-right: 20px;" ng-model="filterData.id" /> <span>#label("SERVICE_CATEGORY")</span><input
+					<span>#label("SERVICE_ORDER_ID")</span><input style="margin-right: 20px;" ng-model="filterData.id" /> <span>#label("SERVICE_CATEGORY")</span><input
 						style="margin-right: 20px;" ng-model="filterData.category" /> <span>#label("SERVICE_ORDER_STATUS")</span><select
-						style="min-width: 130px; margin-right: 20px;"
-						ng-model="filterData.status"
+						style="min-width: 130px; margin-right: 20px;" ng-model="filterData.status"
 						ng-options="status.code as status.message for status in statuses">
 						<option value="">#label("ALL")</option>
 					</select>
@@ -48,14 +43,11 @@
 								<td align="center"><span>#label("OPERATION")</span></td>
 							</tr>
 						</thead>
-						<tbody class="ng-hide" ng-repeat="order in orders"
-							ng-show="orders">
+						<tbody class="ng-hide" ng-repeat="order in orders" ng-show="orders">
 							<tr>
-								<td align="center"><a
-									ng-href="/servicer/order/{{order.id}}"><span>{{order.id}}</span></a></td>
+								<td align="center"><a ng-href="/servicer/order/{{order.id}}"><span>{{order.id}}</span></a></td>
 								<td align="center"><div ng-hide="order.status.code=='F'">
-										<div class="ng-hide"
-											ng-hide="order.staff||order.status.code!='U'">
+										<div class="ng-hide" ng-hide="order.staff||order.status.code!='U'">
 											<button ng-click="$parent.assignPrepare(order)">#button("ASSIGNMENT")</button>
 										</div>
 										<div class="ng-hide" ng-show="order.staff">
@@ -64,48 +56,35 @@
 									</div></td>
 
 								<td align="center"><span>{{order.user.username}}</span></td>
-								<td align="center"><span>{{order.serviceDate|date:'yyyy/MM/dd'}}</span><br />
-									<span> {{order.serviceHour}}:00</span></td>
+								<td align="center"><span>{{order.serviceDate|date:'yyyy/MM/dd'}}</span><br /> <span> {{order.serviceHour}}:00</span></td>
 								<td align="center"><span>{{order.address}}</span></td>
 								<td align="center"><span>{{order.serviceInfo.name}}</span></td>
 								<td align="center"><span>{{order.phone}}</span></td>
-								<td align="center"><span
-									ng-hide="order.status.code=='U'||order.status.code=='I'">{{order.expectedPaymentAmount|currency:"￥"}}</span>
-									<a class="ng-hide"
-									ng-show="order.status.code=='U'||order.status.code=='I'"
-									href="javascript:void(0);"
+								<td align="center"><span ng-hide="order.status.code=='U'||order.status.code=='I'">{{order.expectedPaymentAmount|currency:"￥"}}</span>
+									<a class="ng-hide" ng-show="order.status.code=='U'||order.status.code=='I'" href="javascript:void(0);"
 									ng-click="$parent.prepareEditPrice(order)"><span>{{order.expectedPaymentAmount|currency:"￥"}}</span></a></td>
 								<td align="center"><span>{{order.actualPaymentAmount|currency:"￥"}}</span></td>
 								<td align="center"><div class="ng-hide"
 										ng-show="order.paymentMethod.code=='P'&&(order.status.code=='A'||order.status.code=='I'||order.status.code=='P'||order.status.code=='S')">
-										<div class="ng-hide"
-											ng-show="!order.transaction.code&&order.status.code=='I'">
-											<button ng-hide="order.txCodeInputing"
-												ng-click="$parent.txCodeInput(order)">#button("INPUT")</button>
+										<div class="ng-hide" ng-show="!order.paymentTransaction.code&&order.status.code=='I'">
+											<button ng-hide="order.txCodeInputing" ng-click="$parent.txCodeInput(order)">#button("INPUT")</button>
 										</div>
-										<div class="ng-hide"
-											ng-show="order.transaction.code&&(order.status.code=='P'||order.status.code=='S')">
-											<span>{{order.transaction.code}}</span>
+										<div class="ng-hide" ng-show="order.paymentTransaction.code&&(order.status.code=='P'||order.status.code=='S')">
+											<span>{{order.paymentTransaction.code}}</span>
 										</div>
 									</div></td>
 								<td align="center"><span>{{order.status.message}}</span></td>
-								<td align="center"><button ng-click="release(order)"
-									class="ng-hide" ng-show="order.status.code=='G'">#button("RELEASE")</button>
-									<button ng-click="cancel(order)" class="ng-hide"
-									ng-show="order.status.code=='Q'">#button("ORDER_CANCEL")</button>
-									<button ng-click="rejectCancel(order)" class="ng-hide"
-									ng-show="order.status.code=='Q'">#button("REJECT_ORDER_CANCEL")</button>
+								<td align="center"><button ng-click="release(order)" class="ng-hide" ng-show="order.status.code=='G'">#button("RELEASE")</button>
+									<button ng-click="cancel(order)" class="ng-hide" ng-show="order.status.code=='Q'">#button("ORDER_CANCEL")</button>
+									<button ng-click="rejectCancel(order)" class="ng-hide" ng-show="order.status.code=='Q'">#button("REJECT_ORDER_CANCEL")</button>
 							</tr>
 							<tr class="edit ng-hide" ng-show="order.assigning">
 								<td></td>
 								<td align="center"><span>#label("ASSIGNMENT")</span></td>
-								<td colspan="10"><select ng-model="order.selectedStaff"
-									style="min-width: 400px;">
+								<td colspan="10"><select ng-model="order.selectedStaff" style="min-width: 400px;">
 										<option value="" ng-if="order.availableStaffs.length>0">(#label("RANDOM"))</option>
 										<option value="" ng-if="order.availableStaffs.length==0">(#label("NO_AVAILABLE_STAFF"))</option>
-										<option ng-repeat="staff in order.availableStaffs"
-											value="{{staff.id}}">{{staff.name}} (Id:
-											{{staff.id}})</option>
+										<option ng-repeat="staff in order.availableStaffs" value="{{staff.id}}">{{staff.name}} (Id: {{staff.id}})</option>
 								</select>
 									<button ng-click="$parent.assign(order)">#button("OK")</button>
 									<button ng-click="$parent.assignCancel(order)">#button("CANCEL")</button></td>
@@ -120,21 +99,16 @@
 							<tr class="edit ng-hide" ng-show="order.priceEditing">
 								<td></td>
 								<td align="center"><span>#label("EXPECTED_PAYMENT_AMOUNT")</span></td>
-								<td colspan="10"><input
-									ng-model="order.newExpectedPaymentAmount" />
+								<td colspan="10"><input ng-model="order.newExpectedPaymentAmount" />
 									<button ng-click="$parent.editPrice(order)">#button("APPLY")</button>
 									<button ng-click="$parent.editPriceCancel(order)">#button("CANCEL")</button></td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="paging" style="text-align: center;">
-						<pagination total-items="pagingData.itemCount"
-							ng-model="pagingData.pageIndex" max-size="10"
-							items-per-page="pagingData.pageSize" class="pagination-sm"
-							boundary-links="true" ng-change="searchOrders()"
-							first-text='#label("FIRST_PAGE")' last-text='#label("LAST_PAGE")'
-							previous-text='#label("PREVIOUS_PAGE")'
-							next-text='#label("NEXT_PAGE")'></pagination>
+						<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
+							class="pagination-sm" boundary-links="true" ng-change="searchOrders()" first-text='#label("FIRST_PAGE")'
+							last-text='#label("LAST_PAGE")' previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'></pagination>
 					</div>
 				</div>
 			</div>

@@ -18,16 +18,18 @@ public class ServiceOrderDto extends AbstractBusinessDto {
     private String phone;
     private String address;
     private String receipt;
+
     private LookupDto paymentMethod;
+
     private LookupDto paymentType;
-    private AccountTransactionDto transaction;
+
+    private AccountTransactionDto paymentTransaction;
+
+    private AccountTransactionDto drawbackTransaction;
 
     private Double expectedPaymentAmount;
-
     private Double actualPaymentAmount;
-
     private ServiceInfoDto serviceInfo;
-
     private ServiceOrderAppraiseDto appraise;
 
     private ServiceSupplierStaffDto staff;
@@ -54,6 +56,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
         return approvalTime;
     }
 
+    public AccountTransactionDto getDrawbackTransaction() {
+        return drawbackTransaction;
+    }
+
     public Double getExpectedPaymentAmount() {
         return expectedPaymentAmount;
     }
@@ -67,6 +73,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public LookupDto getPaymentMethod() {
         return paymentMethod;
+    }
+
+    public AccountTransactionDto getPaymentTransaction() {
+        return paymentTransaction;
     }
 
     public LookupDto getPaymentType() {
@@ -116,10 +126,6 @@ public class ServiceOrderDto extends AbstractBusinessDto {
         return staff;
     }
 
-    public AccountTransactionDto getTransaction() {
-        return transaction;
-    }
-
     public UserDto getUser() {
         return user;
     }
@@ -140,6 +146,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
         this.approvalTime = approvalTime;
     }
 
+    public void setDrawbackTransaction(final AccountTransactionDto drawbackTransaction) {
+        this.drawbackTransaction = drawbackTransaction;
+    }
+
     public void setExpectedPaymentAmount(final Double expectedPaymentAmount) {
         this.expectedPaymentAmount = expectedPaymentAmount;
     }
@@ -153,6 +163,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public void setPaymentMethod(final LookupDto paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public void setPaymentTransaction(final AccountTransactionDto paymentTransaction) {
+        this.paymentTransaction = paymentTransaction;
     }
 
     public void setPaymentType(final LookupDto paymentType) {
@@ -197,10 +211,6 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public void setStaff(final ServiceSupplierStaffDto staff) {
         this.staff = staff;
-    }
-
-    public void setTransaction(final AccountTransactionDto transaction) {
-        this.transaction = transaction;
     }
 
     public void setUser(final UserDto user) {

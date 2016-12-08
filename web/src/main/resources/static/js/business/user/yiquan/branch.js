@@ -1,4 +1,4 @@
-layoutApp.controller('contentController', function($scope, $http, $window, $filter, errorHandler) {
+layoutApp.controller('contentController', function($scope, $http, $window, errorHandler) {
 	$scope.pagingData = {
 		pageIndex : 1,
 		pageSize : 10

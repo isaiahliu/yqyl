@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder.In;
@@ -22,6 +23,7 @@ import org.trinity.repository.repository.IJpaRepository;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderSearchingDto;
 import org.trinity.yqyl.common.message.lookup.OrderStatus;
 import org.trinity.yqyl.common.message.lookup.PaymentMethod;
+import org.trinity.yqyl.repository.business.entity.AccountTransaction_;
 import org.trinity.yqyl.repository.business.entity.ServiceCategory_;
 import org.trinity.yqyl.repository.business.entity.ServiceInfo_;
 import org.trinity.yqyl.repository.business.entity.ServiceOrder;
@@ -32,106 +34,141 @@ import org.trinity.yqyl.repository.business.entity.User;
 import org.trinity.yqyl.repository.business.entity.User_;
 
 public interface IServiceOrderRepository extends IJpaRepository<ServiceOrder, ServiceOrderSearchingDto> {
-	@Query("select count(0) from ServiceOrder where user=:user and status in (:status)")
-	int countUnprocessedOrders(@Param("user") User user, @Param("status") OrderStatus[] status);
+    @Query("select count(0) from ServiceOrder where user=:user and status in (:status)")
+    int countUnprocessedOrders(@Param("user") User user, @Param("status") OrderStatus[] status);
 
-	@Override
-	default Page<ServiceOrder> query(final ServiceOrderSearchingDto searchingDto, final Pageable pagable) {
-		final Specification<ServiceOrder> specification = (root, query, cb) -> {
-			final List<Predicate> predicates = new ArrayList<>();
-			switch (searchingDto.getSearchScope()) {
-				case ISearchingDto.SEARCH_ALL:
-					break;
-				case "SUPPLIER":
-					predicates.add(cb.equal(root.join(ServiceOrder_.serviceInfo).join(ServiceInfo_.serviceSupplierClient)
-							.join(ServiceSupplierClient_.user).get(User_.username), searchingDto.getCurrentUsername()));
-					break;
-				case ISearchingDto.SEARCH_ME:
-				default:
-					predicates.add(cb.equal(root.join(ServiceOrder_.user).get(User_.username), searchingDto.getCurrentUsername()));
-					break;
-			}
+    @Override
+    default Page<ServiceOrder> query(final ServiceOrderSearchingDto searchingDto, final Pageable pagable) {
+        final Specification<ServiceOrder> specification = (root, query, cb) -> {
+            final List<Predicate> predicates = new ArrayList<>();
+            switch (searchingDto.getSearchScope()) {
+            case ISearchingDto.SEARCH_ALL:
+                break;
+            case "SUPPLIER":
+                predicates.add(cb.equal(root.join(ServiceOrder_.serviceInfo).join(ServiceInfo_.serviceSupplierClient)
+                        .join(ServiceSupplierClient_.user).get(User_.username), searchingDto.getCurrentUsername()));
+                break;
+            case ISearchingDto.SEARCH_ME:
+            default:
+                predicates.add(cb.equal(root.join(ServiceOrder_.user).get(User_.username), searchingDto.getCurrentUsername()));
+                break;
+            }
 
-			if (!StringUtils.isEmpty(searchingDto.getReceiverUserName())) {
-				predicates.add(cb.like(root.join(ServiceOrder_.user).get(User_.username), "%" + searchingDto.getReceiverUserName() + "%"));
-			}
+            if (!StringUtils.isEmpty(searchingDto.getReceiverUserName())) {
+                predicates.add(cb.like(root.join(ServiceOrder_.user).get(User_.username), "%" + searchingDto.getReceiverUserName() + "%"));
+            }
 
-			if (searchingDto.getId() != null && searchingDto.getId() > 0) {
-				predicates.add(cb.equal(root.get(ServiceOrder_.id), searchingDto.getId()));
-			}
+            if (searchingDto.getId() != null && searchingDto.getId() > 0) {
+                predicates.add(cb.equal(root.get(ServiceOrder_.id), searchingDto.getId()));
+            }
 
-			if (!StringUtils.isEmpty(searchingDto.getCategory())) {
-				predicates.add(cb.equal(root.join(ServiceOrder_.serviceInfo).join(ServiceInfo_.serviceCategory).get(ServiceCategory_.name),
-						searchingDto.getCategory()));
-			}
+            if (!StringUtils.isEmpty(searchingDto.getCategory())) {
+                predicates.add(cb.equal(root.join(ServiceOrder_.serviceInfo).join(ServiceInfo_.serviceCategory).get(ServiceCategory_.name),
+                        searchingDto.getCategory()));
+            }
 
-			if (!searchingDto.getStatus().isEmpty()) {
-				final In<OrderStatus> in = cb.in(root.get(ServiceOrder_.status));
-				searchingDto.getStatus().forEach(item -> in.value(LookupParser.parse(OrderStatus.class, item)));
-				predicates.add(in);
-			}
+            if (!searchingDto.getStatus().isEmpty()) {
+                final In<OrderStatus> in = cb.in(root.get(ServiceOrder_.status));
+                searchingDto.getStatus().forEach(item -> in.value(LookupParser.parse(OrderStatus.class, item)));
+                predicates.add(in);
+            }
 
-			if (searchingDto.getServiceSupplierClientId() != null) {
-				predicates.add(cb.equal(
-						root.join(ServiceOrder_.serviceInfo).join(ServiceInfo_.serviceSupplierClient).get(ServiceSupplierClient_.userId),
-						searchingDto.getServiceSupplierClientId()));
+            if (searchingDto.getServiceSupplierClientId() != null) {
+                predicates.add(cb.equal(
+                        root.join(ServiceOrder_.serviceInfo).join(ServiceInfo_.serviceSupplierClient).get(ServiceSupplierClient_.userId),
+                        searchingDto.getServiceSupplierClientId()));
 
-				query.distinct(true);
-			}
+                query.distinct(true);
+            }
 
-			if (!StringUtils.isEmpty(searchingDto.getSupplierUserName())) {
-				predicates.add(cb.like(root.join(ServiceOrder_.serviceInfo).join(ServiceInfo_.serviceSupplierClient)
-						.join(ServiceSupplierClient_.user).get(User_.username), "%" + searchingDto.getSupplierUserName() + "%"));
-			}
+            if (!StringUtils.isEmpty(searchingDto.getSupplierUserName())) {
+                predicates.add(cb.like(root.join(ServiceOrder_.serviceInfo).join(ServiceInfo_.serviceSupplierClient)
+                        .join(ServiceSupplierClient_.user).get(User_.username), "%" + searchingDto.getSupplierUserName() + "%"));
+            }
 
-			if (!StringUtils.isEmpty(searchingDto.getServiceDate())) {
-				final DateFormat format = new SimpleDateFormat("yyyyMMdd");
-				try {
-					final Calendar calendar = Calendar.getInstance();
-					calendar.setTime(format.parse(searchingDto.getServiceDate()));
-					predicates.add(cb.greaterThanOrEqualTo(root.get(ServiceOrder_.serviceTime), calendar.getTime()));
+            if (!StringUtils.isEmpty(searchingDto.getServiceDate())) {
+                final DateFormat format = new SimpleDateFormat("yyyyMMdd");
+                try {
+                    final Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(format.parse(searchingDto.getServiceDate()));
+                    predicates.add(cb.greaterThanOrEqualTo(root.get(ServiceOrder_.serviceTime), calendar.getTime()));
 
-					calendar.add(Calendar.DATE, 1);
-					predicates.add(cb.lessThan(root.get(ServiceOrder_.serviceTime), calendar.getTime()));
-				} catch (final ParseException e) {
-				}
-			}
+                    calendar.add(Calendar.DATE, 1);
+                    predicates.add(cb.lessThan(root.get(ServiceOrder_.serviceTime), calendar.getTime()));
+                } catch (final ParseException e) {
+                }
+            }
 
-			if (!StringUtils.isEmpty(searchingDto.getSettledDate())) {
-				final DateFormat format = new SimpleDateFormat("yyyyMMdd");
-				try {
-					final Calendar calendar = Calendar.getInstance();
-					calendar.setTime(format.parse(searchingDto.getSettledDate()));
-					predicates.add(cb.greaterThanOrEqualTo(root.get(ServiceOrder_.settledTime), calendar.getTime()));
+            if (!StringUtils.isEmpty(searchingDto.getSettledDate())) {
+                final DateFormat format = new SimpleDateFormat("yyyyMMdd");
+                try {
+                    final Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(format.parse(searchingDto.getSettledDate()));
+                    predicates.add(cb.greaterThanOrEqualTo(root.get(ServiceOrder_.settledTime), calendar.getTime()));
 
-					calendar.add(Calendar.DATE, 1);
-					predicates.add(cb.lessThan(root.get(ServiceOrder_.settledTime), calendar.getTime()));
-				} catch (final ParseException e) {
-				}
-			}
+                    calendar.add(Calendar.DATE, 1);
+                    predicates.add(cb.lessThan(root.get(ServiceOrder_.settledTime), calendar.getTime()));
+                } catch (final ParseException e) {
+                }
+            }
 
-			if (!StringUtils.isEmpty(searchingDto.getPaymentMethod())) {
-				predicates.add(cb.equal(root.get(ServiceOrder_.paymentMethod),
-						LookupParser.parse(PaymentMethod.class, searchingDto.getPaymentMethod())));
-			}
+            if (!StringUtils.isEmpty(searchingDto.getPaymentMethod())) {
+                predicates.add(cb.equal(root.get(ServiceOrder_.paymentMethod),
+                        LookupParser.parse(PaymentMethod.class, searchingDto.getPaymentMethod())));
+            }
 
-			if (searchingDto.isAssigned()) {
-				predicates.add(cb.isNotNull(root.get(ServiceOrder_.serviceSupplierStaff)));
-			}
+            if (searchingDto.isAssigned()) {
+                predicates.add(cb.isNotNull(root.get(ServiceOrder_.serviceSupplierStaff)));
+            }
 
-			if (!StringUtils.isEmpty(searchingDto.getStaffNo())) {
-				predicates.add(cb.like(root.join(ServiceOrder_.serviceSupplierStaff).get(ServiceSupplierStaff_.code),
-						"%" + searchingDto.getStaffNo() + "%"));
-			}
+            if (!StringUtils.isEmpty(searchingDto.getStaffNo())) {
+                predicates.add(cb.like(root.join(ServiceOrder_.serviceSupplierStaff).get(ServiceSupplierStaff_.code),
+                        "%" + searchingDto.getStaffNo() + "%"));
+            }
 
-			if (!StringUtils.isEmpty(searchingDto.getStaffName())) {
-				predicates.add(cb.like(root.join(ServiceOrder_.serviceSupplierStaff).get(ServiceSupplierStaff_.name),
-						"%" + searchingDto.getStaffName() + "%"));
-			}
+            if (!StringUtils.isEmpty(searchingDto.getStaffName())) {
+                predicates.add(cb.like(root.join(ServiceOrder_.serviceSupplierStaff).get(ServiceSupplierStaff_.name),
+                        "%" + searchingDto.getStaffName() + "%"));
+            }
 
-			return cb.and(predicates.toArray(new Predicate[0]));
-		};
+            if (searchingDto.isPaid()) {
+                predicates.add(cb.isNotNull(root.get(ServiceOrder_.paymentTransaction)));
+            }
 
-		return findAll(specification, pagable);
-	}
+            if (!StringUtils.isEmpty(searchingDto.getPaymentFromDate())) {
+                final DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+
+                try {
+                    final Date fromDate = dateFormat.parse(searchingDto.getPaymentFromDate());
+                    predicates.add(cb.greaterThanOrEqualTo(root.join(ServiceOrder_.paymentTransaction).get(AccountTransaction_.timestamp),
+                            fromDate));
+                } catch (final ParseException e) {
+                }
+            }
+
+            if (!StringUtils.isEmpty(searchingDto.getPaymentToDate())) {
+                final DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+
+                try {
+                    final Date toDate = dateFormat.parse(searchingDto.getPaymentToDate());
+                    final Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(toDate);
+                    calendar.add(Calendar.DATE, 1);
+
+                    predicates.add(cb.lessThan(root.join(ServiceOrder_.paymentTransaction).get(AccountTransaction_.timestamp),
+                            calendar.getTime()));
+                } catch (final ParseException e) {
+                }
+            }
+
+            if (!StringUtils.isEmpty(searchingDto.getPaymentCode())) {
+                predicates.add(cb.like(root.join(ServiceOrder_.paymentTransaction).get(AccountTransaction_.code),
+                        "%" + searchingDto.getPaymentCode() + "%"));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        return findAll(specification, pagable);
+    }
 }

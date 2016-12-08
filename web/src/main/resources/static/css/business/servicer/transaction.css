@@ -1,0 +1,79 @@
+div.transaction {
+	padding: 1px 0 0 250px;
+}
+
+div.transaction div.block {
+	border: 1px solid #cccccc;
+}
+
+div.transaction div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+div.transaction div.headerBlock {
+	border-bottom: none;
+}
+
+div.transaction div.inlineBlock {
+	display: inline-block;
+	margin: 5px 20px 5px 0;
+}
+
+div.transaction div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.transaction div.details div.tab {
+	padding: 10px 20px 10px 20px;
+	background: white;
+	margin-bottom: 20px;
+}
+
+div.transaction div.details div.tab div.tabTitle {
+	padding: 5px 10px;
+}
+
+div.transaction div.details div.tab div.tabTitle img {
+	width: 14px;
+	height: 14px;
+}
+
+div.transaction div.details div.tab div.tabContent {
+	padding-left: 5px;
+}
+
+div.transaction div.details div.tab div.tabContent div.inlineItem {
+	margin-top: 8px;
+	display: inline-block;
+}
+
+div.transaction div.details div.tab div.tabContent input, div.transaction div.details div.tab div.tabContent select
+	{
+	width: 160px;
+	height: 26px;
+	margin-right: 50px;
+}
+
+div.transaction div.details div.tab div.tabContent img {
+	max-width: 50px;
+	min-width: 50px;
+	max-height: 50px;
+	min-height: 50px;
+}
+
+div.transaction div.details div.tab div.tabContent table {
+	width: 100%;
+}
+
+div.transaction div.details div.tab div.tabContent table thead td {
+	background: #c7defd;
+}
+
+div.transaction div.details div.tab div.tabContent table td {
+	font-size: 14px;
+	padding: 10px 0;
+	border: 1px solid #7f7f7f;
+}

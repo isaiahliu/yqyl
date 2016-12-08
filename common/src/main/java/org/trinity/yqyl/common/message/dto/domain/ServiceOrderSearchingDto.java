@@ -14,13 +14,29 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
     private boolean assigned;
     private String staffNo;
     private String staffName;
+    private boolean paid;
+    private String paymentFromDate;
+    private String paymentToDate;
+    private String paymentCode;
 
     public String getCategory() {
         return category;
     }
 
+    public String getPaymentCode() {
+        return paymentCode;
+    }
+
+    public String getPaymentFromDate() {
+        return paymentFromDate;
+    }
+
     public String getPaymentMethod() {
         return paymentMethod;
+    }
+
+    public String getPaymentToDate() {
+        return paymentToDate;
     }
 
     public String getReceiverUserName() {
@@ -59,6 +75,10 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
         return fetchUnprocessedCount;
     }
 
+    public boolean isPaid() {
+        return paid;
+    }
+
     public void setAssigned(final boolean assigned) {
         this.assigned = assigned;
     }
@@ -71,8 +91,24 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
         this.fetchUnprocessedCount = fetchUnprocessedCount;
     }
 
+    public void setPaid(final boolean paid) {
+        this.paid = paid;
+    }
+
+    public void setPaymentCode(final String paymentCode) {
+        this.paymentCode = paymentCode;
+    }
+
+    public void setPaymentFromDate(final String paymentFromDate) {
+        this.paymentFromDate = paymentFromDate;
+    }
+
     public void setPaymentMethod(final String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public void setPaymentToDate(final String paymentToDate) {
+        this.paymentToDate = paymentToDate;
     }
 
     public void setReceiverUserName(final String receiverUserName) {

@@ -49,8 +49,11 @@ public class AccountTransaction extends AbstractAuditableEntity implements Seria
     @OneToMany(mappedBy = "accountTransaction")
     private List<AccountPosting> accountPostings;
 
-    @OneToOne(mappedBy = "accountTransaction")
-    private ServiceOrder serviceOrder;
+    @OneToOne(mappedBy = "paymentTransaction")
+    private ServiceOrder paymentOrder;
+
+    @OneToOne(mappedBy = "drawbackTransaction")
+    private ServiceOrder drawbackOrder;
 
     public AccountTransaction() {
     }
@@ -70,12 +73,16 @@ public class AccountTransaction extends AbstractAuditableEntity implements Seria
         return this.code;
     }
 
+    public ServiceOrder getDrawbackOrder() {
+        return drawbackOrder;
+    }
+
     public Long getId() {
         return this.id;
     }
 
-    public ServiceOrder getServiceOrder() {
-        return serviceOrder;
+    public ServiceOrder getPaymentOrder() {
+        return paymentOrder;
     }
 
     public RecordStatus getStatus() {
@@ -105,12 +112,16 @@ public class AccountTransaction extends AbstractAuditableEntity implements Seria
         this.code = code;
     }
 
+    public void setDrawbackOrder(final ServiceOrder drawbackOrder) {
+        this.drawbackOrder = drawbackOrder;
+    }
+
     public void setId(final Long id) {
         this.id = id;
     }
 
-    public void setServiceOrder(final ServiceOrder serviceOrder) {
-        this.serviceOrder = serviceOrder;
+    public void setPaymentOrder(final ServiceOrder paymentOrder) {
+        this.paymentOrder = paymentOrder;
     }
 
     public void setStatus(final RecordStatus status) {

@@ -1,31 +1,24 @@
 #parse("/velocity/servicer/navigation.vm")
 
-<link rel="stylesheet"
-	href="/static/css/business/servicer/staffOrder.css"></link>
+<link rel="stylesheet" href="/static/css/business/servicer/staffOrder.css"></link>
 
 <div class="staffOrder">
-	<div style="padding: 15px 15px 0 15px; height: 78px;"
-		class="block headerBlock">
-		<span
-			style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("SERVICE_SUPPLIER_STAFF_MANAGEMENT")-#button("GENERAL_INFO")</span>
+	<div style="padding: 15px 15px 0 15px; height: 78px;" class="block headerBlock">
+		<span style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("SERVICE_SUPPLIER_STAFF_MANAGEMENT")-#button("GENERAL_INFO")</span>
 	</div>
 	<div class="tab" style="border: 1px solid #a1d0fe; margin: 0 15px;"></div>
 
 	<div class="block" style="background: #f1f1f1; padding: 15px;">
 		<div class="details">
-			<div class="tab"
-				style="overflow: hidden; background: #c7defd; margin-bottom: 0;">
-				<div class="tabTitle">
-					<a style="float: right;" href="javascript:void(0)"
-						ng-click="newStaff()"><span>#button("NEW_STAFF")</span></a>
+			<div class="tab" style="overflow: hidden; background: #c7defd; margin-bottom: 0;">
+				<div class="tab" style="background: #c7defd; margin-bottom: 0; height: 45px;">
+					<div class="tabTitle"></div>
 				</div>
 			</div>
 			<div class="tab" style="margin-top: 0;">
 				<div class="tabTitle" style="text-align: center;">
-					<span>#label("STAFF_NO")</span> <input ng-model="filterData.id"
-						style="width: 200px; margin-right: 20px;" /> <span>#label("STAFF_NAME")</span>
-					<input ng-model="filterData.name"
-						style="width: 200px; margin-right: 20px;" />
+					<span>#label("STAFF_NO")</span> <input ng-model="filterData.id" style="width: 200px; margin-right: 20px;" /> <span>#label("STAFF_NAME")</span>
+					<input ng-model="filterData.name" style="width: 200px; margin-right: 20px;" />
 					<button ng-click="searchStaffs()">#button("SEARCH")</button>
 				</div>
 			</div>
@@ -34,7 +27,7 @@
 					<table>
 						<thead>
 							<tr>
-								<td align="center"><span>#label("ID")</span></td>
+								<td align="center"><span>#label("STAFF_NO")</span></td>
 								<td align="center"><span>#label("NAME")</span></td>
 								<td align="center"><span>#label("SERVICE_ORDER_ID")</span></td>
 								<td align="center"><span>#label("ASSIGNMENT_TIME")</span></td>
@@ -46,29 +39,21 @@
 						</thead>
 						<tbody>
 							<tr class="ng-hide" ng-show="orders" ng-repeat="order in orders">
-								<td align="center"><span>{{order.staff.id}}</span></td>
+								<td align="center"><span>{{order.staff.code}}</span></td>
 								<td align="center"><span>{{order.staff.name}}</span></td>
 								<td align="center"><span>{{order.id}}</span></td>
-								<td align="center"><span>{{order.approvalTime |
-										date:'yyyy-MM-dd HH:mm'}}</span></td>
-								<td align="center"><span>{{order.settledTime |
-										date:'yyyy-MM-dd HH:mm'}}</span></td>
-								<td align="center"><span ng-show="order.status.code=='I'">#label("ASSIGNING")</span><span
-									ng-hide="order.status.code=='I'">#label("COMPLETED")</span></td>
+								<td align="center"><span>{{order.approvalTime | date:'yyyy-MM-dd HH:mm'}}</span></td>
+								<td align="center"><span>{{order.settledTime | date:'yyyy-MM-dd HH:mm'}}</span></td>
+								<td align="center"><span ng-show="order.status.code=='I'">#label("ASSIGNING")</span><span ng-hide="order.status.code=='I'">#label("COMPLETED")</span></td>
 								<td align="center"><span>{{order.appraise.staffRate}}</span></td>
-								<td align="center"><a
-									ng-href="/servicer/order/{{order.id}}">#button("VIEW")</a></td>
+								<td align="center"><a ng-href="/servicer/order/{{order.id}}">#button("VIEW")</a></td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="paging" style="text-align: center;">
-						<pagination total-items="pagingData.itemCount"
-							ng-model="pagingData.pageIndex" max-size="10"
-							items-per-page="pagingData.pageSize" class="pagination-sm"
-							boundary-links="true" ng-change="searchStaffs()"
-							first-text='#label("FIRST_PAGE")' last-text='#label("LAST_PAGE")'
-							previous-text='#label("PREVIOUS_PAGE")'
-							next-text='#label("NEXT_PAGE")'></pagination>
+						<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
+							class="pagination-sm" boundary-links="true" ng-change="searchStaffs()" first-text='#label("FIRST_PAGE")'
+							last-text='#label("LAST_PAGE")' previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'></pagination>
 					</div>
 				</div>
 			</div>
