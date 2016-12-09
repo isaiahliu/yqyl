@@ -20,64 +20,15 @@ import org.trinity.common.util.Tuple2;
 import org.trinity.message.ILookupMessage;
 import org.trinity.message.IMessageResolver;
 import org.trinity.message.IMessageResolverChain;
-import org.trinity.message.LookupParser;
 import org.trinity.message.exception.IErrorMessage;
 import org.trinity.process.converter.IObjectConverter;
 import org.trinity.process.converter.LookupConverter;
 import org.trinity.yqyl.common.accessright.SecurityUtil;
 import org.trinity.yqyl.common.message.lookup.AccessRight;
-import org.trinity.yqyl.common.message.lookup.AccountBalanceStatus;
-import org.trinity.yqyl.common.message.lookup.AccountCategory;
-import org.trinity.yqyl.common.message.lookup.AccountPostingStatus;
-import org.trinity.yqyl.common.message.lookup.AccountStatus;
-import org.trinity.yqyl.common.message.lookup.AccountType;
-import org.trinity.yqyl.common.message.lookup.AnnouncementStatus;
-import org.trinity.yqyl.common.message.lookup.AuditingType;
-import org.trinity.yqyl.common.message.lookup.Bank;
-import org.trinity.yqyl.common.message.lookup.ClientType;
-import org.trinity.yqyl.common.message.lookup.CompanyType;
-import org.trinity.yqyl.common.message.lookup.CredentialType;
-import org.trinity.yqyl.common.message.lookup.FamilyRelationship;
-import org.trinity.yqyl.common.message.lookup.FavoriteCategory;
-import org.trinity.yqyl.common.message.lookup.FlagStatus;
-import org.trinity.yqyl.common.message.lookup.FrequencyStatus;
-import org.trinity.yqyl.common.message.lookup.Gender;
-import org.trinity.yqyl.common.message.lookup.Language;
-import org.trinity.yqyl.common.message.lookup.LookupType;
-import org.trinity.yqyl.common.message.lookup.MessageStatus;
-import org.trinity.yqyl.common.message.lookup.OperatorClientStatus;
-import org.trinity.yqyl.common.message.lookup.OrderOperation;
-import org.trinity.yqyl.common.message.lookup.OrderStatus;
-import org.trinity.yqyl.common.message.lookup.PaymentMethod;
-import org.trinity.yqyl.common.message.lookup.PaymentType;
-import org.trinity.yqyl.common.message.lookup.RealnameStatus;
-import org.trinity.yqyl.common.message.lookup.RecordStatus;
-import org.trinity.yqyl.common.message.lookup.ServiceOrderRequirementStatus;
-import org.trinity.yqyl.common.message.lookup.ServiceReceiverClientStatus;
-import org.trinity.yqyl.common.message.lookup.ServiceStatus;
-import org.trinity.yqyl.common.message.lookup.ServiceSupplierClientStatus;
-import org.trinity.yqyl.common.message.lookup.SmokerAge;
-import org.trinity.yqyl.common.message.lookup.StaffStatus;
-import org.trinity.yqyl.common.message.lookup.SystemAttributeKey;
-import org.trinity.yqyl.common.message.lookup.TokenStatus;
-import org.trinity.yqyl.common.message.lookup.TransactionType;
-import org.trinity.yqyl.common.message.lookup.UserStatus;
-import org.trinity.yqyl.common.message.lookup.ValueType;
-import org.trinity.yqyl.common.message.lookup.VerifyCodeType;
 
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class CommonConfiguration {
-    static {
-        LookupParser.addEnumLookups(AuditingType.class, RecordStatus.class, Gender.class, AccountBalanceStatus.class,
-                AccountPostingStatus.class, AccountStatus.class, AnnouncementStatus.class, OperatorClientStatus.class, ClientType.class,
-                Language.class, MessageStatus.class, OrderStatus.class, CompanyType.class, ServiceStatus.class,
-                ServiceSupplierClientStatus.class, ServiceReceiverClientStatus.class, AccountCategory.class, LookupType.class,
-                SystemAttributeKey.class, ValueType.class, UserStatus.class, TokenStatus.class, FavoriteCategory.class, AccessRight.class,
-                FamilyRelationship.class, FrequencyStatus.class, FlagStatus.class, SmokerAge.class, CredentialType.class,
-                RealnameStatus.class, PaymentType.class, PaymentMethod.class, StaffStatus.class, ServiceOrderRequirementStatus.class,
-                Bank.class, AccountType.class, OrderOperation.class, TransactionType.class, VerifyCodeType.class);
-    }
 
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)

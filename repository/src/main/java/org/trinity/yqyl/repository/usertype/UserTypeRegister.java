@@ -88,5 +88,4 @@ import org.trinity.yqyl.common.message.lookup.VerifyCodeType;
         @TypeDef(name = "AccessRight", defaultForType = AccessRight.class, typeClass = MessageUserType.class, parameters = @Parameter(name = "class", value = "org.trinity.yqyl.common.message.lookup.AccessRight")) })
 @MappedSuperclass
 public class UserTypeRegister {
-
 }
