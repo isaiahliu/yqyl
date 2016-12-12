@@ -43,6 +43,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable().addFilterAfter(tokenFilter, SecurityContextPersistenceFilter.class).authorizeRequests()
                 .antMatchers("/security/token", "/security/register", "/common/ping", "/security/token/verify").permitAll()
                 .antMatchers("/security/authenticate").hasAuthority(AbstractPreAuthenticationFilter.ROLE_ANONYMOUS_WITH_TOKEN).anyRequest()
-                .authenticated();
+                .permitAll();
     }
 }
