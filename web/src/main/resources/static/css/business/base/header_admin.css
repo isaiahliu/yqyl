@@ -1,0 +1,43 @@
+div.header, div.footer {
+	background-color: #ff861a;
+}
+
+div.header {
+	height: 100px;
+}
+
+div.header span {
+	line-height: 100px;
+	font-size: 20px;
+	color: white;
+}
+
+div.header span.title {
+	font-size: 30px;
+}
+
+div.header ul {
+	padding-left: 0px;
+}
+
+div.header li div {
+	height: 100px;;
+}
+
+div.header div.headerBar, div.content {
+	
+}
+
+div.header div.left {
+	float: left;
+}
+
+div.header div.right {
+	float: right;
+}
+
+div.header li {
+	list-style-type: none;
+	float: left;
+	margin-left: 10px;
+}

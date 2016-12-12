@@ -1,5 +1,19 @@
 div.category {
-	padding: 10px 0px 0px 280px;
+	padding: 1px 0 0 250px;
+}
+
+div.category div.block {
+	border: 1px solid #cccccc;
+}
+
+div.category div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+div.category div.headerBlock {
+	border-bottom: none;
 }
 
 div.category div.title {
@@ -7,23 +21,59 @@ div.category div.title {
 	font-size: large;
 }
 
-div.category div.filter {
-	margin-top: 20px;
+div.category div.details div.tab {
+	padding: 10px 20px 10px 20px;
+	background: white;
+	margin-bottom: 20px;
 }
 
-div.category table {
-	margin-top: 20px;
-	width: 900px;
+div.category div.details div.tab div.tabTitle {
+	padding: 5px 10px;
 }
 
-div.category table thead td {
-	background-color: rgba(215, 215, 215, 1)
+div.category div.details div.tab div.tabTitle img {
+	width: 14px;
+	height: 14px;
 }
 
-div.category table td {
-	border: 1px solid;
+div.category div.details div.tab div.tabContent {
+	padding-left: 5px;
 }
 
-div.category span.disabledCategory {
+div.category div.details div.tab div.tabContent div.inlineItem {
+	margin-top: 8px;
+	display: inline-block;
+}
+
+div.category div.details div.tab div.tabContent input, div.category div.details div.tab div.tabContent select
+	{
+	width: 160px;
+	height: 26px;
+	margin-right: 50px;
+}
+
+div.category div.details div.tab div.tabContent img {
+	max-width: 50px;
+	min-width: 50px;
+	max-height: 50px;
+	min-height: 50px;
+}
+
+div.category div.details div.tab div.tabContent table {
+	width: 100%;
+}
+
+div.category div.details div.tab div.tabContent table thead td {
+	background: #ffcfa7;
+}
+
+div.category div.details div.tab div.tabContent table td {
+	font-size: 14px;
+	border: 1px solid #7f7f7f;
+	padding: 10px 0;
+}
+
+div.category span.disabledCategory
+{
 	text-decoration: line-through;
 }

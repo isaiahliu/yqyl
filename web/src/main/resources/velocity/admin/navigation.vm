@@ -2,51 +2,45 @@
 
 <div class="subNavBar navBar">
 	<ul>
-		<li><a href="/admin/news"><div
-					class="navBarItem #if($currentPage=='NEWS')selected #end">
-					<span>#button("ADMIN_NEWS")</span>
+		<li><div style="height: 80px; border-bottom: 1px solid #cccccc;">
+				<img src="/static/images/icon/admin/header.png" /> <span style="line-height: 80px; color: #ff861a; font-size: 20px;">#label("ADMIN")</span>
+			</div></li>
+		<li><a href="/admin/news"><div class="navBarItem #if($currentPage=='NEWS')selected #end">
+					<img class="unselected" src="/static/images/icon/admin/1-1.png" /> <img class="selected" src="/static/images/icon/admin/1-2.png" /> <span>#button("ADMIN_NEWS")</span>
 				</div></a></li>
-		<li><a href="javascript:void(0)">
-				<div class="navBarItem #if($currentPage=='SERVICE')selected #end"
-					ng-mouseenter="showService=true" ng-mouseleave="showService=false">
-					<span>#button("ADMIN_SERVICE")</span>
+		<li ng-mouseenter="expandService=true" ng-mouseleave="expandService=false"><a href="/admin/service/category">
+				<div class="navBarItem #if($currentPage=='SERVICE')selected #end">
+					<img class="unselected" src="/static/images/icon/admin/2-1.png" /> <img class="selected" src="/static/images/icon/admin/2-2.png" /> <span>#button("ADMIN_SERVICE")</span>
 				</div>
-		</a></li>
-		<li><a href="/admin/supplier"><div
-					class="navBarItem #if($currentPage=='SUPPLIER')selected #end">
-					<span>#button("ADMIN_SUPPLIER")</span>
+		</a>
+			<ul style="height: auto; border: none;" #if($currentPage!='SERVICE' ) class="ng-hide" ng-show="expandService" #end>
+				<li class="subItem"><a href="/admin/service/category"><div class="navBarItem #if($currentSubPage=='CATEGORY')selected #end">
+							<span>#button("SERVICER_SERVICE_CATEGORY")</span>
+						</div></a></li>
+				<li class="subItem"><a href="/admin/service/order"><div class="navBarItem #if($currentSubPage=='ORDER')selected #end">
+							<span>#button("SERVICER_SERVICE_ORDER")</span>
+						</div></a></li>
+				<li class="subItem"><a href="/admin/service/appraise"><div class="navBarItem #if($currentSubPage=='APPRAISE')selected #end">
+							<span>#button("SERVICER_SERVICE_APPRAISE")</span>
+						</div></a></li>
+			</ul></li>
+		<li><a href="/admin/supplier"><div class="navBarItem #if($currentPage=='SUPPLIER')selected #end">
+					<img class="unselected" src="/static/images/icon/admin/3-1.png" /> <img class="selected" src="/static/images/icon/admin/3-2.png" /> <span>#button("ADMIN_SUPPLIER")</span>
 				</div></a></li>
-		<li><a href="/admin/receiver"><div
-					class="navBarItem #if($currentPage=='RECEIVER')selected #end">
-					<span>#button("ADMIN_RECEIVER")</span>
+		<li><a href="/admin/receiver"><div class="navBarItem #if($currentPage=='RECEIVER')selected #end">
+					<img class="unselected" src="/static/images/icon/admin/4-1.png" /> <img class="selected" src="/static/images/icon/admin/4-2.png" /> <span>#button("ADMIN_RECEIVER")</span>
 				</div></a></li>
-		<li><a href="/admin/training"><div
-					class="navBarItem #if($currentPage=='TRAINING')selected #end">
-					<span>#button("ADMIN_TRAINING")</span>
+		<li class="ng-hide"><a href="/admin/training"><div class="navBarItem #if($currentPage=='TRAINING')selected #end">
+					<img class="unselected" src="/static/images/icon/admin/5-1.png" /> <img class="selected" src="/static/images/icon/admin/5-2.png" /> <span>#button("ADMIN_TRAINING")</span>
 				</div></a></li>
-		<li><a href="/admin/permission"><div
-					class="navBarItem #if($currentPage=='PERMISSION')selected #end">
-					<span>#button("ADMIN_PERMISSION")</span>
+		<li><a href="/admin/permission"><div class="navBarItem #if($currentPage=='PERMISSION')selected #end">
+					<img class="unselected" src="/static/images/icon/admin/6-1.png" /> <img class="selected" src="/static/images/icon/admin/6-2.png" /> <span>#button("ADMIN_PERMISSION")</span>
 				</div></a></li>
-		<li><a href="/admin/role"><div
-					class="navBarItem #if($currentPage=='ROLE')selected #end">
-					<span>#button("ADMIN_ROLE")</span>
+		<li class="ng-hide"><a href="/admin/role"><div class="navBarItem #if($currentPage=='ROLE')selected #end">
+					<img class="unselected" src="/static/images/icon/admin/7-1.png" /> <img class="selected" src="/static/images/icon/admin/7-2.png" /> <span>#button("ADMIN_ROLE")</span>
 				</div></a></li>
+	</ul>
 
-	</ul>
-	<ul class="popList servicePopList ng-hide"
-		ng-mouseenter="showService=true" ng-mouseleave="showService=false"
-		ng-show="showService">
-		<li><a href="/admin/service/category"><div>
-					<span>#button("SERVICER_SERVICE_CATEGORY")</span>
-				</div></a></li>
-		<li><a href="/admin/service/order"><div>
-					<span>#button("SERVICER_SERVICE_ORDER")</span>
-				</div></a></li>
-		<li><a href="/admin/service/appraise"><div>
-					<span>#button("SERVICER_SERVICE_APPRAISE")</span>
-				</div></a></li>
-	</ul>
 </div>
 
 

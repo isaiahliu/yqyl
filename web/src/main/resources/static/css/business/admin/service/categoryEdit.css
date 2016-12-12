@@ -1,5 +1,19 @@
 div.categoryEdit {
-	padding: 10px 0px 0px 280px;
+	padding: 1px 0 0 250px;
+}
+
+div.categoryEdit div.block {
+	border: 1px solid #cccccc;
+}
+
+div.categoryEdit div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+div.categoryEdit div.headerBlock {
+	border-bottom: none;
 }
 
 div.categoryEdit div.title {
@@ -7,39 +21,48 @@ div.categoryEdit div.title {
 	font-size: large;
 }
 
-div.categoryEdit ul {
-	list-style-type: none;
-	padding-left: 0px;
+div.categoryEdit div.details div.tab {
+	padding: 10px 20px 10px 20px;
+	background: white;
+	margin-bottom: 20px;
 }
 
-div.categoryEdit ul li {
-	text-decoration: none;
-	margin-top: 5px;
+div.categoryEdit div.details div.tab div.tabTitle {
+	padding: 5px 10px;
 }
 
-div.categoryEdit ul li span.disabledCategory {
+div.categoryEdit div.details div.tab div.tabTitle img {
+	width: 14px;
+	height: 14px;
+}
+
+div.categoryEdit div.details div.tab div.tabContent {
+	padding-left: 5px;
+}
+
+div.categoryEdit  span.disabledCategory {
 	text-decoration: line-through;
 }
 
-div.categoryEdit ul li span.name, div.categoryEdit ul li input {
+div.categoryEdit  span.name, div.categoryEdit ul li input {
 	display: inline-block;
 }
 
-div.categoryEdit ul li span.name {
+div.categoryEdit  span.name {
 	min-width: 150px;
 	line-height: 22px;
 }
 
-div.categoryEdit ul li input {
+div.categoryEdit  input {
 	min-width: 150px;
 	padding: 0px;
 	margin-right: 5px;
 }
 
-div.categoryEdit ul li a {
+div.categoryEdit  a {
 	margin-left: 20px;
 }
 
-div.categoryEdit ul li.add a {
+div.categoryEdit div.add a {
 	margin-left: 0px;
 }

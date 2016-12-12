@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="/static/css/business/base/header_admin.css"></link>
+
+<div class="header" ng-controller="headerController">
+	<div class="headerBar">
+		<div class="left">
+			<ul>
+				<li><div>
+						<a href="/home"><span class="title">#info("ADMIN")</span></a>
+					</div></li> #if(${authentication}) #if(${authentication.token.authenticated}) #else
+				<li><div>
+						<a href="/login"><span> #button("LOGIN_REGISTER")</span></a>
+					</div></li> #end #end
+			</ul>
+
+		</div>
+		<div class="right">
+			<ul style="margin-right: 20px;">
+				#if(${authentication}) #if(${authentication.token.authenticated})
+				<li><div>
+						<span>#label("WELCOME") ${authentication.token.username}</span>
+					</div></li>
+				<li><div>
+						<span><a href="javascript:void(0)" ng-click="logout()"><span>#label("LOGOUT")</span></a></span>
+					</div></li> #end #end
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/base/header_admin.js"></script>
+

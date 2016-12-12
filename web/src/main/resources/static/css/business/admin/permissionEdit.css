@@ -1,10 +1,47 @@
 div.permissionEdit {
-	padding: 10px 0px 0px 280px;
+	padding: 1px 0 0 250px;
+}
+
+div.permissionEdit div.block {
+	border: 1px solid #cccccc;
+}
+
+div.permissionEdit div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+div.permissionEdit div.headerBlock {
+	border-bottom: none;
 }
 
 div.permissionEdit div.title {
 	font-weight: bold;
 	font-size: large;
+}
+
+div.permissionEdit div.details div.tab {
+	padding: 10px 20px 10px 20px;
+	background: white;
+	margin-bottom: 20px;
+}
+
+div.permissionEdit div.details div.tab div.tabTitle {
+	padding: 5px 10px;
+}
+
+div.permissionEdit div.details div.tab div.tabTitle img {
+	width: 14px;
+	height: 14px;
+}
+
+div.permissionEdit div.details div.tab div.tabContent {
+	padding-left: 5px;
+}
+
+div.permissionEdit a {
+	margin-left: 20px;
 }
 
 div.permissionEdit div.accessrightTree {

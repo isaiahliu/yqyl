@@ -3,7 +3,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		method : "GET",
 		url : "/ajax/common/accessright"
 	}).success(function(response) {
-		var allAccessrights = response.data;
+		var allAccessrights = response.data[0].children;
 		$scope.initCheckState(allAccessrights);
 
 		$http({

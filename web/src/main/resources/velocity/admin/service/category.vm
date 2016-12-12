@@ -1,40 +1,63 @@
 #parse("/velocity/admin/navigation.vm")
 
-<link rel="stylesheet"
-	href="/static/css/business/admin/service/category.css"></link>
+<link rel="stylesheet" href="/static/css/business/admin/service/category.css"></link>
 
 <div class="category">
-	<div class="title">#label("SERVICE_CATEGORY_MANAGEMENT")</div>
-	<div class="filter">
-		<span style="margin-right: 20px">#label("CATEGORY_NAME")</span><input
-			ng-model="name" style="width: 300px" />
-		<button style="margin-left: 10px" ng-click="search()">#button("SEARCH")</button>
-		<button style="margin-left: 10px" ng-click="edit()">#button("EDIT_SERVICE_CATEGORY")</button>
+	<div style="padding: 15px 15px 0 15px; height: 78px;" class="block headerBlock">
+		<span style="color: #ff861a; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("SERVICE_CATEGORY_MANAGEMENT")</span>
 	</div>
-	<table>
-		<thead>
-			<tr>
-				<td align="center"><span>#label("INDEX")</span></td>
-				<td align="center"><span>#label("SERVICE_CATEGORY_TYPE")</span></td>
-				<td align="center"><span>#label("SERVICE_SUB_CATEGORY_TYPE")</span></td>
-				<td align="center"><span>#label("STATUS")</span></td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="ng-hide" ng-show="categories"
-				ng-repeat="category in categories">
-				<td align="center"><span>{{category.id}}</span></td>
-				<td align="center"><a
-					href="/admin/service/category/edit/{{category.id}}"><span
-						ng-class="{'D': 'disabledCategory'}[category.status.code]">{{category.name}}</span></a></td>
-				<td align="center"><span
-					ng-class="{'D': 'disabledCategory'}[subCategory.status.code]"
-					ng-repeat="subCategory in category.serviceSubCategories">{{subCategory.name}}
-				</span></td>
-				<td align="center"><span>{{category.status.message}}</span></td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="tab" style="border: 1px solid #ffedde; margin: 0 15px;"></div>
+
+	<div class="block" style="background: #f1f1f1; padding: 15px;">
+		<div class="details">
+			<div class="tab" style="overflow: hidden; background: #ffedde; margin-bottom: 0;">
+				<div class="tabTitle">
+					<a style="float: right;" href="javascript:void(0)" ng-click="edit()"><span>#button("EDIT_SERVICE_CATEGORY")</span></a>
+				</div>
+			</div>
+			<div class="tab" style="margin-top: 0;">
+				<div class="tabTitle" style="text-align: center;">
+					<span style="margin-right: 20px">#label("CATEGORY_NAME")</span><input ng-model="name" style="width: 300px" />
+					<button style="margin-left: 10px" ng-click="search()">#button("SEARCH")</button>
+				</div>
+			</div>
+			<div class="tab">
+				<div class="tabContent">
+					<table>
+						<thead>
+							<tr>
+								<td align="center"><span>#label("INDEX")</span></td>
+								<td align="center"><span>#label("SERVICE_CATEGORY_NAME")</span></td>
+								<td align="center"><span>#label("SERVICE_CATEGORY_TYPE")</span></td>
+								<td align="center"><span>#label("PARENT_SERVICE_CATEGORY_TYPE")</span></td>
+								<td align="center"><span>#label("STATUS")</span></td>
+								<td align="center"><span>#label("OPERATION")</span></td>
+							</tr>
+						</thead>
+						<tbody class="ng-hide" ng-show="categories" ng-repeat="category in categories">
+							<tr>
+								<td align="center"><span>{{$index+1}}</span></td>
+								<td align="center"><span ng-class="{'D': 'disabledCategory'}[category.status.code]">{{category.name}}</span></td>
+								<td align="center"><span>#label("SERVICE_CATEGORY_LEVEL_1")</span></td>
+								<td align="center"><span>\</span></td>
+								<td align="center"><span>{{category.status.message}}</span></td>
+								<td align="center"><a href="/admin/service/category/edit/{{category.id}}">#button("EDIT_SUB_CATEGORIES")</a></td>
+							</tr>
+							<tr ng-repeat="subCategory in category.serviceSubCategories">
+								<td align="center"></td>
+								<td align="center"><span ng-class="{true: 'disabledCategory'}[category.status.code=='D'||subCategory.status.code=='D']">{{subCategory.name}}</span></td>
+								<td align="center"><span>#label("SERVICE_CATEGORY_LEVEL_2")</span></td>
+								<td align="center"><span>{{category.name}}</span></td>
+								<td align="center"><span ng-show="category.status.code=='D'">{{category.status.message}}</span><span
+									ng-hide="category.status.code=='D'">{{subCategory.status.message}}</span></td>
+								<td align="center"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script src="/static/js/business/admin/service/category.js"></script>

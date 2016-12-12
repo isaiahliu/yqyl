@@ -18,16 +18,31 @@
 </ol>
 </script>
 <div class="permissionEdit">
-	<div class="title">#label("PERMISSION_MANAGEMENT")</div>
-	<div class="ng-hide accessrightTree" ng-show="accessrights" ui-tree>
-		<ol class="root" ui-tree-nodes="" ng-model="accessrights">
-			<li ng-repeat="accessright in accessrights" ui-tree-node ng-include="'tree_render'"></li>
-		</ol>
+	<div style="padding: 15px 15px 0 15px; height: 78px;" class="block headerBlock">
+		<span style="color: #ff861a; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("PERMISSION_MANAGEMENT")</span>
 	</div>
-	<div style="margin-top: 10px;">
-		<button class="ng-hide" ng-show="accessrights" ng-click="apply()">#button("APPLY")</button>
-		<button ng-click="back()">#button("CANCEL")</button>
+	<div class="tab" style="border: 1px solid #ffedde; margin: 0 15px;"></div>
+
+	<div class="block" style="background: #f1f1f1; padding: 15px;">
+		<div class="details">
+			<div class="tab" style="overflow: hidden; background: #ffedde; height: 45px;">
+				<div class="tabTitle">
+					<a style="float: right;" href="javascript:void(0)" ng-click="back()"><span>#button("BACK")</span></a> <a style="float: right;"
+						class="ng-hide" ng-show="accessrights" href="javascript:void(0)" ng-click="apply()"><span>#button("APPLY")</span></a>
+				</div>
+			</div>
+			<div class="tab">
+				<div class="tabContent">
+					<div class="ng-hide accessrightTree" ng-show="accessrights" ui-tree>
+						<ol class="root" ui-tree-nodes="" ng-model="accessrights">
+							<li ng-repeat="accessright in accessrights" ui-tree-node ng-include="'tree_render'"></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
 </div>
 
 <script src="/static/js/business/admin/permissionEdit.js"></script>

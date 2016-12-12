@@ -1,17 +1,15 @@
 <link rel="stylesheet" href="/static/css/lib/jquery/jquery-ui.css"></link>
-<link rel="stylesheet"
-	href="/static/css/lib/angularjs/angular-ui-tree.min.css"></link>
-<link rel="stylesheet"
-	href="/static/css/lib/bootstrap/bootstrap.min.css"></link>
-<link rel="stylesheet prefetch"
-	href="/static/css/lib/bootstrap/font-awesome.min.css"></link>
+<link rel="stylesheet" href="/static/css/lib/angularjs/angular-ui-tree.min.css"></link>
+<link rel="stylesheet" href="/static/css/lib/bootstrap/bootstrap.min.css"></link>
+<link rel="stylesheet prefetch" href="/static/css/lib/bootstrap/font-awesome.min.css"></link>
 #if($platform=='SERVICER')
 <link rel="stylesheet" href="/static/css/general_servicer.css"></link>
+#elseif($platform=='ADMIN')
+<link rel="stylesheet" href="/static/css/general_admin.css"></link>
 #else
 <link rel="stylesheet" href="/static/css/general.css"></link>
 #end
-<link rel="stylesheet prefetch"
-	href="/static/css/lib/angularjs/textAngular.css" media="screen"></link>
+<link rel="stylesheet prefetch" href="/static/css/lib/angularjs/textAngular.css" media="screen"></link>
 
 <script src="/static/js/lib/jquery/jquery.js"></script>
 <script src="/static/js/lib/jquery/jquery-ui.min.js"></script>
