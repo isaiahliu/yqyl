@@ -8,7 +8,8 @@ layoutApp.directive('customOnChange', function() {
 	};
 });
 
-layoutApp.controller('contentController', function($scope, $http, $window, clientId, errorHandler) {
+layoutApp.controller('contentController', function($scope, $http, $window, clientId, auditing, errorHandler) {
+	$scope.auditing = auditing;
 	$http({
 		method : "GET",
 		url : "/ajax/common/lookup/CDTYPE"
@@ -34,12 +35,40 @@ layoutApp.controller('contentController', function($scope, $http, $window, clien
 	$scope.apply = function() {
 		$http({
 			method : "POST",
-			url : "/ajax/user/receiver/realname",
+			url : "/ajax/user/receiver/realname/apply",
 			data : {
 				data : [ $scope.client ]
 			}
 		}).success(function(response) {
 			$window.location.href = "/user/userinfo";
+		}).error(function(response) {
+			errorHandler($scope, response);
+		});
+	};
+
+	$scope.audit = function() {
+		$http({
+			method : "POST",
+			url : "/ajax/user/receiver/realname/audit",
+			data : {
+				data : [ $scope.client ]
+			}
+		}).success(function(response) {
+			$window.location.href = "/admin/receiver";
+		}).error(function(response) {
+			errorHandler($scope, response);
+		});
+	};
+
+	$scope.deny = function() {
+		$http({
+			method : "POST",
+			url : "/ajax/user/receiver/realname/deny",
+			data : {
+				data : [ $scope.client ]
+			}
+		}).success(function(response) {
+			$window.location.href = "/admin/receiver";
 		}).error(function(response) {
 			errorHandler($scope, response);
 		});

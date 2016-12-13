@@ -63,10 +63,26 @@ public class ServiceReceiverClientAjaxController extends AbstractRestController 
         return createResponseEntity(response);
     }
 
-    @RequestMapping(value = "/realname", method = RequestMethod.POST)
-    public ResponseEntity<ServiceReceiverClientResponse> ajaxServiceReceiverRealname(
+    @RequestMapping(value = "/realname/apply", method = RequestMethod.POST)
+    public ResponseEntity<ServiceReceiverClientResponse> ajaxServiceReceiverRealnameApply(
             @RequestBody final ServiceReceiverClientRequest request) throws IException {
-        final ServiceReceiverClientResponse response = restfulServiceUtil.callRestService(Url.RECEIVER_REALNAME, null, request, null,
+        final ServiceReceiverClientResponse response = restfulServiceUtil.callRestService(Url.RECEIVER_REALNAME_APPLY, null, request, null,
+                ServiceReceiverClientResponse.class);
+        return createResponseEntity(response);
+    }
+
+    @RequestMapping(value = "/realname/audit", method = RequestMethod.POST)
+    public ResponseEntity<ServiceReceiverClientResponse> ajaxServiceReceiverRealnameAudit(
+            @RequestBody final ServiceReceiverClientRequest request) throws IException {
+        final ServiceReceiverClientResponse response = restfulServiceUtil.callRestService(Url.RECEIVER_REALNAME_AUDIT, null, request, null,
+                ServiceReceiverClientResponse.class);
+        return createResponseEntity(response);
+    }
+
+    @RequestMapping(value = "/realname/deny", method = RequestMethod.POST)
+    public ResponseEntity<ServiceReceiverClientResponse> ajaxServiceReceiverRealnameDeny(
+            @RequestBody final ServiceReceiverClientRequest request) throws IException {
+        final ServiceReceiverClientResponse response = restfulServiceUtil.callRestService(Url.RECEIVER_REALNAME_DENY, null, request, null,
                 ServiceReceiverClientResponse.class);
         return createResponseEntity(response);
     }

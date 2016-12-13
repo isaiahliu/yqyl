@@ -36,6 +36,12 @@ public class AdminWebController extends AbstractResourceWebController {
         return createModelAndView("admin/permission").addObject("currentPage", "PERMISSION");
     }
 
+    @RequestMapping("/receiver/{entityId}")
+    @Authorize(AccessRight.ADMINISTRATOR)
+    public ModelAndView receiverAuditPage(@PathVariable("entityId") final Long entityId) throws IException {
+        return createModelAndView("user/realname").addObject("currentPage", "RECEIVER").addObject("clientId", entityId);
+    }
+
     @RequestMapping("/receiver")
     @Authorize(AccessRight.ADMINISTRATOR)
     public ModelAndView receiverPage() throws IException {

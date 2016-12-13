@@ -32,7 +32,8 @@ public enum ErrorMessage implements IErrorMessage {
     YIQUAN_IS_ALREADY_BINDED,
     CLIENT_SHOULD_BE_REALNAME,
     INVALID_YIQUAN_CODE,
-    EXCEED_ALLOWED_SIZE;
+    EXCEED_ALLOWED_SIZE,
+    INCORRECT_SERVICE_RECEIVER_CLIENT_STATUS;
 
     @Override
     public String getMessageCode() {

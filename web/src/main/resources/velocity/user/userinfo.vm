@@ -31,7 +31,7 @@
 							<span>{{member.familyRelationship.message}}</span>
 						</div></td>
 					<td align="center"><div>
-							<span>{{member.nickname}}</span> <span ng-hide="member.status.code=='P'">(#label("VERIFIED"))</span>
+							<span>{{member.nickname}}</span> <span>({{member.status.message}})</span>
 						</div></td>
 					<td align="center"><div>
 							<span>{{member.cellphoneNo}}</span>

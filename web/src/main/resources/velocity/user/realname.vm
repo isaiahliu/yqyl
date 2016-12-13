@@ -1,12 +1,13 @@
-#parse("/velocity/user/navigation.vm")
+#if($platform=='ADMIN') #parse("/velocity/admin/navigation.vm") #else #parse("/velocity/user/navigation.vm") #end
 
 <link rel="stylesheet" href="/static/css/business/user/realname.css"></link>
 
 <script type="text/javascript">
 	layoutApp.value("clientId", #if(${clientId})${clientId}#else 0 #end);
+	layoutApp.value("auditing", #if($platform=='ADMIN') true #else false #end);
 </script>
 
-<div class="realname">
+<div class="realname" #if($platform== 'ADMIN') style="margin-left: 250px;" #end>
 	<div style="padding: 15px;" class="block">
 		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("USER_INFO")</span> <a style="float: right;"
 			href="/user/userinfo"><span>#label("BACK_TO_LIST")</span></a>
@@ -19,38 +20,40 @@
 			<tbody>
 				<tr>
 					<td class="key"><span>#label("NAME")</span></td>
-					<td class="value"><span class="ng-hide" ng-show="verified">{{client.name}}</span> <input class="ng-hide" ng-show="!verified"
-						ng-model="client.name" /></td>
+					<td class="value"><span class="ng-hide" ng-show="verified||auditing">{{client.name}}</span> <input class="ng-hide"
+						ng-hide="verified||auditing" ng-model="client.name" /></td>
 				</tr>
 				<tr>
 					<td class="key"><span>#label("CREDENTIAL_TYPE")</span></td>
-					<td class="value"><span class="ng-hide" ng-show="verified">{{client.credentialType.message}}</span><select class="ng-hide"
-						ng-show="!verified" ng-model="client.credentialType.code"
+					<td class="value"><span class="ng-hide" ng-show="verified||auditing">{{client.credentialType.message}}</span><select
+						class="ng-hide" ng-hide="verified||auditing" ng-model="client.credentialType.code"
 						ng-options="credentialType.code as credentialType.message for credentialType in credentialTypes"></select></td>
 				</tr>
 				<tr>
 					<td class="key"><span>#label("CREDENTIAL_NO")</span></td>
-					<td class="value"><span class="ng-hide" ng-show="verified">{{client.identityCard}}</span><input class="ng-hide"
-						ng-show="!verified" ng-model="client.identityCard" /></td>
+					<td class="value"><span class="ng-hide" ng-show="verified||auditing">{{client.identityCard}}</span><input class="ng-hide"
+						ng-hide="verified||auditing" ng-model="client.identityCard" /></td>
 				</tr>
 				<tr>
 					<td class="key"><span>#label("UPLOAD_CREDENTIAL_COPY")</span></td>
 					<td class="value"><div>
-							<img class="ng-hide" ng-show="client.identityCardCopy" ng-src="{{credentialCopyUrl}}" />
+							<img class="ng-hide" ng-show="client.identityCardCopy||auditing" ng-src="{{credentialCopyUrl}}" />
 						</div>
-						<div>
+						<div ng-hide="auditing">
 							<input style="display: inline-block; width: 220px;" type="file" ng-show="!verified" custom-on-change="selectCredentialCopy" />
 							<button style="display: inline-block;" ng-show="!verified" ng-click="upload()">#button("UPLOAD")</button>
 						</div></td>
 				</tr>
 				<tr>
 					<td class="key"><span>#label("VERIFY_STATUS")</span></td>
-					<td class="value"><span class="ng-hide" ng-show="verified">#label("VERIFIED")</span><span class="ng-hide" ng-hide="verified">#label("NOT_VERIFIED")</span></td>
+					<td class="value"><span>{{client.status.message}}</span></td>
 				</tr>
 			</tbody>
 		</table>
-		<div class="buttons ng-hide" ng-show="!verified">
-			<button ng-click="apply()">#button("APPLY")</button>
+		<div class="buttons">
+			<button class="ng-hide" ng-hide="verified||auditing" ng-click="apply()">#button("APPLY")</button>
+			<button class="ng-hide" ng-show="!verified&&auditing&&(client.status.code=='A')" ng-click="audit()">#button("PASS_AUDIT")</button>
+			<button class="ng-hide" ng-show="!verified&&auditing&&(client.status.code=='A')" ng-click="deny()">#button("DENY_AUDIT")</button>
 		</div>
 	</div>
 </div>

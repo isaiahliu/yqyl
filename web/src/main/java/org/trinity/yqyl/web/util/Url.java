@@ -5,193 +5,198 @@ import org.trinity.common.url.IHttpUrl;
 import org.trinity.common.url.IUrl;
 
 public enum Url implements IHttpUrl {
-	AUTHENTICATE(HttpMethod.PUT, Path.SECURITY, "authenticate"),
-	LOGOUT(HttpMethod.PUT, Path.SECURITY, "logout"),
-	REGISTER(HttpMethod.POST, Path.SECURITY, "register"),
-	REGISTER_VERIFY(HttpMethod.POST, Path.SECURITY, "registerVerify"),
-	AUTHORITIES(HttpMethod.GET, Path.AUTHORITIES, ""),
+    AUTHENTICATE(HttpMethod.PUT, Path.SECURITY, "authenticate"),
+    LOGOUT(HttpMethod.PUT, Path.SECURITY, "logout"),
+    REGISTER(HttpMethod.POST, Path.SECURITY, "register"),
+    REGISTER_VERIFY(HttpMethod.POST, Path.SECURITY, "registerVerify"),
+    AUTHORITIES(HttpMethod.GET, Path.AUTHORITIES, ""),
 
-	ACCESSRIGHT(HttpMethod.GET, Path.ACCESSRIGHT),
+    ACCESSRIGHT(HttpMethod.GET, Path.ACCESSRIGHT),
 
-	TOKEN_VERIFY(HttpMethod.GET, Path.TOKEN, "verify"),
-	TOKEN_NEW(HttpMethod.POST, Path.TOKEN),
+    TOKEN_VERIFY(HttpMethod.GET, Path.TOKEN, "verify"),
+    TOKEN_NEW(HttpMethod.POST, Path.TOKEN),
 
-	USER(HttpMethod.GET, Path.USER),
-	USER_ME(HttpMethod.GET, Path.USER, "me"),
-	USER_INFO(HttpMethod.PUT, Path.USER),
-	USER_CHANGE_PASSWORD(HttpMethod.PUT, Path.USER, "password"),
+    USER(HttpMethod.GET, Path.USER),
+    USER_ME(HttpMethod.GET, Path.USER, "me"),
+    USER_INFO(HttpMethod.PUT, Path.USER),
+    USER_CHANGE_PASSWORD(HttpMethod.PUT, Path.USER, "password"),
 
-	YIQUAN(HttpMethod.GET, Path.YIQUAN),
-	YIQUAN_BIND(HttpMethod.PUT, Path.YIQUAN, "bind"),
-	YIQUAN_UNBIND(HttpMethod.PUT, Path.YIQUAN, "unbind"),
-	YIQUAN_TOPUP(HttpMethod.POST, Path.YIQUAN, "topup"),
+    YIQUAN(HttpMethod.GET, Path.YIQUAN),
+    YIQUAN_BIND(HttpMethod.PUT, Path.YIQUAN, "bind"),
+    YIQUAN_UNBIND(HttpMethod.PUT, Path.YIQUAN, "unbind"),
+    YIQUAN_TOPUP(HttpMethod.POST, Path.YIQUAN, "topup"),
 
-	ACCOUNT_POSTING(HttpMethod.GET, Path.ACCOUNT_POSTING),
+    ACCOUNT_POSTING(HttpMethod.GET, Path.ACCOUNT_POSTING),
 
-	ORDER(HttpMethod.GET, Path.ORDER),
-	ORDER_UPDATE(HttpMethod.PUT, Path.ORDER),
-	ORDER_ASSIGN(HttpMethod.POST, Path.ORDER, "assign"),
-	ORDER_PROPOSAL(HttpMethod.POST, Path.ORDER, "proposal"),
-	ORDER_RECEIPT(HttpMethod.PUT, Path.ORDER, "receipt"),
-	ORDER_RELEASE(HttpMethod.POST, Path.ORDER, "release"),
-	ORDER_TRANSACTION(HttpMethod.POST, Path.ORDER, "transaction"),
-	ORDER_CANCEL(HttpMethod.POST, Path.ORDER, "cancel"),
-	ORDER_PAYMENT(HttpMethod.POST, Path.ORDER, "payment"),
-	ORDER_REJECT_CANCEL(HttpMethod.POST, Path.ORDER, "rejectCancel"),
-	ORDER_PRICE(HttpMethod.PUT, Path.ORDER, "price"),
+    ORDER(HttpMethod.GET, Path.ORDER),
+    ORDER_UPDATE(HttpMethod.PUT, Path.ORDER),
+    ORDER_ASSIGN(HttpMethod.POST, Path.ORDER, "assign"),
+    ORDER_PROPOSAL(HttpMethod.POST, Path.ORDER, "proposal"),
+    ORDER_RECEIPT(HttpMethod.PUT, Path.ORDER, "receipt"),
+    ORDER_RELEASE(HttpMethod.POST, Path.ORDER, "release"),
+    ORDER_TRANSACTION(HttpMethod.POST, Path.ORDER, "transaction"),
+    ORDER_CANCEL(HttpMethod.POST, Path.ORDER, "cancel"),
+    ORDER_PAYMENT(HttpMethod.POST, Path.ORDER, "payment"),
+    ORDER_REJECT_CANCEL(HttpMethod.POST, Path.ORDER, "rejectCancel"),
+    ORDER_PRICE(HttpMethod.PUT, Path.ORDER, "price"),
 
-	APPRAISE(HttpMethod.GET, Path.APPRAISE),
-	APPRAISE_NEW(HttpMethod.POST, Path.APPRAISE),
-	APPRAISE_UPDATE(HttpMethod.PUT, Path.APPRAISE),
-	APPRAISE_REPLY(HttpMethod.POST, Path.APPRAISE, "reply"),
+    APPRAISE(HttpMethod.GET, Path.APPRAISE),
+    APPRAISE_NEW(HttpMethod.POST, Path.APPRAISE),
+    APPRAISE_UPDATE(HttpMethod.PUT, Path.APPRAISE),
+    APPRAISE_REPLY(HttpMethod.POST, Path.APPRAISE, "reply"),
 
-	SUPPLIER(HttpMethod.GET, Path.SUPPLIER),
-	SUPPLIER_PUBLIC(HttpMethod.GET, Path.SUPPLIER, "public"),
-	SUPPLIER_REGISTER(HttpMethod.POST, Path.SUPPLIER, "register"),
-	SUPPLIER_UPDATE(HttpMethod.PUT, Path.SUPPLIER),
-	SUPPLIER_PROPOSE(HttpMethod.PUT, Path.SUPPLIER, "propose"),
-	SUPPLIER_AUDIT(HttpMethod.POST, Path.SUPPLIER, "audit"),
-	SUPPLIER_REJECT(HttpMethod.POST, Path.SUPPLIER, "reject"),
+    SUPPLIER(HttpMethod.GET, Path.SUPPLIER),
+    SUPPLIER_PUBLIC(HttpMethod.GET, Path.SUPPLIER, "public"),
+    SUPPLIER_REGISTER(HttpMethod.POST, Path.SUPPLIER, "register"),
+    SUPPLIER_UPDATE(HttpMethod.PUT, Path.SUPPLIER),
+    SUPPLIER_PROPOSE(HttpMethod.PUT, Path.SUPPLIER, "propose"),
+    SUPPLIER_AUDIT(HttpMethod.POST, Path.SUPPLIER, "audit"),
+    SUPPLIER_REJECT(HttpMethod.POST, Path.SUPPLIER, "reject"),
 
-	STAFF(HttpMethod.GET, Path.STAFF),
-	STAFF_AVAILABLE(HttpMethod.GET, Path.STAFF, "available"),
-	STAFF_UPDATE(HttpMethod.PUT, Path.STAFF),
-	STAFF_NEW(HttpMethod.POST, Path.STAFF),
+    STAFF(HttpMethod.GET, Path.STAFF),
+    STAFF_AVAILABLE(HttpMethod.GET, Path.STAFF, "available"),
+    STAFF_UPDATE(HttpMethod.PUT, Path.STAFF),
+    STAFF_NEW(HttpMethod.POST, Path.STAFF),
 
-	AUDITING(HttpMethod.GET, Path.AUDITING),
+    AUDITING(HttpMethod.GET, Path.AUDITING),
 
-	RECEIVER(HttpMethod.GET, Path.RECEIVER_INFO),
-	RECEIVER_UPDATE(HttpMethod.PUT, Path.RECEIVER_INFO),
-	RECEIVER_DELETE(HttpMethod.DELETE, Path.RECEIVER_INFO),
-	RECEIVER_ADD(HttpMethod.POST, Path.RECEIVER_INFO),
-	RECEIVER_REALNAME(HttpMethod.POST, Path.RECEIVER_INFO, "realname"),
-	RECEIVER_DISABLE(HttpMethod.DELETE, Path.RECEIVER_INFO, "disable"),
+    RECEIVER(HttpMethod.GET, Path.RECEIVER_INFO),
+    RECEIVER_UPDATE(HttpMethod.PUT, Path.RECEIVER_INFO),
+    RECEIVER_DELETE(HttpMethod.DELETE, Path.RECEIVER_INFO),
+    RECEIVER_ADD(HttpMethod.POST, Path.RECEIVER_INFO),
+    RECEIVER_DISABLE(HttpMethod.DELETE, Path.RECEIVER_INFO, "disable"),
 
-	RECEIVER_HEALTH(HttpMethod.GET, Path.RECEIVER_HEALTH),
-	RECEIVER_HEALTH_UPDATE(HttpMethod.PUT, Path.RECEIVER_HEALTH),
+    RECEIVER_REALNAME_APPLY(HttpMethod.POST, Path.RECEIVER_REALNAME, "apply"),
+    RECEIVER_REALNAME_AUDIT(HttpMethod.POST, Path.RECEIVER_REALNAME, "audit"),
+    RECEIVER_REALNAME_DENY(HttpMethod.POST, Path.RECEIVER_REALNAME, "deny"),
 
-	RECEIVER_INTEREST_UPDATE(HttpMethod.PUT, Path.RECEIVER_INTEREST),
+    RECEIVER_HEALTH(HttpMethod.GET, Path.RECEIVER_HEALTH),
+    RECEIVER_HEALTH_UPDATE(HttpMethod.PUT, Path.RECEIVER_HEALTH),
 
-	RECEIVER_OTHER_UPDATE(HttpMethod.PUT, Path.RECEIVER_OTHER),
+    RECEIVER_INTEREST_UPDATE(HttpMethod.PUT, Path.RECEIVER_INTEREST),
 
-	OPERATOR(HttpMethod.GET, Path.OPERATOR),
-	OPERATOR_UPDATE(HttpMethod.PUT, Path.OPERATOR),
+    RECEIVER_OTHER_UPDATE(HttpMethod.PUT, Path.RECEIVER_OTHER),
 
-	CONTENT_UPLOAD(HttpMethod.PUT, Path.CONTENT, "upload"),
-	CONTENT_DOWNLOAD(HttpMethod.GET, Path.CONTENT, "download"),
+    OPERATOR(HttpMethod.GET, Path.OPERATOR),
+    OPERATOR_UPDATE(HttpMethod.PUT, Path.OPERATOR),
 
-	LOOKUP_TYPE(HttpMethod.GET, Path.LOOKUP),
-	RESOURCE_REFRESH(HttpMethod.PUT, Path.RESOURCE),
+    CONTENT_UPLOAD(HttpMethod.PUT, Path.CONTENT, "upload"),
+    CONTENT_DOWNLOAD(HttpMethod.GET, Path.CONTENT, "download"),
 
-	SERVICE_CATEGORY(HttpMethod.GET, Path.SERVICE_CATEGORY),
-	SERVICE_CATEGORY_UPDATE(HttpMethod.PUT, Path.SERVICE_CATEGORY),
+    LOOKUP_TYPE(HttpMethod.GET, Path.LOOKUP),
+    RESOURCE_REFRESH(HttpMethod.PUT, Path.RESOURCE),
 
-	REQUIREMENT_NEW(HttpMethod.POST, Path.REQUIREMENT),
+    SERVICE_CATEGORY(HttpMethod.GET, Path.SERVICE_CATEGORY),
+    SERVICE_CATEGORY_UPDATE(HttpMethod.PUT, Path.SERVICE_CATEGORY),
 
-	SERVICE_INFO(HttpMethod.GET, Path.SERVICE_INFO),
-	SERVICE_INFO_NEW(HttpMethod.POST, Path.SERVICE_INFO),
-	SERVICE_INFO_UPDATE(HttpMethod.PUT, Path.SERVICE_INFO),
-	SERVICE_INFO_DELETE(HttpMethod.DELETE, Path.SERVICE_INFO),
-	SERVICE_INFO_ME(HttpMethod.GET, Path.SERVICE_INFO, "me"),
-	SERVICE_INFO_IMAGE_ADD(HttpMethod.POST, Path.SERVICE_INFO, "image"),
-	SERVICE_INFO_IMAGE_DELETE(HttpMethod.DELETE, Path.SERVICE_INFO, "image"),
+    REQUIREMENT_NEW(HttpMethod.POST, Path.REQUIREMENT),
 
-	PING(HttpMethod.GET, Path.COMMON, "ping");
-	private static enum Path implements IUrl {
-		SECURITY("security"),
-		TOKEN(SECURITY, "token"),
-		AUTHORITIES(SECURITY, "authorities"),
+    SERVICE_INFO(HttpMethod.GET, Path.SERVICE_INFO),
+    SERVICE_INFO_NEW(HttpMethod.POST, Path.SERVICE_INFO),
+    SERVICE_INFO_UPDATE(HttpMethod.PUT, Path.SERVICE_INFO),
+    SERVICE_INFO_DELETE(HttpMethod.DELETE, Path.SERVICE_INFO),
+    SERVICE_INFO_ME(HttpMethod.GET, Path.SERVICE_INFO, "me"),
+    SERVICE_INFO_IMAGE_ADD(HttpMethod.POST, Path.SERVICE_INFO, "image"),
+    SERVICE_INFO_IMAGE_DELETE(HttpMethod.DELETE, Path.SERVICE_INFO, "image"),
 
-		USER("user"),
-		ORDER(USER, "order"),
+    PING(HttpMethod.GET, Path.COMMON, "ping");
+    private static enum Path implements IUrl {
+        SECURITY("security"),
+        TOKEN(SECURITY, "token"),
+        AUTHORITIES(SECURITY, "authorities"),
 
-		APPRAISE(ORDER, "appraise"),
+        USER("user"),
+        ORDER(USER, "order"),
 
-		YIQUAN("yiquan"),
+        APPRAISE(ORDER, "appraise"),
 
-		ACCOUNT("account"),
-		ACCOUNT_POSTING(ACCOUNT, "posting"),
+        YIQUAN("yiquan"),
 
-		CLIENT("client"),
-		SUPPLIER(CLIENT, "supplier"),
-		RECEIVER(CLIENT, "receiver"),
-		OPERATOR(CLIENT, "operator"),
+        ACCOUNT("account"),
+        ACCOUNT_POSTING(ACCOUNT, "posting"),
 
-		STAFF(SUPPLIER, "staff"),
-		AUDITING(SUPPLIER, "auditing"),
+        CLIENT("client"),
+        SUPPLIER(CLIENT, "supplier"),
+        RECEIVER(CLIENT, "receiver"),
+        OPERATOR(CLIENT, "operator"),
 
-		RECEIVER_INFO(RECEIVER, "info"),
+        STAFF(SUPPLIER, "staff"),
+        AUDITING(SUPPLIER, "auditing"),
 
-		RECEIVER_HEALTH(RECEIVER, "health"),
+        RECEIVER_INFO(RECEIVER, "info"),
 
-		RECEIVER_INTEREST(RECEIVER, "interest"),
+        RECEIVER_REALNAME(RECEIVER_INFO, "realname"),
 
-		RECEIVER_OTHER(RECEIVER, "other"),
+        RECEIVER_HEALTH(RECEIVER, "health"),
 
-		SERVICE("service"),
-		SERVICE_INFO(SERVICE, "info"),
-		REQUIREMENT(SERVICE, "requirement"),
+        RECEIVER_INTEREST(RECEIVER, "interest"),
 
-		CONTENT("content"),
+        RECEIVER_OTHER(RECEIVER, "other"),
 
-		COMMON("common"),
-		LOOKUP(COMMON, "lookup"),
-		RESOURCE(COMMON, "resource"),
-		SERVICE_CATEGORY(COMMON, "servicecategory"),
-		ACCESSRIGHT(COMMON, "accessright");
+        SERVICE("service"),
+        SERVICE_INFO(SERVICE, "info"),
+        REQUIREMENT(SERVICE, "requirement"),
 
-		private IUrl parent;
+        CONTENT("content"),
 
-		private String path;
+        COMMON("common"),
+        LOOKUP(COMMON, "lookup"),
+        RESOURCE(COMMON, "resource"),
+        SERVICE_CATEGORY(COMMON, "servicecategory"),
+        ACCESSRIGHT(COMMON, "accessright");
 
-		private Path(final IUrl parent, final String path) {
-			this.parent = parent;
-			this.path = path;
-		}
+        private IUrl parent;
 
-		private Path(final String path) {
-			this(null, path);
-		}
+        private String path;
 
-		@Override
-		public IUrl getParent() {
-			return parent;
-		}
+        private Path(final IUrl parent, final String path) {
+            this.parent = parent;
+            this.path = path;
+        }
 
-		@Override
-		public String getPath() {
-			return path;
-		}
-	}
+        private Path(final String path) {
+            this(null, path);
+        }
 
-	private IUrl parent;
+        @Override
+        public IUrl getParent() {
+            return parent;
+        }
 
-	private String path;
-	private HttpMethod httpMethod;
+        @Override
+        public String getPath() {
+            return path;
+        }
+    }
 
-	private Url(final HttpMethod httpMethod, final Path parent) {
-		this(httpMethod, parent, "");
-	}
+    private IUrl parent;
 
-	private Url(final HttpMethod httpMethod, final Path parent, final String path) {
-		this.httpMethod = httpMethod;
-		this.parent = parent;
-		this.path = path;
-	}
+    private String path;
+    private HttpMethod httpMethod;
 
-	@Override
-	public HttpMethod getHttpMethod() {
-		return httpMethod;
-	}
+    private Url(final HttpMethod httpMethod, final Path parent) {
+        this(httpMethod, parent, "");
+    }
 
-	@Override
-	public IUrl getParent() {
-		return parent;
-	}
+    private Url(final HttpMethod httpMethod, final Path parent, final String path) {
+        this.httpMethod = httpMethod;
+        this.parent = parent;
+        this.path = path;
+    }
 
-	@Override
-	public String getPath() {
-		return path;
-	}
+    @Override
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
+
+    @Override
+    public IUrl getParent() {
+        return parent;
+    }
+
+    @Override
+    public String getPath() {
+        return path;
+    }
 
 }

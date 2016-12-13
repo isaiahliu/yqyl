@@ -6,6 +6,7 @@ public class ServiceReceiverClientSearchingDto extends AbstractSearchingDto {
     private String name;
     private String yijincode;
     private String identity;
+    private Long userId;
 
     public String getIdentity() {
         return identity;
@@ -29,5 +30,13 @@ public class ServiceReceiverClientSearchingDto extends AbstractSearchingDto {
 
     public void setYijincode(final String yijincode) {
         this.yijincode = yijincode;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

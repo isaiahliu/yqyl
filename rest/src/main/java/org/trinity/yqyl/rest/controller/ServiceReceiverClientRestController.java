@@ -11,10 +11,12 @@ import org.trinity.common.dto.response.DefaultResponse;
 import org.trinity.common.dto.validator.OnValid;
 import org.trinity.common.dto.washer.OnWash;
 import org.trinity.common.exception.IException;
+import org.trinity.yqyl.common.accessright.Authorize;
 import org.trinity.yqyl.common.message.dto.domain.ServiceReceiverClientDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceReceiverClientSearchingDto;
 import org.trinity.yqyl.common.message.dto.request.ServiceReceiverClientRequest;
 import org.trinity.yqyl.common.message.dto.response.ServiceReceiverClientResponse;
+import org.trinity.yqyl.common.message.lookup.AccessRight;
 import org.trinity.yqyl.common.scenario.IScenario.IRealname;
 import org.trinity.yqyl.process.controller.base.IServiceReceiverClientProcessController;
 
@@ -30,11 +32,31 @@ public class ServiceReceiverClientRestController extends
         return createResponseEntity();
     }
 
-    @RequestMapping(value = "/realname", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<DefaultResponse> realname(
+    @RequestMapping(value = "/realname/apply", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<DefaultResponse> realnameApply(
             @RequestBody @OnValid(IRealname.class) @OnWash(IRealname.class) final ServiceReceiverClientRequest request) throws IException {
 
-        getDomainProcessController().realname(request.getData());
+        getDomainProcessController().realnameApply(request.getData().get(0));
+
+        return createResponseEntity();
+    }
+
+    @RequestMapping(value = "/realname/audit", method = RequestMethod.POST)
+    @Authorize(AccessRight.ADMINISTRATOR)
+    public @ResponseBody ResponseEntity<DefaultResponse> realnameAudit(@RequestBody final ServiceReceiverClientRequest request)
+            throws IException {
+
+        getDomainProcessController().realnameAudit(request.getData().get(0));
+
+        return createResponseEntity();
+    }
+
+    @RequestMapping(value = "/realname/deny", method = RequestMethod.POST)
+    @Authorize(AccessRight.ADMINISTRATOR)
+    public @ResponseBody ResponseEntity<DefaultResponse> realnameDeny(@RequestBody final ServiceReceiverClientRequest request)
+            throws IException {
+
+        getDomainProcessController().realnameDeny(request.getData().get(0));
 
         return createResponseEntity();
     }

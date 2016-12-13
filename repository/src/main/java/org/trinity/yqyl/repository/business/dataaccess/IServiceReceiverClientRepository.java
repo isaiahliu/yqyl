@@ -32,6 +32,10 @@ public interface IServiceReceiverClientRepository extends IJpaRepository<Service
                 predicates.add(cb.equal(root.get(ServiceReceiverClient_.id), searchingDto.getId()));
             }
 
+            if (!StringUtils.isEmpty(searchingDto.getUserId())) {
+                predicates.add(cb.equal(root.join(ServiceReceiverClient_.user).get(User_.id), searchingDto.getUserId()));
+            }
+
             if (!StringUtils.isEmpty(searchingDto.getName())) {
                 predicates.add(cb.like(root.get(ServiceReceiverClient_.name), "%" + searchingDto.getName() + "%"));
             }

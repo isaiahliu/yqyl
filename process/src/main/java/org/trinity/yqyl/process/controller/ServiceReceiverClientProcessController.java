@@ -3,7 +3,6 @@ package org.trinity.yqyl.process.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -12,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.trinity.common.exception.IException;
 import org.trinity.message.LookupParser;
 import org.trinity.process.converter.IObjectConverter.CopyPolicy;
+import org.trinity.yqyl.common.accessright.Authorize;
 import org.trinity.yqyl.common.message.dto.domain.ServiceReceiverClientDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceReceiverClientSearchingDto;
+import org.trinity.yqyl.common.message.exception.ErrorMessage;
 import org.trinity.yqyl.common.message.lookup.AccessRight;
 import org.trinity.yqyl.common.message.lookup.FamilyRelationship;
 import org.trinity.yqyl.common.message.lookup.RecordStatus;
@@ -113,21 +114,57 @@ public class ServiceReceiverClientProcessController extends
 
     @Override
     @Transactional(rollbackOn = IException.class)
-    public void realname(final List<ServiceReceiverClientDto> data) throws IException {
-        final List<ServiceReceiverClient> entities = data.stream().map(item -> {
-            final ServiceReceiverClient serviceReceiverClient = getDomainEntityRepository().findOne(item.getId());
+    public void realnameApply(final ServiceReceiverClientDto dto) throws IException {
+        final ServiceReceiverClient serviceReceiverClient = getDomainEntityRepository().findOne(dto.getId());
 
-            if (!serviceReceiverClient.getUser().getUsername().equals(getCurrentUsername())) {
-                return serviceReceiverClient;
-            }
+        if (!serviceReceiverClient.getUser().getUsername().equals(getCurrentUsername())) {
+            throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
+        }
 
-            getDomainObjectConverter().convertBack(item, serviceReceiverClient, CopyPolicy.SOURCE_IS_NOT_NULL);
+        switch (serviceReceiverClient.getStatus()) {
+        case PROPOSAL:
+        case AWAITING_REALNAME_VERIFY:
+        case REALNAME_VERIFY_DENIED:
+            getDomainObjectConverter().convertBack(dto, serviceReceiverClient, CopyPolicy.SOURCE_IS_NOT_NULL);
+            serviceReceiverClient.setStatus(ServiceReceiverClientStatus.AWAITING_REALNAME_VERIFY);
+
+            getDomainEntityRepository().save(serviceReceiverClient);
+            break;
+        default:
+            throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_RECEIVER_CLIENT_STATUS);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    @Authorize(AccessRight.ADMINISTRATOR)
+    public void realnameAudit(final ServiceReceiverClientDto dto) throws IException {
+        final ServiceReceiverClient serviceReceiverClient = getDomainEntityRepository().findOne(dto.getId());
+
+        switch (serviceReceiverClient.getStatus()) {
+        case AWAITING_REALNAME_VERIFY:
             serviceReceiverClient.setStatus(ServiceReceiverClientStatus.REALNAME);
 
-            return serviceReceiverClient;
-        }).collect(Collectors.toList());
+            getDomainEntityRepository().save(serviceReceiverClient);
+            break;
+        default:
+            throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_RECEIVER_CLIENT_STATUS);
+        }
+    }
 
-        getDomainEntityRepository().save(entities);
+    @Override
+    public void realnameDeny(final ServiceReceiverClientDto dto) throws IException {
+        final ServiceReceiverClient serviceReceiverClient = getDomainEntityRepository().findOne(dto.getId());
+
+        switch (serviceReceiverClient.getStatus()) {
+        case AWAITING_REALNAME_VERIFY:
+            serviceReceiverClient.setStatus(ServiceReceiverClientStatus.REALNAME_VERIFY_DENIED);
+
+            getDomainEntityRepository().save(serviceReceiverClient);
+            break;
+        default:
+            throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_RECEIVER_CLIENT_STATUS);
+        }
     }
 
     @Override

@@ -54,6 +54,8 @@ public class ServiceReceiverClientDto extends AbstractBusinessDto {
 
     private ServiceReceiverClientOtherDto other;
 
+    private UserDto user;
+
     public String getAddress() {
         return address;
     }
@@ -215,5 +217,13 @@ public class ServiceReceiverClientDto extends AbstractBusinessDto {
 
     public void setYiquan(final YiquanDto yiquan) {
         this.yiquan = yiquan;
+    }
+
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 }

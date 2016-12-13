@@ -4,6 +4,8 @@ import org.trinity.message.ILookupMessage;
 
 public enum ServiceReceiverClientStatus implements ILookupMessage<LookupType> {
     PROPOSAL("P"),
+    AWAITING_REALNAME_VERIFY("A"),
+    REALNAME_VERIFY_DENIED("N"),
     REALNAME("R"),
     DISABLED("D");
 

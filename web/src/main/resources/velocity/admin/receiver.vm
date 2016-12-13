@@ -15,8 +15,10 @@
 			</div>
 			<div class="tab" style="margin-top: 0;">
 				<div class="tabTitle" style="text-align: center;">
-					<span>#label("USER_ID")</span> <input ng-model="filterData.id" /> <span>#label("USER_NAME")</span> <input
-						ng-model="filterData.username" />
+					<span>#label("USER_ID")</span> <input ng-model="filterData.userId" /> <span>#label("NAME")</span> <input ng-model="filterData.name" />
+					<span>#label("CREDENTIAL_NO")</span> <input ng-model="filterData.identity" /> <span>#label("STATUS")</span> <select
+						ng-model="filterData.status"><option value="">#label("ALL")</option>
+						<option value="{{status.code}}" ng-repeat="status in statuses">{{status.message}}</option></select>
 					<button ng-click="searchUsers()">#button("SEARCH")</button>
 				</div>
 			</div>
@@ -27,16 +29,20 @@
 							<tr>
 								<td align="center"><span>#label("USER_ID")</span></td>
 								<td align="center"><span>#label("USER_NAME")</span></td>
-								<td align="center"><span>#label("LAST_ACCESS_TIME")</span></td>
+								<td align="center"><span>#label("NAME")</span></td>
+								<td align="center"><span>#label("CREDENTIAL_NO")</span></td>
+								<td align="center"><span>#label("STATUS")</span></td>
 								<td align="center"><span>#label("OPERATION")</span></td>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="ng-hide" ng-show="user" ng-repeat="user in users">
-								<td align="center"><span>{{user.id}}</span></td>
-								<td align="center"><span>{{user.username}}</span></td>
-								<td align="center"><span>{{user.lastAccessDate | date: 'yyyy/MM/dd HH:mm:ss'}}</span></td>
-								<td align="center"><a href="javascript:void(0)" ng-click="$parent.assignPermission(user)"><span>#button("ASSIGN_PERMISSION")</span></a></td>
+							<tr class="ng-hide" ng-show="receiver" ng-repeat="receiver in receivers">
+								<td align="center"><span>{{receiver.user.id}}</span></td>
+								<td align="center"><span>{{receiver.user.username}}</span></td>
+								<td align="center"><span>{{receiver.name}}</span></td>
+								<td align="center"><span>{{receiver.identityCard}}</span></td>
+								<td align="center"><span>{{receiver.status.message}}</span></td>
+								<td align="center"><a href="javascript:void(0)" ng-click="$parent.view(receiver)"><span>#button("VIEW")</span></a></td>
 							</tr>
 						</tbody>
 					</table>

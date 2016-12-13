@@ -3,37 +3,59 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		pageIndex : 1,
 		pageSize : 10
 	};
+
+	$http({
+		method : "GET",
+		url : "/ajax/common/lookup/SRCSTAT"
+	}).success(function(response) {
+		$scope.statuses = response.data;
+	}).error(function(response) {
+		errorHandler($scope, response);
+	});
+
 	$scope.filterData = {
-		id : "",
-		username : ""
+		userId : "",
+		name : "",
+		status : "A",
+		identity : ""
 	};
 
 	$scope.searchUsers = function() {
-		var ajaxUrl = "/ajax/user?rsexp=token";
+		var ajaxUrl = "/ajax/user/receiver?rsexp=user";
 
 		ajaxUrl += "&pageIndex=" + ($scope.pagingData.pageIndex - 1);
 		ajaxUrl += "&pageSize=" + $scope.pagingData.pageSize;
 
-		if ($scope.filterData.username != undefined && $scope.filterData.username != "") {
-			ajaxUrl += "&username=" + $scope.filterData.username;
+		if ($scope.filterData.name != undefined && $scope.filterData.name != "") {
+			ajaxUrl += "&name=" + $scope.filterData.name;
 		}
 
-		if ($scope.filterData.id != undefined && $scope.filterData.id != "") {
-			ajaxUrl += "&id=" + $scope.filterData.id;
+		if ($scope.filterData.userId != undefined && $scope.filterData.userId != "") {
+			ajaxUrl += "&userId=" + $scope.filterData.userId;
+		}
+
+		if ($scope.filterData.status != undefined && $scope.filterData.status != "") {
+			ajaxUrl += "&status=" + $scope.filterData.status;
+		}
+
+		if ($scope.filterData.identity != undefined && $scope.filterData.identity != "") {
+			ajaxUrl += "&identity=" + $scope.filterData.identity;
 		}
 
 		$http({
 			method : "GET",
 			url : ajaxUrl
 		}).success(function(response) {
-			$scope.users = response.data;
+			$scope.receivers = response.data;
 			response.meta.paging.pageIndex++;
 			$scope.pagingData = response.meta.paging;
 		}).error(function(response) {
 			errorHandler($scope, response);
 		});
 	};
-	$scope.assignPermission = function(user) {
-		$window.location.href = "/admin/permission/edit/" + user.id;
+	$scope.view = function(receiver) {
+		$window.location.href = "/admin/receiver/" + receiver.id;
 	};
+
+	$scope.searchUsers();
 });
