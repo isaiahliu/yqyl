@@ -6,53 +6,55 @@ import org.trinity.message.ILookupType;
 import org.trinity.message.IMessageType;
 
 public enum LookupType implements ILookupType, ILookupMessage<LookupType> {
-    NA("NA"),
-    LOOKUP("LOOKUP"),
-    ACCOUNT_STATUS("ACSTAT"),
-    FAVORITE_CATEGORY("FVCATE"),
-    ACCOUNT_POSTING_STATUS("APSTAT"),
-    ACCOUNT_BALANCE_STATUS("ABSTAT"),
-    USER_STATUS("URSTAT"),
-    ACCESS_RIGHT("ACCESS"),
-    TOKEN_STATUS("TKSTAT"),
-    SYSTEM_ATTRIBUTE_KEY("SYSKEY"),
-    VALUE_TYPE("VALTYP"),
-    RECORD_STATUS("RCSTAT"),
-    ROLE_NAME("RLNAME"),
-    ACCOUNT_CATEGORY("ACCCATE"),
-    COMPANY_TYPE("CMTYPE"),
-    OPERATOR_CLIENT_STATUS("OPCSTAT"),
-    ANNOUNCEMENT_STATUS("ANSTAT"),
-    CLIENT_TYPE("CLTYPE"),
-    LANGUAGE("LANGUAGE"),
-    MESSAGE_STATUS("MSGSTAT"),
-    ORDER_STATUS("ODSTAT"),
-    ORDER_OPERATION("ODOPRT"),
-    SERVICE_STATUS("SVSTAT"),
-    SERVICE_SUPPLIER_CLIENT_STATUS("SSCSTAT"),
-    GENDER("GENDER"),
-    SERVICE_RECEIVER_CLIENT_STATUS("SRCSTAT"),
-    FAMILY_RELATIONSHIP("FARELTN"),
-    FLAG_STATUS("FLSTAT"),
-    SMOKER_AGE("SMKAGE"),
-    FREQUENCY_STATUS("FRQSTAT"),
-    REALNAME_STATUS("RNSTAT"),
-    CREDENTIAL_TYPE("CDTYPE"),
-    PAYMENT_METHOD("PMMTHD"),
-    PAYMENT_TYPE("PMTYPE"),
-    DISTRICT_CODE("DTCODE"),
-    STAFF_STATUS("STSTAT"),
-    SERVICE_ORDER_REQUIREMENT_STATUS("SORSTAT"),
-    BANK("BANK"),
-    ACCOUNT_TYPE("ACCTYPE"),
-    AUDITING_TYPE("AUDTYPE"),
-    TRANSACTION_TYPE("TXTYPE"),
-    VERIFY_CODE_TYPE("VCTYPE");
+    NA("NA", null),
+    LOOKUP("LOOKUP", LookupType.class),
+    ACCOUNT_STATUS("ACSTAT", AccountStatus.class),
+    FAVORITE_CATEGORY("FVCATE", FavoriteCategory.class),
+    ACCOUNT_POSTING_STATUS("APSTAT", AccountPostingStatus.class),
+    ACCOUNT_BALANCE_STATUS("ABSTAT", AccountBalanceStatus.class),
+    USER_STATUS("URSTAT", UserStatus.class),
+    ACCESS_RIGHT("ACCESS", AccessRight.class),
+    TOKEN_STATUS("TKSTAT", TokenStatus.class),
+    SYSTEM_ATTRIBUTE_KEY("SYSKEY", SystemAttributeKey.class),
+    VALUE_TYPE("VALTYP", ValueType.class),
+    RECORD_STATUS("RCSTAT", RecordStatus.class),
+    ACCOUNT_CATEGORY("ACCCATE", AccountCategory.class),
+    COMPANY_TYPE("CMTYPE", CompanyType.class),
+    OPERATOR_CLIENT_STATUS("OPCSTAT", OperatorClientStatus.class),
+    ANNOUNCEMENT_STATUS("ANSTAT", AnnouncementStatus.class),
+    CLIENT_TYPE("CLTYPE", ClientType.class),
+    LANGUAGE("LANGUAGE", Language.class),
+    MESSAGE_STATUS("MSGSTAT", MessageStatus.class),
+    ORDER_STATUS("ODSTAT", OrderStatus.class),
+    ORDER_OPERATION("ODOPRT", OrderOperation.class),
+    SERVICE_STATUS("SVSTAT", ServiceStatus.class),
+    SERVICE_SUPPLIER_CLIENT_STATUS("SSCSTAT", ServiceSupplierClientStatus.class),
+    GENDER("GENDER", Gender.class),
+    SERVICE_RECEIVER_CLIENT_STATUS("SRCSTAT", ServiceReceiverClientStatus.class),
+    FAMILY_RELATIONSHIP("FARELTN", FamilyRelationship.class),
+    FLAG_STATUS("FLSTAT", FlagStatus.class),
+    SMOKER_AGE("SMKAGE", SmokerAge.class),
+    FREQUENCY_STATUS("FRQSTAT", FrequencyStatus.class),
+    REALNAME_STATUS("RNSTAT", RealnameStatus.class),
+    CREDENTIAL_TYPE("CDTYPE", CredentialType.class),
+    PAYMENT_METHOD("PMMTHD", PaymentMethod.class),
+    PAYMENT_TYPE("PMTYPE", PaymentType.class),
+    DISTRICT_CODE("DTCODE", District.class),
+    STAFF_STATUS("STSTAT", StaffStatus.class),
+    SERVICE_ORDER_REQUIREMENT_STATUS("SORSTAT", ServiceOrderRequirementStatus.class),
+    BANK("BANK", Bank.class),
+    ACCOUNT_TYPE("ACCTYPE", AccountType.class),
+    AUDITING_TYPE("AUDTYPE", AuditingType.class),
+    TRANSACTION_TYPE("TXTYPE", TransactionType.class),
+    VERIFY_CODE_TYPE("VCTYPE", VerifyCodeType.class);
 
     private String typeName;
 
-    private LookupType(final String typeName) {
+    private Class<? extends ILookupMessage<LookupType>> targetType;
+
+    private LookupType(final String typeName, final Class<? extends ILookupMessage<LookupType>> targetType) {
         this.typeName = typeName;
+        this.targetType = targetType;
     }
 
     @Override
@@ -73,5 +75,10 @@ public enum LookupType implements ILookupType, ILookupMessage<LookupType> {
     @Override
     public IMessageType getParentType() {
         return GeneralMessageType.LOOKUP;
+    }
+
+    @Override
+    public Class<? extends ILookupMessage<LookupType>> getTargetType() {
+        return targetType;
     }
 }

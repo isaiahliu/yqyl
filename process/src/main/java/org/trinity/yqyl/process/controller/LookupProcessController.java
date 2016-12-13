@@ -24,59 +24,58 @@ import org.trinity.yqyl.repository.business.entity.Lookup;
 
 @Service
 public class LookupProcessController implements ILookupProcessController {
-    @Autowired
-    private ILookupRepository lookupRepository;
+	@Autowired
+	private ILookupRepository lookupRepository;
 
-    @Autowired
-    private IMessageResolverChain messageResolver;
+	@Autowired
+	private IMessageResolverChain messageResolver;
 
-    @Override
-    public List<LookupDto> getLookupsByType(final String lookupType) {
-        final Class<? extends ILookupMessage<?>> lookupEnumClass = LookupParser
-                .parseLookupClass(LookupParser.parse(LookupType.class, lookupType));
+	@Override
+	public List<LookupDto> getLookupsByType(final String lookupType) {
+		final Class<? extends ILookupMessage<?>> lookupEnumClass = LookupParser.parse(LookupType.class, lookupType).getTargetType();
 
-        if (lookupEnumClass == null || !lookupEnumClass.isEnum()) {
-            return Collections.emptyList();
-        }
+		if (lookupEnumClass == null || !lookupEnumClass.isEnum()) {
+			return Collections.emptyList();
+		}
 
-        final ILookupMessage<?>[] items = lookupEnumClass.getEnumConstants();
+		final ILookupMessage<?>[] items = lookupEnumClass.getEnumConstants();
 
-        return Arrays.stream(items).map(item -> new LookupDto(item.getMessageCode(), messageResolver.getMessage(item)))
-                .collect(Collectors.toList());
-    }
+		return Arrays.stream(items).map(item -> new LookupDto(item.getMessageCode(), messageResolver.getMessage(item)))
+				.collect(Collectors.toList());
+	}
 
-    @Override
-    @Transactional(rollbackOn = IException.class)
-    public void refresh() {
-        final List<Lookup> newLookups = new ArrayList<>();
-        for (final Class<?> registeredType : LookupParser.getRegisteredType()) {
-            if (!ILookupMessage.class.isAssignableFrom(registeredType) && !registeredType.isEnum()) {
-                continue;
-            }
+	@Override
+	@Transactional(rollbackOn = IException.class)
+	public void refresh() {
+		final List<Lookup> newLookups = new ArrayList<>();
+		for (final Class<?> registeredType : LookupParser.getRegisteredType()) {
+			if (!ILookupMessage.class.isAssignableFrom(registeredType) && !registeredType.isEnum()) {
+				continue;
+			}
 
-            final Object[] lookups = registeredType.getEnumConstants();
-            for (final Language language : Language.values()) {
-                for (final Object o : lookups) {
-                    final ILookupMessage<?> lookup = (ILookupMessage<?>) o;
-                    final LookupType messageType = (LookupType) lookup.getMessageType();
-                    Lookup lookupEntity = lookupRepository.findOneByLanguageAndCategoryAndCode(language, messageType,
-                            lookup.getMessageCode());
-                    if (lookupEntity == null) {
-                        lookupEntity = new Lookup();
-                        lookupEntity.setCategory(messageType);
-                        lookupEntity.setDescription(lookup.getMessageCodeWithPrefix());
-                        lookupEntity.setCode(lookup.getMessageCode());
-                        lookupEntity.setLanguage(language);
-                        lookupEntity.setStatus(RecordStatus.ACTIVE);
+			final Object[] lookups = registeredType.getEnumConstants();
+			for (final Language language : Language.values()) {
+				for (final Object o : lookups) {
+					final ILookupMessage<?> lookup = (ILookupMessage<?>) o;
+					final LookupType messageType = (LookupType) lookup.getMessageType();
+					Lookup lookupEntity = lookupRepository.findOneByLanguageAndCategoryAndCode(language, messageType,
+							lookup.getMessageCode());
+					if (lookupEntity == null) {
+						lookupEntity = new Lookup();
+						lookupEntity.setCategory(messageType);
+						lookupEntity.setDescription(lookup.getMessageCodeWithPrefix());
+						lookupEntity.setCode(lookup.getMessageCode());
+						lookupEntity.setLanguage(language);
+						lookupEntity.setStatus(RecordStatus.ACTIVE);
 
-                        newLookups.add(lookupEntity);
-                    }
-                }
-            }
-        }
-        if (!newLookups.isEmpty()) {
-            lookupRepository.save(newLookups);
-        }
-        messageResolver.refresh();
-    }
+						newLookups.add(lookupEntity);
+					}
+				}
+			}
+		}
+		if (!newLookups.isEmpty()) {
+			lookupRepository.save(newLookups);
+		}
+		messageResolver.refresh();
+	}
 }
