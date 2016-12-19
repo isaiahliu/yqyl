@@ -25,32 +25,32 @@
 			<dependency>
 				<groupId>org.trinity.yqyl</groupId>
 				<artifactId>common</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.trinity.yqyl</groupId>
 				<artifactId>configuration</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.trinity.yqyl</groupId>
 				<artifactId>process</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.trinity.yqyl</groupId>
 				<artifactId>repository</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.trinity.yqyl</groupId>
 				<artifactId>rest</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.trinity.yqyl</groupId>
 				<artifactId>web</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.trinity.framework</groupId>
