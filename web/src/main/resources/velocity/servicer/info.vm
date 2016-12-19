@@ -1,4 +1,4 @@
-#if($platform=='SUPPLIER') #parse("/velocity/servicer/navigation.vm") #else #parse("/velocity/admin/navigation.vm") #end
+#if($platform=='SERVICER') #parse("/velocity/servicer/navigation.vm") #else #parse("/velocity/admin/navigation.vm") #end
 
 <link rel="stylesheet" href="/static/css/business/servicer/info.css"></link>
 

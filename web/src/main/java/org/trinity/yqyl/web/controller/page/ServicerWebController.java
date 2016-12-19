@@ -18,13 +18,13 @@ public class ServicerWebController extends AbstractResourceWebController {
 	}
 
 	@RequestMapping("/auditing")
-	@Authorize(value = AccessRight.SERVICE_SUPPLIER_REGISTER, checkAncestors = false)
+	@Authorize(value = AccessRight.SERVICE_SUPPLIER_REGISTER)
 	public ModelAndView auditingPage() throws IException {
 		return createModelAndView("servicer/auditing").addObject("currentPage", "AUDITING");
 	}
 
 	@RequestMapping({ "", "/info" })
-	@Authorize(value = AccessRight.SERVICE_SUPPLIER_REGISTER, checkAncestors = false)
+	@Authorize(value = AccessRight.SERVICE_SUPPLIER_REGISTER)
 	public ModelAndView infoPage() throws IException {
 		return createModelAndView("servicer/info").addObject("serviceSupplierClientId", 0).addObject("currentPage", "INFO");
 	}
