@@ -26,3 +26,7 @@ div.content div.operations a {
 div.content table tbody td.add div {
 	color: white;
 }
+
+span.unverified {
+	color: blue;
+}

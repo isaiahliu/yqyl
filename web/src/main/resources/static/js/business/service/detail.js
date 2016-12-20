@@ -9,9 +9,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 
 	$scope.modifying = false;
 
-	var url =
-			"/ajax/user/order/" + serviceOrderId
-					+ "?&rsexp=serviceInfo[serviceSupplierClient,serviceCategory],operations,appraise";
+	var url = "/ajax/user/order/" + serviceOrderId + "?&rsexp=serviceInfo[serviceSupplierClient,serviceCategory],operations,appraise";
 
 	if (mode == 'receiver') {
 		url += "&searchScope=me";
@@ -128,5 +126,9 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	};
 	$scope.cancelModify = function() {
 		$scope.modifying = false;
+	};
+
+	$scope.print = function() {
+		window.print();
 	};
 });

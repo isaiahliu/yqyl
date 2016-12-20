@@ -7,17 +7,24 @@
 layoutApp.value("serviceOrderId", ${orderId});
 layoutApp.value("mode", '${mode}');
 </script>
-<div class="detail ng-hide" ng-show="serviceOrder" #if(${mode}=='supplier') style="margin-left:250px;" #end >
-	<div style="padding: 15px;" class="block">
-		<span ng-hide="mode=='supplier'" style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("MY_ORDER")</span>
+
+<div
+	class="detail #if(${mode}==
+	'supplier') detail_servicer #end ng-hide doprint"
+	ng-show="serviceOrder">
+	<div style="padding: 15px;" class="block noprint">
+		<span ng-hide="mode=='supplier'"
+			style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("MY_ORDER")</span>
 		<span style="color: #333333; font-size: 16px;">#label("ORDER_ID")
 			: </span> <span style="color: #fd6a15; font-size: 16px; margin-right: 20px;">{{serviceOrder.id}}</span>
 		<a class="ng-hide" style="float: right; line-height: 30px;"
 			ng-show="mode=='receiver'" href="/user"><span>#label("BACK_TO_LIST")</span></a>
 		<a class="ng-hide" style="float: right; line-height: 30px;"
 			ng-hide="mode=='receiver'" href="/servicer/order"><span>#label("BACK_TO_LIST")</span></a>
+		<a href="javascript:void(0)" ng-click="print()"
+			style="float: right; line-height: 30px; margin-right: 20px;"><span>#button("PRINT")</span></a>
 	</div>
-	<div style="padding: 15px 40px;" class="block">
+	<div style="padding: 15px 40px;" class="block doprint">
 		<div class="subBlock">
 			<div class="level1">
 				<img src="/static/images/icon/green_block.png"> <span>#label("SERVICE_ORDER_PREVIEW")</span>

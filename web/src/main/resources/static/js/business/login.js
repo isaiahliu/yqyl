@@ -2,7 +2,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, $cook
 	$scope.isReg = false;
 	$scope.rememberUsername = false;
 	$scope.verifyCodeSent = false;
-	
+
 	$scope.loginData = {
 		username : $cookieStore.get("YQYL_USERNAME"),
 		password : ""
@@ -18,7 +18,12 @@ layoutApp.controller('contentController', function($scope, $http, $window, $cook
 			} else {
 				$cookieStore.put("YQYL_USERNAME", "");
 			}
-			$window.location.href = "/home";
+
+			if (response.data[0].servicer) {
+				$window.location.href = "/servicer";
+			} else {
+				$window.location.href = "/home";
+			}
 		}).error(function(response) {
 			errorHandler($scope, response);
 		});

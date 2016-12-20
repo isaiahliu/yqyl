@@ -66,7 +66,8 @@
 						</div>
 						<div class="right">
 							<span class="priceLabel">#label("PRICE")</span> <span
-								class="price">{{service.price|currency:"￥"}}</span>
+								class="price">{{service.price|currency:"￥"}} /
+								{{service.paymentType.message}}</span>
 						</div>
 					</div>
 				</div>

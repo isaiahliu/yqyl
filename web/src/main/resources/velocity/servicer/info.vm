@@ -49,7 +49,7 @@
 						<div class="image">
 							<img style="min-width: 200px; min-height: 200px; width: 200px; height: 200px;" ng-src="{{logoUrl}}" />
 						</div>
-						<input type="file" ng-if="!audited&&!auditing" upload-logo="uploadLogo" />
+						<input type="file" upload-logo="uploadLogo" />
 					</div>
 					<div class="right">
 						<div>

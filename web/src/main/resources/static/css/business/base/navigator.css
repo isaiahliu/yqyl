@@ -1,23 +1,3 @@
-div.navBar ul.homePagePopList {
-	left: 175px;
-	top: 155px;
-}
-
-div.navBar ul.homeEndowmentPopList {
-	left: 655px;
-	top: 155px;
-}
-
-div.navBar ul.pensionIndustryPopList {
-	left: 775px;
-	top: 155px;
-}
-
-div.navBar ul.talentTrainingPopList {
-	left: 1015px;
-	top: 155px;
-}
-
 div.navBar div.advertisement {
 	width: 1200px;
 	padding: 20px 0px;
@@ -68,11 +48,11 @@ div.navBar div.navBarItems li.selectedNavBarItem {
 	list-style-type: none;
 	float: left;
 	height: 45px;
-	width: 175px;
+	width: 225px;
 }
 
 div.navBar div.navBarItems li.selectedNavBarItem div {
 	background: #4a9900;
 	height: 45px;
-	width: 175px;
+	width: 225px;
 }

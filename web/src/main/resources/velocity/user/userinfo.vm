@@ -5,7 +5,9 @@
 <div class="userinfo">
 	<div style="padding: 15px;" class="block">
 		<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("USER_INFO")</span>
-		<button style="float: right; height: 33px; width: 150px; border-radius: 2px; background: #8ab563" ng-click="addFamilyMember()">#button("ADD_FAMILY_MEMBER")</button>
+		<button
+			style="float: right; height: 33px; width: 150px; border-radius: 2px; background: #8ab563"
+			ng-click="addFamilyMember()">#button("ADD_FAMILY_MEMBER")</button>
 	</div>
 	<div style="padding: 15px 20px; text-align: center;" class="block">
 		<table>
@@ -31,18 +33,22 @@
 							<span>{{member.familyRelationship.message}}</span>
 						</div></td>
 					<td align="center"><div>
-							<span>{{member.nickname}}</span> <span>({{member.status.message}})</span>
+							<span>{{member.nickname}}</span> <span
+								ng-class="{false: 'unverified'}[member.status.code=='R']">({{member.status.message}})</span>
 						</div></td>
 					<td align="center"><div>
 							<span>{{member.cellphoneNo}}</span>
 						</div></td>
 					<td align="center"><div class="operations">
-							<a href="javascript:void(0)"><span>#button("VIEW")</span></a> <a ng-href="/user/realname/{{member.id}}"><span>#button("REALNAME_VERIFY")</span></a>
-							<a ng-href="/user/userinfo/{{member.id}}"><span>#button("EDIT")</span></a> <a href="javascript:void(0)" ng-click="disable(member)"><span>#button("DISABLE_CLIENT")</span></a>
+							<a href="javascript:void(0)"><span>#button("VIEW")</span></a> <a
+								ng-href="/user/realname/{{member.id}}"><span>#button("REALNAME_VERIFY")</span></a>
+							<a ng-href="/user/userinfo/{{member.id}}"><span>#button("EDIT")</span></a>
+							<a href="javascript:void(0)" ng-click="disable(member)"><span>#button("DISABLE_CLIENT")</span></a>
 						</div></td>
 				</tr>
 				<tr class="ng-hide" ng-show="modeUpdate">
-					<td class="add" align="center" colspan="3"><a href="javascript:void(0)" ng-click="addNew()"><div>#button("ADD_NEW")</div></a></td>
+					<td class="add" align="center" colspan="3"><a
+						href="javascript:void(0)" ng-click="addNew()"><div>#button("ADD_NEW")</div></a></td>
 				</tr>
 			</tbody>
 		</table>

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/static/css/business/base/header.css"></link>
 
-<div class="header" ng-controller="headerController">
+<div class="header noprint" ng-controller="headerController">
 	<div class="headerBar">
 		<div class="left">
 			<ul>

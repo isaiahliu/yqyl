@@ -5,10 +5,25 @@
 #parse("/velocity/base/include.vm")
 </head>
 <script src="/static/js/business/base/layout.js"></script>
+
+<style type="text/css" media=print>
+.noprint {
+	display: none;
+}
+
+.doprint {
+	margin-left: 0px;
+}
+</style>
+
+
 <body ng-app="layoutApp">
-	#if($platform=='SERVICER') #parse("/velocity/base/header_servicer.vm") #elseif($platform=='ADMIN')
-	#parse("/velocity/base/header_admin.vm") #else #parse("/velocity/base/header.vm") #parse("/velocity/base/navigator.vm") #end
-	<div class="content" ng-controller="contentController">#parse("/velocity/base/errorBar.vm") $screen_content</div>
+	#if($platform=='SERVICER') #parse("/velocity/base/header_servicer.vm")
+	#elseif($platform=='ADMIN') #parse("/velocity/base/header_admin.vm")
+	#else #parse("/velocity/base/header.vm")
+	#parse("/velocity/base/navigator.vm") #end
+	<div class="content doprint" ng-controller="contentController">#parse("/velocity/base/errorBar.vm")
+		$screen_content</div>
 
 	#if(!$platform) #parse("/velocity/base/footer.vm")#end
 </body>

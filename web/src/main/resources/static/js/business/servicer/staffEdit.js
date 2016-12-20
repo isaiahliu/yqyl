@@ -30,11 +30,13 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 				url : "/ajax/service/category?status=A&rsexp=serviceSubCategories"
 			}).success(function(response) {
 				for (var i = 0; i < response.data.length; i++) {
+					response.data[i].expanding = false;
 					for (var j = 0; j < response.data[i].serviceSubCategories.length; j++) {
 						var currentCategory = response.data[i].serviceSubCategories[j];
 						for (var k = 0; k < $scope.staff.serviceCategories.length; k++) {
 							if (currentCategory.id == $scope.staff.serviceCategories[k].id) {
 								currentCategory.checked = true;
+								response.data[i].expanding = true;
 								continue;
 							}
 						}
@@ -139,5 +141,15 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	$scope.back = function() {
 		$window.location.href = "/servicer/staff";
 
+	};
+
+	$scope.selectAll = function(category, flag) {
+		if (flag == true) {
+			category.expanding = true;
+		}
+
+		for (var i = 0; i < category.serviceSubCategories.length; i++) {
+			category.serviceSubCategories[i].checked = flag;
+		}
 	};
 });

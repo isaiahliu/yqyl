@@ -4,6 +4,7 @@
 	<div class="navBar">
 		<ul>
 			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("ABOUT_US")</span></a></li>
+
 			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("JOIN_AS_A_SERVICE_SUPPLIER")</span></a>
 			</li>
 			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("JOIN_AS_A_SERVICE_RECEIVER")</span></a>
@@ -16,9 +17,16 @@
 			</li>
 			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("WECHAT_QR_CODE")</span></a>
 			</li>
+			<li class="navBarItem"><a href="/servicer"><span
+					style="color: #fd6a15;">#button("SERVICE_SUPPLIER_HOME")</span></a></li>
+			<li class="navBarItem"><a href="/admin"><span
+					style="color: #fd6a15;">#button("ADMIN_HOME")</span></a></li>
 			<li class="navBarItem"><img class="QRCode"
 				src="/static/images/logo/QRCode.jpg" alt="QR Code" /></li>
 		</ul>
+	</div>
+	<div class="navBar">
+		<span style="color: black;">#info("COPYRIGHT")</span>
 	</div>
 </div>
 <script src="/static/js/business/base/footer.js"></script>

@@ -31,6 +31,7 @@
 							<tr>
 								<td align="center"><span>#label("SERVICE_ORDER_ID")</span></td>
 								<td align="center"><span>#label("ASSIGNMENT")</span></td>
+								<td align="center"><span>#label("STAFF_NAME")</span></td>
 								<td align="center"><span>#label("SERVICE_RECEIVER_NAME")</span></td>
 								<td align="center"><span>#label("SERVICE_TIME")</span></td>
 								<td align="center"><span>#label("SERVICE_ADDRESS")</span></td>
@@ -55,6 +56,7 @@
 										</div>
 									</div></td>
 
+								<td align="center"><span>{{order.staff.name}}</span></td>
 								<td align="center"><span>{{order.user.username}}</span></td>
 								<td align="center"><span>{{order.serviceDate|date:'yyyy/MM/dd'}}</span><br /> <span> {{order.serviceHour}}:00</span></td>
 								<td align="center"><span>{{order.address}}</span></td>
@@ -81,7 +83,7 @@
 							<tr class="edit ng-hide" ng-show="order.assigning">
 								<td></td>
 								<td align="center"><span>#label("ASSIGNMENT")</span></td>
-								<td colspan="10"><select ng-model="order.selectedStaff" style="min-width: 400px;">
+								<td colspan="11"><select ng-model="order.selectedStaff" style="min-width: 400px;">
 										<option value="" ng-if="order.availableStaffs.length>0">(#label("RANDOM"))</option>
 										<option value="" ng-if="order.availableStaffs.length==0">(#label("NO_AVAILABLE_STAFF"))</option>
 										<option ng-repeat="staff in order.availableStaffs" value="{{staff.id}}">{{staff.name}} (Id: {{staff.id}})</option>
@@ -92,14 +94,14 @@
 							<tr class="edit ng-hide" ng-show="order.txCodeInputing">
 								<td></td>
 								<td align="center"><span>#label("RECEIPT")</span></td>
-								<td colspan="10"><input ng-model="order.inputTxCode" />
+								<td colspan="11"><input ng-model="order.inputTxCode" />
 									<button ng-click="$parent.sendTxCode(order)">#button("APPLY")</button>
 									<button ng-click="$parent.txCodeInputCancel(order)">#button("CANCEL")</button></td>
 							</tr>
 							<tr class="edit ng-hide" ng-show="order.priceEditing">
 								<td></td>
 								<td align="center"><span>#label("EXPECTED_PAYMENT_AMOUNT")</span></td>
-								<td colspan="10"><input ng-model="order.newExpectedPaymentAmount" />
+								<td colspan="11"><input ng-model="order.newExpectedPaymentAmount" />
 									<button ng-click="$parent.editPrice(order)">#button("APPLY")</button>
 									<button ng-click="$parent.editPriceCancel(order)">#button("CANCEL")</button></td>
 							</tr>

@@ -20,7 +20,7 @@ button {
 }
 
 div.content {
-	min-height: 600;
+	min-height: 600px;
 }
 
 div.content table th {
@@ -58,7 +58,7 @@ div.navBar li.navBarItem {
 }
 
 div.navBar li div {
-	width: 120px;
+	width: 150px;
 	height: 45px;
 }
 

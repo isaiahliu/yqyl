@@ -84,6 +84,9 @@ public class SecurityProcessController implements ISecurityProcessController {
 		// }
 		// });
 
+		userDto.setServicer(user.getAccessrights().contains(AccessRight.SERVICE_SUPPLIER)
+				|| user.getAccessrights().contains(AccessRight.SERVICE_SUPPLIER_REGISTER));
+
 		return userDto;
 	}
 

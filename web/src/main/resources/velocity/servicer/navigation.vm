@@ -4,7 +4,7 @@
 <link rel="stylesheet"
 	href="/static/css/business/servicer/navigation.css"></link>
 
-<div class="subNavBar navBar" ng-controller="subNavigatorController">
+<div class="subNavBar navBar noprint" ng-controller="subNavigatorController">
 	<ul>
 		<li><div style="height: 80px; border-bottom: 1px solid #cccccc;">
 				<span style="line-height: 80px; color: #0a7ef9; font-size: 20px;">${authentication.token.username}
