@@ -56,8 +56,10 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
     private String name;
 
     private String contact;
+
     @Column(name = "contact_phone")
     private String contactPhone;
+
     private String region;
 
     @Column(name = "service_categories")

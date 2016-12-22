@@ -9,7 +9,7 @@ spring:
     basename: message/resource,message/lookup
     cache-seconds: ${args.messages.cache-seconds:5}
   datasource:
-    url: ${args.datasource.url:jdbc:mysql://localhost:8099/yqyl_business?characterEncoding=utf-8&serverTimezone=UTC }
+    url: ${args.datasource.url:jdbc:mysql://localhost:3306/yqyl_business?characterEncoding=utf-8&serverTimezone=UTC }
     username: ${args.datasource.username:dev}
     password: ${args.datasource.password:!QAZ2wsx}
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -47,5 +47,4 @@ spring:
   profiles: dev-work
 args:
   datasource: 
-    url: jdbc:mysql://172.16.128.191:3307/yqyl_business?characterEncoding=utf-8&serverTimezone=UTC
-    username: qa 
+    url: jdbc:mysql://localhost:3306/yqyl_business?characterEncoding=utf-8&serverTimezone=UTC
