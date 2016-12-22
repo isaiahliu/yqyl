@@ -2,7 +2,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 
 	$http({
 		method : "GET",
-		url : "/ajax/user/order/" + orderId
+		url : "/ajax/user/order?uid=" + orderId
 	}).success(function(response) {
 		$scope.order = response.data[0];
 		$scope.payment = {

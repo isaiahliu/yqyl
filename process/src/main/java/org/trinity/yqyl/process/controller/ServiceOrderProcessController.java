@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.trinity.common.dto.object.LookupDto;
 import org.trinity.common.exception.IException;
+import org.trinity.common.util.TrinityUtil;
 import org.trinity.message.exception.GeneralErrorMessage;
 import org.trinity.process.converter.IObjectConverter;
 import org.trinity.process.converter.IObjectConverter.CopyPolicy;
@@ -94,7 +95,7 @@ public class ServiceOrderProcessController
     @Override
     @Transactional(rollbackOn = IException.class)
     public void assignOrder(final ServiceOrderDto item) throws IException {
-        final ServiceOrder entity = getDomainEntityRepository().findOne(item.getId());
+        final ServiceOrder entity = getDomainEntityRepository().findOneByUid(item.getUid());
 
         if (!entity.getServiceInfo().getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
             throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
@@ -153,7 +154,7 @@ public class ServiceOrderProcessController
     @Override
     @Transactional(rollbackOn = IException.class)
     public ServiceOrderDto cancelOrder(final ServiceOrderDto item) throws IException {
-        final ServiceOrder entity = getDomainEntityRepository().findOne(item.getId());
+        final ServiceOrder entity = getDomainEntityRepository().findOneByUid(item.getUid());
 
         final String username = getSecurityUtil().getCurrentToken().getUsername();
 
@@ -270,7 +271,7 @@ public class ServiceOrderProcessController
     @Transactional(rollbackOn = IException.class)
     public List<ServiceOrderDto> changePrice(final List<ServiceOrderDto> data) throws IException {
         final List<ServiceOrder> entities = data.stream().map(item -> {
-            final ServiceOrder entity = getDomainEntityRepository().findOne(item.getId());
+            final ServiceOrder entity = getDomainEntityRepository().findOneByUid(item.getUid());
             boolean isSupplier = false;
             try {
                 isSupplier = entity.getServiceInfo().getServiceSupplierClient().getUser().getUsername()
@@ -380,8 +381,8 @@ public class ServiceOrderProcessController
     public ServiceOrderDto proposeOrder(final ServiceOrderDto serviceOrderDto) throws IException {
         final User user = userRepository.findOneByUsername(getSecurityUtil().getCurrentToken().getUsername());
 
-        if (serviceOrderDto.getId() != null && serviceOrderDto.getId() > 0) {
-            final ServiceOrder serviceOrder = getDomainEntityRepository().findOne(serviceOrderDto.getId());
+        if (!StringUtils.isEmpty(serviceOrderDto.getUid())) {
+            final ServiceOrder serviceOrder = getDomainEntityRepository().findOneByUid(serviceOrderDto.getUid());
             if (!serviceOrder.getUser().getId().equals(user.getId())) {
                 throw getExceptionFactory().createException(ErrorMessage.INVALID_ORDER_ID);
             }
@@ -410,6 +411,7 @@ public class ServiceOrderProcessController
         } else {
             final ServiceOrder serviceOrder = getDomainObjectConverter().convertBack(serviceOrderDto);
             serviceOrder.setId(null);
+            serviceOrder.setUid(TrinityUtil.randomBase36Uuid());
             serviceOrder.setPrice(0d);
             serviceOrder.setProposalTime(new Date());
             serviceOrder.setUser(user);
@@ -462,7 +464,7 @@ public class ServiceOrderProcessController
     @Transactional(rollbackOn = IException.class)
     public List<ServiceOrderDto> rejectCancelOrder(final List<ServiceOrderDto> data) throws IException {
         final List<ServiceOrder> entities = data.stream().map(item -> {
-            final ServiceOrder entity = getDomainEntityRepository().findOne(item.getId());
+            final ServiceOrder entity = getDomainEntityRepository().findOneByUid(item.getUid());
 
             String username = null;
             try {
@@ -511,7 +513,7 @@ public class ServiceOrderProcessController
     @Transactional(rollbackOn = IException.class)
     public void releaseOrder(final List<ServiceOrderDto> data) throws IException {
         for (final ServiceOrderDto serviceOrderDto : data) {
-            final ServiceOrder serviceOrder = getDomainEntityRepository().findOne(serviceOrderDto.getId());
+            final ServiceOrder serviceOrder = getDomainEntityRepository().findOneByUid(serviceOrderDto.getUid());
 
             if (serviceOrder.getStatus() != OrderStatus.REQUEST_GRABBED) {
                 throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_ORDER_STATUS);
@@ -537,7 +539,7 @@ public class ServiceOrderProcessController
         final List<ServiceOrder> entities = new ArrayList<>();
         for (final ServiceOrderDto item : data) {
 
-            final ServiceOrder entity = getDomainEntityRepository().findOne(item.getId());
+            final ServiceOrder entity = getDomainEntityRepository().findOneByUid(item.getUid());
 
             if (entity.getStatus() != OrderStatus.IN_PROGRESS) {
                 getSecurityUtil().checkAccessRight(AccessRight.SUPER_USER);
@@ -610,7 +612,8 @@ public class ServiceOrderProcessController
     @Override
     @Transactional(rollbackOn = IException.class)
     public String uploadReceipt(final ServiceOrderDto serviceOrderDto) throws IException {
-        final ServiceOrder order = getDomainEntityRepository().findOne(serviceOrderDto.getId());
+        final ServiceOrder order = getDomainEntityRepository().findOneByUid(serviceOrderDto.getUid());
+
         if (order == null) {
             throw getExceptionFactory().createException(GeneralErrorMessage.UNABLE_TO_FIND_INSTANCE);
         }

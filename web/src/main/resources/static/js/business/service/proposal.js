@@ -47,7 +47,6 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		}
 
 		order = {
-			id : null,
 			serviceInfo : {
 				id : serviceInfo.id
 			},

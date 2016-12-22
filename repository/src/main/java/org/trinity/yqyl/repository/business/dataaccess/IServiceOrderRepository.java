@@ -37,6 +37,8 @@ public interface IServiceOrderRepository extends IJpaRepository<ServiceOrder, Se
     @Query("select count(0) from ServiceOrder where user=:user and status in (:status)")
     int countUnprocessedOrders(@Param("user") User user, @Param("status") OrderStatus[] status);
 
+    ServiceOrder findOneByUid(String uid);
+
     @Override
     default Page<ServiceOrder> query(final ServiceOrderSearchingDto searchingDto, final Pageable pagable) {
         final Specification<ServiceOrder> specification = (root, query, cb) -> {
@@ -58,8 +60,8 @@ public interface IServiceOrderRepository extends IJpaRepository<ServiceOrder, Se
                 predicates.add(cb.like(root.join(ServiceOrder_.user).get(User_.username), "%" + searchingDto.getReceiverUserName() + "%"));
             }
 
-            if (searchingDto.getId() != null && searchingDto.getId() > 0) {
-                predicates.add(cb.equal(root.get(ServiceOrder_.id), searchingDto.getId()));
+            if (!StringUtils.isEmpty(searchingDto.getUid())) {
+                predicates.add(cb.equal(root.get(ServiceOrder_.uid), searchingDto.getUid()));
             }
 
             if (!StringUtils.isEmpty(searchingDto.getCategory())) {

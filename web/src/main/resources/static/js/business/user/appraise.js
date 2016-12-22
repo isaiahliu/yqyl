@@ -1,7 +1,7 @@
 layoutApp.controller('contentController', function($scope, $http, $window, errorHandler, orderId) {
 	$http({
 		method : "GET",
-		url : "/ajax/user/order/" + orderId + "?rsexp=appraise,serviceInfo"
+		url : "/ajax/user/order?uid=" + orderId + "&rsexp=appraise,serviceInfo"
 	}).success(function(response) {
 		$scope.order = response.data[0];
 		if ($scope.order.appraise == undefined) {

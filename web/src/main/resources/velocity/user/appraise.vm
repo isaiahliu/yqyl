@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/static/css/business/user/appraise.css"></link>
 
 <script type="text/javascript">
-	layoutApp.value("orderId", ${orderId});
+	layoutApp.value("orderId", "${orderId}");
 </script>
 
 <div ng-show="order" class="appraise ng-hide">

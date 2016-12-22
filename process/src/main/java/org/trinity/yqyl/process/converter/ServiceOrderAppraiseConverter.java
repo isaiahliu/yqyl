@@ -32,7 +32,6 @@ public class ServiceOrderAppraiseConverter extends AbstractLookupSupportObjectCo
     @Override
     protected void convertBackInternal(final ServiceOrderAppraiseDto source, final ServiceOrderAppraise target,
             final CopyPolicy copyPolicy) {
-        copyObject(source::getId, target::getServiceOrderId, target::setServiceOrderId, copyPolicy);
         copyObject(source::getAttitudeRate, target::getAttitudeRate, target::setAttitudeRate, copyPolicy);
         copyObject(source::getComment, target::getComment, target::setComment, copyPolicy);
         copyObject(source::getReply, target::getReply, target::setReply, copyPolicy);
@@ -45,7 +44,7 @@ public class ServiceOrderAppraiseConverter extends AbstractLookupSupportObjectCo
 
     @Override
     protected void convertInternal(final ServiceOrderAppraise source, final ServiceOrderAppraiseDto target, final CopyPolicy copyPolicy) {
-        copyObject(source::getServiceOrderId, target::getId, target::setId, copyPolicy);
+        copyObject(() -> source.getServiceOrder().getUid(), target::getUid, target::setUid, copyPolicy);
         copyObject(source::getAttitudeRate, target::getAttitudeRate, target::setAttitudeRate, copyPolicy);
         copyObject(source::getReply, target::getReply, target::setReply, copyPolicy);
         copyObject(source::getComment, target::getComment, target::setComment, copyPolicy);

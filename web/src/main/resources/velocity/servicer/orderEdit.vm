@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/static/css/business/servicer/orderEdit.css"></link>
 
 <script type="text/javascript">
-	layoutApp.value("serviceOrderId", ${serviceOrderId});
+	layoutApp.value("serviceOrderId", "${serviceOrderId}");
 </script>
 
 <div class="orderEdit">

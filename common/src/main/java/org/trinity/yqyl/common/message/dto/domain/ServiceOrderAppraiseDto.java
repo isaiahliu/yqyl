@@ -4,13 +4,10 @@ import org.trinity.common.dto.domain.AbstractBusinessDto;
 
 public class ServiceOrderAppraiseDto extends AbstractBusinessDto {
     private Integer attitudeRate;
-
     private String comment;
-
     private String reply;
-
     private Integer onTimeRate;
-
+    private String uid;
     private Integer qualityRate;
 
     private Integer staffRate;
@@ -23,6 +20,15 @@ public class ServiceOrderAppraiseDto extends AbstractBusinessDto {
 
     public String getComment() {
         return comment;
+    }
+
+    /*
+     * Use uid instead of id to identify orders
+     */
+    @Override
+    @Deprecated
+    public Long getId() {
+        return super.getId();
     }
 
     public Integer getOnTimeRate() {
@@ -45,12 +51,25 @@ public class ServiceOrderAppraiseDto extends AbstractBusinessDto {
         return staffRate;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
     public void setAttitudeRate(final Integer attitudeRate) {
         this.attitudeRate = attitudeRate;
     }
 
     public void setComment(final String comment) {
         this.comment = comment;
+    }
+
+    /*
+     * Use uid instead of id to identify orders
+     */
+    @Override
+    @Deprecated
+    public void setId(final Long id) {
+        super.setId(id);
     }
 
     public void setOnTimeRate(final Integer onTimeRate) {
@@ -71,5 +90,9 @@ public class ServiceOrderAppraiseDto extends AbstractBusinessDto {
 
     public void setStaffRate(final Integer staffRate) {
         this.staffRate = staffRate;
+    }
+
+    public void setUid(final String uid) {
+        this.uid = uid;
     }
 }

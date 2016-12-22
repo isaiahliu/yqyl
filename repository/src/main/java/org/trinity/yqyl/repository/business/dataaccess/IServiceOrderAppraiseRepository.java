@@ -27,8 +27,8 @@ public interface IServiceOrderAppraiseRepository extends IJpaRepository<ServiceO
             if (!searchingDto.isSearchAll()) {
             }
 
-            if (searchingDto.getId() != null) {
-                predicates.add(cb.equal(root.get(ServiceOrderAppraise_.serviceOrderId), searchingDto.getId()));
+            if (searchingDto.getUid() != null) {
+                predicates.add(cb.equal(root.join(ServiceOrderAppraise_.serviceOrder).get(ServiceOrder_.uid), searchingDto.getUid()));
             }
 
             if (searchingDto.getServiceSupplierClientId() != null && searchingDto.getServiceSupplierClientId() > 0) {

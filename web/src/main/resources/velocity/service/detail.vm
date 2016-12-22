@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/static/css/business/service/detail.css"></link>
 
 <script type="text/javascript">
-layoutApp.value("serviceOrderId", ${orderId});
+layoutApp.value("serviceOrderId", "${orderId}");
 layoutApp.value("mode", '${mode}');
 </script>
 

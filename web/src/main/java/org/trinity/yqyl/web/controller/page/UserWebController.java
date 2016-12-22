@@ -22,18 +22,18 @@ public class UserWebController extends AbstractResourceWebController {
     }
 
     @RequestMapping(value = "/order/appraise/{entityId}", method = RequestMethod.GET)
-    public ModelAndView orderAppraisePage(@PathVariable("entityId") final Long entityId) throws IException {
+    public ModelAndView orderAppraisePage(@PathVariable("entityId") final String entityId) throws IException {
         return createModelAndView("user/appraise").addObject("orderId", entityId).addObject("currentPage", "ORDER");
     }
 
     @RequestMapping(value = "/order/{entityId}", method = RequestMethod.GET)
-    public ModelAndView orderDetailPage(@PathVariable("entityId") final Long entityId) throws IException {
+    public ModelAndView orderDetailPage(@PathVariable("entityId") final String entityId) throws IException {
         return createModelAndView("service/detail").addObject("orderId", entityId).addObject("mode", "receiver").addObject("currentPage",
                 "SEARCH");
     }
 
     @RequestMapping(value = "/order/edit/{entityId}", method = RequestMethod.GET)
-    public ModelAndView orderEditPage(@PathVariable("entityId") final Long entityId) throws IException {
+    public ModelAndView orderEditPage(@PathVariable("entityId") final String entityId) throws IException {
         return createModelAndView("service/proposal").addObject("orderId", entityId);
     }
 
@@ -43,7 +43,7 @@ public class UserWebController extends AbstractResourceWebController {
     }
 
     @RequestMapping(value = "/order/payment/{entityId}", method = RequestMethod.GET)
-    public ModelAndView orderPaymentPage(@PathVariable("entityId") final Long entityId) throws IException {
+    public ModelAndView orderPaymentPage(@PathVariable("entityId") final String entityId) throws IException {
         return createModelAndView("user/payment").addObject("orderId", entityId).addObject("currentPage", "ORDER");
     }
 

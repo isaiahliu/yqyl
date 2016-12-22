@@ -9,7 +9,7 @@ import org.trinity.common.dto.object.LookupDto;
 
 public class ServiceOrderDto extends AbstractBusinessDto {
     private Double price;
-
+    private String uid;
     private Date proposalTime;
     private Date approvalTime;
     private Date settledTime;
@@ -62,6 +62,15 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public Double getExpectedPaymentAmount() {
         return expectedPaymentAmount;
+    }
+
+    /*
+     * Use uid instead of id to identify orders
+     */
+    @Override
+    @Deprecated
+    public Long getId() {
+        return super.getId();
     }
 
     public List<ServiceOrderOperationDto> getOperations() {
@@ -126,6 +135,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
         return staff;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
     public UserDto getUser() {
         return user;
     }
@@ -152,6 +165,15 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public void setExpectedPaymentAmount(final Double expectedPaymentAmount) {
         this.expectedPaymentAmount = expectedPaymentAmount;
+    }
+
+    /*
+     * Use uid instead of id to identify orders
+     */
+    @Override
+    @Deprecated
+    public void setId(final Long id) {
+        super.setId(id);
     }
 
     public void setOperations(List<ServiceOrderOperationDto> operations) {
@@ -211,6 +233,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public void setStaff(final ServiceSupplierStaffDto staff) {
         this.staff = staff;
+    }
+
+    public void setUid(final String uid) {
+        this.uid = uid;
     }
 
     public void setUser(final UserDto user) {

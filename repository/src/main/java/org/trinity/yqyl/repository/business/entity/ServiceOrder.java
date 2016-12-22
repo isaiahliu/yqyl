@@ -43,6 +43,8 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
     @JoinColumn(name = "service_order_requirement_id")
     private ServiceOrderRequirement serviceOrderRequirement;
 
+    private String uid;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "service_time")
     private Date serviceTime;
@@ -206,6 +208,10 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
         return this.status;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
     public User getUser() {
         return user;
     }
@@ -299,6 +305,10 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
 
     public void setStatus(final OrderStatus status) {
         this.status = status;
+    }
+
+    public void setUid(final String uid) {
+        this.uid = uid;
     }
 
     public void setUser(final User user) {

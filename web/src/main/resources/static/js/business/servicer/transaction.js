@@ -35,7 +35,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, $filt
 		}
 
 		if ($scope.filterData.orderId != undefined && $scope.filterData.orderId != "") {
-			ajaxUrl += "&id=" + $scope.filterData.orderId;
+			ajaxUrl += "&uid=" + $scope.filterData.orderId;
 		}
 
 		if ($scope.filterData.paymentCode != undefined && $scope.filterData.paymentCode != "") {

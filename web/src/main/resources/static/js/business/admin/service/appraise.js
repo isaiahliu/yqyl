@@ -12,7 +12,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		if (order.appraise.status.code == 'A') {
 			$http({
 				method : "PUT",
-				url : "/ajax/user/order/appraise/disable/" + order.id
+				url : "/ajax/user/order/appraise/disable/" + order.uid
 			}).success(function(response) {
 				order.appraise.status.code = 'D';
 			}).error(function(response) {
@@ -21,7 +21,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		} else {
 			$http({
 				method : "PUT",
-				url : "/ajax/user/order/appraise/active/" + order.id
+				url : "/ajax/user/order/appraise/active/" + order.uid
 			}).success(function(response) {
 				order.appraise.status.code = 'A';
 			}).error(function(response) {
@@ -43,10 +43,6 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 
 		if ($scope.filterData.supplierId != undefined && $scope.filterData.supplierId != "") {
 			ajaxUrl += "&serviceSupplierClientId=" + $scope.filterData.supplierId;
-		}
-
-		if ($scope.filterData.orderId != undefined && $scope.filterData.orderId != "") {
-			ajaxUrl += "&serviceOrderId=" + $scope.filterData.orderId;
 		}
 
 		if ($scope.filterData.serviceTime != undefined && $scope.filterData.serviceTime != "") {

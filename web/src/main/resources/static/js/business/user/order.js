@@ -96,7 +96,7 @@ layoutApp
 							url : "/ajax/user/order/cancel",
 							data : {
 								data : [ {
-									id : order.id,
+									uid : order.uid,
 									operations : [ {
 										params : [ reason ]
 									} ]

@@ -18,9 +18,16 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
     private String paymentFromDate;
     private String paymentToDate;
     private String paymentCode;
+    private String uid;
 
     public String getCategory() {
         return category;
+    }
+
+    @Override
+    @Deprecated
+    public Long getId() {
+        return super.getId();
     }
 
     public String getPaymentCode() {
@@ -67,6 +74,10 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
         return supplierUserName;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
     public boolean isAssigned() {
         return assigned;
     }
@@ -89,6 +100,12 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
 
     public void setFetchUnprocessedCount(final boolean fetchUnprocessedCount) {
         this.fetchUnprocessedCount = fetchUnprocessedCount;
+    }
+
+    @Override
+    @Deprecated
+    public void setId(final Long id) {
+        super.setId(id);
     }
 
     public void setPaid(final boolean paid) {
@@ -137,5 +154,9 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
 
     public void setSupplierUserName(final String supplierUserName) {
         this.supplierUserName = supplierUserName;
+    }
+
+    public void setUid(final String uid) {
+        this.uid = uid;
     }
 }

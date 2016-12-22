@@ -31,10 +31,6 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			ajaxUrl += "&serviceSupplierClientId=" + $scope.filterData.supplierId;
 		}
 
-		if ($scope.filterData.orderId != undefined && $scope.filterData.orderId != "") {
-			ajaxUrl += "&serviceOrderId=" + $scope.filterData.orderId;
-		}
-
 		if ($scope.filterData.status != undefined && $scope.filterData.status != "") {
 			ajaxUrl += "&status=" + $scope.filterData.status;
 		}

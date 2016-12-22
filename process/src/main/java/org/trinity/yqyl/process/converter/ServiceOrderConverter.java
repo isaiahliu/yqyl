@@ -67,7 +67,7 @@ public class ServiceOrderConverter extends AbstractLookupSupportObjectConverter<
 
     @Override
     protected void convertBackInternal(final ServiceOrderDto source, final ServiceOrder target, final CopyPolicy copyPolicy) {
-        copyObject(source::getId, target::getId, target::setId, copyPolicy);
+        copyObject(source::getUid, target::getUid, target::setUid, copyPolicy);
         copyObject(source::getPrice, target::getPrice, target::setPrice, copyPolicy);
         copyObject(source::getExpectedPaymentAmount, target::getExpectedPaymentAmount, target::setExpectedPaymentAmount, copyPolicy);
         copyObject(source::getActualPaymentAmount, target::getActualPaymentAmount, target::setActualPaymentAmount, copyPolicy);
@@ -100,7 +100,7 @@ public class ServiceOrderConverter extends AbstractLookupSupportObjectConverter<
 
     @Override
     protected void convertInternal(final ServiceOrder source, final ServiceOrderDto target, final CopyPolicy copyPolicy) {
-        copyObject(source::getId, target::getId, target::setId, copyPolicy);
+        copyObject(source::getUid, target::getUid, target::setUid, copyPolicy);
         copyObject(source::getPrice, target::getPrice, target::setPrice, copyPolicy);
         copyObject(source::getExpectedPaymentAmount, target::getExpectedPaymentAmount, target::setExpectedPaymentAmount, copyPolicy);
         copyObject(source::getActualPaymentAmount, target::getActualPaymentAmount, target::setActualPaymentAmount, copyPolicy);

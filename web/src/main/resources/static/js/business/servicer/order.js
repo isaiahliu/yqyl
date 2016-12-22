@@ -30,7 +30,6 @@ layoutApp
 						pageSize : 10
 					};
 					$scope.filterData = {
-						id : "",
 						category : "",
 						status : ""
 					};
@@ -43,9 +42,6 @@ layoutApp
 								ajaxUrl += "&pageIndex=" + ($scope.pagingData.pageIndex - 1);
 								ajaxUrl += "&pageSize=" + $scope.pagingData.pageSize;
 								ajaxUrl += "&sortedBy=serviceTime";
-								if ($scope.filterData.id != undefined && $scope.filterData.id != "") {
-									ajaxUrl += "&id=" + $scope.filterData.id;
-								}
 
 								if ($scope.filterData.category != undefined && $scope.filterData.category != "") {
 									ajaxUrl += "&category=" + $scope.filterData.category;
@@ -72,7 +68,7 @@ layoutApp
 						fd.append("IMAGE", file);
 						$http({
 							method : "POST",
-							url : "/ajax/user/order/" + order.id + "/receipt",
+							url : "/ajax/user/order/" + order.uid + "/receipt",
 							transformRequest : angular.identity,
 							headers : {
 								'Content-Type' : undefined
@@ -120,7 +116,7 @@ layoutApp
 							url : "/ajax/user/order/cancel",
 							data : {
 								data : [ {
-									id : order.id
+									uid : order.uid
 								} ]
 							}
 						}).success(function(response) {
@@ -136,7 +132,7 @@ layoutApp
 							url : "/ajax/user/order/rejectCancel",
 							data : {
 								data : [ {
-									id : order.id
+									uid : order.uid
 								} ]
 							}
 						}).success(function(response) {
@@ -152,7 +148,7 @@ layoutApp
 							url : "/ajax/user/order/transaction",
 							data : {
 								data : [ {
-									id : order.id,
+									uid : order.uid,
 									paymentTransaction : {
 										code : order.inputTxCode
 									}
@@ -193,7 +189,7 @@ layoutApp
 							url : "/ajax/user/order/assign",
 							data : {
 								data : [ {
-									id : order.id,
+									uid : order.uid,
 									staff : staff
 								} ]
 							}
@@ -218,7 +214,7 @@ layoutApp
 							url : "/ajax/user/order/release",
 							data : {
 								data : [ {
-									id : order.id
+									uid : order.uid
 								} ]
 							}
 						}).success(function(response) {
@@ -249,7 +245,7 @@ layoutApp
 							url : "/ajax/user/order/price",
 							data : {
 								data : [ {
-									id : order.id,
+									uid : order.uid,
 									expectedPaymentAmount : order.newExpectedPaymentAmount
 								} ]
 							}

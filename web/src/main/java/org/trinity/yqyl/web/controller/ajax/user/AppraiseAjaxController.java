@@ -28,9 +28,9 @@ public class AppraiseAjaxController extends AbstractRestController {
     private IRestfulServiceUtil restfulServiceUtil;
 
     @RequestMapping(value = "/active/{entityId}", method = RequestMethod.PUT)
-    public @ResponseBody DefaultResponse ajaxActiveOrderAppraise(@PathVariable("entityId") final Long entityId) throws IException {
+    public @ResponseBody DefaultResponse ajaxActiveOrderAppraise(@PathVariable("entityId") final String entityId) throws IException {
         final ServiceOrderAppraiseDto dto = new ServiceOrderAppraiseDto();
-        dto.setId(entityId);
+        dto.setUid(entityId);
         dto.setStatus(new LookupDto(RecordStatus.ACTIVE));
         final ServiceOrderAppraiseRequest request = new ServiceOrderAppraiseRequest();
         request.getData().add(dto);
@@ -45,9 +45,9 @@ public class AppraiseAjaxController extends AbstractRestController {
     }
 
     @RequestMapping(value = "/disable/{entityId}", method = RequestMethod.PUT)
-    public @ResponseBody DefaultResponse ajaxDisableOrderAppraise(@PathVariable("entityId") final Long entityId) throws IException {
+    public @ResponseBody DefaultResponse ajaxDisableOrderAppraise(@PathVariable("entityId") final String entityId) throws IException {
         final ServiceOrderAppraiseDto dto = new ServiceOrderAppraiseDto();
-        dto.setId(entityId);
+        dto.setUid(entityId);
         dto.setStatus(new LookupDto(RecordStatus.DISABLED));
         final ServiceOrderAppraiseRequest request = new ServiceOrderAppraiseRequest();
         request.getData().add(dto);
