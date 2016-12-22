@@ -6,7 +6,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		$scope.order = response.data[0];
 		if ($scope.order.appraise == undefined) {
 			$scope.order.appraise = {
-				id : $scope.order.id
+				uid : $scope.order.uid
 			};
 		}
 		if ($scope.order.appraise.attitudeRate == undefined || $scope.order.appraise.attitudeRate == null) {

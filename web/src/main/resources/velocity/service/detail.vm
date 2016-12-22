@@ -16,7 +16,7 @@ layoutApp.value("mode", '${mode}');
 		<span ng-hide="mode=='supplier'"
 			style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("MY_ORDER")</span>
 		<span style="color: #333333; font-size: 16px;">#label("ORDER_ID")
-			: </span> <span style="color: #fd6a15; font-size: 16px; margin-right: 20px;">{{serviceOrder.id}}</span>
+			: </span> <span style="color: #fd6a15; font-size: 16px; margin-right: 20px;">{{serviceOrder.uid}}</span>
 		<a class="ng-hide" style="float: right; line-height: 30px;"
 			ng-show="mode=='receiver'" href="/user"><span>#label("BACK_TO_LIST")</span></a>
 		<a class="ng-hide" style="float: right; line-height: 30px;"
@@ -30,7 +30,7 @@ layoutApp.value("mode", '${mode}');
 				<img src="/static/images/icon/green_block.png"> <span>#label("SERVICE_ORDER_PREVIEW")</span>
 			</div>
 			<div class="level2">
-				<span class="key">#label("ORDER_ID"):</span> <span class="value">{{serviceOrder.id}}</span>
+				<span class="key">#label("ORDER_ID"):</span> <span class="value">{{serviceOrder.uid}}</span>
 			</div>
 			<div class="level2">
 				<span class="key">#label("STATUS"): </span> <span class="value">{{serviceOrder.status.message}}</span>

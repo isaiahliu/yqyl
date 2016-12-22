@@ -37,7 +37,7 @@ public class ServicerWebController extends AbstractResourceWebController {
 
 	@RequestMapping("/order/{entityId}")
 	@Authorize(value = AccessRight.SERVICE_SUPPLIER, checkAncestors = false)
-	public ModelAndView orderDetailPage(@PathVariable("entityId") final Long entityId) throws IException {
+	public ModelAndView orderDetailPage(@PathVariable("entityId") final String entityId) throws IException {
 		return createModelAndView("service/detail").addObject("orderId", entityId).addObject("mode", "supplier").addObject("currentPage",
 				"ORDER");
 	}

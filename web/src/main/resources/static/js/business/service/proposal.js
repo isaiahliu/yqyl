@@ -64,9 +64,9 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			}
 		}).success(function(response) {
 			if (serviceInfo.paymentMethod.code == 'O') {
-				$window.location.href = "/user/order/payment/" + response.data[0].id;
+				$window.location.href = "/user/order/payment/" + response.data[0].uid;
 			} else {
-				$window.location.href = "/user/order/" + response.data[0].id;
+				$window.location.href = "/user/order/" + response.data[0].uid;
 			}
 		}).error(function(response) {
 			errorHandler($scope, response);

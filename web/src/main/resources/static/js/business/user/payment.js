@@ -6,7 +6,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	}).success(function(response) {
 		$scope.order = response.data[0];
 		$scope.payment = {
-			orderId : $scope.order.id
+			orderUid : $scope.order.uid
 		};
 		$scope.awaitingPayment = $scope.order.status.code == 'A';
 	}).error(function(response) {

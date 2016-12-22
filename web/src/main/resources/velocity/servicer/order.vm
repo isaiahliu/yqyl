@@ -46,7 +46,7 @@
 						</thead>
 						<tbody class="ng-hide" ng-repeat="order in orders" ng-show="orders">
 							<tr>
-								<td align="center"><a ng-href="/servicer/order/{{order.id}}"><span>{{order.id}}</span></a></td>
+								<td align="center"><a ng-href="/servicer/order/{{order.uid}}"><span>{{order.uid}}</span></a></td>
 								<td align="center"><div ng-hide="order.status.code=='F'">
 										<div class="ng-hide" ng-hide="order.staff||order.status.code!='U'">
 											<button ng-click="$parent.assignPrepare(order)">#button("ASSIGNMENT")</button>

@@ -37,7 +37,7 @@
 								<img alt="#label('NOT_UPLOADED')"
 									ng-src="/ajax/content/image/{{order.serviceInfo.image}}" />
 							</div></td>
-						<td align="center"><span>{{order.id}}</span></td>
+						<td align="center"><span>{{order.uid}}</span></td>
 						<td align="center"><span>{{order.serviceInfo.serviceCategory.name}}</span></td>
 						<td align="center"><span>{{order.price|currency:'￥'}}</span></td>
 						<td align="center"><span>{{order.status.message}}</span></td>
@@ -51,10 +51,10 @@
 									class="ng-hide" ng-show="order.editing">
 									<div>
 										<a href="javascript:void(0)" ng-show="order.status.code=='P'"
-											ng-click="appraise(order.id)"><span>#button("ORDER_APPRAISE")</span></a>
+											ng-click="appraise(order.uid)"><span>#button("ORDER_APPRAISE")</span></a>
 									</div>
 									<div>
-										<a ng-href="/user/order/payment/{{order.id}}"
+										<a ng-href="/user/order/payment/{{order.uid}}"
 											ng-show="order.status.code=='A'"><span>#button("ORDER_PAYMENT")</span></a>
 									</div>
 									<div>
@@ -66,7 +66,7 @@
 							</div>
 
 						</td>
-						<td align="center"><a ng-href="/user/order/{{order.id}}"><span>#label("DETAILS")</span></a></td>
+						<td align="center"><a ng-href="/user/order/{{order.uid}}"><span>#label("DETAILS")</span></a></td>
 					</tr>
 				</tbody>
 			</table>
