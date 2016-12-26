@@ -3,27 +3,21 @@
 <link rel="stylesheet" href="/static/css/business/servicer/service.css"></link>
 
 <div class="service">
-	<div style="padding: 15px 15px 0 15px; height: 78px;"
-		class="block headerBlock">
-		<span
-			style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("SERVICE_MANAGEMENT")</span>
+	<div style="padding: 15px 15px 0 15px; height: 78px;" class="block headerBlock">
+		<span style="color: #097ffa; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("SERVICE_MANAGEMENT")</span>
 	</div>
 	<div class="tab" style="border: 1px solid #a1d0fe; margin: 0 15px;"></div>
 
 	<div class="block" style="background: #f1f1f1; padding: 15px;">
 		<div class="details">
-			<div class="tab"
-				style="overflow: hidden; background: #c7defd; margin-bottom: 0;">
+			<div class="tab" style="overflow: hidden; background: #c7defd; margin-bottom: 0;">
 				<div class="tabTitle">
-					<a style="float: right;" href="javascript:void(0)"
-						ng-click="newService()"><span>#button("NEW_SERVICE")</span></a>
+					<a style="float: right;" href="javascript:void(0)" ng-click="newService()"><span>#button("NEW_SERVICE")</span></a>
 				</div>
 			</div>
 			<div class="tab" style="margin-top: 0;">
 				<div class="tabTitle" style="text-align: center;">
-					<span>#label("SERVICE_INFO_NAME")</span> <input
-						style="width: 200px; margin-right: 20px;"
-						ng-model="filterData.name" />
+					<span>#label("SERVICE_INFO_NAME")</span> <input style="width: 200px; margin-right: 20px;" ng-model="filterData.name" />
 					<button ng-click="searchServices()">#button("SEARCH")</button>
 				</div>
 			</div>
@@ -41,17 +35,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="ng-hide" ng-show="services"
-								ng-repeat="service in services">
-								<td class="image" align="center"><img
-									alt="{{service.name}}"
-									ng-src="/ajax/content/image/{{service.image}}"></span></td>
+							<tr class="ng-hide" ng-show="services" ng-repeat="service in services">
+								<td class="image" align="center"><img alt="{{service.name}}" ng-src="/ajax/content/image/{{service.image}}" /></td>
 								<td align="center"><span>{{service.name}}</span></td>
 								<td align="center"><span>{{service.price}}</span></td>
 								<td align="center"><span>{{service.monthlyProposalOrderCount}}</span></td>
-								<td align="center"><span>{{service.monthlyRate}}</span></td>
-								<td align="center"><button
-									ng-click="$parent.editService(service)">#button("EDIT")</button></td>
+								<td align="center"><span>{{service.monthlyRate|number:2}}</span></td>
+								<td align="center"><button ng-click="$parent.editService(service)">#button("EDIT")</button></td>
 							</tr>
 						</tbody>
 					</table>

@@ -20,6 +20,7 @@ import org.trinity.yqyl.repository.business.entity.ServiceInfo;
 import org.trinity.yqyl.repository.business.entity.ServiceInfoStastic_;
 import org.trinity.yqyl.repository.business.entity.ServiceInfo_;
 import org.trinity.yqyl.repository.business.entity.ServiceSupplierClient_;
+import org.trinity.yqyl.repository.business.entity.User_;
 
 public interface IServiceInfoRepository extends IJpaRepository<ServiceInfo, ServiceInfoSearchingDto> {
     @Override
@@ -29,6 +30,11 @@ public interface IServiceInfoRepository extends IJpaRepository<ServiceInfo, Serv
 
             if (searchingDto.getId() != null) {
                 predicates.add(cb.equal(root.get(ServiceInfo_.id), searchingDto.getId()));
+            }
+
+            if (!searchingDto.isSearchAll()) {
+                predicates.add(cb.equal(root.join(ServiceInfo_.serviceSupplierClient).join(ServiceSupplierClient_.user).get(User_.username),
+                        searchingDto.getCurrentUsername()));
             }
 
             if (searchingDto.getServiceSupplierClientId() != null) {
@@ -53,6 +59,8 @@ public interface IServiceInfoRepository extends IJpaRepository<ServiceInfo, Serv
                 final In<ServiceStatus> in = cb.in(root.get(ServiceInfo_.status));
                 searchingDto.getStatus().forEach(item -> in.value(LookupParser.parse(ServiceStatus.class, item)));
                 predicates.add(in);
+            } else if (!searchingDto.isSearchAllStatus()) {
+                predicates.add(cb.equal(root.get(ServiceInfo_.status), ServiceStatus.ACTIVE));
             }
 
             switch (searchingDto.getCustomSortedBy()) {

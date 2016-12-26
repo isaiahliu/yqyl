@@ -22,7 +22,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, $cook
 			if (response.data[0].servicer) {
 				$window.location.href = "/servicer";
 			} else {
-				$window.location.href = "/home";
+				$window.location.href = "/service";
 			}
 		}).error(function(response) {
 			errorHandler($scope, response);

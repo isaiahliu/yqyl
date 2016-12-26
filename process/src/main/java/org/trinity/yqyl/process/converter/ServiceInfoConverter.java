@@ -96,7 +96,9 @@ public class ServiceInfoConverter extends AbstractLookupSupportObjectConverter<S
             target.setMonthlyProposalOrderCount(orders.size());
 
             final Double averageRate = orders.stream().filter(item -> item.getAppraise() != null)
-                    .map(item -> item.getAppraise().getStaffRate()).collect(Collectors.averagingDouble(item -> item));
+                    .map(item -> (item.getAppraise().getStaffRate() + item.getAppraise().getAttitudeRate()
+                            + item.getAppraise().getOnTimeRate() + item.getAppraise().getQualityRate()) / 4)
+                    .collect(Collectors.averagingDouble(item -> item));
             target.setMonthlyRate(averageRate);
             break;
         case STASTIC:

@@ -4,7 +4,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	};
 
 	$scope.searchServices = function() {
-		var ajaxUrl = "/ajax/service/me";
+		var ajaxUrl = "/ajax/service/me?rsexp=monthlyInfo";
 
 		if ($scope.filterData.name != undefined && $scope.filterData.name != "") {
 			ajaxUrl += "?name=" + $scope.filterData.name;

@@ -3,10 +3,22 @@ package org.trinity.yqyl.common.message.lookup;
 import org.trinity.message.ILookupMessage;
 
 public enum PaymentType implements ILookupMessage<LookupType> {
-    FIXED("F"),
-    TYPE("T"),
-    PIECE("P"),
-    PER_HOUR("H");
+    PER_HOUR("H"),
+    PER_MONTH("M"),
+    PER_WEEK("W"),
+    PER_DAY("D"),
+    PER_SQURED("SQ"),
+    ONE_TIME("F"),
+    ONE_SET("S"),
+    ONE_PIECE("P"),
+    ONE_STICK("ST"),
+    ONE_FAN("FA"),
+    ONE_BASE("BA"),
+    ONE_TYPE("T"),
+    ONE_BUNCH("BN"),
+    ONE_SPREAD("SP"),
+    ONE_CASE("CS"),
+    ONE_ITEM("IT");
 
     private final String messageCode;
 

@@ -1,13 +1,13 @@
 package org.trinity.yqyl.rest.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.trinity.common.dto.object.AbstractSearchingDto;
 import org.trinity.common.dto.response.DefaultResponse;
 import org.trinity.common.exception.IException;
 import org.trinity.yqyl.common.message.dto.domain.ServiceInfoDto;
@@ -44,9 +44,13 @@ public class ServiceInfoRestController extends
     public @ResponseBody ResponseEntity<ServiceInfoResponse> getMe(final ServiceInfoSearchingDto request) throws IException {
         final ServiceInfoResponse response = createResponseInstance();
 
-        final List<ServiceInfoDto> data = getDomainProcessController().getMe(request);
+        request.setSearchScope(AbstractSearchingDto.SEARCH_ME);
+        request.getStatus().clear();
+        request.setSearchAllStatus(true);
 
-        response.addData(data);
+        final Page<ServiceInfoDto> data = getDomainProcessController().getAll(request);
+
+        response.addData(data.getContent());
 
         return createResponseEntity(response);
     }

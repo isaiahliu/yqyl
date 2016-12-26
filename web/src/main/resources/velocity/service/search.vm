@@ -118,25 +118,25 @@
 					</div>
 					<div class="line appraise">
 						<span class="key">#label("APPRAISE") : </span> <img
-							class="ng-hide" ng-show="service.stastic.appraiseAvg>=1"
+							class="ng-hide" ng-show="service.stastic.appraiseAvg+0.5>=1"
 							src="/static/images/icon/rate_filled.png"><img
-							class="ng-hide" ng-hide="service.stastic.appraiseAvg>=1"
+							class="ng-hide" ng-hide="service.stastic.appraiseAvg+0.5>=1"
 							src="/static/images/icon/rate_empty.png"> <img
-							class="ng-hide" ng-show="service.stastic.appraiseAvg>=2"
+							class="ng-hide" ng-show="service.stastic.appraiseAvg+0.5>=2"
 							src="/static/images/icon/rate_filled.png"><img
-							class="ng-hide" ng-hide="service.stastic.appraiseAvg>=2"
+							class="ng-hide" ng-hide="service.stastic.appraiseAvg+0.5>=2"
 							src="/static/images/icon/rate_empty.png"> <img
-							class="ng-hide" ng-show="service.stastic.appraiseAvg>=3"
+							class="ng-hide" ng-show="service.stastic.appraiseAvg+0.5>=3"
 							src="/static/images/icon/rate_filled.png"><img
-							class="ng-hide" ng-hide="service.stastic.appraiseAvg>=3"
+							class="ng-hide" ng-hide="service.stastic.appraiseAvg+0.5>=3"
 							src="/static/images/icon/rate_empty.png"> <img
-							class="ng-hide" ng-show="service.stastic.appraiseAvg>=4"
+							class="ng-hide" ng-show="service.stastic.appraiseAvg+0.5>=4"
 							src="/static/images/icon/rate_filled.png"><img
-							class="ng-hide" ng-hide="service.stastic.appraiseAvg>=4"
+							class="ng-hide" ng-hide="service.stastic.appraiseAvg+0.5>=4"
 							src="/static/images/icon/rate_empty.png"> <img
-							class="ng-hide" ng-show="service.stastic.appraiseAvg>=5"
+							class="ng-hide" ng-show="service.stastic.appraiseAvg+0.5>=5"
 							src="/static/images/icon/rate_filled.png"><img
-							class="ng-hide" ng-hide="service.stastic.appraiseAvg>=5"
+							class="ng-hide" ng-hide="service.stastic.appraiseAvg+0.5>=5"
 							src="/static/images/icon/rate_empty.png">
 					</div>
 				</div>

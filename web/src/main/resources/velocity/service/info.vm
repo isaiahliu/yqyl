@@ -32,7 +32,7 @@
 					ng-options="service.name for service in services"></select>
 			</div>
 			<div class="cardItem  appraise">
-				<span class="key">#label("APPRAISE") : </span> #readonlyRateBar("selectedService.stastic.appraiseAvg")
+				<span class="key">#label("APPRAISE") : </span> #readonlyRateBar("selectedService.stastic.appraiseAvg+0.5")
 			</div>
 
 			<div class="cardItem">
