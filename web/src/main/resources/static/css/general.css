@@ -122,3 +122,8 @@ div.errorBar {
 	margin-bottom: 5px;
 	background: #d0d0d0;
 }
+
+div.error span {
+	font-size: 14px;
+	color: red;
+}

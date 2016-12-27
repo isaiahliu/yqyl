@@ -11,7 +11,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	$scope.oldPassword = "";
 	$scope.newPassword = "";
 	$scope.newPasswordAgain = "";
-
+	$scope.finished = false;
 	$scope.apply = function() {
 		if ($scope.newPassword == "" || $scope.newPassword != $scope.newPasswordAgain) {
 
@@ -25,9 +25,13 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 					newPassword : $scope.newPassword
 				}
 			}).success(function(response) {
-				$window.location.reload();
+				$scope.finished = true;
 			}).error(function(response) {
-				errorHandler($scope, response);
+				if (response.errors != undefined) {
+					$scope.message = response.errors[0].message;
+				} else {
+					$scope.message = "请求失败";
+				}
 			});
 		}
 	};
