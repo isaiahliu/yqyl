@@ -10,3 +10,7 @@ div.publish table {
 div.publish table td input, div.publish table td textarea {
 	min-width: 400px;
 }
+
+div.publish table td {
+	padding: 5px;
+}
