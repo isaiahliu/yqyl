@@ -123,6 +123,10 @@ div.errorBar {
 	background: #d0d0d0;
 }
 
+div.error {
+	position: absolute;
+}
+
 div.error span {
 	font-size: 14px;
 	color: red;

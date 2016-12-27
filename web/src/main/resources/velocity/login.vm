@@ -31,6 +31,10 @@
 									ng-keydown="loginKeydown($event)"
 									placeholder='#label("PASSWORD")' />
 							</div>
+							<div class="error ng-hide" ng-show="message"
+								style="text-align: left; padding-left: 60px;">
+								<span>{{message}}</span>
+							</div>
 							<div class="line">
 								<button class="btn-login" ng-click="login()">#button("LOGIN")</button>
 							</div>

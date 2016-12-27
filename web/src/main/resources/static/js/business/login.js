@@ -25,7 +25,11 @@ layoutApp.controller('contentController', function($scope, $http, $window, $cook
 				$window.location.href = "/home";
 			}
 		}).error(function(response) {
-			errorHandler($scope, response);
+			if (response.errors != undefined) {
+				$scope.message = response.errors[0].message;
+			} else {
+				$scope.message = "请求失败";
+			}
 		});
 	};
 
