@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.trinity.common.dto.object.LookupDto;
 import org.trinity.common.exception.IException;
-import org.trinity.common.util.TrinityUtil;
 import org.trinity.message.exception.GeneralErrorMessage;
 import org.trinity.process.converter.IObjectConverter;
 import org.trinity.process.converter.IObjectConverter.CopyPolicy;
@@ -33,6 +32,7 @@ import org.trinity.yqyl.common.message.lookup.PaymentMethod;
 import org.trinity.yqyl.common.message.lookup.RecordStatus;
 import org.trinity.yqyl.common.message.lookup.ServiceOrderRequirementStatus;
 import org.trinity.yqyl.common.message.lookup.TransactionType;
+import org.trinity.yqyl.common.utils.YqylUtil;
 import org.trinity.yqyl.process.controller.base.AbstractAutowiredCrudProcessController;
 import org.trinity.yqyl.process.controller.base.IAccountTransactionProcessController;
 import org.trinity.yqyl.process.controller.base.IServiceOrderProcessController;
@@ -411,7 +411,7 @@ public class ServiceOrderProcessController
         } else {
             final ServiceOrder serviceOrder = getDomainObjectConverter().convertBack(serviceOrderDto);
             serviceOrder.setId(null);
-            serviceOrder.setUid(TrinityUtil.randomBase36Uuid());
+            serviceOrder.setUid(YqylUtil.randomServiceOrderId());
             serviceOrder.setPrice(0d);
             serviceOrder.setProposalTime(new Date());
             serviceOrder.setUser(user);
