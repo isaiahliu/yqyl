@@ -4,25 +4,47 @@ spring:
   profiles: 
     active: '@profileActive@'
   batch: 
+    initializer: 
+      enabled: false
     job: 
       enabled: false
-  datasource: 
-    url: ${args.datasource.url:jdbc:mysql://58.58.116.68:8099/yqyl_business}
+  datasource:
+    url: ${args.datasource.url:jdbc:mysql://localhost:3306/yqyl_business?characterEncoding=utf-8&serverTimezone=UTC }
     username: ${args.datasource.username:dev}
     password: ${args.datasource.password:!QAZ2wsx}
-    driverClassName: com.mysql.jdbc.Driver
-  jpa: 
+    driverClassName: com.mysql.cj.jdbc.Driver
+    testWhileIdle: true
+    validationQuery: select 1
+    sqlScriptEncoding: utf-8
+  jpa:
     database: MYSQL
-    show-sql: true
-    hibernate: 
+    show-sql: false
+    hibernate:
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-    properties: 
-      hibernate: 
+      use-new-id-generator-mappings: true
+    properties:
+      hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
       
 ---
 spring: 
   profiles: qa
 args:
+  messages: 
+    cache-seconds: -1
   datasource: 
-    url: jdbc:mysql://localhost:8099/yqyl_business
+    url: jdbc:mysql://localhost:8099/yqyl_business?characterEncoding=utf-8&serverTimezone=UTC
+    
+---
+spring: 
+  profiles: dev-home
+args:
+  datasource: 
+    url: jdbc:mysql://localhost:3306/yqyl_business?characterEncoding=utf-8&serverTimezone=UTC
+     
+---
+spring: 
+  profiles: dev-work
+args:
+  datasource: 
+    url: jdbc:mysql://localhost:3306/yqyl_business?characterEncoding=utf-8&serverTimezone=UTC
