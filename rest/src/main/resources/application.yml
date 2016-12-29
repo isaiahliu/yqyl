@@ -2,6 +2,7 @@ server:
   port: 8091
 logging:
   level: DEBUG
+  config: classpath:log4j2.xml  
 spring:
   profiles: 
     active: '@profileActive@'
