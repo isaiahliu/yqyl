@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="trinity-yqyl-repository">
-		<class>org.trinity.yqyl.repository.business.entity.AllowanceSupplierClient</class>
-		<class>org.trinity.yqyl.repository.business.entity.Announcement</class>
-		<class>org.trinity.yqyl.repository.business.entity.Message</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceOrder</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceInfo</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceReceiverClient</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierClient</class>
-		<class>org.trinity.yqyl.repository.business.entity.User</class>
-		<class>org.trinity.yqyl.repository.usertype.UserTypeRegister</class>
-		<class>org.trinity.yqyl.repository.business.entity.Token</class>
-		<class>org.trinity.yqyl.repository.business.entity.SystemAttribute</class>
-		<class>org.trinity.yqyl.repository.business.entity.Lookup</class>
-		<class>org.trinity.yqyl.repository.business.entity.OperatorClient</class>
-		<class>org.trinity.yqyl.repository.business.entity.Favorite</class>
-		<class>org.trinity.yqyl.repository.business.entity.Content</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceCategory</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceReceiverClientHealthInformation</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceReceiverClientInterest</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceReceiverClientOther</class>
-		<class>org.trinity.yqyl.repository.business.entity.Yiquan</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceOrderAppraise</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierStaff</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceOrderRequirement</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierClientAccount</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierClientMaterial</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceOrderOperation</class>
-		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierClientAuditing</class>
 		<class>org.trinity.yqyl.repository.business.entity.Account</class>
 		<class>org.trinity.yqyl.repository.business.entity.AccountBalance</class>
 		<class>org.trinity.yqyl.repository.business.entity.AccountPosting</class>
 		<class>org.trinity.yqyl.repository.business.entity.AccountTransaction</class>
+		<class>org.trinity.yqyl.repository.business.entity.AllowanceSupplierClient</class>
+		<class>org.trinity.yqyl.repository.business.entity.Announcement</class>
+		<class>org.trinity.yqyl.repository.business.entity.Content</class>
+		<class>org.trinity.yqyl.repository.business.entity.Favorite</class>
+		<class>org.trinity.yqyl.repository.business.entity.Lookup</class>
+		<class>org.trinity.yqyl.repository.business.entity.Message</class>
+		<class>org.trinity.yqyl.repository.business.entity.OperatorClient</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceCategory</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceInfo</class>
 		<class>org.trinity.yqyl.repository.business.entity.ServiceInfoStastic</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceOrder</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceOrderAppraise</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceOrderOperation</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceOrderRequirement</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceReceiverClient</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceReceiverClientHealthInformation</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceReceiverClientInterest</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceReceiverClientOther</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierClient</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierClientAccount</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierClientAuditing</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierClientMaterial</class>
+		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierStaff</class>
+		<class>org.trinity.yqyl.repository.business.entity.SystemAttribute</class>
+		<class>org.trinity.yqyl.repository.business.entity.Token</class>
+		<class>org.trinity.yqyl.repository.business.entity.User</class>
 		<class>org.trinity.yqyl.repository.business.entity.UserVerifycode</class>
+		<class>org.trinity.yqyl.repository.business.entity.Yiquan</class>
+		<class>org.trinity.yqyl.repository.usertype.UserTypeRegister</class>
 	</persistence-unit>
 </persistence>
