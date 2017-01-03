@@ -1,6 +1,7 @@
 package org.trinity.yqyl.repository.business.dataaccess;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder.In;
@@ -37,6 +38,10 @@ public interface IServiceOrderRequirementRepository extends IJpaRepository<Servi
                 searchingDto.getStatus().stream().map(item -> LookupParser.parse(ServiceOrderRequirementStatus.class, item))
                         .forEach(item -> in.value(item));
                 predicates.add(in);
+            }
+
+            if (searchingDto.getAfter() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get(ServiceOrderRequirement_.announceTime), new Date(searchingDto.getAfter())));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

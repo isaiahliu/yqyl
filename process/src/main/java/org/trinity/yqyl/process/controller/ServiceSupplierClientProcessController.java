@@ -143,6 +143,27 @@ public class ServiceSupplierClientProcessController extends
     }
 
     @Override
+    public Date getLastReadTime() throws IException {
+        final User user = userRepository.findOneByUsername(getCurrentUsername());
+
+        final ServiceSupplierClient entity = user.getServiceSupplierClient();
+        if (entity == null) {
+            return null;
+        }
+
+        final List<Date> lastReadTimestamps = entity.getLastReadTimestamps();
+        if (lastReadTimestamps.isEmpty()) {
+            final Date lastReadTimestamp = new Date(0);
+            lastReadTimestamps.add(lastReadTimestamp);
+
+            entity.setLastReadTimestamps(lastReadTimestamps);
+            getDomainEntityRepository().save(entity);
+        }
+
+        return lastReadTimestamps.get(0);
+    }
+
+    @Override
     public Page<ServiceSupplierClientDto> listPublicInfo(final ServiceSupplierClientSearchingDto request) throws IException {
         final ServiceSupplierClientSearchingDto filter = new ServiceSupplierClientSearchingDto();
 

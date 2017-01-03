@@ -89,6 +89,7 @@ public enum Url implements IHttpUrl {
     SERVICE_CATEGORY(HttpMethod.GET, Path.SERVICE_CATEGORY),
     SERVICE_CATEGORY_UPDATE(HttpMethod.PUT, Path.SERVICE_CATEGORY),
 
+    REQUIREMENT(HttpMethod.GET, Path.REQUIREMENT),
     REQUIREMENT_NEW(HttpMethod.POST, Path.REQUIREMENT),
 
     SERVICE_INFO(HttpMethod.GET, Path.SERVICE_INFO),

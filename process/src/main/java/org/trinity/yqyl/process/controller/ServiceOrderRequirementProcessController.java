@@ -13,20 +13,19 @@ import org.trinity.yqyl.repository.business.entity.ServiceOrderRequirement;
 
 @Service
 public class ServiceOrderRequirementProcessController extends
-		AbstractAutowiredCrudProcessController<ServiceOrderRequirement, ServiceOrderRequirementDto, ServiceOrderRequirementSearchingDto, IServiceOrderRequirementRepository>
-		implements IServiceOrderRequirementProcessController {
+        AbstractAutowiredCrudProcessController<ServiceOrderRequirement, ServiceOrderRequirementDto, ServiceOrderRequirementSearchingDto, IServiceOrderRequirementRepository>
+        implements IServiceOrderRequirementProcessController {
 
-	@Autowired
-	private IUserRepository userRepository;
+    @Autowired
+    private IUserRepository userRepository;
 
-	@Override
-	protected void addRelationshipFields(final ServiceOrderRequirement entity, final ServiceOrderRequirementDto dto) throws IException {
-		entity.setUser(userRepository.findOneByUsername(getCurrentUsername()));
-	}
+    @Override
+    protected void addRelationshipFields(final ServiceOrderRequirement entity, final ServiceOrderRequirementDto dto) throws IException {
+        entity.setUser(userRepository.findOneByUsername(getCurrentUsername()));
+    }
 
-	@Override
-	protected boolean canAccessAllStatus() {
-		return true;
-	}
-
+    @Override
+    protected boolean canAccessAllStatus() {
+        return true;
+    }
 }

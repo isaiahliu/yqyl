@@ -19,6 +19,7 @@ import org.trinity.rest.controller.AbstractRestController;
 import org.trinity.rest.util.IRestfulServiceUtil;
 import org.trinity.yqyl.common.accessright.Authorize;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderDto;
+import org.trinity.yqyl.common.message.dto.domain.ServiceOrderRequirementSearchingDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderSearchingDto;
 import org.trinity.yqyl.common.message.dto.request.PaymentRequest;
 import org.trinity.yqyl.common.message.dto.request.ServiceOrderRequest;
@@ -68,6 +69,13 @@ public class OrderAjaxController extends AbstractRestController {
                 ServiceOrderResponse.class);
 
         return createResponseEntity(response);
+    }
+
+    @RequestMapping(value = "/requirement", method = RequestMethod.GET)
+    public @ResponseBody ServiceOrderRequirementResponse ajaxGetRequirement(final ServiceOrderRequirementSearchingDto request)
+            throws IException {
+        request.getStatus().add(ServiceOrderRequirementStatus.ACTIVE.getMessageCode());
+        return restfulServiceUtil.callRestService(Url.REQUIREMENT, null, null, request, ServiceOrderRequirementResponse.class);
     }
 
     @RequestMapping(value = "/payment", method = RequestMethod.POST)

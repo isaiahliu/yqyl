@@ -2,9 +2,12 @@
 package org.trinity.yqyl.repository.business.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,6 +16,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.trinity.repository.entity.AbstractAuditableEntity;
 import org.trinity.yqyl.common.message.lookup.CompanyType;
@@ -86,6 +91,13 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
     @ManyToOne
     private Account account;
 
+    // bi-directional many-to-many association to UserGroup
+    @ElementCollection
+    @Temporal(TemporalType.TIMESTAMP)
+    @CollectionTable(name = "service_supplier_client_requirement", joinColumns = @JoinColumn(name = "service_supplier_client_id"))
+    @Column(name = "last_read_timestamp")
+    private List<Date> lastReadTimestamps;
+
     public ServiceSupplierClient() {
     }
 
@@ -140,6 +152,10 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
 
     public String getEmail() {
         return this.email;
+    }
+
+    public List<Date> getLastReadTimestamps() {
+        return lastReadTimestamps;
     }
 
     public String getLogo() {
@@ -241,6 +257,10 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
 
     public void setEmail(final String email) {
         this.email = email;
+    }
+
+    public void setLastReadTimestamps(final List<Date> lastReadTimestamps) {
+        this.lastReadTimestamps = lastReadTimestamps;
     }
 
     public void setLogo(final String logo) {

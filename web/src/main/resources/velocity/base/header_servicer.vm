@@ -1,5 +1,4 @@
-<link rel="stylesheet"
-	href="/static/css/business/base/header_servicer.css"></link>
+<link rel="stylesheet" href="/static/css/business/base/header_servicer.css"></link>
 
 <div class="header noprint" ng-controller="headerController">
 	<div class="headerBar">
@@ -7,8 +6,7 @@
 			<ul>
 				<li><div>
 						<a href="/home"><span class="title">#info("SERVICER")</span></a>
-					</div></li> #if(${authentication}) #if(${authentication.token.authenticated})
-				#else
+					</div></li> #if(${authentication}) #if(${authentication.token.authenticated}) #else
 				<li><div>
 						<a href="/login"><span> #button("LOGIN_REGISTER")</span></a>
 					</div></li> #end #end
@@ -18,9 +16,11 @@
 		<div class="right">
 			<ul style="margin-right: 20px;">
 				#if(${authentication}) #if(${authentication.token.authenticated})
+				#if(${security.hasAccessRightByName('SUPPLIER', false)})<li><div>
+						<a href="javascript:void(0)"><span>#button("REQUIREMENT_INFORMATION")</span><span class="ng-hide" ng-show="newRequirementCount>0">({{newRequirementCount}})</span></a>
+					</div></li>#end
 				<li><div>
-						<span>#label("WELCOME") ${authentication.token.username}
-							#label("SERVICER")</span>
+						<span>#label("WELCOME") ${authentication.token.username} #label("SERVICER")</span>
 					</div></li>
 				<li><div>
 						<span><a href="javascript:void(0)" ng-click="logout()"><span>#label("LOGOUT")</span></a></span>

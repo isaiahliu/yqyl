@@ -1,5 +1,6 @@
 package org.trinity.yqyl.process.controller.base;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -12,6 +13,8 @@ public interface IServiceSupplierClientProcessController
         extends ICrudProcessController<ServiceSupplierClientDto, ServiceSupplierClientSearchingDto> {
 
     void audit(List<ServiceSupplierClientDto> serviceSupplierClientDtos) throws IException;
+
+    Date getLastReadTime() throws IException;
 
     Page<ServiceSupplierClientDto> listPublicInfo(ServiceSupplierClientSearchingDto request) throws IException;
 
