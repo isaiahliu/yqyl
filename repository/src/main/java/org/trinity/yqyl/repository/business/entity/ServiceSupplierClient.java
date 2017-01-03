@@ -86,6 +86,10 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
 	@ManyToOne
 	private Account account;
 
+	// bi-directional one-to-one association to ServiceSupplierClientRequirement
+	@OneToOne(mappedBy = "serviceSupplierClient")
+	private ServiceSupplierClientRequirement serviceSupplierClientRequirement;
+
 	public ServiceSupplierClient() {
 	}
 
@@ -168,6 +172,10 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
 
 	public String getServicePhone() {
 		return this.servicePhone;
+	}
+
+	public ServiceSupplierClientRequirement getServiceSupplierClientRequirement() {
+		return this.serviceSupplierClientRequirement;
 	}
 
 	public List<ServiceSupplierStaff> getServiceSupplierStaffs() {
@@ -271,6 +279,10 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
 		this.servicePhone = servicePhone;
 	}
 
+	public void setServiceSupplierClientRequirement(final ServiceSupplierClientRequirement serviceSupplierClientRequirement) {
+		this.serviceSupplierClientRequirement = serviceSupplierClientRequirement;
+	}
+
 	public void setServiceSupplierStaffs(final List<ServiceSupplierStaff> serviceSupplierStaffs) {
 		this.serviceSupplierStaffs = serviceSupplierStaffs;
 	}
@@ -289,5 +301,5 @@ public class ServiceSupplierClient extends AbstractAuditableEntity implements Se
 
 	public void setUserId(final Long userId) {
 		this.userId = userId;
-	} // bi-directional many-to-one association to ServiceSupplierClientAuditing
+	}
 }
