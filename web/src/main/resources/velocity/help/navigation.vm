@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="/static/css/business/help/navigation.css"></link>
+
+<div class="subNavBar navBar helpBar">
+	<ul>
+		<li style="margin: 0; background: #fd6a15; height: 5px;"></li>
+		<li><a href="/help/about"><div class="navBarItem #if($currentPage=='ABOUT')selected #end">
+					<span>#button("ABOUT_US")</span>
+				</div></a></li>
+		<li><a href="/help/join"><div class="navBarItem #if($currentPage=='JOIN')selected #end">
+					<span>#button("JOIN_US")</span>
+				</div></a></li>
+		<li><a href="/help/answer"><div class="navBarItem #if($currentPage=='ANSWER')selected #end">
+					<span>#button("COMMON_PROBLEMS")</span>
+				</div></a></li>
+	</ul>
+</div>
+
+<script src="/static/js/business/help/navigation.js"></script>

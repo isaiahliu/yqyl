@@ -60,7 +60,7 @@
 						<tbody>
 							<tr ng-repeat="requirement in requirements">
 								<td align="center"><span>{{requirement.announceTime|date:'yyyy/MM/dd HH:mm:ss'}}</span></td>
-								<td align="center"><span>{{requirement.comment}}</span></td>
+								<td align="center"><span style="text-overflow: ellipsis; overflow: hidden;">{{requirement.comment}}</span></td>
 								<td align="center"><span>{{requirement.price|currency:'¥'}}</span></td>
 								<td align="center"><a ng-hide="requirement.caught" href="javascript:void(0)" ng-click="catchRequirement(requirement)"><span>#button("CATCH_REQUIREMENT")</span></a><span
 									ng-show="requirement.caught">#label("REQUIREMENT_CAUGHT")</span></td>

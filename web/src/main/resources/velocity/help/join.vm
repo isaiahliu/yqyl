@@ -1,0 +1,24 @@
+#parse("/velocity/help/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/help/join.css"></link>
+
+<div class="join">
+	<div class="block">
+		<span style="font-size: 22px; color: #fd6a15;">#label("JOIN_US")</span>
+	</div>
+	<div class="block">
+		<div ng-repeat="qa in qas" style="border-bottom: 1px dotted #cccccc; padding: 10px;">
+			<div style="margin: 0 0 10px 0">
+				<span class="question">{{$index+1}} : {{qa.question}}</span>
+			</div>
+			<div class="ng-hide" ng-show="qa.answer">
+				<span class="answer">{{qa.answer}}</span>
+			</div>
+			<div class="ng-hide" ng-show="qa.image">
+				<img ng-src="{{qa.image}}" />
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/help/join.js"></script>

@@ -1,0 +1,45 @@
+div.helpBar {
+	width: 175px;
+	margin: 0;
+}
+
+div.helpBar ul {
+	background: white;
+	border: 1px solid #cccccc;
+}
+
+div.helpBar ul li div {
+	height: 36px;
+	width: 173px;
+	text-align: left;
+	padding-left: 20px;
+}
+
+div.helpBar ul li div.selected {
+	border-left: 3px solid #fd6a15;
+	border-bottom: none;
+	background-color: #eeeeee;
+}
+
+div.helpBar ul li div img {
+	margin-bottom: 6px;
+}
+
+div.helpBar ul li div span {
+	margin-left: 5px;
+	font-size: 14px;
+	line-height: 36px;
+}
+
+div.helpBar ul li div.navBarSubItem {
+	height: 26px;
+}
+
+div.helpBar ul li div.navBarSubItem span {
+	margin-left: 35px;
+	line-height: 26px;
+}
+
+div.helpBar ul li div.subSelected {
+	background-color: #ffddc9;
+}

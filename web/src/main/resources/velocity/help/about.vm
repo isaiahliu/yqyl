@@ -1,0 +1,19 @@
+ #parse("/velocity/help/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/help/about.css"></link>
+
+<div class="about">
+	<div class="block">
+		<span style="font-size: 22px; color: #fd6a15;">#label("ABOUT_US")</span>
+	</div>
+	<div class="block" style="text-align: center;">
+		<div>
+			<img src="/static/images/pic/about.png" />
+		</div>
+		<div style="margin-top: 20px;">
+			<span>#info("ABOUT_US")</span>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/help/about.js"></script>

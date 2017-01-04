@@ -3,13 +3,13 @@
 <div class="footer" ng-controller="footerController">
 	<div class="navBar">
 		<ul>
-			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("ABOUT_US")</span></a></li>
+			<li class="navBarItem"><a href="/help/about"><span>#button("ABOUT_US")</span></a></li>
 
-			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("JOIN_AS_A_SERVICE_SUPPLIER")</span></a>
+			<li class="navBarItem"><a href="/help/join"><span>#button("JOIN_AS_A_SERVICE_SUPPLIER")</span></a>
 			</li>
-			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("JOIN_AS_A_SERVICE_RECEIVER")</span></a>
+			<li class="navBarItem"><a href="/help/join"><span>#button("JOIN_AS_A_SERVICE_RECEIVER")</span></a>
 			</li>
-			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("COMMON_PROBLEMS")</span></a>
+			<li class="navBarItem"><a href="/help/answer"><span>#button("COMMON_PROBLEMS")</span></a>
 			</li>
 			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("CONTACT_US")</span></a>
 			</li>
