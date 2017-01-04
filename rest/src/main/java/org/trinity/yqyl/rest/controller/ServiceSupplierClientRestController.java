@@ -55,6 +55,13 @@ public class ServiceSupplierClientRestController extends
         return createResponseEntity(response);
     }
 
+    @RequestMapping(value = "/read", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<DefaultResponse> readRequirements() throws IException {
+        getDomainProcessController().readRequirements();
+
+        return createResponseEntity();
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<ServiceSupplierClientResponse> register() throws IException {
         final ServiceSupplierClientResponse response = createResponseInstance();

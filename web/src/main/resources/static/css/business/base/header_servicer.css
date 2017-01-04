@@ -25,6 +25,7 @@ div.header li div {
 }
 
 div.header div.headerBar, div.content {
+	
 }
 
 div.header div.left {
@@ -39,4 +40,33 @@ div.header li {
 	list-style-type: none;
 	float: left;
 	margin-left: 10px;
+}
+
+div.header div.requirements table span {
+	font-size: 16px;
+	line-height: normal;
+	color: black;
+}
+
+div.header div.requirements table {
+	width: 100%;
+	margin-top: 10px;
+}
+
+div.header div.requirements table thead td {
+	background: #f1f1f1;
+	padding: 5px;
+}
+
+div.header div.requirements table tbody td {
+	border-bottom: 1px solid #f1f1f1;
+	padding: 3px 0;
+}
+
+div.header div.requirements table tbody span {
+	font-size: 14px;
+}
+
+div.header div.requirements table tbody a span {
+	color: #097ffa;
 }

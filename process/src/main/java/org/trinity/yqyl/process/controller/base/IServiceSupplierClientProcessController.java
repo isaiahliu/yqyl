@@ -20,6 +20,8 @@ public interface IServiceSupplierClientProcessController
 
     void propose(ServiceSupplierClientDto data) throws IException;
 
+    void readRequirements() throws IException;
+
     ServiceSupplierClientDto register() throws IException;
 
     void reject(List<ServiceSupplierClientDto> serviceSupplierClientDtos) throws IException;

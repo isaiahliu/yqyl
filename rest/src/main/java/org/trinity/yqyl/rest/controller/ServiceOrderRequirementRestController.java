@@ -4,13 +4,19 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.trinity.common.dto.response.DefaultResponse;
 import org.trinity.common.exception.IException;
+import org.trinity.yqyl.common.accessright.Authorize;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderRequirementDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderRequirementSearchingDto;
 import org.trinity.yqyl.common.message.dto.request.ServiceOrderRequirementRequest;
 import org.trinity.yqyl.common.message.dto.response.ServiceOrderRequirementResponse;
+import org.trinity.yqyl.common.message.lookup.AccessRight;
 import org.trinity.yqyl.process.controller.base.IServiceOrderRequirementProcessController;
 import org.trinity.yqyl.process.controller.base.IServiceSupplierClientProcessController;
 
@@ -21,6 +27,14 @@ public class ServiceOrderRequirementRestController extends
 
     @Autowired
     private IServiceSupplierClientProcessController serviceSupplierClientProcessController;
+
+    @RequestMapping(value = "/catch/{entityId}", method = RequestMethod.POST)
+    @Authorize(checkAncestors = false, value = AccessRight.SERVICE_SUPPLIER)
+    public @ResponseBody ResponseEntity<DefaultResponse> addImage(@PathVariable("entityId") final Long entityId) throws IException {
+        getDomainProcessController().catchRequirement(entityId);
+
+        return createResponseEntity();
+    }
 
     @Override
     public ResponseEntity<ServiceOrderRequirementResponse> getAll(final ServiceOrderRequirementSearchingDto request) throws IException {
@@ -37,4 +51,5 @@ public class ServiceOrderRequirementRestController extends
     protected ServiceOrderRequirementResponse createResponseInstance() {
         return new ServiceOrderRequirementResponse();
     }
+
 }

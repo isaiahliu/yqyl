@@ -1,6 +1,7 @@
-layoutApp.controller('headerController', function($scope, $http, $window, $interval, errorHandler) {
+layoutApp.controller('headerController', function($scope, $http, $window, $interval, isSupplier, errorHandler) {
 	$scope.newRequirementCount = 0;
 	$scope.requirements = undefined;
+	$scope.lastReadTime = null;
 
 	$scope.logout = function() {
 		$http({
@@ -32,16 +33,21 @@ layoutApp.controller('headerController', function($scope, $http, $window, $inter
 			url : ajaxUrl
 		}).success(function(response) {
 			$scope.requirements = response.data;
-			$scope.lastReadTime = new Date(response.extraData["lastReadTime"]);
+			if ($scope.lastReadTime == null) {
+				$scope.lastReadTime = new Date(response.extraData["lastReadTime"]);
+			}
 
 			var newRequirementCount = 0;
 			for (var index = 0; index < $scope.requirements.length; index++) {
+				$scope.requirements[index].caught = false;
 				if ($scope.requirements[index].announceTime > $scope.lastReadTime) {
 					newRequirementCount++;
 				}
 			}
 
 			$scope.newRequirementCount = newRequirementCount;
+			response.meta.paging.pageIndex++;
+			$scope.pagingData = response.meta.paging;
 
 		}).error(function(response) {
 			errorHandler($scope, response);
@@ -50,10 +56,41 @@ layoutApp.controller('headerController', function($scope, $http, $window, $inter
 
 	$scope.checkingRequirements = false;
 	$scope.populating = false;
-	var timer = $interval(function() {
-		if (!$scope.checkingRequirements && !$scope.populating || ($scope.requirements == undefined)) {
-			$scope.pagingData.pageIndex = 1;
-			$scope.searchRequirements();
+
+	$scope.searchRequirements();
+
+	if (isSupplier) {
+		var timer = $interval(function() {
+			if (!$scope.checkingRequirements && !$scope.populating) {
+				$scope.pagingData.pageIndex = 1;
+				$scope.searchRequirements();
+			}
+		}, 3000);
+	}
+
+	$scope.changeCheckingRequirementsStatus = function() {
+		if ($scope.checkingRequirements) {
+			$scope.lastReadTime = null;
+		} else {
+			$http({
+				method : "POST",
+				url : "/ajax/service/supplier/read"
+			}).success(function(response) {
+			}).error(function(response) {
+				errorHandler($scope, response);
+			});
 		}
-	}, 3000);
+		$scope.checkingRequirements = !$scope.checkingRequirements;
+	};
+
+	$scope.catchRequirement = function(requirement) {
+		$http({
+			method : "POST",
+			url : "/ajax/user/order/requirement/catch/" + requirement.id
+		}).success(function(response) {
+			requirement.caught = true;
+		}).error(function(response) {
+			errorHandler($scope, response);
+		});
+	};
 });

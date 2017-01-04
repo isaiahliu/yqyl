@@ -52,6 +52,7 @@ public enum Url implements IHttpUrl {
     SUPPLIER_PROPOSE(HttpMethod.PUT, Path.SUPPLIER, "propose"),
     SUPPLIER_AUDIT(HttpMethod.POST, Path.SUPPLIER, "audit"),
     SUPPLIER_REJECT(HttpMethod.POST, Path.SUPPLIER, "reject"),
+    SUPPLIER_READ(HttpMethod.POST, Path.SUPPLIER, "read"),
 
     STAFF(HttpMethod.GET, Path.STAFF),
     STAFF_AVAILABLE(HttpMethod.GET, Path.STAFF, "available"),
@@ -91,6 +92,7 @@ public enum Url implements IHttpUrl {
 
     REQUIREMENT(HttpMethod.GET, Path.REQUIREMENT),
     REQUIREMENT_NEW(HttpMethod.POST, Path.REQUIREMENT),
+    REQUIREMENT_CATCH(HttpMethod.POST, Path.REQUIREMENT, "catch"),
 
     SERVICE_INFO(HttpMethod.GET, Path.SERVICE_INFO),
     SERVICE_INFO_NEW(HttpMethod.POST, Path.SERVICE_INFO),

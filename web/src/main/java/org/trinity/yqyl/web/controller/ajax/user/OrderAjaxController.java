@@ -50,6 +50,11 @@ public class OrderAjaxController extends AbstractRestController {
         return restfulServiceUtil.callRestService(Url.ORDER_CANCEL, null, serviceOrderRequest, null, ServiceOrderResponse.class);
     }
 
+    @RequestMapping(value = "/requirement/catch/{entityId}", method = RequestMethod.POST)
+    public @ResponseBody DefaultResponse ajaxCatchRequirement(@PathVariable("entityId") final Long entityId) throws IException {
+        return restfulServiceUtil.callRestService(Url.REQUIREMENT_CATCH, String.valueOf(entityId), null, null, DefaultResponse.class);
+    }
+
     @RequestMapping(value = "/price", method = RequestMethod.PUT)
     @Authorize(AccessRight.SERVICE_SUPPLIER)
     public @ResponseBody ServiceOrderResponse ajaxChangePriceOrder(@RequestBody final ServiceOrderRequest serviceOrderRequest)

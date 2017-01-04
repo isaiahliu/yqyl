@@ -1,5 +1,4 @@
-<link rel="stylesheet"
-	href="/static/css/business/base/header_servicer.css"></link>
+<link rel="stylesheet" href="/static/css/business/base/header_servicer.css"></link>
 
 <div class="header noprint" ng-controller="headerController">
 	<div class="headerBar">
@@ -7,8 +6,7 @@
 			<ul>
 				<li><div>
 						<a href="/home"><span class="title">#info("SERVICER")</span></a>
-					</div></li> #if(${authentication}) #if(${authentication.token.authenticated})
-				#else
+					</div></li> #if(${authentication}) #if(${authentication.token.authenticated}) #else
 				<li><div>
 						<a href="/login"><span> #button("LOGIN_REGISTER")</span></a>
 					</div></li> #end #end
@@ -17,32 +15,64 @@
 		</div>
 		<div class="right">
 			<ul style="margin-right: 20px;">
-				#if(${authentication}) #if(${authentication.token.authenticated})
-				#if(${security.hasAccessRightByName('SUPPLIER', false)})
-				<li><div>
-						<a href="javascript:void(0)"
-							ng-click="checkingRequirements=!checkingRequirements"><span>#button("REQUIREMENT_INFORMATION")</span><span
+				#if(${authentication}) #if(${authentication.token.authenticated}) #if(${security.hasAccessRightByName('SUPPLIER', false)})
+
+				<script type="text/javascript">
+					layoutApp.value("isSupplier", true);
+				</script>
+				<li ng-show="requirements" class="ng-hide"><div>
+						<a href="javascript:void(0)" ng-click="changeCheckingRequirementsStatus()"><span>#button("REQUIREMENT_INFORMATION")</span><span
 							class="ng-hide" ng-show="newRequirementCount>0">({{newRequirementCount}})</span></a>
-					</div></li>#end
+					</div></li>#else
+				<script type="text/javascript">
+					layoutApp.value("isSupplier", false);
+				</script>
+				#end
 				<li><div>
-						<span>#label("WELCOME") ${authentication.token.username}
-							#label("SERVICER")</span>
+						<span>#label("WELCOME") ${authentication.token.username} #label("SERVICER")</span>
 					</div></li>
 				<li><div>
 						<span><a href="javascript:void(0)" ng-click="logout()"><span>#label("LOGOUT")</span></a></span>
 					</div></li> #end #end
 			</ul>
-			<div ng-show="checkingRequirements"
-				style="background: grey; position: absolute; top: 80px; width: 400px; right: 10px; min-height: 200px;">
-				<table>
-					<tbody>
-						<tr ng-repeat="requirement in requirements">
-							<td>{{requirement.phone}}</td>
-							<td>{{requirement.address}}</td>
-							<td>{{requirement.comment}}</td>
-						</tr>
-					</tbody>
-				</table>
+			<div ng-show="checkingRequirements" class="ng-hide requirements"
+				style="z-index: 99; border: 3px solid #d0e0f0; background: white; position: absolute; top: 80px; width: 600px; right: 10px; min-height: 200px;">
+				<div style="background: #097ffa; padding: 0 20px;">
+					<div style="display: inline-block;">
+						<span style="line-height: 40px; font-weight: normal; font-size: 16px;">#label("REQUIREMENT")</span>
+					</div>
+					<div style="display: inline-block; float: right;">
+						<a href="javascript:void(0)" ng-click="searchRequirements()"> <span
+							style="line-height: 40px; font-weight: normal; font-size: 16px;">#button("REFRESH")</span></a> <a href="javascript:void(0)"
+							ng-click="changeCheckingRequirementsStatus()"> <span style="line-height: 40px; font-weight: normal; font-size: 16px;">#button("CLOSE")</span></a>
+					</div>
+				</div>
+				<div>
+					<table>
+						<thead>
+							<tr>
+								<td align="center" width="160px;"><span>#label("ANNOUNCE_TIME")</span></td>
+								<td align="center"><span>#label("CONTENT")</span></td>
+								<td align="center" width="80px;"><span>#label("REWARD")</span></td>
+								<td align="center" width="80px;"><span>#label("OPERATION")</span></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="requirement in requirements">
+								<td align="center"><span>{{requirement.announceTime|date:'yyyy/MM/dd HH:mm:ss'}}</span></td>
+								<td align="center"><span>{{requirement.comment}}</span></td>
+								<td align="center"><span>{{requirement.price|currency:'¥'}}</span></td>
+								<td align="center"><a ng-hide="requirement.caught" href="javascript:void(0)" ng-click="catchRequirement(requirement)"><span>#button("CATCH_REQUIREMENT")</span></a><span
+									ng-show="requirement.caught">#label("REQUIREMENT_CAUGHT")</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="paging" style="text-align: center;">
+					<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
+						class="pagination-sm" boundary-links="true" ng-change="searchRequirements()" first-text='<<' last-text='>>' previous-text='<'
+						next-text='>'></pagination>
+				</div>
 			</div>
 		</div>
 	</div>
