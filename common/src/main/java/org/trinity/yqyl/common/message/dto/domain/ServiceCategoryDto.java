@@ -10,9 +10,14 @@ public class ServiceCategoryDto extends AbstractBusinessDto {
     private String description;
     private List<ServiceCategoryDto> serviceSubCategories;
     private ServiceCategoryDto parent;
+    private String image;
 
     public String getDescription() {
         return description;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public String getName() {
@@ -32,6 +37,10 @@ public class ServiceCategoryDto extends AbstractBusinessDto {
 
     public void setDescription(final String description) {
         this.description = description;
+    }
+
+    public void setImage(final String image) {
+        this.image = image;
     }
 
     public void setName(final String name) {

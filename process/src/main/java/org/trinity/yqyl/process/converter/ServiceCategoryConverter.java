@@ -30,6 +30,7 @@ public class ServiceCategoryConverter extends AbstractLookupSupportObjectConvert
         copyObject(source::getId, target::getId, target::setId, copyPolicy);
         copyObject(source::getName, target::getName, target::setName, copyPolicy);
         copyObject(source::getDescription, target::getDescription, target::setDescription, copyPolicy);
+        // copyObject(source::getImage, target::getImage, target::setImage, copyPolicy);
         copyLookup(source::getStatus, target::getStatus, target::setStatus, RecordStatus.class, copyPolicy);
     }
 
@@ -38,6 +39,7 @@ public class ServiceCategoryConverter extends AbstractLookupSupportObjectConvert
         copyObject(source::getId, target::getId, target::setId, copyPolicy);
         copyObject(source::getName, target::getName, target::setName, copyPolicy);
         copyObject(source::getDescription, target::getDescription, target::setDescription, copyPolicy);
+        copyObject(source::getImage, target::getImage, target::setImage, copyPolicy);
         copyMessage(source::getStatus, target::getStatus, target::setStatus, copyPolicy);
     }
 

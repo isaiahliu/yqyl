@@ -13,6 +13,20 @@
 	<div class="tab" style="border: 1px solid #ffedde; margin: 0 15px;"></div>
 
 	<div class="block" style="background: #f1f1f1; padding: 15px;">
+		<div class="details ng-hide" ng-show="parentCategory">
+			<div class="tab" style="overflow: hidden; background: #ffedde; margin-bottom: 0;">
+				<div class="tabTitle" style="color: #ff861a;">
+					<span>#label("UPLOAD_PHOTO")</span>
+				</div>
+			</div>
+			<div class="tab">
+				<div style="text-align: left;">
+					<img style="height: 100px; width: 100px; display: inline-block;" ng-src="{{imageUrl}}" /> <input
+						style="width: 65px; margin-right: 0; display: inline-block; vertical-align: bottom;" type="file" custom-on-change="selectImage" />
+				</div>
+			</div>
+		</div>
+
 		<div class="details">
 			<div class="tab" style="overflow: hidden; background: #ffedde; margin-bottom: 0;">
 				<div class="tabTitle">

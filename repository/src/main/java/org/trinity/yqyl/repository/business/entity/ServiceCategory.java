@@ -4,12 +4,12 @@ package org.trinity.yqyl.repository.business.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
@@ -33,7 +33,9 @@ public class ServiceCategory extends AbstractAuditableEntity implements Serializ
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
+    @Column(name = "image", insertable = true, updatable = true)
+    private String image;
+
     private String description;
 
     private String name;
@@ -84,6 +86,10 @@ public class ServiceCategory extends AbstractAuditableEntity implements Serializ
         return this.id;
     }
 
+    public String getImage() {
+        return image;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -128,6 +134,10 @@ public class ServiceCategory extends AbstractAuditableEntity implements Serializ
 
     public void setId(final Long id) {
         this.id = id;
+    }
+
+    public void setImage(final String image) {
+        this.image = image;
     }
 
     public void setName(final String name) {
