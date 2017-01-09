@@ -10,8 +10,8 @@
 		<div>
 			<img src="/static/images/pic/about.png" />
 		</div>
-		<div style="margin-top: 20px;">
-			<span>#info("ABOUT_US")</span>
+		<div style="margin-top: 20px; padding: 0 10px; text-align: left;">
+			<span ng-bind-html="content"></span>
 		</div>
 	</div>
 </div>

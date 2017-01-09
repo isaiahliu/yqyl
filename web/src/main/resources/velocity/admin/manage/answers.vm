@@ -1,0 +1,7 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/admin/manage/answers.css"></link>
+
+<div class="answers">answers</div>
+
+<script src="/static/js/business/admin/manage/answers.js"></script>

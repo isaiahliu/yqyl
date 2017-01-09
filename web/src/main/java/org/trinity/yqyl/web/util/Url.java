@@ -87,6 +87,9 @@ public enum Url implements IHttpUrl {
     LOOKUP_TYPE(HttpMethod.GET, Path.LOOKUP),
     RESOURCE_REFRESH(HttpMethod.PUT, Path.RESOURCE),
 
+    SYSTEM_ATTRIBUTE_GET(HttpMethod.GET, Path.SYSTEM_ATTRIBUTE),
+    SYSTEM_ATTRIBUTE_UPDATE(HttpMethod.PUT, Path.SYSTEM_ATTRIBUTE),
+
     SERVICE_CATEGORY(HttpMethod.GET, Path.SERVICE_CATEGORY),
     SERVICE_CATEGORY_UPDATE(HttpMethod.PUT, Path.SERVICE_CATEGORY),
 
@@ -146,7 +149,8 @@ public enum Url implements IHttpUrl {
         LOOKUP(COMMON, "lookup"),
         RESOURCE(COMMON, "resource"),
         SERVICE_CATEGORY(COMMON, "servicecategory"),
-        ACCESSRIGHT(COMMON, "accessright");
+        ACCESSRIGHT(COMMON, "accessright"),
+        SYSTEM_ATTRIBUTE(COMMON, "systemattribute");
 
         private IUrl parent;
 

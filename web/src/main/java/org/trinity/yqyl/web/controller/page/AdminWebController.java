@@ -12,10 +12,34 @@ import org.trinity.yqyl.common.message.lookup.AccessRight;
 @RequestMapping("/admin")
 public class AdminWebController extends AbstractResourceWebController {
 
+    @RequestMapping("/manage/about")
+    @Authorize(AccessRight.ADMINISTRATOR)
+    public ModelAndView aboutPage() throws IException {
+        return createModelAndView("admin/manage/about").addObject("currentPage", "MANAGE").addObject("currentSubPage", "ABOUT");
+    }
+
+    @RequestMapping("/manage/agreement")
+    @Authorize(AccessRight.ADMINISTRATOR)
+    public ModelAndView agreementPage() throws IException {
+        return createModelAndView("admin/manage/agreement").addObject("currentPage", "MANAGE").addObject("currentSubPage", "AGREEMENT");
+    }
+
+    @RequestMapping("/manage/answers")
+    @Authorize(AccessRight.ADMINISTRATOR)
+    public ModelAndView answersPage() throws IException {
+        return createModelAndView("admin/manage/answers").addObject("currentPage", "MANAGE").addObject("currentSubPage", "ANSWERS");
+    }
+
     @RequestMapping("/supplier/{entityId}")
     @Authorize(AccessRight.ADMINISTRATOR)
     public ModelAndView infoPage(@PathVariable("entityId") final Long entityId) throws IException {
         return createModelAndView("servicer/info").addObject("currentPage", "SUPPLIER").addObject("serviceSupplierClientId", entityId);
+    }
+
+    @RequestMapping("/manage/join")
+    @Authorize(AccessRight.ADMINISTRATOR)
+    public ModelAndView joinPage() throws IException {
+        return createModelAndView("admin/manage/join").addObject("currentPage", "MANAGE").addObject("currentSubPage", "JOIN");
     }
 
     @RequestMapping({ "", "/news" })
@@ -34,6 +58,12 @@ public class AdminWebController extends AbstractResourceWebController {
     @Authorize(AccessRight.ADMINISTRATOR)
     public ModelAndView permissionPage() throws IException {
         return createModelAndView("admin/permission").addObject("currentPage", "PERMISSION");
+    }
+
+    @RequestMapping("/manage/readme")
+    @Authorize(AccessRight.ADMINISTRATOR)
+    public ModelAndView readmePage() throws IException {
+        return createModelAndView("admin/manage/readme").addObject("currentPage", "MANAGE").addObject("currentSubPage", "README");
     }
 
     @RequestMapping("/receiver/{entityId}")

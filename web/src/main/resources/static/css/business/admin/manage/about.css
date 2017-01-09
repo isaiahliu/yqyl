@@ -1,0 +1,27 @@
+div.about {
+	padding: 1px 0 0 250px;
+}
+
+div.about div.block {
+	border: 1px solid #cccccc;
+}
+
+div.about div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+div.about div.headerBlock {
+	border-bottom: none;
+}
+
+div.about div.title {
+	font-weight: bold;
+	font-size: large;
+}
+
+div.richtext div.btn-toolbar::before, div.richtext div.btn-toolbar::after
+	{
+	content: none;
+}

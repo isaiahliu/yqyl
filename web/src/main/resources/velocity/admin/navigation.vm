@@ -24,6 +24,28 @@
 							<span>#button("SERVICER_SERVICE_APPRAISE")</span>
 						</div></a></li>
 			</ul></li>
+		<li ng-mouseenter="expandManage=true" ng-mouseleave="expandManage=false"><a href="/admin/manage/about">
+				<div class="navBarItem #if($currentPage=='MANAGE')selected #end">
+					<img class="unselected" src="/static/images/icon/admin/2-1.png" /> <img class="selected" src="/static/images/icon/admin/2-2.png" /> <span>#button("ADMIN_MANAGE")</span>
+				</div>
+		</a>
+			<ul style="height: auto; border: none;" #if($currentPage!='MANAGE' ) class="ng-hide" ng-show="expandManage" #end>
+				<li class="subItem"><a href="/admin/manage/about"><div class="navBarItem #if($currentSubPage=='ABOUT')selected #end">
+							<span>#button("ADMIN_MANAGE_ABOUT")</span>
+						</div></a></li>
+				<li class="subItem"><a href="/admin/manage/join"><div class="navBarItem #if($currentSubPage=='JOIN')selected #end">
+							<span>#button("ADMIN_MANAGE_JOIN")</span>
+						</div></a></li>
+				<li class="subItem"><a href="/admin/manage/answers"><div class="navBarItem #if($currentSubPage=='ANSWERS')selected #end">
+							<span>#button("ADMIN_MANAGE_ANSWERS")</span>
+						</div></a></li>
+				<li class="subItem"><a href="/admin/manage/agreement"><div class="navBarItem #if($currentSubPage=='AGREEMENT')selected #end">
+							<span>#button("ADMIN_MANAGE_AGREEMENT")</span>
+						</div></a></li>
+				<li class="subItem"><a href="/admin/manage/readme"><div class="navBarItem #if($currentSubPage=='README')selected #end">
+							<span>#button("ADMIN_MANAGE_README")</span>
+						</div></a></li>
+			</ul></li>
 		<li><a href="/admin/supplier"><div class="navBarItem #if($currentPage=='SUPPLIER')selected #end">
 					<img class="unselected" src="/static/images/icon/admin/3-1.png" /> <img class="selected" src="/static/images/icon/admin/3-2.png" /> <span>#button("ADMIN_SUPPLIER")</span>
 				</div></a></li>

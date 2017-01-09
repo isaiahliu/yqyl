@@ -1,0 +1,9 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/admin/manage/agreement.css"></link>
+
+<div class="agreement">
+	<div  text-angular ng-model="xxx"/>
+</div>
+
+<script src="/static/js/business/admin/manage/agreement.js"></script>

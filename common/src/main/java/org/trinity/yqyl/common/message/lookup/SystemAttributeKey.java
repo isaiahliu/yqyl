@@ -5,7 +5,8 @@ import org.trinity.message.ILookupMessage;
 public enum SystemAttributeKey implements ILookupMessage<LookupType> {
     TOKEN_EXPIRE_DAYS("TKEXPDAYS", "30"),
     VERIFY_CODE_EXPIRE_MINUTES("VCEXPMINS", "30"),
-    MAX_SERVICE_INFO_IMAGES("MAXSIIMG", "6");
+    MAX_SERVICE_INFO_IMAGES("MAXSIIMG", "6"),
+    ABOUT_US("ABOUTUS", "");
 
     private final String messageCode;
     private String defaultValue;

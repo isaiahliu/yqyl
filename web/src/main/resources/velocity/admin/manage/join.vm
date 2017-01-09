@@ -1,0 +1,7 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/admin/manage/join.css"></link>
+
+<div class="join">join</div>
+
+<script src="/static/js/business/admin/manage/join.js"></script>

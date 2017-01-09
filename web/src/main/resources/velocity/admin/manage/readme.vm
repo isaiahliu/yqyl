@@ -1,0 +1,7 @@
+#parse("/velocity/admin/navigation.vm")
+
+<link rel="stylesheet" href="/static/css/business/admin/manage/readme.css"></link>
+
+<div class="readme">readme</div>
+
+<script src="/static/js/business/admin/manage/readme.js"></script>
