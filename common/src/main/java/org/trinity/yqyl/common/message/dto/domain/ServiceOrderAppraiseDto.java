@@ -9,7 +9,7 @@ public class ServiceOrderAppraiseDto extends AbstractBusinessDto {
     private Integer onTimeRate;
     private String uid;
     private Integer qualityRate;
-
+    private Integer totalRate;
     private Integer staffRate;
 
     private ServiceOrderDto serviceOrder;
@@ -51,6 +51,10 @@ public class ServiceOrderAppraiseDto extends AbstractBusinessDto {
         return staffRate;
     }
 
+    public Integer getTotalRate() {
+        return totalRate;
+    }
+
     public String getUid() {
         return uid;
     }
@@ -90,6 +94,10 @@ public class ServiceOrderAppraiseDto extends AbstractBusinessDto {
 
     public void setStaffRate(final Integer staffRate) {
         this.staffRate = staffRate;
+    }
+
+    public void setTotalRate(final Integer totalRate) {
+        this.totalRate = totalRate;
     }
 
     public void setUid(final String uid) {

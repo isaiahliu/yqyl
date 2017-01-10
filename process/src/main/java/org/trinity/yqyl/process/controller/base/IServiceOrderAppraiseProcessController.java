@@ -10,5 +10,9 @@ import org.trinity.yqyl.common.message.dto.domain.ServiceOrderAppraiseSearchingD
 public interface IServiceOrderAppraiseProcessController
 		extends ICrudProcessController<ServiceOrderAppraiseDto, ServiceOrderAppraiseSearchingDto> {
 
+	int countAppraises(Long serviceSupplierClientId);
+
+	int countAppraisesForRate(Long serviceSupplierClientId, int from, int to);
+
 	void reply(List<ServiceOrderAppraiseDto> data) throws IException;
 }

@@ -22,137 +22,162 @@ import org.trinity.yqyl.repository.business.dataaccess.IServiceInfoStasticReposi
 import org.trinity.yqyl.repository.business.dataaccess.IServiceOrderAppraiseRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceOrderOperationRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceOrderRepository;
+import org.trinity.yqyl.repository.business.dataaccess.IServiceSupplierClientRepository;
 import org.trinity.yqyl.repository.business.entity.ServiceInfoStastic;
 import org.trinity.yqyl.repository.business.entity.ServiceOrder;
 import org.trinity.yqyl.repository.business.entity.ServiceOrderAppraise;
 import org.trinity.yqyl.repository.business.entity.ServiceOrderOperation;
+import org.trinity.yqyl.repository.business.entity.ServiceSupplierClient;
 
 @Service
 public class ServiceOrderAppraiseProcessController extends
-        AbstractAutowiredCrudProcessController<ServiceOrderAppraise, ServiceOrderAppraiseDto, ServiceOrderAppraiseSearchingDto, IServiceOrderAppraiseRepository>
-        implements IServiceOrderAppraiseProcessController {
-    @Autowired
-    private IServiceOrderRepository serviceOrderRepository;
+		AbstractAutowiredCrudProcessController<ServiceOrderAppraise, ServiceOrderAppraiseDto, ServiceOrderAppraiseSearchingDto, IServiceOrderAppraiseRepository>
+		implements IServiceOrderAppraiseProcessController {
+	@Autowired
+	private IServiceOrderRepository serviceOrderRepository;
 
-    @Autowired
-    private IServiceOrderOperationRepository serviceOrderOperationRepository;
+	@Autowired
+	private IServiceSupplierClientRepository serviceSupplierClientRepository;
 
-    @Autowired
-    private IServiceInfoStasticRepository serviceInfoStasticRepository;
+	@Autowired
+	private IServiceOrderOperationRepository serviceOrderOperationRepository;
 
-    @Override
-    @Transactional(rollbackOn = IException.class)
-    public List<ServiceOrderAppraiseDto> addAll(final List<ServiceOrderAppraiseDto> data) throws IException {
-        final Date now = new Date();
-        for (final ServiceOrderAppraiseDto dto : data) {
-            final ServiceOrder serviceOrder = serviceOrderRepository.findOneByUid(dto.getUid());
+	@Autowired
+	private IServiceInfoStasticRepository serviceInfoStasticRepository;
 
-            if (!serviceOrder.getUser().getUsername().equals(getSecurityUtil().getCurrentToken().getUsername())) {
-                throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
-            }
+	@Override
+	@Transactional(rollbackOn = IException.class)
+	public List<ServiceOrderAppraiseDto> addAll(final List<ServiceOrderAppraiseDto> data) throws IException {
+		final Date now = new Date();
+		for (final ServiceOrderAppraiseDto dto : data) {
+			final ServiceOrder serviceOrder = serviceOrderRepository.findOneByUid(dto.getUid());
 
-            if (serviceOrder.getStatus() != OrderStatus.AWAITING_APPRAISE) {
-                throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_ORDER_STATUS);
-            }
+			if (!serviceOrder.getUser().getUsername().equals(getSecurityUtil().getCurrentToken().getUsername())) {
+				throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
+			}
 
-            final ServiceOrderAppraise serviceOrderAppraise = getDomainObjectConverter().convertBack(dto);
-            serviceOrderAppraise.setServiceOrder(serviceOrder);
-            serviceOrderAppraise.setServiceOrderId(serviceOrder.getId());
-            serviceOrderAppraise.setStatus(RecordStatus.ACTIVE);
-            serviceOrder.setSettledTime(now);
-            serviceOrder.setStatus(OrderStatus.SETTLED);
+			if (serviceOrder.getStatus() != OrderStatus.AWAITING_APPRAISE) {
+				throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_ORDER_STATUS);
+			}
 
-            ServiceOrderOperation operation = new ServiceOrderOperation();
-            operation.setOperation(OrderOperation.APPRAISED);
-            operation.setOperator(getSecurityUtil().getCurrentToken().getUsername());
-            operation.setOrderStatus(OrderStatus.SETTLED);
-            operation.setStatus(RecordStatus.ACTIVE);
-            operation.setServiceOrder(serviceOrder);
-            operation.setTimestamp(now);
+			final ServiceOrderAppraise serviceOrderAppraise = getDomainObjectConverter().convertBack(dto);
+			serviceOrderAppraise.setServiceOrder(serviceOrder);
+			serviceOrderAppraise.setServiceOrderId(serviceOrder.getId());
+			serviceOrderAppraise.setStatus(RecordStatus.ACTIVE);
+			serviceOrder.setSettledTime(now);
+			serviceOrder.setStatus(OrderStatus.SETTLED);
 
-            serviceOrderOperationRepository.save(operation);
+			ServiceOrderOperation operation = new ServiceOrderOperation();
+			operation.setOperation(OrderOperation.APPRAISED);
+			operation.setOperator(getSecurityUtil().getCurrentToken().getUsername());
+			operation.setOrderStatus(OrderStatus.SETTLED);
+			operation.setStatus(RecordStatus.ACTIVE);
+			operation.setServiceOrder(serviceOrder);
+			operation.setTimestamp(now);
 
-            operation = new ServiceOrderOperation();
-            operation.setOperation(OrderOperation.SETTLED);
-            operation.setOperator(getSecurityUtil().getCurrentToken().getUsername());
-            operation.setOrderStatus(OrderStatus.SETTLED);
-            operation.setStatus(RecordStatus.ACTIVE);
-            operation.setServiceOrder(serviceOrder);
-            operation.setTimestamp(now);
+			serviceOrderOperationRepository.save(operation);
 
-            serviceOrderOperationRepository.save(operation);
+			operation = new ServiceOrderOperation();
+			operation.setOperation(OrderOperation.SETTLED);
+			operation.setOperator(getSecurityUtil().getCurrentToken().getUsername());
+			operation.setOrderStatus(OrderStatus.SETTLED);
+			operation.setStatus(RecordStatus.ACTIVE);
+			operation.setServiceOrder(serviceOrder);
+			operation.setTimestamp(now);
 
-            getDomainEntityRepository().save(serviceOrderAppraise);
-            serviceOrderRepository.save(serviceOrder);
+			serviceOrderOperationRepository.save(operation);
 
-            if (serviceOrder.getServiceInfo().getServiceInfoStastic() == null) {
-                final ServiceInfoStastic serviceInfoStastic = new ServiceInfoStastic();
-                serviceInfoStastic.setServiceInfoId(serviceOrder.getServiceInfo().getId());
-                serviceInfoStastic.setServiceInfo(serviceOrder.getServiceInfo());
-                serviceInfoStastic.setAppraiseAvg(Double.valueOf(serviceOrderAppraise.getStaffRate()));
-                serviceInfoStastic.setAppraiseCount(1l);
-                serviceInfoStastic.setOrderCount(1l);
+			getDomainEntityRepository().save(serviceOrderAppraise);
+			serviceOrderRepository.save(serviceOrder);
 
-                serviceInfoStasticRepository.save(serviceInfoStastic);
-            } else {
-                final double rate = (serviceOrderAppraise.getStaffRate() + serviceOrderAppraise.getAttitudeRate()
-                        + serviceOrderAppraise.getOnTimeRate() + serviceOrderAppraise.getQualityRate()) / 4;
-                serviceInfoStasticRepository.updateForNewAppraise(rate, serviceOrder.getServiceInfo().getId());
-            }
-        }
+			if (serviceOrder.getServiceInfo().getServiceInfoStastic() == null) {
+				final ServiceInfoStastic serviceInfoStastic = new ServiceInfoStastic();
+				serviceInfoStastic.setServiceInfoId(serviceOrder.getServiceInfo().getId());
+				serviceInfoStastic.setServiceInfo(serviceOrder.getServiceInfo());
+				serviceInfoStastic.setAppraiseAvg(Double.valueOf(serviceOrderAppraise.getStaffRate()));
+				serviceInfoStastic.setAppraiseCount(1l);
+				serviceInfoStastic.setOrderCount(1l);
 
-        return data;
-    }
+				serviceInfoStasticRepository.save(serviceInfoStastic);
+			} else {
+				final double rate = (serviceOrderAppraise.getStaffRate() + serviceOrderAppraise.getAttitudeRate()
+						+ serviceOrderAppraise.getOnTimeRate() + serviceOrderAppraise.getQualityRate()) / 4;
+				serviceInfoStasticRepository.updateForNewAppraise(rate, serviceOrder.getServiceInfo().getId());
+			}
+		}
 
-    @Override
-    public void reply(final List<ServiceOrderAppraiseDto> data) throws IException {
-        final List<ServiceOrderAppraise> entities = data.stream().map(item -> {
-            final ServiceOrder serviceOrder = serviceOrderRepository.findOneByUid(item.getUid());
-            final ServiceOrderAppraise entity = serviceOrder.getAppraise();
+		return data;
+	}
 
-            String username = null;
-            try {
-                username = getSecurityUtil().getCurrentToken().getUsername();
-            } catch (final IException e1) {
-                return entity;
-            }
+	@Override
+	public int countAppraises(final Long serviceSupplierClientId) {
+		final ServiceSupplierClient client = serviceSupplierClientRepository.findOne(serviceSupplierClientId);
+		if (client == null) {
+			return 0;
+		}
 
-            final boolean isSupplier = serviceOrder.getServiceInfo().getServiceSupplierClient().getUser().getUsername().equals(username);
-            final boolean isAdmin = getSecurityUtil().hasAccessRight(AccessRight.ADMINISTRATOR);
+		return getDomainEntityRepository().countAppraises(client);
+	}
 
-            if (!isSupplier && !isAdmin) {
-                return entity;
-            }
-            entity.setReply(item.getReply());
+	@Override
+	public int countAppraisesForRate(final Long serviceSupplierClientId, final int from, final int to) {
+		final ServiceSupplierClient client = serviceSupplierClientRepository.findOne(serviceSupplierClientId);
+		if (client == null) {
+			return 0;
+		}
 
-            final ServiceOrderOperation serviceOrderOperation = new ServiceOrderOperation();
+		return getDomainEntityRepository().countAppraisesBetween(client, from, to);
+	}
 
-            try {
-                serviceOrderOperation.setOperator(getSecurityUtil().getCurrentToken().getUsername());
-            } catch (final IException e) {
-            }
+	@Override
+	public void reply(final List<ServiceOrderAppraiseDto> data) throws IException {
+		final List<ServiceOrderAppraise> entities = data.stream().map(item -> {
+			final ServiceOrder serviceOrder = serviceOrderRepository.findOneByUid(item.getUid());
+			final ServiceOrderAppraise entity = serviceOrder.getAppraise();
 
-            serviceOrderOperation.setOperation(OrderOperation.REPLYED);
-            serviceOrderOperation.setOrderStatus(OrderStatus.SETTLED);
-            serviceOrderOperation.setServiceOrder(serviceOrder);
-            serviceOrderOperation.setStatus(RecordStatus.ACTIVE);
-            serviceOrderOperation.setTimestamp(new Date());
+			String username = null;
+			try {
+				username = getSecurityUtil().getCurrentToken().getUsername();
+			} catch (final IException e1) {
+				return entity;
+			}
 
-            serviceOrderOperationRepository.save(serviceOrderOperation);
+			final boolean isSupplier = serviceOrder.getServiceInfo().getServiceSupplierClient().getUser().getUsername().equals(username);
+			final boolean isAdmin = getSecurityUtil().hasAccessRight(AccessRight.ADMINISTRATOR);
 
-            return entity;
-        }).collect(Collectors.toList());
+			if (!isSupplier && !isAdmin) {
+				return entity;
+			}
+			entity.setReply(item.getReply());
 
-        getDomainEntityRepository().save(entities);
-    }
+			final ServiceOrderOperation serviceOrderOperation = new ServiceOrderOperation();
 
-    @Override
-    protected boolean canAccessAllStatus() {
-        return getSecurityUtil().hasAccessRight(AccessRight.ADMINISTRATOR);
-    }
+			try {
+				serviceOrderOperation.setOperator(getSecurityUtil().getCurrentToken().getUsername());
+			} catch (final IException e) {
+			}
 
-    @Override
-    protected boolean canAccessScopeAll() {
-        return true;
-    }
+			serviceOrderOperation.setOperation(OrderOperation.REPLYED);
+			serviceOrderOperation.setOrderStatus(OrderStatus.SETTLED);
+			serviceOrderOperation.setServiceOrder(serviceOrder);
+			serviceOrderOperation.setStatus(RecordStatus.ACTIVE);
+			serviceOrderOperation.setTimestamp(new Date());
+
+			serviceOrderOperationRepository.save(serviceOrderOperation);
+
+			return entity;
+		}).collect(Collectors.toList());
+
+		getDomainEntityRepository().save(entities);
+	}
+
+	@Override
+	protected boolean canAccessAllStatus() {
+		return getSecurityUtil().hasAccessRight(AccessRight.ADMINISTRATOR);
+	}
+
+	@Override
+	protected boolean canAccessScopeAll() {
+		return true;
+	}
 }

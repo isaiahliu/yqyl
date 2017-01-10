@@ -43,6 +43,9 @@ public class ServiceOrderAppraise extends AbstractAuditableEntity implements Ser
 	@Column(name = "staff_rate")
 	private Integer staffRate;
 
+	@Column(name = "total_rate")
+	private Integer totalRate;
+
 	private RecordStatus status;
 
 	// bi-directional one-to-one association to ServiceOrder
@@ -89,6 +92,10 @@ public class ServiceOrderAppraise extends AbstractAuditableEntity implements Ser
 		return this.status;
 	}
 
+	public Integer getTotalRate() {
+		return totalRate;
+	}
+
 	public void setAttitudeRate(final Integer attitudeRate) {
 		this.attitudeRate = attitudeRate;
 	}
@@ -123,6 +130,10 @@ public class ServiceOrderAppraise extends AbstractAuditableEntity implements Ser
 
 	public void setStatus(final RecordStatus status) {
 		this.status = status;
+	}
+
+	public void setTotalRate(final Integer totalRate) {
+		this.totalRate = totalRate;
 	}
 
 }

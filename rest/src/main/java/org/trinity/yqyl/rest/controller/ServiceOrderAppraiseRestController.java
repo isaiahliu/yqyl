@@ -19,6 +19,23 @@ import org.trinity.yqyl.process.controller.base.IServiceOrderAppraiseProcessCont
 public class ServiceOrderAppraiseRestController extends
 		AbstractApplicationAwareCrudRestController<ServiceOrderAppraiseDto, ServiceOrderAppraiseSearchingDto, IServiceOrderAppraiseProcessController, ServiceOrderAppraiseRequest, ServiceOrderAppraiseResponse> {
 
+	@Override
+	public ResponseEntity<ServiceOrderAppraiseResponse> getAll(final ServiceOrderAppraiseSearchingDto request) throws IException {
+		final ResponseEntity<ServiceOrderAppraiseResponse> responseEntity = super.getAll(request);
+
+		if (request.isRequireTotal()) {
+			responseEntity.getBody().addExtraData("totalAppraise",
+					getDomainProcessController().countAppraises(request.getServiceSupplierClientId()));
+			responseEntity.getBody().addExtraData("level1",
+					getDomainProcessController().countAppraisesForRate(request.getServiceSupplierClientId(), 4, 11));
+			responseEntity.getBody().addExtraData("level2",
+					getDomainProcessController().countAppraisesForRate(request.getServiceSupplierClientId(), 12, 16));
+			responseEntity.getBody().addExtraData("level3",
+					getDomainProcessController().countAppraisesForRate(request.getServiceSupplierClientId(), 17, 20));
+		}
+		return responseEntity;
+	}
+
 	@RequestMapping(value = "/reply", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<DefaultResponse> reply(@RequestBody final ServiceOrderAppraiseRequest request) throws IException {
 		getDomainProcessController().reply(request.getData());
