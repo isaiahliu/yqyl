@@ -11,7 +11,8 @@ public enum OrderStatus implements ILookupMessage<LookupType> {
     REQUEST_FAILED("F"),
     SETTLED("S"),
     CANCELLED("C"),
-    CANCEL_REQUESTED("Q");
+    CANCEL_REQUESTED("Q"),
+    REQUEST_AWAITING_RECEIVER_VEIRFYING("R");
 
     private final String messageCode;
 

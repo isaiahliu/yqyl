@@ -78,6 +78,7 @@ public class ServiceOrderConverter extends AbstractLookupSupportObjectConverter<
         copyObject(source::getAddress, target::getAddress, target::setAddress, copyPolicy);
         copyObject(source::getPhone, target::getPhone, target::setPhone, copyPolicy);
         copyObject(source::getReceipt, target::getReceipt, target::setReceipt, copyPolicy);
+        copyObject(source::getComment, target::getComment, target::setComment, copyPolicy);
         copyLookup(source::getPaymentMethod, target::getPaymentMethod, target::setPaymentMethod, PaymentMethod.class, copyPolicy);
         copyLookup(source::getPaymentType, target::getPaymentType, target::setPaymentType, PaymentType.class, copyPolicy);
         copyObject(() -> {
@@ -107,11 +108,12 @@ public class ServiceOrderConverter extends AbstractLookupSupportObjectConverter<
         copyObject(source::getProposalTime, target::getProposalTime, target::setProposalTime, copyPolicy);
         copyObject(source::getApprovalTime, target::getApprovalTime, target::setApprovalTime, copyPolicy);
         copyObject(source::getSettledTime, target::getSettledTime, target::setSettledTime, copyPolicy);
-        copyMessage(source::getStatus, target::getStatus, target::setStatus, copyPolicy);
         copyObject(source::getAddress, target::getAddress, target::setAddress, copyPolicy);
         copyObject(source::getPhone, target::getPhone, target::setPhone, copyPolicy);
         copyObject(source::getReceipt, target::getReceipt, target::setReceipt, copyPolicy);
         copyObject(source::getServiceTime, target::getServiceDate, target::setServiceDate, copyPolicy);
+        copyObject(source::getComment, target::getComment, target::setComment, copyPolicy);
+        copyMessage(source::getStatus, target::getStatus, target::setStatus, copyPolicy);
         copyMessage(source::getPaymentMethod, target::getPaymentMethod, target::setPaymentMethod, copyPolicy);
         copyMessage(source::getPaymentType, target::getPaymentType, target::setPaymentType, copyPolicy);
         copyObject(() -> {

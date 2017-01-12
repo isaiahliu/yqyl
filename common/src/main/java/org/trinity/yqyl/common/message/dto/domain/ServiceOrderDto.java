@@ -18,7 +18,7 @@ public class ServiceOrderDto extends AbstractBusinessDto {
     private String phone;
     private String address;
     private String receipt;
-
+    private String comment;
     private LookupDto paymentMethod;
 
     private LookupDto paymentType;
@@ -54,6 +54,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public Date getApprovalTime() {
         return approvalTime;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public AccountTransactionDto getDrawbackTransaction() {
@@ -157,6 +161,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public void setApprovalTime(final Date approvalTime) {
         this.approvalTime = approvalTime;
+    }
+
+    public void setComment(final String comment) {
+        this.comment = comment;
     }
 
     public void setDrawbackTransaction(final AccountTransactionDto drawbackTransaction) {

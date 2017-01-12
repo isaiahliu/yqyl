@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.trinity.common.dto.object.LookupDto;
 import org.trinity.common.exception.IException;
+import org.trinity.message.LookupParser;
 import org.trinity.message.exception.GeneralErrorMessage;
 import org.trinity.process.converter.IObjectConverter;
 import org.trinity.process.converter.IObjectConverter.CopyPolicy;
@@ -310,6 +311,24 @@ public class ServiceOrderProcessController
     }
 
     @Override
+    @Transactional(rollbackOn = IException.class)
+    public void confirmOrderRequirement(final ServiceOrderDto serviceOrderDto) throws IException {
+        final ServiceOrder order = getDomainEntityRepository().findOneByUid(serviceOrderDto.getUid());
+
+        if (order.getStatus() != OrderStatus.REQUEST_AWAITING_RECEIVER_VEIRFYING) {
+            throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_ORDER_STATUS);
+        }
+
+        if (!order.getServiceInfo().getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
+            getSecurityUtil().checkAccessRight(AccessRight.ADMINISTRATOR);
+        }
+
+        order.setStatus(OrderStatus.UNPROCESSED);
+
+        getDomainEntityRepository().save(order);
+    }
+
+    @Override
     public int countUnprocessedOrders(final String username) throws IException {
         return getDomainEntityRepository().countUnprocessedOrders(userRepository.findOneByUsername(username),
                 new OrderStatus[] { OrderStatus.UNPROCESSED });
@@ -462,6 +481,30 @@ public class ServiceOrderProcessController
 
     @Override
     @Transactional(rollbackOn = IException.class)
+    public void proposeOrderRequirement(final ServiceOrderDto serviceOrderDto) throws IException {
+        final ServiceOrder order = getDomainEntityRepository().findOneByUid(serviceOrderDto.getUid());
+
+        if (order.getStatus() != OrderStatus.REQUEST_GRABBED) {
+            throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_ORDER_STATUS);
+        }
+
+        final ServiceInfo serviceInfo = serviceInfoRepository.findOne(serviceOrderDto.getServiceInfo().getId());
+
+        if (!order.getServiceInfo().getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())
+                || !serviceInfo.getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
+            getSecurityUtil().checkAccessRight(AccessRight.ADMINISTRATOR);
+        }
+
+        order.setServiceInfo(serviceInfo);
+        order.setExpectedPaymentAmount(serviceOrderDto.getExpectedPaymentAmount());
+        order.setPaymentMethod(LookupParser.parse(PaymentMethod.class, serviceOrderDto.getPaymentMethod().getCode()));
+        order.setStatus(OrderStatus.REQUEST_AWAITING_RECEIVER_VEIRFYING);
+
+        getDomainEntityRepository().save(order);
+    }
+
+    @Override
+    @Transactional(rollbackOn = IException.class)
     public List<ServiceOrderDto> rejectCancelOrder(final List<ServiceOrderDto> data) throws IException {
         final List<ServiceOrder> entities = data.stream().map(item -> {
             final ServiceOrder entity = getDomainEntityRepository().findOneByUid(item.getUid());
@@ -507,6 +550,24 @@ public class ServiceOrderProcessController
         }).collect(Collectors.toList());
 
         return getDomainObjectConverter().convert(getDomainEntityRepository().save(entities));
+    }
+
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public void rejectConfirmOrderRequirement(final ServiceOrderDto serviceOrderDto) throws IException {
+        final ServiceOrder order = getDomainEntityRepository().findOneByUid(serviceOrderDto.getUid());
+
+        if (order.getStatus() != OrderStatus.REQUEST_AWAITING_RECEIVER_VEIRFYING) {
+            throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_ORDER_STATUS);
+        }
+
+        if (!order.getServiceInfo().getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
+            getSecurityUtil().checkAccessRight(AccessRight.ADMINISTRATOR);
+        }
+
+        order.setStatus(OrderStatus.REQUEST_GRABBED);
+
+        getDomainEntityRepository().save(order);
     }
 
     @Override

@@ -63,6 +63,13 @@ public class OrderAjaxController extends AbstractRestController {
         return restfulServiceUtil.callRestService(Url.ORDER_PRICE, null, serviceOrderRequest, null, ServiceOrderResponse.class);
     }
 
+    @RequestMapping(value = "/confirmRequirement/{entityId}", method = RequestMethod.POST)
+    public @ResponseBody DefaultResponse ajaxconfirmOrderRequirement(@PathVariable("entityId") final Long entityId,
+            @RequestBody final ServiceOrderRequest request) throws IException {
+        return restfulServiceUtil.callRestService(Url.ORDER_CONFIRM_REQUIREMENT, String.valueOf(entityId), request, null,
+                DefaultResponse.class);
+    }
+
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public @ResponseBody DefaultResponse ajaxEditOrder(@RequestBody final ServiceOrderRequest serviceOrderRequest) throws IException {
         return restfulServiceUtil.callRestService(Url.ORDER_UPDATE, null, serviceOrderRequest, null, DefaultResponse.class);
@@ -102,6 +109,11 @@ public class OrderAjaxController extends AbstractRestController {
         return restfulServiceUtil.callRestService(Url.ORDER_PROPOSAL, null, serviceOrderRequest, null, ServiceOrderResponse.class);
     }
 
+    @RequestMapping(value = "/proposeRequirement", method = RequestMethod.POST)
+    public @ResponseBody DefaultResponse ajaxProposeOrderRequirement(@RequestBody final ServiceOrderRequest request) throws IException {
+        return restfulServiceUtil.callRestService(Url.ORDER_PROPOSE_REQUIREMENT, null, request, null, DefaultResponse.class);
+    }
+
     @RequestMapping(value = "/requirement", method = RequestMethod.POST)
     public @ResponseBody ServiceOrderRequirementResponse ajaxPublishRequirement(@RequestBody final ServiceOrderRequirementRequest request)
             throws IException {
@@ -121,6 +133,13 @@ public class OrderAjaxController extends AbstractRestController {
             throws IException {
 
         return restfulServiceUtil.callRestService(Url.ORDER_REJECT_CANCEL, null, serviceOrderRequest, null, ServiceOrderResponse.class);
+    }
+
+    @RequestMapping(value = "/rejectConfirmRequirement/{entityId}", method = RequestMethod.POST)
+    public @ResponseBody DefaultResponse ajaxrejectConfirmOrderRequirement(@PathVariable("entityId") final Long entityId,
+            @RequestBody final ServiceOrderRequest request) throws IException {
+        return restfulServiceUtil.callRestService(Url.ORDER_REJECT_CONFIRM_REQUIREMENT, String.valueOf(entityId), request, null,
+                DefaultResponse.class);
     }
 
     @RequestMapping(value = "/release", method = RequestMethod.POST)

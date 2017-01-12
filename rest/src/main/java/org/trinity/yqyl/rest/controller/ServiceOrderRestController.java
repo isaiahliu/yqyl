@@ -49,6 +49,14 @@ public class ServiceOrderRestController extends
         return createResponseEntity(response);
     }
 
+    @RequestMapping(value = "/confirmRequirement", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<DefaultResponse> confirmOrderRequirement(@RequestBody final ServiceOrderRequest request)
+            throws IException {
+        getDomainProcessController().confirmOrderRequirement(request.getData().get(0));
+
+        return createResponseEntity();
+    }
+
     @Override
     public ResponseEntity<ServiceOrderResponse> getAll(final ServiceOrderSearchingDto request) throws IException {
         final ResponseEntity<ServiceOrderResponse> response = super.getAll(request);
@@ -85,6 +93,15 @@ public class ServiceOrderRestController extends
         return createResponseEntity(response);
     }
 
+    @RequestMapping(value = "/proposeRequirement", method = RequestMethod.POST)
+    @Authorize(AccessRight.SERVICE_SUPPLIER)
+    public @ResponseBody ResponseEntity<DefaultResponse> proposeOrderRequirement(@RequestBody final ServiceOrderRequest request)
+            throws IException {
+        getDomainProcessController().proposeOrderRequirement(request.getData().get(0));
+
+        return createResponseEntity();
+    }
+
     @RequestMapping(value = "/rejectCancel", method = RequestMethod.POST)
     @Authorize(AccessRight.SERVICE_SUPPLIER)
     public @ResponseBody ResponseEntity<ServiceOrderResponse> rejectCancelOrder(@RequestBody final ServiceOrderRequest request)
@@ -93,6 +110,14 @@ public class ServiceOrderRestController extends
         response.addData(getDomainProcessController().rejectCancelOrder(request.getData()));
 
         return createResponseEntity(response);
+    }
+
+    @RequestMapping(value = "/rejectConfirmRequirement", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<DefaultResponse> rejectConfirmOrderRequirement(@RequestBody final ServiceOrderRequest request)
+            throws IException {
+        getDomainProcessController().rejectConfirmOrderRequirement(request.getData().get(0));
+
+        return createResponseEntity();
     }
 
     @RequestMapping(value = "/release", method = RequestMethod.POST)

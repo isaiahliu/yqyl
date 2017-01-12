@@ -68,6 +68,8 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
     @TableGenerator(name = "ServiceOrder_PK_IdGenerator", table = "id_table", pkColumnName = "type", pkColumnValue = "ServiceOrder_PK", valueColumnName = "value", initialValue = 1, allocationSize = 1)
     private Long id;
 
+    private String comment;
+
     private Double price;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "proposal_time")
@@ -138,6 +140,10 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
 
     public Date getApprovalTime() {
         return approvalTime;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public AccountTransaction getDrawbackTransaction() {
@@ -237,6 +243,10 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
 
     public void setApprovalTime(final Date approvalTime) {
         this.approvalTime = approvalTime;
+    }
+
+    public void setComment(final String comment) {
+        this.comment = comment;
     }
 
     public void setDrawbackTransaction(final AccountTransaction drawbackTransaction) {
