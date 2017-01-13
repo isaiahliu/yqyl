@@ -108,4 +108,36 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			errorHandler($scope, response);
 		});
 	};
+
+	$scope.confirmRequirement = function(order) {
+		$http({
+			method : "POST",
+			url : "/ajax/user/order/confirmRequirement",
+			data : {
+				data : [ {
+					uid : order.uid
+				} ]
+			}
+		}).success(function(response) {
+			$scope.populateOrders();
+		}).error(function(response) {
+			errorHandler($scope, response);
+		});
+	};
+	
+	$scope.rejectConfirmRequirement = function(order) {
+		$http({
+			method : "POST",
+			url : "/ajax/user/order/rejectConfirmRequirement",
+			data : {
+				data : [ {
+					uid : order.uid
+				} ]
+			}
+		}).success(function(response) {
+			$scope.populateOrders();
+		}).error(function(response) {
+			errorHandler($scope, response);
+		});
+	};
 });

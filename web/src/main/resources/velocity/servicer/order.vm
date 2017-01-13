@@ -79,7 +79,7 @@
 									</div></td>
 								<td align="center"><span>{{order.status.message}}</span></td>
 								<td align="center"><button
-										ng-click="order.requestEditing=true;order.newExpectedPaymentAmount=order.price;order.newServiceInfoId=order.serviceInfo.id;order.newPaymentMethodCode=order.paymentMethod.code;"
+										ng-click="order.requestEditing=true;order.newExpectedPaymentAmount=order.expectedPaymentAmount;order.newServiceInfoId=order.serviceInfo.id;order.newPaymentMethodCode=order.paymentMethod.code;"
 										class="ng-hide" ng-show="order.status.code=='G'"
 									>#button("EDIT")</button>
 									<button ng-click="release(order)" class="ng-hide" ng-show="order.status.code=='G'">#button("RELEASE")</button>

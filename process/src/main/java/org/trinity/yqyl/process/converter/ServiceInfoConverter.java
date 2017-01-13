@@ -91,8 +91,8 @@ public class ServiceInfoConverter extends AbstractLookupSupportObjectConverter<S
             now.add(Calendar.MONTH, -1);
             final Date aMonthAgo = now.getTime();
 
-            final List<ServiceOrder> orders = source.getServiceOrders().stream().filter(item -> item.getProposalTime().after(aMonthAgo))
-                    .collect(Collectors.toList());
+            final List<ServiceOrder> orders = source.getServiceOrders().stream()
+                    .filter(item -> item.getProposalTime() != null && item.getProposalTime().after(aMonthAgo)).collect(Collectors.toList());
             target.setMonthlyProposalOrderCount(orders.size());
 
             final Double averageRate = orders.stream().filter(item -> item.getAppraise() != null)

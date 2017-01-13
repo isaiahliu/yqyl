@@ -63,11 +63,9 @@ public class OrderAjaxController extends AbstractRestController {
         return restfulServiceUtil.callRestService(Url.ORDER_PRICE, null, serviceOrderRequest, null, ServiceOrderResponse.class);
     }
 
-    @RequestMapping(value = "/confirmRequirement/{entityId}", method = RequestMethod.POST)
-    public @ResponseBody DefaultResponse ajaxconfirmOrderRequirement(@PathVariable("entityId") final Long entityId,
-            @RequestBody final ServiceOrderRequest request) throws IException {
-        return restfulServiceUtil.callRestService(Url.ORDER_CONFIRM_REQUIREMENT, String.valueOf(entityId), request, null,
-                DefaultResponse.class);
+    @RequestMapping(value = "/confirmRequirement", method = RequestMethod.POST)
+    public @ResponseBody DefaultResponse ajaxconfirmOrderRequirement(@RequestBody final ServiceOrderRequest request) throws IException {
+        return restfulServiceUtil.callRestService(Url.ORDER_CONFIRM_REQUIREMENT, null, request, null, DefaultResponse.class);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
@@ -135,11 +133,10 @@ public class OrderAjaxController extends AbstractRestController {
         return restfulServiceUtil.callRestService(Url.ORDER_REJECT_CANCEL, null, serviceOrderRequest, null, ServiceOrderResponse.class);
     }
 
-    @RequestMapping(value = "/rejectConfirmRequirement/{entityId}", method = RequestMethod.POST)
-    public @ResponseBody DefaultResponse ajaxrejectConfirmOrderRequirement(@PathVariable("entityId") final Long entityId,
-            @RequestBody final ServiceOrderRequest request) throws IException {
-        return restfulServiceUtil.callRestService(Url.ORDER_REJECT_CONFIRM_REQUIREMENT, String.valueOf(entityId), request, null,
-                DefaultResponse.class);
+    @RequestMapping(value = "/rejectConfirmRequirement", method = RequestMethod.POST)
+    public @ResponseBody DefaultResponse ajaxrejectConfirmOrderRequirement(@RequestBody final ServiceOrderRequest request)
+            throws IException {
+        return restfulServiceUtil.callRestService(Url.ORDER_REJECT_CONFIRM_REQUIREMENT, null, request, null, DefaultResponse.class);
     }
 
     @RequestMapping(value = "/release", method = RequestMethod.POST)

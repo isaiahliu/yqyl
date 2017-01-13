@@ -323,7 +323,13 @@ public class ServiceOrderProcessController
             getSecurityUtil().checkAccessRight(AccessRight.ADMINISTRATOR);
         }
 
-        order.setStatus(OrderStatus.UNPROCESSED);
+        order.setProposalTime(new Date());
+
+        if (order.getPaymentMethod() == PaymentMethod.ONLINE) {
+            order.setStatus(OrderStatus.AWAITING_PAYMENT);
+        } else {
+            order.setStatus(OrderStatus.UNPROCESSED);
+        }
 
         getDomainEntityRepository().save(order);
     }

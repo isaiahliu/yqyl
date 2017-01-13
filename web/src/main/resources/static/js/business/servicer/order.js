@@ -288,7 +288,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 				} ]
 			}
 		}).success(function(response) {
-			order.expectedPaymentAmount = response.data[0].expectedPaymentAmount;
+			order.expectedPaymentAmount = order.newExpectedPaymentAmount;
 			for (var index = 0; index < $scope.services; index++) {
 				if ($scope.services[index].id == order.newServiceInfoId) {
 					order.serviceInfo = $scope.services;
@@ -302,6 +302,14 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 					break;
 				}
 			}
+
+			for (var index = 0; index < $scope.statuses; index++) {
+				if ($scope.statuses[index].code == 'V') {
+					order.status = $scope.statuses[index];
+					break;
+				}
+			}
+
 			order.requestEditing = false;
 		}).error(function(response) {
 			errorHandler($scope, response);
