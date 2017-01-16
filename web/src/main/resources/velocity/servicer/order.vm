@@ -15,8 +15,8 @@
 			</div>
 			<div class="tab" style="margin-top: 0;">
 				<div class="tabTitle" style="text-align: center;">
-					<span>#label("SERVICE_CATEGORY")</span><input style="margin-right: 20px;" ng-model="filterData.category" /> <span>#label("SERVICE_ORDER_STATUS")</span><select
-						style="min-width: 130px; margin-right: 20px;" ng-model="filterData.status"
+					<span>#label("SERVICE_CATEGORY")</span><input style="margin-right: 20px;" ng-model="filterData.category" /> <span>#label("SERVICE_ORDER_STATUS")</span>
+					<select style="min-width: 130px; margin-right: 20px;" ng-model="filterData.status"
 						ng-options="status.code as status.message for status in statuses"
 					>
 						<option value="">#label("ALL")</option>
