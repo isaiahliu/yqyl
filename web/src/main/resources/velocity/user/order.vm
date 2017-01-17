@@ -12,6 +12,7 @@
 				<option value="">#label("ALL_ORDERS")</option>
 				<option ng-repeat="status in statuses" value="{{status.code}}">{{status.message}}</option>
 			</select>
+			<button ng-click="populateRequirements()" style="float: right; font-size: 16px; height: 35px; margin-right: 20px;">#button("MY_REQUIREMENTS")</button>
 		</div>
 		<div style="padding: 15px; text-align: center;" class="block">
 			<table class="data">
@@ -72,6 +73,48 @@
 			<pagination total-items="orderPaging.itemCount" ng-model="orderPaging.pageIndex" max-size="10" items-per-page="orderPaging.pageSize"
 				class="pagination-sm" boundary-links="true" ng-change="populateOrders()" first-text='#label("FIRST_PAGE")'
 				last-text='#label("LAST_PAGE")' previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'
+			></pagination>
+		</div>
+	</div>
+	<div ng-show="checkingRequirements" class="ng-hide requirements"
+		style="z-index: 99; border: 3px solid #d0e0f0; background: white; position: absolute; top: 80px; width: 600px; right: 10px; min-height: 200px;"
+	>
+		<div style="background: #097ffa; padding: 0 20px;">
+			<div style="display: inline-block;">
+				<span style="line-height: 40px; font-weight: normal; font-size: 16px;">#label("REQUIREMENT")</span>
+			</div>
+			<div style="display: inline-block; float: right;">
+				<a href="javascript:void(0)" ng-click="populateRequirements()"> <span
+					style="line-height: 40px; font-weight: normal; font-size: 16px;"
+				>#button("CLOSE")</span></a>
+			</div>
+		</div>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<td align="center" width="160px;"><span>#label("ANNOUNCE_TIME")</span></td>
+						<td align="center"><span>#label("CONTENT")</span></td>
+						<td align="center" width="80px;"><span>#label("REWARD")</span></td>
+						<td align="center" width="80px;"><span>#label("OPERATION")</span></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="requirement in requirements">
+						<td align="center"><span>{{requirement.announceTime|date:'yyyy/MM/dd HH:mm:ss'}}</span></td>
+						<td align="center"><span style="text-overflow: ellipsis; overflow: hidden;">{{requirement.comment}}</span></td>
+						<td align="center"><span>{{requirement.price|currency:'¥'}}</span></td>
+						<td align="center"><a ng-hide="requirement.caught" href="javascript:void(0)" ng-click="catchRequirement(requirement)"><span>#button("CATCH_REQUIREMENT")</span></a><span
+							ng-show="requirement.caught"
+						>#label("REQUIREMENT_CAUGHT")</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="paging" style="text-align: center;">
+			<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
+				class="pagination-sm" boundary-links="true" ng-change="searchRequirements()" first-text='<<' last-text='>>' previous-text='<'
+				next-text='>'
 			></pagination>
 		</div>
 	</div>

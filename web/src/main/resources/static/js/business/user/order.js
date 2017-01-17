@@ -4,6 +4,8 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		selectedPaymentMethod : ""
 	};
 
+	$scope.checkingRequirements = false;
+
 	$scope.orderPaging = {
 		pageIndex : 1,
 		pageSize : 10
@@ -124,7 +126,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			errorHandler($scope, response);
 		});
 	};
-	
+
 	$scope.rejectConfirmRequirement = function(order) {
 		$http({
 			method : "POST",
@@ -139,5 +141,12 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		}).error(function(response) {
 			errorHandler($scope, response);
 		});
+	};
+
+	$scope.populateRequirements = function() {
+		if (!$scope.checkingRequirements) {
+			$scope.requirements = [];
+		}
+		$scope.checkingRequirements = !$scope.checkingRequirements;
 	};
 });
