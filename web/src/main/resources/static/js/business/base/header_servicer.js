@@ -24,7 +24,7 @@ layoutApp.controller('headerController', function($scope, $http, $window, $inter
 	};
 
 	$scope.searchRequirements = function() {
-		var ajaxUrl = "/ajax/user/order/requirement?sortedBy=announceTime_desc";
+		var ajaxUrl = "/ajax/user/order/requirement?sortedBy=announceTime_desc&status=A&searchScope=all";
 
 		ajaxUrl += "&pageIndex=" + ($scope.pagingData.pageIndex - 1);
 		ajaxUrl += "&pageSize=" + $scope.pagingData.pageSize;

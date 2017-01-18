@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.trinity.common.exception.IException;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderRequirementDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderRequirementSearchingDto;
+import org.trinity.yqyl.common.message.exception.ErrorMessage;
+import org.trinity.yqyl.common.message.lookup.AccessRight;
 import org.trinity.yqyl.common.message.lookup.OrderOperation;
 import org.trinity.yqyl.common.message.lookup.OrderStatus;
 import org.trinity.yqyl.common.message.lookup.PaymentMethod;
@@ -41,6 +43,24 @@ public class ServiceOrderRequirementProcessController extends
 
     @Autowired
     private IServiceOrderOperationRepository serviceOrderOperationRepository;
+
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public void cancelRequirement(final Long entityId) throws IException {
+        final ServiceOrderRequirement entity = getDomainEntityRepository().findOne(entityId);
+
+        if (!entity.getUser().getUsername().equals(getCurrentUsername())) {
+            getSecurityUtil().checkAccessRight(AccessRight.ADMINISTRATOR);
+        }
+
+        if (entity.getStatus() != ServiceOrderRequirementStatus.ACTIVE) {
+            throw getExceptionFactory().createException(ErrorMessage.INCORRECT_STATUS);
+        }
+
+        entity.setStatus(ServiceOrderRequirementStatus.CANCELED);
+
+        getDomainEntityRepository().save(entity);
+    }
 
     @Override
     @Transactional(rollbackOn = IException.class)
@@ -88,5 +108,11 @@ public class ServiceOrderRequirementProcessController extends
     @Override
     protected boolean canAccessAllStatus() {
         return true;
+    }
+
+    @Override
+    protected boolean canAccessScopeAll() {
+        return getSecurityUtil().hasAccessRight(AccessRight.SERVICE_SUPPLIER)
+                || getSecurityUtil().hasAccessRight(AccessRight.ADMINISTRATOR);
     }
 }

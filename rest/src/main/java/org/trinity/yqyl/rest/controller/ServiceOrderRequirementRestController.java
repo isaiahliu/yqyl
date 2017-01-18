@@ -28,9 +28,17 @@ public class ServiceOrderRequirementRestController extends
     @Autowired
     private IServiceSupplierClientProcessController serviceSupplierClientProcessController;
 
+    @RequestMapping(value = "/cancel/{entityId}", method = RequestMethod.DELETE)
+    public @ResponseBody ResponseEntity<DefaultResponse> cancelRequirement(@PathVariable("entityId") final Long entityId)
+            throws IException {
+        getDomainProcessController().cancelRequirement(entityId);
+
+        return createResponseEntity();
+    }
+
     @RequestMapping(value = "/catch/{entityId}", method = RequestMethod.POST)
     @Authorize(checkAncestors = false, value = AccessRight.SERVICE_SUPPLIER)
-    public @ResponseBody ResponseEntity<DefaultResponse> addImage(@PathVariable("entityId") final Long entityId) throws IException {
+    public @ResponseBody ResponseEntity<DefaultResponse> catchRequirement(@PathVariable("entityId") final Long entityId) throws IException {
         getDomainProcessController().catchRequirement(entityId);
 
         return createResponseEntity();

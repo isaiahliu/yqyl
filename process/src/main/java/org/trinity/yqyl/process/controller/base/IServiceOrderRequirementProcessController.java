@@ -8,5 +8,7 @@ import org.trinity.yqyl.common.message.dto.domain.ServiceOrderRequirementSearchi
 public interface IServiceOrderRequirementProcessController
         extends ICrudProcessController<ServiceOrderRequirementDto, ServiceOrderRequirementSearchingDto> {
 
+    void cancelRequirement(Long entityId) throws IException;
+
     void catchRequirement(Long entityId) throws IException;
 }

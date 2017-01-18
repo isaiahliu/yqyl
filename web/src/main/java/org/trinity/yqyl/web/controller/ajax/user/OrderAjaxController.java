@@ -50,9 +50,19 @@ public class OrderAjaxController extends AbstractRestController {
         return restfulServiceUtil.callRestService(Url.ORDER_CANCEL, null, serviceOrderRequest, null, ServiceOrderResponse.class);
     }
 
+    @RequestMapping(value = "/requirement/{entityId}", method = RequestMethod.DELETE)
+    public @ResponseBody DefaultResponse ajaxCancelRequirement(@PathVariable("entityId") final Long entityId) throws IException {
+        return restfulServiceUtil.callRestService(Url.REQUIREMENT_CANCEL, String.valueOf(entityId), null, null, DefaultResponse.class);
+    }
+
     @RequestMapping(value = "/requirement/catch/{entityId}", method = RequestMethod.POST)
     public @ResponseBody DefaultResponse ajaxCatchRequirement(@PathVariable("entityId") final Long entityId) throws IException {
         return restfulServiceUtil.callRestService(Url.REQUIREMENT_CATCH, String.valueOf(entityId), null, null, DefaultResponse.class);
+    }
+
+    @RequestMapping(value = "/confirmRequirement", method = RequestMethod.POST)
+    public @ResponseBody DefaultResponse ajaxcCnfirmOrderRequirement(@RequestBody final ServiceOrderRequest request) throws IException {
+        return restfulServiceUtil.callRestService(Url.ORDER_CONFIRM_REQUIREMENT, null, request, null, DefaultResponse.class);
     }
 
     @RequestMapping(value = "/price", method = RequestMethod.PUT)
@@ -61,11 +71,6 @@ public class OrderAjaxController extends AbstractRestController {
             throws IException {
 
         return restfulServiceUtil.callRestService(Url.ORDER_PRICE, null, serviceOrderRequest, null, ServiceOrderResponse.class);
-    }
-
-    @RequestMapping(value = "/confirmRequirement", method = RequestMethod.POST)
-    public @ResponseBody DefaultResponse ajaxconfirmOrderRequirement(@RequestBody final ServiceOrderRequest request) throws IException {
-        return restfulServiceUtil.callRestService(Url.ORDER_CONFIRM_REQUIREMENT, null, request, null, DefaultResponse.class);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
@@ -84,7 +89,6 @@ public class OrderAjaxController extends AbstractRestController {
     @RequestMapping(value = "/requirement", method = RequestMethod.GET)
     public @ResponseBody ServiceOrderRequirementResponse ajaxGetRequirement(final ServiceOrderRequirementSearchingDto request)
             throws IException {
-        request.getStatus().add(ServiceOrderRequirementStatus.ACTIVE.getMessageCode());
         return restfulServiceUtil.callRestService(Url.REQUIREMENT, null, null, request, ServiceOrderRequirementResponse.class);
     }
 

@@ -98,6 +98,7 @@ public enum Url implements IHttpUrl {
 
     REQUIREMENT(HttpMethod.GET, Path.REQUIREMENT),
     REQUIREMENT_NEW(HttpMethod.POST, Path.REQUIREMENT),
+    REQUIREMENT_CANCEL(HttpMethod.DELETE, Path.REQUIREMENT, "cancel"),
     REQUIREMENT_CATCH(HttpMethod.POST, Path.REQUIREMENT, "catch"),
 
     SERVICE_INFO(HttpMethod.GET, Path.SERVICE_INFO),

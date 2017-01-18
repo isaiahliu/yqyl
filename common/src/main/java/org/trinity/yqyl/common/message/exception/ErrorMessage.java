@@ -34,7 +34,8 @@ public enum ErrorMessage implements IErrorMessage {
     INVALID_YIQUAN_CODE,
     EXCEED_ALLOWED_SIZE,
     INCORRECT_SERVICE_RECEIVER_CLIENT_STATUS,
-    NEW_PASSWORD_SHOULD_BE_DIFFERENT;
+    NEW_PASSWORD_SHOULD_BE_DIFFERENT,
+    INCORRECT_STATUS;
 
     @Override
     public String getMessageCode() {

@@ -16,6 +16,7 @@ import org.trinity.yqyl.common.message.dto.domain.ServiceOrderRequirementSearchi
 import org.trinity.yqyl.common.message.lookup.ServiceOrderRequirementStatus;
 import org.trinity.yqyl.repository.business.entity.ServiceOrderRequirement;
 import org.trinity.yqyl.repository.business.entity.ServiceOrderRequirement_;
+import org.trinity.yqyl.repository.business.entity.User_;
 
 public interface IServiceOrderRequirementRepository extends IJpaRepository<ServiceOrderRequirement, ServiceOrderRequirementSearchingDto> {
     @Override
@@ -23,6 +24,7 @@ public interface IServiceOrderRequirementRepository extends IJpaRepository<Servi
         final Specification<ServiceOrderRequirement> specification = (root, query, cb) -> {
             final List<Predicate> predicates = new ArrayList<>();
             if (!searchingDto.isSearchAll()) {
+                predicates.add(cb.equal(root.get(ServiceOrderRequirement_.user).get(User_.username), searchingDto.getCurrentUsername()));
             }
 
             if (searchingDto.getId() != null) {

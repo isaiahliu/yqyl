@@ -143,9 +143,43 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		});
 	};
 
+	$scope.cancelRequirement = function(requirement) {
+		$http({
+			method : "DELETE",
+			url : "/ajax/user/order/requirement/" + requirement.id
+		}).success(function(response) {
+			$scope.populateRequirements();
+		}).error(function(response) {
+			errorHandler($scope, response);
+		});
+	};
+
+	$scope.pagingData = {
+		pageIndex : 1,
+		pageSize : 10
+	};
+
 	$scope.populateRequirements = function() {
+		var ajaxUrl = "/ajax/user/order/requirement?sortedBy=announceTime_desc&searchScope=me&status=A";
+
+		ajaxUrl += "&pageIndex=" + ($scope.pagingData.pageIndex - 1);
+		ajaxUrl += "&pageSize=" + $scope.pagingData.pageSize;
+		$http({
+			method : "GET",
+			url : ajaxUrl
+		}).success(function(response) {
+			$scope.requirements = response.data;
+			response.meta.paging.pageIndex++;
+			$scope.pagingData = response.meta.paging;
+
+		}).error(function(response) {
+			errorHandler($scope, response);
+		});
+	};
+
+	$scope.changeCheckingRequirements = function() {
 		if (!$scope.checkingRequirements) {
-			$scope.requirements = [];
+			$scope.populateRequirements();
 		}
 		$scope.checkingRequirements = !$scope.checkingRequirements;
 	};
