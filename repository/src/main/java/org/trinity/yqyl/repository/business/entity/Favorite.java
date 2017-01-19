@@ -3,6 +3,7 @@ package org.trinity.yqyl.repository.business.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,66 +23,67 @@ import org.trinity.yqyl.common.message.lookup.RecordStatus;
 @Entity
 @NamedQuery(name = "Favorite.findAll", query = "SELECT f FROM Favorite f")
 public class Favorite extends AbstractAuditableEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private FavoriteCategory category;
+    @Basic
+    private FavoriteCategory category;
 
-	private RecordStatus status;
+    private RecordStatus status;
 
-	// bi-directional many-to-one association to Service
-	@ManyToOne
-	private ServiceInfo service;
+    // bi-directional many-to-one association to Service
+    @ManyToOne
+    private ServiceInfo service;
 
-	// bi-directional many-to-one association to ServiceReceiverClient
-	@ManyToOne
-	@JoinColumn(name = "service_receiver_client_id")
-	private ServiceReceiverClient serviceReceiverClient;
+    // bi-directional many-to-one association to ServiceReceiverClient
+    @ManyToOne
+    @JoinColumn(name = "service_receiver_client_id")
+    private ServiceReceiverClient serviceReceiverClient;
 
-	public Favorite() {
-	}
+    public Favorite() {
+    }
 
-	public FavoriteCategory getCategory() {
-		return this.category;
-	}
+    public FavoriteCategory getCategory() {
+        return this.category;
+    }
 
-	public Long getId() {
-		return this.id;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public ServiceInfo getService() {
-		return this.service;
-	}
+    public ServiceInfo getService() {
+        return this.service;
+    }
 
-	public ServiceReceiverClient getServiceReceiverClient() {
-		return this.serviceReceiverClient;
-	}
+    public ServiceReceiverClient getServiceReceiverClient() {
+        return this.serviceReceiverClient;
+    }
 
-	public RecordStatus getStatus() {
-		return this.status;
-	}
+    public RecordStatus getStatus() {
+        return this.status;
+    }
 
-	public void setCategory(final FavoriteCategory category) {
-		this.category = category;
-	}
+    public void setCategory(final FavoriteCategory category) {
+        this.category = category;
+    }
 
-	public void setId(final Long id) {
-		this.id = id;
-	}
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
-	public void setService(final ServiceInfo service) {
-		this.service = service;
-	}
+    public void setService(final ServiceInfo service) {
+        this.service = service;
+    }
 
-	public void setServiceReceiverClient(final ServiceReceiverClient serviceReceiverClient) {
-		this.serviceReceiverClient = serviceReceiverClient;
-	}
+    public void setServiceReceiverClient(final ServiceReceiverClient serviceReceiverClient) {
+        this.serviceReceiverClient = serviceReceiverClient;
+    }
 
-	public void setStatus(final RecordStatus status) {
-		this.status = status;
-	}
+    public void setStatus(final RecordStatus status) {
+        this.status = status;
+    }
 
 }
