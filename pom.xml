@@ -77,7 +77,11 @@
 				<artifactId>web</artifactId>
 				<version>${trinity-framework}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.trinity.framework.contact</groupId>
+				<artifactId>tsykt</artifactId>
+				<version>${trinity-framework}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>

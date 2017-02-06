@@ -21,5 +21,9 @@
 			<groupId>org.apache.mina</groupId>
 			<artifactId>mina-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.trinity.framework.contact</groupId>
+			<artifactId>tsykt</artifactId>
+		</dependency>
 	</dependencies>
 </project>
