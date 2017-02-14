@@ -35,7 +35,8 @@ public enum ErrorMessage implements IErrorMessage {
     EXCEED_ALLOWED_SIZE,
     INCORRECT_SERVICE_RECEIVER_CLIENT_STATUS,
     NEW_PASSWORD_SHOULD_BE_DIFFERENT,
-    INCORRECT_STATUS;
+    INCORRECT_STATUS,
+    UNABLE_TO_CONNECT_YKT;
 
     @Override
     public String getMessageCode() {
