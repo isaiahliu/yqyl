@@ -1,5 +1,8 @@
 <link rel="stylesheet" href="/static/css/business/base/header.css"></link>
 
+<div
+	style="background: #fd6a15; position: absolute; width: 100%; height: 45px; top: 143px;"></div>
+
 <div class="header noprint" ng-controller="headerController">
 	<div class="headerBar">
 		<div class="left">

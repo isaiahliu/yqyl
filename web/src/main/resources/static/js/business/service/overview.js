@@ -15,7 +15,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	$scope.searchServices =
 			function(category) {
 				var ajaxUrl =
-						"/ajax/service?rsexp=serviceSupplierClient&status=A&searchScope=all&pageIndex=0&pageSize=4&parentCategoryId="
+						"/ajax/service?rsexp=serviceSupplierClient&status=A&searchScope=all&pageIndex=0&pageSize=8&parentCategoryId="
 								+ category.id;
 
 				$http({
