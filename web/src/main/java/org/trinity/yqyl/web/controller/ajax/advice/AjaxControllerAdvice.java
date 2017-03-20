@@ -17,25 +17,25 @@ import org.trinity.rest.controller.AbstractRestController;
 
 @ControllerAdvice("org.trinity.yqyl.web.controller.ajax")
 public class AjaxControllerAdvice extends AbstractRestController {
-    private static Logger logger = LogManager.getLogger(AjaxControllerAdvice.class);
+	private static Logger logger = LogManager.getLogger(AjaxControllerAdvice.class);
 
-    @Autowired
-    private IMessageResolverChain messageResolver;
+	@Autowired
+	private IMessageResolverChain messageResolver;
 
-    @ExceptionHandler(LocalizedException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public ResponseEntity<IResponse> processException(final LocalizedException e) {
-        final DefaultResponse response = new DefaultResponse();
+	@ExceptionHandler(LocalizedException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ResponseEntity<IResponse> processException(final LocalizedException e) {
+		final DefaultResponse response = new DefaultResponse();
 
-        if (e.getErrorMessages().isEmpty()) {
-            e.getErrorMessages().forEach(item -> response.addError(item.getItem1().getMessageCode(),
-                    messageResolver.getMessage(item.getItem1(), item.getItem2())));
-        } else {
-            response.addError("", e.getMessage());
-        }
-        logger.error(e.getMessage(), e);
+		if (e.getErrorMessages().isEmpty()) {
+			e.getErrorMessages().forEach(item -> response.addError(item.getItem1().getMessageCode(),
+					messageResolver.getMessage(item.getItem1(), item.getItem2())));
+		} else {
+			response.addError("", e.getMessage());
+		}
+		logger.error(e.getMessage());
 
-        return createResponseEntity(response, HttpStatus.BAD_REQUEST);
-    }
+		return createResponseEntity(response, HttpStatus.BAD_REQUEST);
+	}
 }
