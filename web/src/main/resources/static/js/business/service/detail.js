@@ -9,14 +9,14 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 
 	$scope.modifying = false;
 
-	var url =
-			"/ajax/user/order?uid=" + serviceOrderId
-					+ "&rsexp=serviceInfo[serviceSupplierClient,serviceCategory],operations,appraise";
+	var url = "/ajax/user/order?uid=" + serviceOrderId + "&rsexp=serviceInfo[serviceSupplierClient,serviceCategory],operations,appraise";
 
 	if (mode == 'receiver') {
 		url += "&searchScope=me";
-	} else {
+	} else if (mode == 'supplier') {
 		url += "&searchScope=supplier";
+	} else {
+		url += "&searchScope=all";
 	}
 	$http({
 		method : "GET",

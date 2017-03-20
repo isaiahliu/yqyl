@@ -16,11 +16,14 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	}).error(function(response) {
 		errorHandler($scope, response);
 	});
+	$scope.showOrder = function(uid) {
+		$window.location.href = "/admin/service/order/" + uid;
+	};
 
 	$scope.searchOrders = function() {
-		var ajaxUrl = "/ajax/user/order";
+		var ajaxUrl = "/ajax/user/order?rsexp=user";
 
-		ajaxUrl += "?pageIndex=" + ($scope.pagingData.pageIndex - 1);
+		ajaxUrl += "&pageIndex=" + ($scope.pagingData.pageIndex - 1);
 		ajaxUrl += "&pageSize=" + $scope.pagingData.pageSize;
 
 		if ($scope.filterData.username != undefined && $scope.filterData.username != "") {

@@ -12,6 +12,7 @@ import org.trinity.yqyl.common.message.dto.domain.ServiceOrderAppraiseDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderAppraiseSearchingDto;
 import org.trinity.yqyl.common.message.dto.request.ServiceOrderAppraiseRequest;
 import org.trinity.yqyl.common.message.dto.response.ServiceOrderAppraiseResponse;
+import org.trinity.yqyl.common.message.lookup.AccessRight;
 import org.trinity.yqyl.process.controller.base.IServiceOrderAppraiseProcessController;
 
 @RestController
@@ -27,11 +28,11 @@ public class ServiceOrderAppraiseRestController extends
 			responseEntity.getBody().addExtraData("totalAppraise",
 					getDomainProcessController().countAppraises(request.getServiceSupplierClientId()));
 			responseEntity.getBody().addExtraData("level1",
-					getDomainProcessController().countAppraisesForRate(request.getServiceSupplierClientId(), 4, 11));
+					getDomainProcessController().countAppraisesForRate(request.getServiceSupplierClientId(), 17, 20));
 			responseEntity.getBody().addExtraData("level2",
 					getDomainProcessController().countAppraisesForRate(request.getServiceSupplierClientId(), 12, 16));
 			responseEntity.getBody().addExtraData("level3",
-					getDomainProcessController().countAppraisesForRate(request.getServiceSupplierClientId(), 17, 20));
+					getDomainProcessController().countAppraisesForRate(request.getServiceSupplierClientId(), 4, 11));
 		}
 		return responseEntity;
 	}
@@ -46,5 +47,12 @@ public class ServiceOrderAppraiseRestController extends
 	@Override
 	protected ServiceOrderAppraiseResponse createResponseInstance() {
 		return new ServiceOrderAppraiseResponse();
+
 	}
+
+	@Override
+	protected void validateUpdate() throws IException {
+		getSecurityUtil().checkAccessRight(AccessRight.ADMINISTRATOR);
+	}
+
 }

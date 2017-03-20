@@ -37,8 +37,11 @@ public class ServiceOrderAppraiseConverter extends AbstractLookupSupportObjectCo
 		copyObject(source::getOnTimeRate, target::getOnTimeRate, target::setOnTimeRate, copyPolicy);
 		copyObject(source::getQualityRate, target::getQualityRate, target::setQualityRate, copyPolicy);
 		copyObject(source::getStaffRate, target::getStaffRate, target::setStaffRate, copyPolicy);
-		copyObject(() -> source.getAttitudeRate() + source.getOnTimeRate() + source.getQualityRate() + source.getStaffRate(),
-				target::getTotalRate, target::setTotalRate, copyPolicy);
+		if (source.getAttitudeRate() != null && source.getOnTimeRate() != null && source.getQualityRate() != null
+				&& source.getStaffRate() != null) {
+			copyObject(() -> source.getAttitudeRate() + source.getOnTimeRate() + source.getQualityRate() + source.getStaffRate(),
+					target::getTotalRate, target::setTotalRate, copyPolicy);
+		}
 		copyLookup(source::getStatus, target::getStatus, target::setStatus, RecordStatus.class, copyPolicy);
 	}
 

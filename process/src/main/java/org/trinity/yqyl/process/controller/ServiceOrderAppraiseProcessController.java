@@ -1,5 +1,6 @@
 package org.trinity.yqyl.process.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +9,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.trinity.common.exception.IException;
+import org.trinity.message.exception.GeneralErrorMessage;
+import org.trinity.process.converter.IObjectConverter.CopyPolicy;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderAppraiseDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderAppraiseSearchingDto;
 import org.trinity.yqyl.common.message.exception.ErrorMessage;
@@ -167,6 +171,24 @@ public class ServiceOrderAppraiseProcessController extends
 
 			return entity;
 		}).collect(Collectors.toList());
+
+		getDomainEntityRepository().save(entities);
+	}
+
+	@Override
+	public void updateAll(final List<ServiceOrderAppraiseDto> data) throws IException {
+		final List<ServiceOrderAppraise> entities = new ArrayList<>();
+		for (final ServiceOrderAppraiseDto dto : data.stream().filter(item -> !StringUtils.isEmpty(item.getUid()))
+				.collect(Collectors.toList())) {
+			ServiceOrderAppraise entity = null;
+
+			entity = serviceOrderRepository.findOneByUid(dto.getUid()).getAppraise();
+			if (entity == null) {
+				throw getExceptionFactory().createException(GeneralErrorMessage.UNABLE_TO_FIND_INSTANCE, dto.getUid());
+			}
+
+			entities.add(getDomainObjectConverter().convertBack(dto, entity, CopyPolicy.SOURCE_IS_NOT_NULL));
+		}
 
 		getDomainEntityRepository().save(entities);
 	}
