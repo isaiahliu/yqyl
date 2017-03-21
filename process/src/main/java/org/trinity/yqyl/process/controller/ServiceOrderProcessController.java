@@ -319,7 +319,8 @@ public class ServiceOrderProcessController
 			throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_ORDER_STATUS);
 		}
 
-		if (!order.getServiceInfo().getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
+		if (!order.getServiceInfo().getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())
+				&& !order.getUser().getUsername().equals(getCurrentUsername())) {
 			getSecurityUtil().checkAccessRight(AccessRight.ADMINISTRATOR);
 		}
 
@@ -567,7 +568,8 @@ public class ServiceOrderProcessController
 			throw getExceptionFactory().createException(ErrorMessage.INCORRECT_SERVICE_ORDER_STATUS);
 		}
 
-		if (!order.getServiceInfo().getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
+		if (!order.getServiceInfo().getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())
+				&& !order.getUser().getUsername().equals(getCurrentUsername())) {
 			getSecurityUtil().checkAccessRight(AccessRight.ADMINISTRATOR);
 		}
 
