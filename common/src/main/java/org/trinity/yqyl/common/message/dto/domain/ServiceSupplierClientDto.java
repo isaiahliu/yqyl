@@ -30,8 +30,26 @@ public class ServiceSupplierClientDto extends AbstractBusinessDto {
     private List<String> images;
     private UserDto user;
 
+    private Integer orderCount;
+    private Integer appraiseLevel1Count;
+    private Integer appraiseLevel2Count;
+    private Integer appraiseLevel3Count;
+    private Integer cancelCount;
+
     public String getAddress() {
         return address;
+    }
+
+    public Integer getAppraiseLevel1Count() {
+        return appraiseLevel1Count;
+    }
+
+    public Integer getAppraiseLevel2Count() {
+        return appraiseLevel2Count;
+    }
+
+    public Integer getAppraiseLevel3Count() {
+        return appraiseLevel3Count;
     }
 
     public List<ServiceSupplierClientAuditingDto> getAuditings() {
@@ -43,6 +61,10 @@ public class ServiceSupplierClientDto extends AbstractBusinessDto {
 
     public ServiceSupplierClientAccountDto getBankAccount() {
         return bankAccount;
+    }
+
+    public Integer getCancelCount() {
+        return cancelCount;
     }
 
     public String getCategories() {
@@ -85,6 +107,10 @@ public class ServiceSupplierClientDto extends AbstractBusinessDto {
         return name;
     }
 
+    public Integer getOrderCount() {
+        return orderCount;
+    }
+
     public String getRegion() {
         return region;
     }
@@ -109,12 +135,28 @@ public class ServiceSupplierClientDto extends AbstractBusinessDto {
         this.address = address;
     }
 
+    public void setAppraiseLevel1Count(final Integer appraiseLevel1Count) {
+        this.appraiseLevel1Count = appraiseLevel1Count;
+    }
+
+    public void setAppraiseLevel2Count(final Integer appraiseLevel2Count) {
+        this.appraiseLevel2Count = appraiseLevel2Count;
+    }
+
+    public void setAppraiseLevel3Count(final Integer appraiseLevel3Count) {
+        this.appraiseLevel3Count = appraiseLevel3Count;
+    }
+
     public void setAuditings(final List<ServiceSupplierClientAuditingDto> auditings) {
         this.auditings = auditings;
     }
 
     public void setBankAccount(final ServiceSupplierClientAccountDto bankAccount) {
         this.bankAccount = bankAccount;
+    }
+
+    public void setCancelCount(final Integer cancelCount) {
+        this.cancelCount = cancelCount;
     }
 
     public void setCategories(final String categories) {
@@ -155,6 +197,10 @@ public class ServiceSupplierClientDto extends AbstractBusinessDto {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public void setOrderCount(final Integer orderCount) {
+        this.orderCount = orderCount;
     }
 
     public void setRegion(final String region) {

@@ -122,6 +122,12 @@ public class AdminWebController extends AbstractResourceWebController {
 				.addObject("categoryId", entityId);
 	}
 
+	@RequestMapping("/service/supplier")
+	@Authorize(AccessRight.ADMINISTRATOR)
+	public ModelAndView serviceSupplierPage() throws IException {
+		return createModelAndView("admin/service/supplier").addObject("currentPage", "SERVICE").addObject("currentSubPage", "SUPPLIER");
+	}
+
 	@RequestMapping("/supplier")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView supplierPage() throws IException {

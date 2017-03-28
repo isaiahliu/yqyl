@@ -23,6 +23,9 @@
 				<li class="subItem"><a href="/admin/service/appraise"><div class="navBarItem #if($currentSubPage=='APPRAISE')selected #end">
 							<span>#button("SERVICER_SERVICE_APPRAISE")</span>
 						</div></a></li>
+				<li class="subItem"><a href="/admin/service/supplier"><div class="navBarItem #if($currentSubPage=='SUPPLIER')selected #end">
+							<span>#button("SERVICER_SERVICE_SUPPLIER")</span>
+						</div></a></li>
 			</ul></li>
 		<li ng-mouseenter="expandManage=true" ng-mouseleave="expandManage=false"><a href="/admin/manage/about">
 				<div class="navBarItem #if($currentPage=='MANAGE')selected #end">

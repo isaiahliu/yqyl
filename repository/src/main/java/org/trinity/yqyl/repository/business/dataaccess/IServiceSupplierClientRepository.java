@@ -21,47 +21,51 @@ import org.trinity.yqyl.repository.business.entity.ServiceSupplierClient_;
 import org.trinity.yqyl.repository.business.entity.User_;
 
 public interface IServiceSupplierClientRepository extends IJpaRepository<ServiceSupplierClient, ServiceSupplierClientSearchingDto> {
-    @Override
-    default Page<ServiceSupplierClient> query(final ServiceSupplierClientSearchingDto searchingDto, final Pageable pagable) {
-        final Specification<ServiceSupplierClient> specification = (root, query, cb) -> {
-            final List<Predicate> predicates = new ArrayList<>();
+	@Override
+	default Page<ServiceSupplierClient> query(final ServiceSupplierClientSearchingDto searchingDto, final Pageable pagable) {
+		final Specification<ServiceSupplierClient> specification = (root, query, cb) -> {
+			final List<Predicate> predicates = new ArrayList<>();
 
-            if (!searchingDto.getCategoryChildren().isEmpty()) {
-                predicates.add(root.join(ServiceSupplierClient_.serviceInfos).join(ServiceInfo_.serviceCategory).get(ServiceCategory_.id)
-                        .in(searchingDto.getCategoryChildren()));
-                query.distinct(true);
-            }
+			if (!searchingDto.getCategoryChildren().isEmpty()) {
+				predicates.add(root.join(ServiceSupplierClient_.serviceInfos).join(ServiceInfo_.serviceCategory).get(ServiceCategory_.id)
+						.in(searchingDto.getCategoryChildren()));
+				query.distinct(true);
+			}
 
-            if (!searchingDto.isSearchAll()) {
-                predicates.add(cb.equal(root.join(ServiceSupplierClient_.user).get(User_.username), searchingDto.getCurrentUsername()));
-            }
+			if (!searchingDto.isSearchAll()) {
+				predicates.add(cb.equal(root.join(ServiceSupplierClient_.user).get(User_.username), searchingDto.getCurrentUsername()));
+			}
 
-            if (!StringUtils.isEmpty(searchingDto.getName())) {
-                predicates.add(cb.like(root.get(ServiceSupplierClient_.name), "%" + searchingDto.getName() + "%"));
-            }
+			if (!StringUtils.isEmpty(searchingDto.getName())) {
+				predicates.add(cb.like(root.get(ServiceSupplierClient_.name), "%" + searchingDto.getName() + "%"));
+			}
 
-            if (!StringUtils.isEmpty(searchingDto.getAddress())) {
-                predicates.add(cb.like(root.get(ServiceSupplierClient_.address), "%" + searchingDto.getAddress() + "%"));
-            }
+			if (!StringUtils.isEmpty(searchingDto.getUsername())) {
+				predicates.add(cb.like(root.join(ServiceSupplierClient_.user).get(User_.username), "%" + searchingDto.getUsername() + "%"));
+			}
 
-            if (searchingDto.getId() != null && searchingDto.getId() != 0) {
-                predicates.add(cb.equal(root.get(ServiceSupplierClient_.userId), searchingDto.getId()));
-            }
+			if (!StringUtils.isEmpty(searchingDto.getAddress())) {
+				predicates.add(cb.like(root.get(ServiceSupplierClient_.address), "%" + searchingDto.getAddress() + "%"));
+			}
 
-            if (searchingDto.getStatus().isEmpty()) {
-                if (!searchingDto.isSearchAllStatus()) {
-                    predicates.add(cb.equal(root.get(ServiceSupplierClient_.status), ServiceSupplierClientStatus.ACTIVE));
-                }
-            } else {
-                final In<ServiceSupplierClientStatus> in = cb.in(root.get(ServiceSupplierClient_.status));
-                searchingDto.getStatus().stream().map(item -> LookupParser.parse(ServiceSupplierClientStatus.class, item))
-                        .forEach(item -> in.value(item));
-                predicates.add(in);
-            }
+			if (searchingDto.getId() != null && searchingDto.getId() != 0) {
+				predicates.add(cb.equal(root.get(ServiceSupplierClient_.userId), searchingDto.getId()));
+			}
 
-            return cb.and(predicates.toArray(new Predicate[0]));
-        };
+			if (searchingDto.getStatus().isEmpty()) {
+				if (!searchingDto.isSearchAllStatus()) {
+					predicates.add(cb.equal(root.get(ServiceSupplierClient_.status), ServiceSupplierClientStatus.ACTIVE));
+				}
+			} else {
+				final In<ServiceSupplierClientStatus> in = cb.in(root.get(ServiceSupplierClient_.status));
+				searchingDto.getStatus().stream().map(item -> LookupParser.parse(ServiceSupplierClientStatus.class, item))
+						.forEach(item -> in.value(item));
+				predicates.add(in);
+			}
 
-        return findAll(specification, pagable);
-    }
+			return cb.and(predicates.toArray(new Predicate[0]));
+		};
+
+		return findAll(specification, pagable);
+	}
 }

@@ -10,19 +10,21 @@ import org.trinity.yqyl.common.message.dto.domain.ServiceSupplierClientDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceSupplierClientSearchingDto;
 
 public interface IServiceSupplierClientProcessController
-        extends ICrudProcessController<ServiceSupplierClientDto, ServiceSupplierClientSearchingDto> {
+		extends ICrudProcessController<ServiceSupplierClientDto, ServiceSupplierClientSearchingDto> {
 
-    void audit(List<ServiceSupplierClientDto> serviceSupplierClientDtos) throws IException;
+	void audit(List<ServiceSupplierClientDto> serviceSupplierClientDtos) throws IException;
 
-    Date getLastReadTime() throws IException;
+	Date getLastReadTime() throws IException;
 
-    Page<ServiceSupplierClientDto> listPublicInfo(ServiceSupplierClientSearchingDto request) throws IException;
+	Page<ServiceSupplierClientDto> listPublicInfo(ServiceSupplierClientSearchingDto request) throws IException;
 
-    void propose(ServiceSupplierClientDto data) throws IException;
+	void propose(ServiceSupplierClientDto data) throws IException;
 
-    void readRequirements() throws IException;
+	void readRequirements() throws IException;
 
-    ServiceSupplierClientDto register() throws IException;
+	ServiceSupplierClientDto register() throws IException;
 
-    void reject(List<ServiceSupplierClientDto> serviceSupplierClientDtos) throws IException;
+	void reject(List<ServiceSupplierClientDto> serviceSupplierClientDtos) throws IException;
+
+	Page<ServiceSupplierClientDto> reportSuppliers(ServiceSupplierClientSearchingDto request);
 }

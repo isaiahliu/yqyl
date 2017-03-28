@@ -19,15 +19,23 @@
 			</div>
 			<div class="tab" style="margin-top: 0;">
 				<div class="tabTitle" style="text-align: center;">
-					<span>#label("TIME")</span><input type="text"
+				<span>#label("SEARCH_TIME")</span><input type="text"
 						placeholder="YYYY/MM/DD" ui-date="dateOptions"
-						ng-model="filterData.serviceTime" style="width: 100px;" /> <span>#label("USER_ID")</span>
+						ng-model="filterData.fromServiceTime" style="width: 100px;" /> <span>#label("TO")</span>
+					<input type="text" placeholder="YYYY/MM/DD" ui-date="dateOptions"
+						ng-model="filterData.toServiceTime" style="width: 100px;" /> <span>#label("USER_ID")</span>
 					<input ng-model="filterData.username" /> <span>#label("SERVICE_SUPPLIER_ID")</span><input
-						ng-model="filterData.supplierId" /> <span>#label("SERVICE_ORDER_ID")</span>
-					<input ng-model="filterData.orderId" /> <span>#label("SERVICE_ORDER_STATUS")</span><select
+						ng-model="filterData.supplierName" /> <span>#label("SERVICE_ORDER_ID")</span>
+					<input ng-model="filterData.orderUid" /> <span>#label("SERVICE_ORDER_STATUS")</span><select
 						ng-model="filterData.status"><option
 							ng-repeat="status in orderStatusLookups" ng-value="status.code">{{status.message}}</option>
 						<option value="">#label("ALL")</option>
+					</select> <span>#label("APPRAISE_TYPE")</span>
+					<select ng-model="filterData.appraiseLevel">
+						<option value="0">#label("ALL")</option>
+						<option value="1">好评</option>
+						<option value="2">中评</option>
+						<option value="3">差评</option>
 					</select>
 					<button ng-click="searchOrders()">#button("SEARCH")</button>
 				</div>
@@ -38,24 +46,33 @@
 						<thead>
 							<tr>
 								<td align="center"><span>#label("INDEX")</span></td>
-								<td align="center"><span>#label("USER_ID")</span></td>
+								<td align="center"><span>#label("SERVICE_SUPPLIER_NAME")</span></td>
 								<td align="center"><span>#label("SERVICE_ORDER_ID")</span></td>
 								<td align="center"><span>#label("SERVICE_ORDER_TIME")</span></td>
 								<td align="center"><span>#label("SERVICE_ORDER_SETTLED_TIME")</span></td>
 								<td align="center"><span>#label("SERVICE_ORDER_STATUS")</span></td>
+								<td align="center"><span>#label("USER_ID")</span></td>
+								<td align="center"><span>#label("APPRAISE_TYPE")</span></td>
+								<td align="center"><span>#label("APPRAISE_COMMENT")</span></td>
 								<td align="center"><span>#label("OPERATION")</span></td>
 							</tr>
 						</thead>
 						<tbody class="ng-hide" ng-show="orders">
 							<tr ng-repeat="order in orders">
 								<td align="center"><span>{{$index + 1}}</span></td>
-								<td align="center"><span>{{order.user.username}}</span></td>
+								<td align="center"><span>{{order.serviceInfo.serviceSupplierClient.user.username}}</span></td>
 								<td align="center"><span>{{order.uid}}</span></td>
 								<td align="center"><span>{{order.serviceDate|date:'yyyy/MM/dd'}}
 										{{order.serviceHour}}:00</span></td>
 								<td align="center"><span>{{order.settledTime|date:'yyyy/MM/dd
 										HH:mm:ss'}}</span></td>
 								<td align="center"><span>{{order.status.message}}</span></td>
+								<td align="center"><span>{{order.user.username}}</span></td>
+								<td align="center"><span
+									ng-show='order.appraise.totalRate>=17'>好评</span><span
+									ng-show='order.appraise.totalRate>=12&&order.appraise.totalRate<=16'>中评</span><span
+									ng-show='order.appraise.totalRate<12'>差评</span></td>
+								<td align="center"><span>{{order.appraise.comment}}</span></td>
 								<td align="center"><span><button ng-click="showOrder(order.uid)">#button("VIEW")</button></span></td>
 							</tr>
 						</tbody>

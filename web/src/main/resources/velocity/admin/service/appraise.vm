@@ -19,7 +19,7 @@
 			</div>
 			<div class="tab" style="margin-top: 0;">
 				<div class="tabTitle" style="text-align: center;">
-					<span>#label("TIME")</span><input type="text"
+					<span>#label("SEARCH_TIME")</span><input type="text"
 						placeholder="YYYY/MM/DD" ui-date="dateOptions"
 						ng-model="filterData.fromServiceTime" style="width: 100px;" /> <span>#label("TO")</span>
 					<input type="text" placeholder="YYYY/MM/DD" ui-date="dateOptions"

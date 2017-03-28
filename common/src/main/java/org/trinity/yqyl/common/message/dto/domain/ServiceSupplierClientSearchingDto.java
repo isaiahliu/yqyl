@@ -9,7 +9,11 @@ public class ServiceSupplierClientSearchingDto extends AbstractSearchingDto {
     private Long categoryParent;
     private List<Long> categoryChildren;
     private String name;
+    private String username;
     private String address;
+
+    private String fromProposalTime;
+    private String toProposalTime;
 
     public String getAddress() {
         return address;
@@ -26,8 +30,20 @@ public class ServiceSupplierClientSearchingDto extends AbstractSearchingDto {
         return categoryParent;
     }
 
+    public String getFromProposalTime() {
+        return fromProposalTime;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public String getToProposalTime() {
+        return toProposalTime;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setAddress(final String address) {
@@ -42,8 +58,20 @@ public class ServiceSupplierClientSearchingDto extends AbstractSearchingDto {
         this.categoryParent = categoryParent;
     }
 
+    public void setFromProposalTime(final String fromProposalTime) {
+        this.fromProposalTime = fromProposalTime;
+    }
+
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public void setToProposalTime(final String toProposalTime) {
+        this.toProposalTime = toProposalTime;
+    }
+
+    public void setUsername(final String username) {
+        this.username = username;
     }
 
 }
