@@ -8,26 +8,53 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
     private String serviceDate;
     private String settledDate;
     private String supplierUserName;
+    private Integer appraiseLevel;
     private String category;
+
     private String paymentMethod;
+
     private boolean fetchUnprocessedCount;
+
     private boolean assigned;
+
     private String staffNo;
+
     private String staffName;
+    private String fromSettledTime;
+    private String toSettledTime;
+
     private boolean paid;
+
     private String paymentFromDate;
+
     private String paymentToDate;
+
     private String paymentCode;
+
     private String uid;
+
+    private String partialUid;
+
+    public Integer getAppraiseLevel() {
+        return appraiseLevel;
+    }
 
     public String getCategory() {
         return category;
+    }
+
+    public String getFromSettledTime() {
+        return fromSettledTime;
     }
 
     @Override
     @Deprecated
     public Long getId() {
         return super.getId();
+    }
+
+    public String getPartialUid() {
+        return partialUid;
     }
 
     public String getPaymentCode() {
@@ -74,6 +101,10 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
         return supplierUserName;
     }
 
+    public String getToSettledTime() {
+        return toSettledTime;
+    }
+
     public String getUid() {
         return uid;
     }
@@ -90,6 +121,10 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
         return paid;
     }
 
+    public void setAppraiseLevel(final Integer appraiseLevel) {
+        this.appraiseLevel = appraiseLevel;
+    }
+
     public void setAssigned(final boolean assigned) {
         this.assigned = assigned;
     }
@@ -102,6 +137,10 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
         this.fetchUnprocessedCount = fetchUnprocessedCount;
     }
 
+    public void setFromSettledTime(final String fromSettledTime) {
+        this.fromSettledTime = fromSettledTime;
+    }
+
     @Override
     @Deprecated
     public void setId(final Long id) {
@@ -110,6 +149,10 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
 
     public void setPaid(final boolean paid) {
         this.paid = paid;
+    }
+
+    public void setPartialUid(final String partialUid) {
+        this.partialUid = partialUid;
     }
 
     public void setPaymentCode(final String paymentCode) {
@@ -154,6 +197,10 @@ public class ServiceOrderSearchingDto extends AbstractSearchingDto {
 
     public void setSupplierUserName(final String supplierUserName) {
         this.supplierUserName = supplierUserName;
+    }
+
+    public void setToSettledTime(final String toSettledTime) {
+        this.toSettledTime = toSettledTime;
     }
 
     public void setUid(final String uid) {

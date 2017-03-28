@@ -28,6 +28,7 @@ public class ServiceSupplierClientDto extends AbstractBusinessDto {
     private List<ServiceSupplierClientAuditingDto> auditings;
 
     private List<String> images;
+    private UserDto user;
 
     public String getAddress() {
         return address;
@@ -100,6 +101,10 @@ public class ServiceSupplierClientDto extends AbstractBusinessDto {
         return type;
     }
 
+    public UserDto getUser() {
+        return user;
+    }
+
     public void setAddress(final String address) {
         this.address = address;
     }
@@ -166,5 +171,9 @@ public class ServiceSupplierClientDto extends AbstractBusinessDto {
 
     public void setType(final LookupDto type) {
         this.type = type;
+    }
+
+    public void setUser(final UserDto user) {
+        this.user = user;
     }
 }

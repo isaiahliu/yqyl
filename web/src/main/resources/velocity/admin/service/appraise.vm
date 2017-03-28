@@ -21,10 +21,18 @@
 				<div class="tabTitle" style="text-align: center;">
 					<span>#label("TIME")</span><input type="text"
 						placeholder="YYYY/MM/DD" ui-date="dateOptions"
-						ng-model="filterData.serviceTime" style="width: 100px;" /> <span>#label("USER_ID")</span><input
+						ng-model="filterData.fromServiceTime" style="width: 100px;" /> <span>#label("TO")</span>
+					<input type="text" placeholder="YYYY/MM/DD" ui-date="dateOptions"
+						ng-model="filterData.toServiceTime" style="width: 100px;" /> <span>#label("APPRAISE_TYPE")</span>
+					<select ng-model="filterData.appraiseLevel">
+						<option value="0">#label("ALL")</option>
+						<option value="1">好评</option>
+						<option value="2">中评</option>
+						<option value="3">差评</option>
+					</select> <span>#label("USER_ID")</span><input
 						ng-model="filterData.username" " /> <span>#label("SERVICE_SUPPLIER_ID")</span><input
-						ng-model="filterData.supplierId" /> <span>#label("SERVICE_ORDER_ID")</span><input
-						ng-model="filterData.orderId" />
+						ng-model="filterData.supplierName" /> <span>#label("SERVICE_ORDER_ID")</span><input
+						ng-model="filterData.orderUid" />
 					<button ng-click="searchOrders()">#button("SEARCH")</button>
 				</div>
 			</div>
@@ -36,8 +44,9 @@
 							<tr>
 								<td align="center"><span>#label("SERVICE_ORDER_ID")</span></td>
 								<td align="center"><span>#label("SERVICE_ORDER_SETTLED_TIME")</span></td>
+								<td align="center"><span>#label("SERVICE_SUPPLIER_NAME")</span></td>
 								<td align="center"><span>#label("USER_ID")</span></td>
-								<td align="center"><span>#label("SERVICE_SUPPLIER_ID")</span></td>
+								<td align="center"><span>#label("APPRAISE_SCORE")</span></td>
 								<td align="center"><span>#label("APPRAISE_COMMENT")</span></td>
 								<td align="center"><span>#label("OPERATION")</span></td>
 							</tr>
@@ -47,11 +56,17 @@
 								<td align="center"><span>{{order.uid}}</span></td>
 								<td align="center"><span>{{order.settledTime|date:'yyyy/MM/dd
 										HH:mm:ss'}}</span></td>
+								<td align="center"><span>{{order.serviceInfo.serviceSupplierClient.user.username}}</span></td>
 								<td align="center"><span>{{order.user.username}}</span></td>
-								<td align="center"><span>{{order.serviceInfo.serviceSupplierClient.id}}</span></td>
+								<td align="center"><span
+									ng-show='order.appraise.totalRate>=17'>好评</span><span
+									ng-show='order.appraise.totalRate>=12&&order.appraise.totalRate<=16'>中评</span><span
+									ng-show='order.appraise.totalRate<12'>差评</span></td>
 								<td align="center"><span>{{order.appraise.comment}}</span></td>
 								<td align="center"><span><button
-										ng-click="$parent.modifyAppraiseStatus(order)">{{(order.appraise.status.code=='A')?'#button("HIDE")':'#button("SHOW")'}}</button></span></td>
+										ng-click="$parent.modifyAppraiseStatus(order)">{{(order.appraise.status.code=='A')?'#button("HIDE")':'#button("SHOW")'}}</button></span><span
+									style="margin-left: 20px;"><button
+										ng-click="javascript:void(0)">#button("WARN")</button></span></td>
 							</tr>
 						</tbody>
 					</table>

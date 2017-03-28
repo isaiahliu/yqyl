@@ -8,6 +8,10 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		pageSize : 10
 	};
 
+	$scope.filterData = {
+		appraiseLevel : "0"
+	};
+
 	$scope.modifyAppraiseStatus = function(order) {
 		if (order.appraise.status.code == 'A') {
 			$http({
@@ -31,7 +35,7 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	};
 
 	$scope.searchOrders = function() {
-		var ajaxUrl = "/ajax/user/order?rsexp=appraise,user,serviceInfo[serviceSupplierClient]";
+		var ajaxUrl = "/ajax/user/order?rsexp=appraise,user,serviceInfo[serviceSupplierClient[user]]";
 
 		ajaxUrl += "&pageIndex=" + ($scope.pagingData.pageIndex - 1);
 		ajaxUrl += "&pageSize=" + $scope.pagingData.pageSize;
@@ -41,12 +45,24 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			ajaxUrl += "&receiverUserName=" + $scope.filterData.username;
 		}
 
-		if ($scope.filterData.supplierId != undefined && $scope.filterData.supplierId != "") {
-			ajaxUrl += "&serviceSupplierClientId=" + $scope.filterData.supplierId;
+		if ($scope.filterData.supplierName != undefined && $scope.filterData.supplierName != "") {
+			ajaxUrl += "&supplierUserName=" + $scope.filterData.supplierName;
 		}
 
-		if ($scope.filterData.serviceTime != undefined && $scope.filterData.serviceTime != "") {
-			ajaxUrl += "&settledDate=" + $filter('date')($scope.filterData.serviceTime, "yyyyMMdd");
+		if ($scope.filterData.fromServiceTime != undefined && $scope.filterData.fromServiceTime != "") {
+			ajaxUrl += "&fromSettledTime=" + $filter('date')($scope.filterData.fromServiceTime, "yyyyMMdd");
+		}
+
+		if ($scope.filterData.toServiceTime != undefined && $scope.filterData.toServiceTime != "") {
+			ajaxUrl += "&toSettledTime=" + $filter('date')($scope.filterData.toServiceTime, "yyyyMMdd");
+		}
+
+		if ($scope.filterData.appraiseLevel != undefined && $scope.filterData.appraiseLevel != "") {
+			ajaxUrl += "&appraiseLevel=" + $scope.filterData.appraiseLevel;
+		}
+
+		if ($scope.filterData.orderUid != undefined && $scope.filterData.orderUid != "") {
+			ajaxUrl += "&partialUid=" + $scope.filterData.orderUid;
 		}
 
 		$http({
