@@ -82,6 +82,7 @@
 				<artifactId>tsykt</artifactId>
 				<version>${trinity-framework}</version>
 			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -93,6 +94,8 @@
 			<groupId>org.trinity.framework.springboot</groupId>
 			<artifactId>core</artifactId>
 		</dependency>
+		
+
 	</dependencies>
 
 	<properties>
@@ -105,6 +108,9 @@
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<version>1.4.2.RELEASE</version>
+					<configuration>
+						<fork>true</fork>
+					</configuration>
 					<executions>
 						<execution>
 							<goals>

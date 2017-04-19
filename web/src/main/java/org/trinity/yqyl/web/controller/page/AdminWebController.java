@@ -15,31 +15,42 @@ public class AdminWebController extends AbstractResourceWebController {
 	@RequestMapping("/manage/about")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView aboutPage() throws IException {
-		return createModelAndView("admin/manage/about").addObject("currentPage", "MANAGE").addObject("currentSubPage", "ABOUT");
+		return createModelAndView("admin/manage/about").addObject("currentPage", "MANAGE").addObject("currentSubPage",
+				"ABOUT");
 	}
 
 	@RequestMapping("/manage/agreement")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView agreementPage() throws IException {
-		return createModelAndView("admin/manage/agreement").addObject("currentPage", "MANAGE").addObject("currentSubPage", "AGREEMENT");
+		return createModelAndView("admin/manage/agreement").addObject("currentPage", "MANAGE")
+				.addObject("currentSubPage", "AGREEMENT");
 	}
 
 	@RequestMapping("/manage/answers")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView answersPage() throws IException {
-		return createModelAndView("admin/manage/answers").addObject("currentPage", "MANAGE").addObject("currentSubPage", "ANSWERS");
+		return createModelAndView("admin/manage/answers").addObject("currentPage", "MANAGE").addObject("currentSubPage",
+				"ANSWERS");
+	}
+
+	@Override
+	@Authorize(AccessRight.ADMINISTRATOR)
+	protected ModelAndView createModelAndView(final String viewName) {
+		return super.createModelAndView(viewName).addObject("platform", "ADMIN");
 	}
 
 	@RequestMapping("/supplier/{entityId}")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView infoPage(@PathVariable("entityId") final Long entityId) throws IException {
-		return createModelAndView("servicer/info").addObject("currentPage", "SUPPLIER").addObject("serviceSupplierClientId", entityId);
+		return createModelAndView("servicer/info").addObject("currentPage", "SUPPLIER")
+				.addObject("serviceSupplierClientId", entityId);
 	}
 
 	@RequestMapping("/manage/join")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView joinPage() throws IException {
-		return createModelAndView("admin/manage/join").addObject("currentPage", "MANAGE").addObject("currentSubPage", "JOIN");
+		return createModelAndView("admin/manage/join").addObject("currentPage", "MANAGE").addObject("currentSubPage",
+				"JOIN");
 	}
 
 	@RequestMapping({ "", "/news" })
@@ -51,7 +62,8 @@ public class AdminWebController extends AbstractResourceWebController {
 	@RequestMapping("/permission/edit/{entityId}")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView permissionEditPage(@PathVariable("entityId") final Long entityId) throws IException {
-		return createModelAndView("admin/permissionEdit").addObject("currentPage", "PERMISSION").addObject("userId", entityId);
+		return createModelAndView("admin/permissionEdit").addObject("currentPage", "PERMISSION").addObject("userId",
+				entityId);
 	}
 
 	@RequestMapping("/permission")
@@ -63,7 +75,8 @@ public class AdminWebController extends AbstractResourceWebController {
 	@RequestMapping("/manage/readme")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView readmePage() throws IException {
-		return createModelAndView("admin/manage/readme").addObject("currentPage", "MANAGE").addObject("currentSubPage", "README");
+		return createModelAndView("admin/manage/readme").addObject("currentPage", "MANAGE").addObject("currentSubPage",
+				"README");
 	}
 
 	@RequestMapping("/receiver/{entityId}")
@@ -87,19 +100,22 @@ public class AdminWebController extends AbstractResourceWebController {
 	@RequestMapping("/service/appraise")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView serviceAppraisePage() throws IException {
-		return createModelAndView("admin/service/appraise").addObject("currentPage", "SERVICE").addObject("currentSubPage", "APPRAISE");
+		return createModelAndView("admin/service/appraise").addObject("currentPage", "SERVICE")
+				.addObject("currentSubPage", "APPRAISE");
 	}
 
 	@RequestMapping("/service/category/edit")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView serviceCategoryEditPage() throws IException {
-		return createModelAndView("admin/service/categoryEdit").addObject("currentPage", "SERVICE").addObject("currentSubPage", "CATEGORY");
+		return createModelAndView("admin/service/categoryEdit").addObject("currentPage", "SERVICE")
+				.addObject("currentSubPage", "CATEGORY");
 	}
 
 	@RequestMapping("/service/category")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView serviceCategoryPage() throws IException {
-		return createModelAndView("admin/service/category").addObject("currentPage", "SERVICE").addObject("currentSubPage", "CATEGORY");
+		return createModelAndView("admin/service/category").addObject("currentPage", "SERVICE")
+				.addObject("currentSubPage", "CATEGORY");
 	}
 
 	@RequestMapping("/service/order/{entityId}")
@@ -112,20 +128,22 @@ public class AdminWebController extends AbstractResourceWebController {
 	@RequestMapping("/service/order")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView serviceOrdersPage() throws IException {
-		return createModelAndView("admin/service/order").addObject("currentPage", "SERVICE").addObject("currentSubPage", "ORDER");
+		return createModelAndView("admin/service/order").addObject("currentPage", "SERVICE").addObject("currentSubPage",
+				"ORDER");
 	}
 
 	@RequestMapping("/service/category/edit/{entityId}")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView serviceSubCategoryEditPage(@PathVariable("entityId") final Long entityId) throws IException {
-		return createModelAndView("admin/service/categoryEdit").addObject("currentPage", "SERVICE").addObject("currentSubPage", "CATEGORY")
-				.addObject("categoryId", entityId);
+		return createModelAndView("admin/service/categoryEdit").addObject("currentPage", "SERVICE")
+				.addObject("currentSubPage", "CATEGORY").addObject("categoryId", entityId);
 	}
 
 	@RequestMapping("/service/supplier")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView serviceSupplierPage() throws IException {
-		return createModelAndView("admin/service/supplier").addObject("currentPage", "SERVICE").addObject("currentSubPage", "SUPPLIER");
+		return createModelAndView("admin/service/supplier").addObject("currentPage", "SERVICE")
+				.addObject("currentSubPage", "SUPPLIER");
 	}
 
 	@RequestMapping("/supplier")
@@ -138,11 +156,5 @@ public class AdminWebController extends AbstractResourceWebController {
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView trainingPage() throws IException {
 		return createModelAndView("admin/training").addObject("currentPage", "TRAINING");
-	}
-
-	@Override
-	@Authorize(AccessRight.ADMINISTRATOR)
-	protected ModelAndView createModelAndView(final String viewName) {
-		return super.createModelAndView(viewName).addObject("platform", "ADMIN");
 	}
 }
