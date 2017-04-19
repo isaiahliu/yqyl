@@ -13,12 +13,13 @@ import org.trinity.yqyl.web.util.SessionFilter;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private SessionFilter sessionFilter;
+	@Autowired
+	private SessionFilter sessionFilter;
 
-    @Override
-    protected void configure(final HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().and().addFilterAfter(sessionFilter, SecurityContextPersistenceFilter.class)
-                .authorizeRequests().antMatchers("/user/**").authenticated().anyRequest().permitAll();
-    }
+	@Override
+	protected void configure(final HttpSecurity http) throws Exception {
+		http.headers().frameOptions().sameOrigin().and().csrf().disable().authorizeRequests().and()
+				.addFilterAfter(sessionFilter, SecurityContextPersistenceFilter.class).authorizeRequests().antMatchers("/user/**")
+				.authenticated().anyRequest().permitAll();
+	}
 }
