@@ -3,10 +3,6 @@
 <link rel="stylesheet"
 	href="/static/css/business/admin/manage/agreement.css"></link>
 
-<div class="agreement">
-	<div type="text/html" style="width: 600px;" ng-model="model"
-		meta-umeditor meta-umeditor-config='config'
-		meta-umeditor-placeholder="提示文案!这里是完整的示例" />
-</div>
+<div class="agreement">agreement</div>
 
 <script src="/static/js/business/admin/manage/agreement.js"></script>

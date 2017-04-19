@@ -1,6 +1,7 @@
 layoutApp.controller('contentController', function($scope, $http, $window, errorHandler) {
 	$scope.content = null;
 
+	$scope.config = {}
 	$http({
 		method : "GET",
 		url : "/ajax/common/systemattribute/ABOUTUS"

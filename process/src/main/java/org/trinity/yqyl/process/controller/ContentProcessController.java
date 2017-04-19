@@ -20,53 +20,59 @@ import org.trinity.yqyl.repository.business.entity.Content;
 
 @Service
 public class ContentProcessController
-        extends AbstractAutowiredCrudProcessController<Content, ContentDto, ContentSearchingDto, IContentRepository>
-        implements IContentProcessController {
+		extends AbstractAutowiredCrudProcessController<Content, ContentDto, ContentSearchingDto, IContentRepository>
+		implements IContentProcessController {
 
-    @Override
-    @Transactional(rollbackOn = IException.class)
-    public List<ContentDto> addUpdateAll(final List<ContentDto> data) {
-        final List<Content> items = new ArrayList<>();
+	@Override
+	@Transactional(rollbackOn = IException.class)
+	public List<ContentDto> addUpdateAll(final List<ContentDto> data) {
+		final List<Content> items = new ArrayList<>();
 
-        for (final ContentDto item : data) {
-            Content content;
-            if (StringUtils.isEmpty(item.getUuid())) {
-                content = new Content();
-                content.setUuid(UUID.randomUUID().toString());
-                content.setStatus(RecordStatus.ACTIVE);
-            } else {
-                content = getDomainEntityRepository().findOneByUuid(item.getUuid());
-            }
+		for (final ContentDto item : data) {
+			Content content;
+			if (StringUtils.isEmpty(item.getUuid())) {
+				content = new Content();
+				content.setUuid(UUID.randomUUID().toString());
+				content.setStatus(RecordStatus.ACTIVE);
+			} else {
+				content = getDomainEntityRepository().findOneByUuid(item.getUuid());
 
-            content.setContent(item.getContent());
+				if (content == null) {
+					content = new Content();
+					content.setUuid(item.getUuid());
+					content.setStatus(RecordStatus.ACTIVE);
+				}
+			}
 
-            items.add(content);
-        }
+			content.setContent(item.getContent());
 
-        getDomainEntityRepository().save(items);
+			items.add(content);
+		}
 
-        return items.stream().map(item -> {
-            final ContentDto dto = new ContentDto();
-            dto.setUuid(item.getUuid());
-            return dto;
-        }).collect(Collectors.toList());
-    }
+		getDomainEntityRepository().save(items);
 
-    @Override
-    @Transactional(rollbackOn = IException.class)
-    public String create() {
-        final Content content = new Content();
-        content.setContent(new byte[0]);
-        content.setStatus(RecordStatus.ACTIVE);
-        content.setUuid(UUID.randomUUID().toString());
+		return items.stream().map(item -> {
+			final ContentDto dto = new ContentDto();
+			dto.setUuid(item.getUuid());
+			return dto;
+		}).collect(Collectors.toList());
+	}
 
-        getDomainEntityRepository().save(content);
-        return content.getUuid();
-    }
+	@Override
+	@Transactional(rollbackOn = IException.class)
+	public String create() {
+		final Content content = new Content();
+		content.setContent(new byte[0]);
+		content.setStatus(RecordStatus.ACTIVE);
+		content.setUuid(UUID.randomUUID().toString());
 
-    @Override
-    public ContentDto getOneByUuid(final String uuid) {
-        final Content content = getDomainEntityRepository().findOneByUuid(uuid);
-        return getDomainObjectConverter().convert(content);
-    }
+		getDomainEntityRepository().save(content);
+		return content.getUuid();
+	}
+
+	@Override
+	public ContentDto getOneByUuid(final String uuid) {
+		final Content content = getDomainEntityRepository().findOneByUuid(uuid);
+		return getDomainObjectConverter().convert(content);
+	}
 }
