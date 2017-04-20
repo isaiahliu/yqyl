@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.trinity.repository.entity.AbstractAuditableEntity;
 import org.trinity.yqyl.common.message.lookup.RecordStatus;
 
 /**
@@ -19,7 +20,7 @@ import org.trinity.yqyl.common.message.lookup.RecordStatus;
 @Entity
 @Table(name = "system_qa")
 @NamedQuery(name = "SystemQa.findAll", query = "SELECT s FROM SystemQa s")
-public class SystemQa implements Serializable {
+public class SystemQa extends AbstractAuditableEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

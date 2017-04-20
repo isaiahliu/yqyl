@@ -6,13 +6,13 @@
 	<div class="block">
 		<span style="font-size: 22px; color: #fd6a15;">#label("COMMON_PROBLEMS")</span>
 	</div>
-	<div class="block">
+	<div class="block ng-hide" ng-show="qas">
 		<div ng-repeat="qa in qas" style="border-bottom: 1px dotted #cccccc; padding: 10px;">
 			<div style="margin: 0 0 10px 0">
 				<span class="question">#label("PROBLEM"){{$index+1}} : {{qa.question}}</span>
 			</div>
 			<div>
-				<span class="answer">{{qa.answer}}</span>
+				<span class="answer" ng-bind-html="qa.answer"/>
 			</div>
 		</div>
 	</div>

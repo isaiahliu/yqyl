@@ -26,6 +26,20 @@ public class AdminWebController extends AbstractResourceWebController {
 				.addObject("currentSubPage", "AGREEMENT");
 	}
 
+	@RequestMapping("/manage/answer")
+	@Authorize(AccessRight.ADMINISTRATOR)
+	public ModelAndView answerPage() throws IException {
+		return createModelAndView("admin/manage/answer/answer").addObject("entityId", 0)
+				.addObject("currentPage", "MANAGE").addObject("currentSubPage", "ANSWERS");
+	}
+
+	@RequestMapping("/manage/answer/{entityId}")
+	@Authorize(AccessRight.ADMINISTRATOR)
+	public ModelAndView answerPage(@PathVariable("entityId") final String entityId) throws IException {
+		return createModelAndView("admin/manage/answer/answer").addObject("entityId", entityId)
+				.addObject("currentPage", "MANAGE").addObject("currentSubPage", "ANSWERS");
+	}
+
 	@RequestMapping("/manage/answers")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView answersPage() throws IException {

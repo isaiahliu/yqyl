@@ -1,7 +1,36 @@
 #parse("/velocity/admin/navigation.vm")
 
-<link rel="stylesheet" href="/static/css/business/admin/manage/answers.css"></link>
+<link rel="stylesheet"
+	href="/static/css/business/admin/manage/answer/answer.css"></link>
 
-<div class="answers">answers</div>
+<script type="text/javascript">
+	layoutApp.value("entityId",#if(${entityId}) ${entityId} #else 0 #end);
+</script>
 
-<script src="/static/js/business/admin/manage/answers.js"></script>
+<div class="answer">
+	<div style="padding: 15px 15px 0 15px; height: 78px;"
+		class="block headerBlock">
+		<span
+			style="color: #ff861a; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("GENERAL_QUESTIONS")</span>
+	</div>
+	<div class="tab" style="border: 1px solid #ffedde; margin: 0 15px;"></div>
+
+	<div class="block" style="background: #f1f1f1; padding: 15px;">
+		<div class="tab">
+			<div class="tabContent" style="margin-bottom: 10px;">
+				<span>#label("QUESTION")</span> <input
+					style="margin-left: 10px; width: 750px;" ng-model="qa.question" />
+			</div>
+			<div class="tabContent">
+				<div type="text/html" style="width: 800px;" ng-model="qa.answer"
+					meta-umeditor meta-umeditor-config='config' />
+			</div>
+			<div class="tabContent"
+				style="padding-left: 300px; margin-top: 10px;">
+				<button ng-click="apply()">#button("APPLY")</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/static/js/business/admin/manage/answer/answer.js"></script>

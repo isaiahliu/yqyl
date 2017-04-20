@@ -1,12 +1,10 @@
-layoutApp.controller('contentController', function($scope, $http, $window, errorHandler) {
+layoutApp.controller('contentController', function($scope, $http, $window,
+		errorHandler) {
 	$http({
 		method : "GET",
-		url : "/ajax/user/help/answer"
+		url :  "/ajax/common/qa"
 	}).success(function(response) {
-		$scope.content = "";
-		if (response.data.length > 0) {
-			$scope.content = response.data[0];
-		}
+		$scope.qas = response.data;
 	}).error(function(response) {
 		errorHandler($scope, response);
 	});

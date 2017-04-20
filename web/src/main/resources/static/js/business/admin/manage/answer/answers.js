@@ -45,5 +45,9 @@ layoutApp.controller('contentController', function($scope, $http, $window,
 		});
 	};
 
+	$scope.newQa = function() {
+		$window.location.href = "/admin/manage/answer";
+	};
+
 	$scope.searchQas();
 });

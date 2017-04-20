@@ -45,7 +45,7 @@
 									ng-click="showQa(qa, false)" ng-show="qa.status.code=='A'">#button("HIDE")</a>
 									<a href="javascript:void(0)" ng-click="showQa(qa, true)"
 									ng-show="qa.status.code=='D'">#button("SHOW")</a> <a
-									href="javascript:void(0)">#button("EDIT")</a></td>
+									ng-href="/admin/manage/answer/{{qa.id}}">#button("EDIT")</a></td>
 							</tr>
 						</tbody>
 					</table>
