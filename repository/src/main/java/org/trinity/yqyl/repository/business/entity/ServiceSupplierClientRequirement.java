@@ -1,3 +1,4 @@
+//Cleaned
 package org.trinity.yqyl.repository.business.entity;
 
 import java.io.Serializable;

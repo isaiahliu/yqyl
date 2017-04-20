@@ -2,6 +2,22 @@
 
 <link rel="stylesheet" href="/static/css/business/admin/manage/join.css"></link>
 
-<div class="join">join</div>
+<div class="join">
+	<div style="padding: 15px 15px 0 15px; height: 78px;"
+		class="block headerBlock">
+		<span
+			style="color: #ff861a; font-size: 22px; margin-right: 60px; line-height: 50px;">#label("JOIN_US")</span>
+	</div>
+	<div class="tab" style="border: 1px solid #ffedde; margin: 0 15px;"></div>
+
+	<div class="block ng-hide" ng-show="content!=null"
+		style="background: #f1f1f1; padding: 15px;">
+		<div type="text/html" style="width: 800px;" ng-model="content"
+			meta-umeditor meta-umeditor-config='config'></div>
+		<div style="text-align: center; margin: 10px;">
+			<button ng-click="apply()">#button("APPLY")</button>
+		</div>
+	</div>
+</div>
 
 <script src="/static/js/business/admin/manage/join.js"></script>

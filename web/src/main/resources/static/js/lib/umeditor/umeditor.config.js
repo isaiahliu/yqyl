@@ -137,8 +137,8 @@
 
         //图片上传配置区
         //,imageUrl:"http://dylike.github.io/meta.umeditor/lib/umeditor/dist/utf8-php/php/imageUp.php"
-        ,imageUrl:"/ajax/content/image/upload1"             //图片上传提交地址
-        ,imagePath:URL + "jsp/"                     //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
+        ,imageUrl:"/ajax/content/image/upload"             //图片上传提交地址
+        ,imagePath: "/ajax/content/image/"                     //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
         ,imageFieldName:"IMAGE"                   //图片数据的key,若此处修改，需要在后台对应文件修改对应参数
 
 

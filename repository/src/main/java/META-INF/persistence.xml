@@ -35,5 +35,6 @@
 		<class>org.trinity.yqyl.repository.business.entity.Yiquan</class>
 		<class>org.trinity.yqyl.repository.usertype.UserTypeRegister</class>
 		<class>org.trinity.yqyl.repository.business.entity.ServiceSupplierClientRequirement</class>
+		<class>org.trinity.yqyl.repository.business.entity.SystemQa</class>
 	</persistence-unit>
 </persistence>

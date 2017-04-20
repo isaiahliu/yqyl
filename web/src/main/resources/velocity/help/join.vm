@@ -6,17 +6,9 @@
 	<div class="block">
 		<span style="font-size: 22px; color: #fd6a15;">#label("JOIN_US")</span>
 	</div>
-	<div class="block">
-		<div ng-repeat="qa in qas" style="border-bottom: 1px dotted #cccccc; padding: 10px;">
-			<div style="margin: 0 0 10px 0">
-				<span class="question">{{$index+1}} : {{qa.question}}</span>
-			</div>
-			<div class="ng-hide" ng-show="qa.answer">
-				<span class="answer">{{qa.answer}}</span>
-			</div>
-			<div class="ng-hide" ng-show="qa.image">
-				<img ng-src="{{qa.image}}" />
-			</div>
+	<div class="block" style="text-align: center;">
+		<div style="margin-top: 20px; padding: 0 10px; text-align: left;">
+			<span ng-bind-html="content"></span>
 		</div>
 	</div>
 </div>

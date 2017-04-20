@@ -1,0 +1,23 @@
+div.join {
+	padding: 1px 0 0 250px;
+}
+
+div.join div.block {
+	border: 1px solid #cccccc;
+}
+
+div.join div.headerBlock a {
+	float: right;
+	margin-right: 10px;
+	line-height: 50px;
+}
+
+div.join div.headerBlock {
+	border-bottom: none;
+}
+
+div.join div.title {
+	font-weight: bold;
+	font-size: large;
+}
+

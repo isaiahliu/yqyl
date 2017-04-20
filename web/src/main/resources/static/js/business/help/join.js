@@ -1,10 +1,13 @@
 layoutApp.controller('contentController', function($scope, $http, $window, errorHandler) {
-	$scope.qas = [ {
-		question : "服务商入网流程",
-		image : "/static/images/pic/supplierJoin.png"
-	}, {
-		question : "用户入网流程",
-		answer : "凭会计师事务所出具的...",
-		image : "/static/images/pic/receiverJoin.png"
-	} ];
+	$http({
+		method : "GET",
+		url : "/ajax/user/help/join"
+	}).success(function(response) {
+		$scope.content = "";
+		if (response.data.length > 0) {
+			$scope.content = response.data[0];
+		}
+	}).error(function(response) {
+		errorHandler($scope, response);
+	});
 });
