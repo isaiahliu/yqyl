@@ -9,13 +9,11 @@ import org.trinity.yqyl.common.message.dto.response.SystemQaResponse;
 import org.trinity.yqyl.process.controller.base.ISystemQaProcessController;
 
 @RestController
-@RequestMapping("/*")
+@RequestMapping("/qa")
 public class SystemQaRestController extends
-      AbstractApplicationAwareCrudRestController<SystemQaDto, SystemQaSearchingDto, ISystemQaProcessController, SystemQaRequest, SystemQaResponse> {
-
-  @Override
-  protected SystemQaResponse createResponseInstance() {
-      return new SystemQaResponse();
-  }
+		AbstractApplicationAwareCrudRestController<SystemQaDto, SystemQaSearchingDto, ISystemQaProcessController, SystemQaRequest, SystemQaResponse> {
+	@Override
+	protected SystemQaResponse createResponseInstance() {
+		return new SystemQaResponse();
+	}
 }
-

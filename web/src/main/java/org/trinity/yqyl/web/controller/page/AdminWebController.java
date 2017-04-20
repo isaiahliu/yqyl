@@ -29,8 +29,8 @@ public class AdminWebController extends AbstractResourceWebController {
 	@RequestMapping("/manage/answers")
 	@Authorize(AccessRight.ADMINISTRATOR)
 	public ModelAndView answersPage() throws IException {
-		return createModelAndView("admin/manage/answers").addObject("currentPage", "MANAGE").addObject("currentSubPage",
-				"ANSWERS");
+		return createModelAndView("admin/manage/answer/answers").addObject("currentPage", "MANAGE")
+				.addObject("currentSubPage", "ANSWERS");
 	}
 
 	@Override

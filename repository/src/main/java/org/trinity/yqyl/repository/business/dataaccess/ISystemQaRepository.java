@@ -9,6 +9,7 @@ import javax.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.StringUtils;
 import org.trinity.message.LookupParser;
 import org.trinity.repository.repository.IJpaRepository;
 import org.trinity.yqyl.common.message.dto.domain.SystemQaSearchingDto;
@@ -26,6 +27,10 @@ public interface ISystemQaRepository extends IJpaRepository<SystemQa, SystemQaSe
 
 			if (searchingDto.getId() != null) {
 				predicates.add(cb.equal(root.get(SystemQa_.id), searchingDto.getId()));
+			}
+
+			if (!StringUtils.isEmpty(searchingDto.getQuestion())) {
+				predicates.add(cb.like(root.get(SystemQa_.question), "%" + searchingDto.getQuestion() + "%"));
 			}
 
 			if (searchingDto.getStatus().isEmpty()) {

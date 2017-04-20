@@ -110,6 +110,10 @@ public enum Url implements IHttpUrl {
 	SERVICE_INFO_IMAGE_ADD(HttpMethod.POST, Path.SERVICE_INFO, "image"),
 	SERVICE_INFO_IMAGE_DELETE(HttpMethod.DELETE, Path.SERVICE_INFO, "image"),
 
+	QA_GET(HttpMethod.GET, Path.QA),
+	QA_UPDATE(HttpMethod.PUT, Path.QA),
+	QA_ADD(HttpMethod.POST, Path.QA),
+
 	PING(HttpMethod.GET, Path.COMMON, "ping");
 	private static enum Path implements IUrl {
 		SECURITY("security"),
@@ -149,6 +153,8 @@ public enum Url implements IHttpUrl {
 		REQUIREMENT(SERVICE, "requirement"),
 
 		CONTENT("content"),
+
+		QA("qa"),
 
 		COMMON("common"),
 		LOOKUP(COMMON, "lookup"),
