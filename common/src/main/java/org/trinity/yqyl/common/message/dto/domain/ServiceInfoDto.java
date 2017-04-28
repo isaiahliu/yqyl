@@ -13,6 +13,8 @@ public class ServiceInfoDto extends AbstractBusinessDto {
     private String image;
     private LookupDto paymentMethod;
     private LookupDto paymentType;
+    private LookupDto province;
+    private LookupDto city;
     private int monthlyProposalOrderCount;
     private double monthlyRate;
 
@@ -21,6 +23,10 @@ public class ServiceInfoDto extends AbstractBusinessDto {
     private ServiceCategoryDto serviceCategory;
 
     private List<String> images;
+
+    public LookupDto getCity() {
+        return city;
+    }
 
     public String getDescription() {
         return description;
@@ -58,6 +64,10 @@ public class ServiceInfoDto extends AbstractBusinessDto {
         return price;
     }
 
+    public LookupDto getProvince() {
+        return province;
+    }
+
     public ServiceCategoryDto getServiceCategory() {
         return serviceCategory;
     }
@@ -68,6 +78,10 @@ public class ServiceInfoDto extends AbstractBusinessDto {
 
     public ServiceInfoStasticDto getStastic() {
         return stastic;
+    }
+
+    public void setCity(final LookupDto city) {
+        this.city = city;
     }
 
     public void setDescription(final String description) {
@@ -104,6 +118,10 @@ public class ServiceInfoDto extends AbstractBusinessDto {
 
     public void setPrice(final Double price) {
         this.price = price;
+    }
+
+    public void setProvince(final LookupDto province) {
+        this.province = province;
     }
 
     public void setServiceCategory(final ServiceCategoryDto serviceCategory) {

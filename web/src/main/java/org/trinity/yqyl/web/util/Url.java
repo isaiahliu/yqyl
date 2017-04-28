@@ -89,6 +89,7 @@ public enum Url implements IHttpUrl {
 	CONTENT_DOWNLOAD(HttpMethod.GET, Path.CONTENT, "download"),
 
 	LOOKUP_TYPE(HttpMethod.GET, Path.LOOKUP),
+	PROVINCE(HttpMethod.GET, Path.PROVINCE),
 	RESOURCE_REFRESH(HttpMethod.PUT, Path.RESOURCE),
 
 	SYSTEM_ATTRIBUTE_GET(HttpMethod.GET, Path.SYSTEM_ATTRIBUTE),
@@ -157,6 +158,7 @@ public enum Url implements IHttpUrl {
 		QA("qa"),
 
 		COMMON("common"),
+		PROVINCE(COMMON, "province"),
 		LOOKUP(COMMON, "lookup"),
 		RESOURCE(COMMON, "resource"),
 		SERVICE_CATEGORY(COMMON, "servicecategory"),

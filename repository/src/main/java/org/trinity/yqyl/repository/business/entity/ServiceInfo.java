@@ -20,8 +20,10 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.trinity.repository.entity.AbstractAuditableEntity;
+import org.trinity.yqyl.common.message.lookup.City;
 import org.trinity.yqyl.common.message.lookup.PaymentMethod;
 import org.trinity.yqyl.common.message.lookup.PaymentType;
+import org.trinity.yqyl.common.message.lookup.Province;
 import org.trinity.yqyl.common.message.lookup.ServiceStatus;
 
 /**
@@ -32,199 +34,219 @@ import org.trinity.yqyl.common.message.lookup.ServiceStatus;
 @Table(name = "service_info")
 @NamedQuery(name = "ServiceInfo.findAll", query = "SELECT s FROM ServiceInfo s")
 public class ServiceInfo extends AbstractAuditableEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Service_PK_IdGenerator")
-    @TableGenerator(name = "Service_PK_IdGenerator", table = "id_table", pkColumnName = "type", pkColumnValue = "Service_PK", valueColumnName = "value", initialValue = 1, allocationSize = 1)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "Service_PK_IdGenerator")
+	@TableGenerator(name = "Service_PK_IdGenerator", table = "id_table", pkColumnName = "type", pkColumnValue = "Service_PK", valueColumnName = "value", initialValue = 1, allocationSize = 1)
+	private Long id;
 
-    // bi-directional many-to-many association to UserGroup
-    @ElementCollection
-    @CollectionTable(name = "service_info_image", joinColumns = @JoinColumn(name = "service_info_id"))
-    @Column(name = "uuid")
-    private List<String> images;
+	// bi-directional many-to-many association to UserGroup
+	@ElementCollection
+	@CollectionTable(name = "service_info_image", joinColumns = @JoinColumn(name = "service_info_id"))
+	@Column(name = "uuid")
+	private List<String> images;
 
-    private String description;
+	private String description;
 
-    private String name;
+	private String name;
 
-    private Double price;
+	private Province province;
 
-    @Column(name = "image", insertable = true, updatable = true)
-    private String image;
+	private City city;
 
-    private ServiceStatus status;
+	private Double price;
 
-    @Column(name = "payment_method")
-    private PaymentMethod paymentMethod;
+	@Column(name = "image", insertable = true, updatable = true)
+	private String image;
 
-    @Column(name = "payment_type")
-    private PaymentType paymentType;
+	private ServiceStatus status;
 
-    // bi-directional many-to-one association to Favorite
-    @OneToMany(mappedBy = "service")
-    private List<Favorite> favorites;
+	@Column(name = "payment_method")
+	private PaymentMethod paymentMethod;
 
-    // bi-directional many-to-one association to ServiceCategory
-    @ManyToOne
-    @JoinColumn(name = "service_category_id")
-    private ServiceCategory serviceCategory;
+	@Column(name = "payment_type")
+	private PaymentType paymentType;
 
-    // bi-directional many-to-one association to ServiceSupplierClient
-    @ManyToOne
-    @JoinColumn(name = "service_supplier_client_id")
-    private ServiceSupplierClient serviceSupplierClient;
+	// bi-directional many-to-one association to Favorite
+	@OneToMany(mappedBy = "service")
+	private List<Favorite> favorites;
 
-    // bi-directional many-to-one association to ServiceOrder
-    @OneToMany(mappedBy = "serviceInfo")
-    private List<ServiceOrder> serviceOrders;
+	// bi-directional many-to-one association to ServiceCategory
+	@ManyToOne
+	@JoinColumn(name = "service_category_id")
+	private ServiceCategory serviceCategory;
 
-    // bi-directional one-to-one association to ServiceInfoStastic
-    @OneToOne(mappedBy = "serviceInfo")
-    private ServiceInfoStastic serviceInfoStastic;
+	// bi-directional many-to-one association to ServiceSupplierClient
+	@ManyToOne
+	@JoinColumn(name = "service_supplier_client_id")
+	private ServiceSupplierClient serviceSupplierClient;
 
-    public ServiceInfo() {
-    }
+	// bi-directional many-to-one association to ServiceOrder
+	@OneToMany(mappedBy = "serviceInfo")
+	private List<ServiceOrder> serviceOrders;
 
-    public Favorite addFavorite(final Favorite favorite) {
-        getFavorites().add(favorite);
-        favorite.setService(this);
+	// bi-directional one-to-one association to ServiceInfoStastic
+	@OneToOne(mappedBy = "serviceInfo")
+	private ServiceInfoStastic serviceInfoStastic;
 
-        return favorite;
-    }
+	public ServiceInfo() {
+	}
 
-    public ServiceOrder addServiceOrder(final ServiceOrder serviceOrder) {
-        getServiceOrders().add(serviceOrder);
-        serviceOrder.setServiceInfo(this);
+	public Favorite addFavorite(final Favorite favorite) {
+		getFavorites().add(favorite);
+		favorite.setService(this);
 
-        return serviceOrder;
-    }
+		return favorite;
+	}
 
-    public String getDescription() {
-        return this.description;
-    }
+	public ServiceOrder addServiceOrder(final ServiceOrder serviceOrder) {
+		getServiceOrders().add(serviceOrder);
+		serviceOrder.setServiceInfo(this);
 
-    public List<Favorite> getFavorites() {
-        return this.favorites;
-    }
+		return serviceOrder;
+	}
 
-    public Long getId() {
-        return this.id;
-    }
+	public City getCity() {
+		return city;
+	}
 
-    public String getImage() {
-        return image;
-    }
+	public String getDescription() {
+		return this.description;
+	}
 
-    public List<String> getImages() {
-        return images;
-    }
+	public List<Favorite> getFavorites() {
+		return this.favorites;
+	}
 
-    public String getName() {
-        return this.name;
-    }
+	public Long getId() {
+		return this.id;
+	}
 
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
-    }
+	public String getImage() {
+		return image;
+	}
 
-    public PaymentType getPaymentType() {
-        return paymentType;
-    }
+	public List<String> getImages() {
+		return images;
+	}
 
-    public Double getPrice() {
-        return this.price;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public ServiceCategory getServiceCategory() {
-        return this.serviceCategory;
-    }
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
 
-    public ServiceInfoStastic getServiceInfoStastic() {
-        return serviceInfoStastic;
-    }
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
 
-    public List<ServiceOrder> getServiceOrders() {
-        return this.serviceOrders;
-    }
+	public Double getPrice() {
+		return this.price;
+	}
 
-    public ServiceSupplierClient getServiceSupplierClient() {
-        return this.serviceSupplierClient;
-    }
+	public Province getProvince() {
+		return province;
+	}
 
-    public ServiceStatus getStatus() {
-        return this.status;
-    }
+	public ServiceCategory getServiceCategory() {
+		return this.serviceCategory;
+	}
 
-    public Favorite removeFavorite(final Favorite favorite) {
-        getFavorites().remove(favorite);
-        favorite.setService(null);
+	public ServiceInfoStastic getServiceInfoStastic() {
+		return serviceInfoStastic;
+	}
 
-        return favorite;
-    }
+	public List<ServiceOrder> getServiceOrders() {
+		return this.serviceOrders;
+	}
 
-    public ServiceOrder removeServiceOrder(final ServiceOrder serviceOrder) {
-        getServiceOrders().remove(serviceOrder);
-        serviceOrder.setServiceInfo(null);
+	public ServiceSupplierClient getServiceSupplierClient() {
+		return this.serviceSupplierClient;
+	}
 
-        return serviceOrder;
-    }
+	public ServiceStatus getStatus() {
+		return this.status;
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	public Favorite removeFavorite(final Favorite favorite) {
+		getFavorites().remove(favorite);
+		favorite.setService(null);
 
-    public void setFavorites(final List<Favorite> favorites) {
-        this.favorites = favorites;
-    }
+		return favorite;
+	}
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
+	public ServiceOrder removeServiceOrder(final ServiceOrder serviceOrder) {
+		getServiceOrders().remove(serviceOrder);
+		serviceOrder.setServiceInfo(null);
 
-    public void setImage(final String image) {
-        this.image = image;
-    }
+		return serviceOrder;
+	}
 
-    public void setImages(final List<String> images) {
-        this.images = images;
-    }
+	public void setCity(final City city) {
+		this.city = city;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public void setPaymentMethod(final PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
+	public void setFavorites(final List<Favorite> favorites) {
+		this.favorites = favorites;
+	}
 
-    public void setPaymentType(final PaymentType paymentType) {
-        this.paymentType = paymentType;
-    }
+	public void setId(final Long id) {
+		this.id = id;
+	}
 
-    public void setPrice(final Double price) {
-        this.price = price;
-    }
+	public void setImage(final String image) {
+		this.image = image;
+	}
 
-    public void setServiceCategory(final ServiceCategory serviceCategory) {
-        this.serviceCategory = serviceCategory;
-    }
+	public void setImages(final List<String> images) {
+		this.images = images;
+	}
 
-    public void setServiceInfoStastic(final ServiceInfoStastic serviceInfoStastic) {
-        this.serviceInfoStastic = serviceInfoStastic;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public void setServiceOrders(final List<ServiceOrder> serviceOrders) {
-        this.serviceOrders = serviceOrders;
-    }
+	public void setPaymentMethod(final PaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
 
-    public void setServiceSupplierClient(final ServiceSupplierClient serviceSupplierClient) {
-        this.serviceSupplierClient = serviceSupplierClient;
-    }
+	public void setPaymentType(final PaymentType paymentType) {
+		this.paymentType = paymentType;
+	}
 
-    public void setStatus(final ServiceStatus status) {
-        this.status = status;
-    }
+	public void setPrice(final Double price) {
+		this.price = price;
+	}
+
+	public void setProvince(final Province province) {
+		this.province = province;
+	}
+
+	public void setServiceCategory(final ServiceCategory serviceCategory) {
+		this.serviceCategory = serviceCategory;
+	}
+
+	public void setServiceInfoStastic(final ServiceInfoStastic serviceInfoStastic) {
+		this.serviceInfoStastic = serviceInfoStastic;
+	}
+
+	public void setServiceOrders(final List<ServiceOrder> serviceOrders) {
+		this.serviceOrders = serviceOrders;
+	}
+
+	public void setServiceSupplierClient(final ServiceSupplierClient serviceSupplierClient) {
+		this.serviceSupplierClient = serviceSupplierClient;
+	}
+
+	public void setStatus(final ServiceStatus status) {
+		this.status = status;
+	}
 
 }

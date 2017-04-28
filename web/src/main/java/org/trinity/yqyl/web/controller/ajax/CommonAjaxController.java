@@ -50,6 +50,11 @@ public class CommonAjaxController extends AbstractRestController {
 		return restfulServiceUtil.callRestService(Url.LOOKUP_TYPE, lookupType, null, null, LookupResponse.class);
 	}
 
+	@RequestMapping(value = "/province", method = RequestMethod.GET)
+	public @ResponseBody LookupResponse ajaxGetProvinces() throws IException {
+		return restfulServiceUtil.callRestService(Url.PROVINCE, null, null, null, LookupResponse.class);
+	}
+
 	@RequestMapping(value = "/qa", method = RequestMethod.GET)
 	public @ResponseBody SystemQaResponse ajaxGetQa(final SystemQaSearchingDto request) throws IException {
 		return restfulServiceUtil.callRestService(Url.QA_GET, null, null, request, SystemQaResponse.class);

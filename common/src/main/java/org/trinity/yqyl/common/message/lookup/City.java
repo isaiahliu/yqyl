@@ -19,18 +19,6 @@ public enum City implements ILookupMessage<LookupType> {
     河北省_廊坊市(Province.河北省, "10"),
     河北省_衡水市(Province.河北省, "11"),
 
-    太原市_山西省(Province.山西省, "01"),
-    大同市_山西省(Province.山西省, "02"),
-    阳泉市_山西省(Province.山西省, "03"),
-    长治市_山西省(Province.山西省, "04"),
-    晋城市_山西省(Province.山西省, "05"),
-    朔州市_山西省(Province.山西省, "06"),
-    晋中市_山西省(Province.山西省, "07"),
-    运城市_山西省(Province.山西省, "08"),
-    忻州市_山西省(Province.山西省, "09"),
-    临汾市_山西省(Province.山西省, "10"),
-    吕梁市_山西省(Province.山西省, "11"),
-
     山西省_太原市(Province.山西省, "01"),
     山西省_大同市(Province.山西省, "02"),
     山西省_阳泉市(Province.山西省, "03"),

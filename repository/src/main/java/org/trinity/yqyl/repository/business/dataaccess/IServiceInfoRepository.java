@@ -14,6 +14,8 @@ import org.springframework.util.StringUtils;
 import org.trinity.message.LookupParser;
 import org.trinity.repository.repository.IJpaRepository;
 import org.trinity.yqyl.common.message.dto.domain.ServiceInfoSearchingDto;
+import org.trinity.yqyl.common.message.lookup.City;
+import org.trinity.yqyl.common.message.lookup.Province;
 import org.trinity.yqyl.common.message.lookup.ServiceStatus;
 import org.trinity.yqyl.repository.business.entity.ServiceCategory_;
 import org.trinity.yqyl.repository.business.entity.ServiceInfo;
@@ -33,13 +35,14 @@ public interface IServiceInfoRepository extends IJpaRepository<ServiceInfo, Serv
 			}
 
 			if (!searchingDto.isSearchAll()) {
-				predicates.add(cb.equal(root.join(ServiceInfo_.serviceSupplierClient).join(ServiceSupplierClient_.user).get(User_.username),
-						searchingDto.getCurrentUsername()));
+				predicates.add(cb.equal(root.join(ServiceInfo_.serviceSupplierClient).join(ServiceSupplierClient_.user)
+						.get(User_.username), searchingDto.getCurrentUsername()));
 			}
 
 			if (searchingDto.getServiceSupplierClientId() != null) {
-				predicates.add(cb.equal(root.join(ServiceInfo_.serviceSupplierClient).get(ServiceSupplierClient_.userId),
-						searchingDto.getServiceSupplierClientId()));
+				predicates
+						.add(cb.equal(root.join(ServiceInfo_.serviceSupplierClient).get(ServiceSupplierClient_.userId),
+								searchingDto.getServiceSupplierClientId()));
 			}
 
 			if (!StringUtils.isEmpty(searchingDto.getName())) {
@@ -49,11 +52,13 @@ public interface IServiceInfoRepository extends IJpaRepository<ServiceInfo, Serv
 			}
 
 			if (searchingDto.getCategoryId() != null && searchingDto.getCategoryId() > 0) {
-				predicates.add(cb.equal(root.join(ServiceInfo_.serviceCategory).get(ServiceCategory_.id), searchingDto.getCategoryId()));
+				predicates.add(cb.equal(root.join(ServiceInfo_.serviceCategory).get(ServiceCategory_.id),
+						searchingDto.getCategoryId()));
 			}
 
 			if (searchingDto.getParentCategoryId() != null && searchingDto.getParentCategoryId() > 0) {
-				predicates.add(cb.equal(root.join(ServiceInfo_.serviceCategory).join(ServiceCategory_.parent).get(ServiceCategory_.id),
+				predicates.add(cb.equal(
+						root.join(ServiceInfo_.serviceCategory).join(ServiceCategory_.parent).get(ServiceCategory_.id),
 						searchingDto.getParentCategoryId()));
 			}
 
@@ -65,29 +70,43 @@ public interface IServiceInfoRepository extends IJpaRepository<ServiceInfo, Serv
 				predicates.add(cb.equal(root.get(ServiceInfo_.status), ServiceStatus.ACTIVE));
 			}
 
+			if (!StringUtils.isEmpty(searchingDto.getProvince())) {
+				final Province province = LookupParser.parse(Province.class, searchingDto.getProvince());
+				if (province != null) {
+					predicates.add(cb.equal(root.get(ServiceInfo_.province), province));
+				}
+			}
+
+			if (!StringUtils.isEmpty(searchingDto.getCity())) {
+				final City city = LookupParser.parse(City.class, searchingDto.getCity());
+				if (city != null) {
+					predicates.add(cb.equal(root.get(ServiceInfo_.city), city));
+				}
+			}
+
 			switch (searchingDto.getCustomSortedBy()) {
-				case "sales":
-					query.distinct(true);
-					if ("desc".equals(searchingDto.getCustomSortedDirection())) {
-						query.orderBy(
-								cb.desc(root.join(ServiceInfo_.serviceInfoStastic, JoinType.LEFT).get(ServiceInfoStastic_.orderCount)));
-					} else {
-						query.orderBy(
-								cb.asc(root.join(ServiceInfo_.serviceInfoStastic, JoinType.LEFT).get(ServiceInfoStastic_.orderCount)));
-					}
-					break;
-				case "appraise":
-					query.distinct(true);
-					if ("desc".equals(searchingDto.getCustomSortedDirection())) {
-						query.orderBy(
-								cb.desc(root.join(ServiceInfo_.serviceInfoStastic, JoinType.LEFT).get(ServiceInfoStastic_.appraiseAvg)));
-					} else {
-						query.orderBy(
-								cb.asc(root.join(ServiceInfo_.serviceInfoStastic, JoinType.LEFT).get(ServiceInfoStastic_.appraiseAvg)));
-					}
-					break;
-				default:
-					break;
+			case "sales":
+				query.distinct(true);
+				if ("desc".equals(searchingDto.getCustomSortedDirection())) {
+					query.orderBy(cb.desc(root.join(ServiceInfo_.serviceInfoStastic, JoinType.LEFT)
+							.get(ServiceInfoStastic_.orderCount)));
+				} else {
+					query.orderBy(cb.asc(root.join(ServiceInfo_.serviceInfoStastic, JoinType.LEFT)
+							.get(ServiceInfoStastic_.orderCount)));
+				}
+				break;
+			case "appraise":
+				query.distinct(true);
+				if ("desc".equals(searchingDto.getCustomSortedDirection())) {
+					query.orderBy(cb.desc(root.join(ServiceInfo_.serviceInfoStastic, JoinType.LEFT)
+							.get(ServiceInfoStastic_.appraiseAvg)));
+				} else {
+					query.orderBy(cb.asc(root.join(ServiceInfo_.serviceInfoStastic, JoinType.LEFT)
+							.get(ServiceInfoStastic_.appraiseAvg)));
+				}
+				break;
+			default:
+				break;
 			}
 
 			return cb.and(predicates.toArray(new Predicate[0]));

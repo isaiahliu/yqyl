@@ -10,8 +10,15 @@ public class ServiceInfoSearchingDto extends AbstractSearchingDto {
     private String customSortedBy;
     private String customSortedDirection;
 
+    private String province;
+    private String city;
+
     public Long getCategoryId() {
         return categoryId;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     public String getCustomSortedBy() {
@@ -30,12 +37,20 @@ public class ServiceInfoSearchingDto extends AbstractSearchingDto {
         return parentCategoryId;
     }
 
+    public String getProvince() {
+        return province;
+    }
+
     public Long getServiceSupplierClientId() {
         return serviceSupplierClientId;
     }
 
     public void setCategoryId(final Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public void setCity(final String city) {
+        this.city = city;
     }
 
     public void setCustomSortedBy(final String customSortedBy) {
@@ -52,6 +67,10 @@ public class ServiceInfoSearchingDto extends AbstractSearchingDto {
 
     public void setParentCategoryId(final Long parentCategoryId) {
         this.parentCategoryId = parentCategoryId;
+    }
+
+    public void setProvince(final String province) {
+        this.province = province;
     }
 
     public void setServiceSupplierClientId(final Long serviceSupplierClientId) {
