@@ -18,6 +18,7 @@ import org.trinity.yqyl.common.accessright.Authorize;
 import org.trinity.yqyl.common.message.dto.domain.SystemQaSearchingDto;
 import org.trinity.yqyl.common.message.dto.request.SystemAttributeRequest;
 import org.trinity.yqyl.common.message.dto.request.SystemQaRequest;
+import org.trinity.yqyl.common.message.dto.response.ProvinceResponse;
 import org.trinity.yqyl.common.message.dto.response.SystemQaResponse;
 import org.trinity.yqyl.common.message.lookup.AccessRight;
 import org.trinity.yqyl.web.util.Url;
@@ -51,8 +52,8 @@ public class CommonAjaxController extends AbstractRestController {
 	}
 
 	@RequestMapping(value = "/province", method = RequestMethod.GET)
-	public @ResponseBody LookupResponse ajaxGetProvinces() throws IException {
-		return restfulServiceUtil.callRestService(Url.PROVINCE, null, null, null, LookupResponse.class);
+	public @ResponseBody ProvinceResponse ajaxGetProvinces() throws IException {
+		return restfulServiceUtil.callRestService(Url.PROVINCE, null, null, null, ProvinceResponse.class);
 	}
 
 	@RequestMapping(value = "/qa", method = RequestMethod.GET)

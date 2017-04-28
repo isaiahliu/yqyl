@@ -25,8 +25,9 @@
 		<div class="right">
 			<ul>
 				<li><div>
-						<img src="/static/images/logo/city.png" /> <span>#label("SWITCH_CITY")</span>
-						<select><option>泰安市</option></select>
+						<a href="javascript:void(0)" ng-click="showLocation=!showLocation">
+							<img src="/static/images/logo/city.png" /> <span class="ng-hide" ng-show="selectedCityName">{{selectedCityName}}</span>
+						</a>
 					</div></li> #if(${authentication}) #if(${authentication.token.authenticated})
 				<li><div>
 						<span>#label("WELCOME"), ${authentication.token.username}</span>
@@ -38,6 +39,20 @@
 						<span><a href="javascript:void(0)" ng-click="logout()">#label("LOGOUT")</a></span>
 					</div></li> #end #end
 			</ul>
+		</div>
+		<div class="ng-hide" ng-show="showLocation"
+			style="width: 400px; padding: 20px; position: absolute; right: 20px; top: 30px; background: white; border: 5px solid #dddddd; z-index: 999;">
+			<div>
+				<span>#label("PROVINCE"):</span><select
+					style="width: 200px; margin: 0 20px;" ng-model="location.province"
+					ng-options="province.message for province in provinces"></select><a
+					href="javascript:void(0)" ng-click="selectedCityName='泰安市';showLocation=false;">#button("CURRENT_POSITION")</a>
+			</div>
+			<div>
+				<a style="display: inline-block; margin-right: 10px;"
+					ng-repeat="city in location.province.cities"
+					href="javascript:void(0)" ng-click="$parent.selectedCityName=city.message;$parent.showLocation=false;">{{city.message}}</a>
+			</div>
 		</div>
 	</div>
 </div>

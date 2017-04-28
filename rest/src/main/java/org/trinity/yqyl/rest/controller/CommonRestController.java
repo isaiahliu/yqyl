@@ -13,7 +13,6 @@ import org.trinity.common.accessright.ISecurityUtil;
 import org.trinity.common.dto.IResponse;
 import org.trinity.common.dto.object.AccessrightDto;
 import org.trinity.common.dto.object.AccessrightResponse;
-import org.trinity.common.dto.object.LookupResponse;
 import org.trinity.common.dto.response.DefaultResponse;
 import org.trinity.common.exception.IException;
 import org.trinity.message.IMessageResolverChain;
@@ -21,6 +20,7 @@ import org.trinity.rest.controller.AbstractRestController;
 import org.trinity.yqyl.common.accessright.Authorize;
 import org.trinity.yqyl.common.message.dto.domain.CityDto;
 import org.trinity.yqyl.common.message.dto.domain.ProvinceDto;
+import org.trinity.yqyl.common.message.dto.response.ProvinceResponse;
 import org.trinity.yqyl.common.message.lookup.AccessRight;
 import org.trinity.yqyl.common.message.lookup.City;
 import org.trinity.yqyl.common.message.lookup.Province;
@@ -56,8 +56,8 @@ public class CommonRestController extends AbstractRestController {
 	}
 
 	@RequestMapping(value = "/province", method = RequestMethod.GET)
-	public ResponseEntity<LookupResponse> getProvinces() throws IException {
-		final LookupResponse response = new LookupResponse();
+	public ResponseEntity<ProvinceResponse> getProvinces() throws IException {
+		final ProvinceResponse response = new ProvinceResponse();
 		final List<ProvinceDto> provinces = Arrays.stream(Province.values()).map(item -> {
 			final ProvinceDto provinceDto = new ProvinceDto();
 
