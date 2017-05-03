@@ -52,7 +52,7 @@
 			<div>
 				<a style="display: inline-block; margin-right: 10px;"
 					ng-repeat="city in location.province.cities"
-					href="javascript:void(0)" ng-click="overrideCurrent(city.message)">{{city.message}}</a>
+					href="javascript:void(0)" ng-click="overrideCurrent(city)">{{city.message}}</a>
 			</div>
 		</div>
 	</div>
