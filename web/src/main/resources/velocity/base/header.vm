@@ -26,7 +26,8 @@
 			<ul>
 				<li><div>
 						<a href="javascript:void(0)" ng-click="showLocation=!showLocation">
-							<img src="/static/images/logo/city.png" /> <span class="ng-hide" ng-show="selectedCityName">{{selectedCityName}}</span>
+							<img src="/static/images/logo/city.png" /> <span class="ng-hide"
+							ng-show="selectedCityName">{{selectedCityName}}</span>
 						</a>
 					</div></li> #if(${authentication}) #if(${authentication.token.authenticated})
 				<li><div>
@@ -46,12 +47,12 @@
 				<span>#label("PROVINCE"):</span><select
 					style="width: 200px; margin: 0 20px;" ng-model="location.province"
 					ng-options="province.message for province in provinces"></select><a
-					href="javascript:void(0)" ng-click="selectedCityName='泰安市';showLocation=false;">#button("CURRENT_POSITION")</a>
+					href="javascript:void(0)" ng-click="locateCurrent()">#button("CURRENT_POSITION")</a>
 			</div>
 			<div>
 				<a style="display: inline-block; margin-right: 10px;"
 					ng-repeat="city in location.province.cities"
-					href="javascript:void(0)" ng-click="$parent.selectedCityName=city.message;$parent.showLocation=false;">{{city.message}}</a>
+					href="javascript:void(0)" ng-click="overrideCurrent(city.message)">{{city.message}}</a>
 			</div>
 		</div>
 	</div>
