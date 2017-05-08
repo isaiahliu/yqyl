@@ -28,145 +28,149 @@ import org.trinity.yqyl.repository.business.entity.ServiceInfoStastic;
 import org.trinity.yqyl.repository.business.entity.ServiceSupplierClient;
 
 @Service
-public class ServiceInfoProcessController
-        extends AbstractAutowiredCrudProcessController<ServiceInfo, ServiceInfoDto, ServiceInfoSearchingDto, IServiceInfoRepository>
-        implements IServiceInfoProcessController {
-    @Autowired
-    private IUserRepository userRepository;
+public class ServiceInfoProcessController extends AbstractAutowiredCrudProcessController<ServiceInfo, ServiceInfoDto, ServiceInfoSearchingDto, IServiceInfoRepository>
+		implements IServiceInfoProcessController {
+	@Autowired
+	private IUserRepository userRepository;
 
-    @Autowired
-    private IServiceCategoryRepository serviceCategoryRepository;
+	@Autowired
+	private IServiceCategoryRepository serviceCategoryRepository;
 
-    @Autowired
-    private IServiceSupplierClientRepository serviceSupplierClientRepository;
+	@Autowired
+	private IServiceSupplierClientRepository serviceSupplierClientRepository;
 
-    @Autowired
-    private IServiceInfoStasticRepository serviceInfoStasticRepository;
+	@Autowired
+	private IServiceInfoStasticRepository serviceInfoStasticRepository;
 
-    @Autowired
-    private ISystemAttributeProcessController systemAttributeProcessController;
+	@Autowired
+	private ISystemAttributeProcessController systemAttributeProcessController;
 
-    @Autowired
-    private IContentProcessController contentProcessController;
+	@Autowired
+	private IContentProcessController contentProcessController;
 
-    @Override
-    @Transactional(rollbackOn = IException.class)
-    public List<ServiceInfoDto> addAll(final List<ServiceInfoDto> data) throws IException {
-        for (final ServiceInfoDto dto : data) {
-            final ServiceInfo entity = getDomainObjectConverter().convertBack(dto);
-            final ServiceSupplierClient serviceSupplierClient = userRepository
-                    .findOneByUsername(getSecurityUtil().getCurrentToken().getUsername()).getServiceSupplierClient();
+	@Override
+	@Transactional(rollbackOn = IException.class)
+	public List<ServiceInfoDto> addAll(final List<ServiceInfoDto> data) throws IException {
+		for (final ServiceInfoDto dto : data) {
+			final ServiceInfo entity = getDomainObjectConverter().convertBack(dto);
+			final ServiceSupplierClient serviceSupplierClient = userRepository.findOneByUsername(getSecurityUtil().getCurrentToken().getUsername()).getServiceSupplierClient();
 
-            if (dto.getServiceSupplierClient() != null && dto.getServiceSupplierClient().getId() != null
-                    && dto.getServiceSupplierClient().getId() > 0
-                    && dto.getServiceSupplierClient().getId() != serviceSupplierClient.getUserId()) {
-                getSecurityUtil().checkAccessRight(AccessRight.OPERATOR);
+			if (dto.getServiceSupplierClient() != null && dto.getServiceSupplierClient().getId() != null && dto.getServiceSupplierClient().getId() > 0
+					&& dto.getServiceSupplierClient().getId() != serviceSupplierClient.getUserId()) {
+				getSecurityUtil().checkAccessRight(AccessRight.OPERATOR);
 
-                entity.setServiceSupplierClient(serviceSupplierClientRepository.findOne(dto.getServiceSupplierClient().getId()));
-            } else {
-                entity.setServiceSupplierClient(serviceSupplierClient);
-            }
+				entity.setServiceSupplierClient(serviceSupplierClientRepository.findOne(dto.getServiceSupplierClient().getId()));
+			} else {
+				entity.setServiceSupplierClient(serviceSupplierClient);
+			}
 
-            if (dto.getServiceCategory() != null && dto.getServiceCategory().getId() != null && dto.getServiceCategory().getId() > 0) {
-                entity.setServiceCategory(serviceCategoryRepository.findOne(dto.getServiceCategory().getId()));
-            }
+			if (dto.getServiceCategory() != null && dto.getServiceCategory().getId() != null && dto.getServiceCategory().getId() > 0) {
+				entity.setServiceCategory(serviceCategoryRepository.findOne(dto.getServiceCategory().getId()));
+			}
 
-            getDomainEntityRepository().save(entity);
+			getDomainEntityRepository().save(entity);
 
-            final ServiceInfoStastic serviceInfoStastic = new ServiceInfoStastic();
-            serviceInfoStastic.setServiceInfoId(entity.getId());
-            serviceInfoStastic.setServiceInfo(entity);
-            serviceInfoStastic.setAppraiseAvg(5d);
-            serviceInfoStastic.setAppraiseCount(0l);
-            serviceInfoStastic.setOrderCount(0l);
+			final ServiceInfoStastic serviceInfoStastic = new ServiceInfoStastic();
+			serviceInfoStastic.setServiceInfoId(entity.getId());
+			serviceInfoStastic.setServiceInfo(entity);
+			serviceInfoStastic.setAppraiseAvg(5d);
+			serviceInfoStastic.setAppraiseCount(0l);
+			serviceInfoStastic.setOrderCount(0l);
 
-            serviceInfoStasticRepository.save(serviceInfoStastic);
+			serviceInfoStasticRepository.save(serviceInfoStastic);
 
-            getDomainObjectConverter().convert(entity, dto, CopyPolicy.TARGET_IS_NULL);
-        }
+			getDomainObjectConverter().convert(entity, dto, CopyPolicy.TARGET_IS_NULL);
+		}
 
-        return data;
-    }
+		return data;
+	}
 
-    @Override
-    @Transactional(rollbackOn = IException.class)
-    public String addImage(final Long entityId) throws IException {
-        final ServiceInfo serviceInfo = getDomainEntityRepository().findOne(entityId);
-        if (!serviceInfo.getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
-            throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
-        }
-        final String value = systemAttributeProcessController.getValue(SystemAttributeKey.MAX_SERVICE_INFO_IMAGES);
-        final int maxSize = Integer.parseInt(value);
+	@Override
+	@Transactional(rollbackOn = IException.class)
+	public String addImage(final Long entityId) throws IException {
+		final ServiceInfo serviceInfo = getDomainEntityRepository().findOne(entityId);
+		if (!serviceInfo.getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
+			throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
+		}
+		final String value = systemAttributeProcessController.getValue(SystemAttributeKey.MAX_SERVICE_INFO_IMAGES);
+		final int maxSize = Integer.parseInt(value);
 
-        if (serviceInfo.getImages().size() >= maxSize) {
-            throw getExceptionFactory().createException(ErrorMessage.EXCEED_ALLOWED_SIZE);
-        }
+		if (serviceInfo.getImages().size() >= maxSize) {
+			throw getExceptionFactory().createException(ErrorMessage.EXCEED_ALLOWED_SIZE);
+		}
 
-        final String uuid = contentProcessController.create();
+		final String uuid = contentProcessController.create();
 
-        if (serviceInfo.getImages().isEmpty()) {
-            serviceInfo.setImage(uuid);
-        }
+		if (serviceInfo.getImages().isEmpty()) {
+			serviceInfo.setImage(uuid);
+		}
 
-        serviceInfo.getImages().add(uuid);
+		serviceInfo.getImages().add(uuid);
 
-        getDomainEntityRepository().save(serviceInfo);
+		getDomainEntityRepository().save(serviceInfo);
 
-        return uuid;
-    }
+		return uuid;
+	}
 
-    @Override
-    @Transactional(rollbackOn = IException.class)
-    public void delete(final Long id) throws IException {
-        final ServiceInfo serviceInfo = getDomainEntityRepository().findOne(id);
+	@Override
+	protected boolean canAccessAllStatus() {
+		return getSecurityUtil().hasAccessRight(AccessRight.SERVICE_SUPPLIER) || getSecurityUtil().hasAccessRight(AccessRight.ADMINISTRATOR);
+	}
 
-        final String username = serviceInfo.getServiceSupplierClient().getUser().getUsername();
+	@Override
+	protected boolean canAccessScopeAll() {
+		return true;
+	}
 
-        if (!username.equals(getSecurityUtil().getCurrentToken().getUsername())) {
-            getSecurityUtil().checkAccessRight(AccessRight.OPERATOR);
-        }
+	@Override
+	@Transactional(rollbackOn = IException.class)
+	public void delete(final Long id) throws IException {
+		final ServiceInfo serviceInfo = getDomainEntityRepository().findOne(id);
 
-        serviceInfo.setStatus(ServiceStatus.DISABLED);
+		final String username = serviceInfo.getServiceSupplierClient().getUser().getUsername();
 
-        getDomainEntityRepository().save(serviceInfo);
-    }
+		if (!username.equals(getSecurityUtil().getCurrentToken().getUsername())) {
+			getSecurityUtil().checkAccessRight(AccessRight.OPERATOR);
+		}
 
-    @Override
-    @Transactional(rollbackOn = IException.class)
-    public void deleteImage(final Long entityId, final String uuid) throws IException {
-        final ServiceInfo serviceInfo = getDomainEntityRepository().findOne(entityId);
-        if (!serviceInfo.getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
-            throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
-        }
+		serviceInfo.setStatus(ServiceStatus.DISABLED);
 
-        serviceInfo.getImages().remove(uuid);
+		getDomainEntityRepository().save(serviceInfo);
+	}
 
-        if (uuid.equals(serviceInfo.getImage())) {
-            if (serviceInfo.getImages().isEmpty()) {
-                serviceInfo.setImage(null);
-            } else {
-                serviceInfo.setImage(serviceInfo.getImages().get(0));
-            }
-        }
+	@Override
+	@Transactional(rollbackOn = IException.class)
+	public void deleteImage(final Long entityId, final String uuid) throws IException {
+		final ServiceInfo serviceInfo = getDomainEntityRepository().findOne(entityId);
+		if (!serviceInfo.getServiceSupplierClient().getUser().getUsername().equals(getCurrentUsername())) {
+			throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
+		}
 
-        getDomainEntityRepository().save(serviceInfo);
-    }
+		serviceInfo.getImages().remove(uuid);
 
-    @Override
-    protected boolean canAccessAllStatus() {
-        return getSecurityUtil().hasAccessRight(AccessRight.SERVICE_SUPPLIER)
-                || getSecurityUtil().hasAccessRight(AccessRight.ADMINISTRATOR);
-    }
+		if (uuid.equals(serviceInfo.getImage())) {
+			if (serviceInfo.getImages().isEmpty()) {
+				serviceInfo.setImage(null);
+			} else {
+				serviceInfo.setImage(serviceInfo.getImages().get(0));
+			}
+		}
 
-    @Override
-    protected boolean canAccessScopeAll() {
-        return true;
-    }
+		getDomainEntityRepository().save(serviceInfo);
+	}
 
-    @Override
-    protected void updateRelationshipFields(final ServiceInfo entity, final ServiceInfoDto dto) {
-        if (dto.getServiceCategory() != null && dto.getServiceCategory().getId() != null && dto.getServiceCategory().getId() > 0) {
-            entity.setServiceCategory(serviceCategoryRepository.findOne(dto.getServiceCategory().getId()));
-        }
-    }
+	@Override
+	protected void updateRelationshipFields(final ServiceInfo entity, final ServiceInfoDto dto) {
+		if (dto.getServiceCategory() != null && dto.getServiceCategory().getId() != null && dto.getServiceCategory().getId() > 0) {
+			entity.setServiceCategory(serviceCategoryRepository.findOne(dto.getServiceCategory().getId()));
+		}
+
+		if (dto.getProvince() == null) {
+			entity.setProvince(null);
+		}
+
+		if (dto.getCity() == null) {
+			entity.setCity(null);
+		}
+	}
 }

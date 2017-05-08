@@ -4,6 +4,15 @@ layoutApp.controller('contentController', function($scope, $http, $window, $loca
 		asc : true
 	}
 
+	$http({
+		method : "GET",
+		url : "/ajax/common/province",
+	}).success(function(response) {
+		$scope.provinces = response.data;
+	}).error(function(response) {
+		errorHandler($scope, response);
+	});
+	
 	$scope.searchServices = function(newSearch) {
 		var paging = $scope.pagingData;
 		if (newSearch) {
@@ -44,6 +53,15 @@ layoutApp.controller('contentController', function($scope, $http, $window, $loca
 		default:
 			break;
 		}
+		
+		if ($scope.selectedProvince != undefined && $scope.selectedProvince != "") {
+			ajaxUrl += "&province=" + $scope.selectedProvince.code;
+		}
+		
+		if ($scope.selectedCity != undefined && $scope.selectedCity != "") {
+			ajaxUrl += "&city=" + $scope.selectedCity.code;
+		}
+		
 		$http({
 			method : "GET",
 			url : ajaxUrl

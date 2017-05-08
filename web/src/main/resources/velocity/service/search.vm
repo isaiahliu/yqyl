@@ -71,9 +71,7 @@
 								ng-click="modifySorting('timestamp')"><span>#label("PUBLISH_TIMESTAMP")</span></a>
 							<img class="ng-hide"
 								ng-show="sorting.name=='timestamp' && sorting.asc"
-								src="/static/images/icon/arrow_up.png" />
-							<imgclass
-								="ng-hide"
+								src="/static/images/icon/arrow_up.png" /> <img class="ng-hide"
 								ng-show="sorting.name=='timestamp' && !sorting.asc"
 								src="/static/images/icon/arrow_down.png" />
 						</div></td>
@@ -87,6 +85,27 @@
 									&lt; </span></a> <span>{{pagingData.pageIndex}}/{{(pagingData.itemCount-1)/(pagingData.pageSize)
 								+ 1 | number : 0}}</span> <a href="javascript:void(0)"
 								ng-click="nextPage()"><span> &gt; </span></a>
+						</div></td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle" class="barItem" colspan="2"><div
+							style="width: 220px">
+							<select style="border: none; height: 30px;"
+								ng-model="selectedProvince"
+								ng-options="province.message for province in provinces">
+								<option value="">请选择省份</option>
+							</select>
+						</div></td>
+					<td align="center" valign="middle" class="barItem" colspan="2"><div
+							style="width: 220px">
+							<select style="border: none; height: 30px;"
+								ng-model="selectedCity"
+								ng-options="city.message for city in selectedProvince.cities">
+								<option value="">请选择城市</option>
+							</select>
+						</div></td>
+					<td align="center" class="barItem"><div>
+							<a href="javascript:void(0)" ng-click="searchServices(true)">搜索</a>
 						</div></td>
 				</tr>
 			</table>

@@ -11,6 +11,60 @@ layoutApp.directive('customOnChange', function() {
 layoutApp.controller('contentController', function($scope, $http, $window, errorHandler, serviceInfoId) {
 	$scope.serviceInfoId = serviceInfoId;
 
+	$scope.getServiceInfo = function() {
+		if ($scope.serviceInfoId > 0) {
+			$http({
+				method : "GET",
+				url : "/ajax/service?id=" + $scope.serviceInfoId + "&rsexp=images,serviceCategory[parent]"
+			}).success(function(response) {
+				$scope.serviceInfo = response.data[0];
+				$scope.serviceInfo.active = $scope.serviceInfo.status.code == 'A'
+				$scope.populateSubCategory();
+				if ($scope.serviceInfo.image != undefined && $scope.serviceInfo.image != null) {
+					$scope.imageUrl = "/ajax/content/image/" + $scope.serviceInfo.image;
+				}
+
+				if ($scope.serviceInfo.province != null && $scope.serviceInfo.province != undefined) {
+					for (var index = 0; index < $scope.provinces.length; index++) {
+						if ($scope.provinces[index].code == $scope.serviceInfo.province.code) {
+							$scope.selectedProvinceAndCity.province = $scope.provinces[index];
+
+							if ($scope.serviceInfo.city != null && $scope.serviceInfo.city != undefined) {
+								for (var index2 = 0; index2 < $scope.selectedProvinceAndCity.province.cities.length; index2++) {
+									if ($scope.selectedProvinceAndCity.province.cities[index2].code == $scope.serviceInfo.city.code) {
+										$scope.selectedProvinceAndCity.city = $scope.selectedProvinceAndCity.province.cities[index2];
+										break;
+									}
+								}
+							}
+
+							break;
+						}
+					}
+				}
+
+			}).error(function(response) {
+				errorHandler($scope, response);
+			});
+		} else {
+			$scope.serviceInfo = {
+				name : "",
+				price : "",
+				status : {
+					code : 'A'
+				},
+				serviceCategory : {
+					id : null,
+					parent : {
+						id : null
+					}
+				}
+			};
+
+			$scope.serviceInfo.active = true;
+		}
+	};
+
 	$http({
 		method : "GET",
 		url : "/ajax/common/lookup/PMMTHD"
@@ -26,6 +80,15 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 				url : "/ajax/service/category?status=A"
 			}).success(function(response) {
 				$scope.categories = response.data;
+				$http({
+					method : "GET",
+					url : "/ajax/common/province",
+				}).success(function(response) {
+					$scope.provinces = response.data;
+					$scope.getServiceInfo();
+				}).error(function(response) {
+					errorHandler($scope, response);
+				});
 			}).error(function(response) {
 				errorHandler($scope, response);
 			});
@@ -55,41 +118,10 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		}
 	}
 
-	$scope.getServiceInfo = function() {
-		if ($scope.serviceInfoId > 0) {
-			$http({
-				method : "GET",
-				url : "/ajax/service?id=" + $scope.serviceInfoId + "&rsexp=images,serviceCategory[parent]"
-			}).success(function(response) {
-				$scope.serviceInfo = response.data[0];
-				$scope.serviceInfo.active = $scope.serviceInfo.status.code == 'A'
-				$scope.populateSubCategory();
-				if ($scope.serviceInfo.image != undefined && $scope.serviceInfo.image != null) {
-					$scope.imageUrl = "/ajax/content/image/" + $scope.serviceInfo.image;
-				}
-			}).error(function(response) {
-				errorHandler($scope, response);
-			});
-		} else {
-			$scope.serviceInfo = {
-				name : "",
-				price : "",
-				status : {
-					code : 'A'
-				},
-				serviceCategory : {
-					id : null,
-					parent : {
-						id : null
-					}
-				}
-			};
-
-			$scope.serviceInfo.active = true;
-		}
-	};
-
-	$scope.getServiceInfo();
+	$scope.selectedProvinceAndCity = {
+		province : null,
+		city : null
+	}
 
 	$scope.selectImage = function(event) {
 		if (event.target.files.length > 0) {
@@ -131,6 +163,22 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 
 	$scope.apply = function() {
 		$scope.serviceInfo.status.code = $scope.serviceInfo.active ? 'A' : 'O';
+
+		if ($scope.selectedProvinceAndCity.province == null && $scope.selectedProvinceAndCity.province == undefined) {
+			$scope.serviceInfo.province = null;
+		} else {
+			$scope.serviceInfo.province = {
+				code : $scope.selectedProvinceAndCity.province.code
+			};
+		}
+
+		if ($scope.selectedProvinceAndCity.city == null && $scope.selectedProvinceAndCity.city == undefined) {
+			$scope.serviceInfo.city = null;
+		} else {
+			$scope.serviceInfo.city = {
+				code : $scope.selectedProvinceAndCity.city.code
+			};
+		}
 
 		if ($scope.serviceInfoId > 0) {
 			$http({
