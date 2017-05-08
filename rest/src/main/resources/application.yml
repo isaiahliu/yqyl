@@ -35,6 +35,15 @@ args:
     cache-seconds: -1
   datasource: 
     url: jdbc:mysql://localhost:8099/yqyl_business?characterEncoding=utf-8&serverTimezone=GMT%2b8
+   
+---
+spring: 
+  profiles: prod
+args:
+  messages: 
+    cache-seconds: -1
+  datasource: 
+    url: jdbc:mysql://58.58.116.68:8099/yqyl_business?characterEncoding=utf-8&serverTimezone=GMT%2b8
     
 ---
 spring: 
