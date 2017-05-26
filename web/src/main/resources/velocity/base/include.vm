@@ -21,7 +21,8 @@
 <script src="/static/js/lib/angularjs/textAngular-sanitize.min.js"></script>
 <script src="/static/js/lib/angularjs/textAngular.min.js"></script>
 <script src="/static/js/lib/angularjs/date.js"></script>
-<script src="/static/js/lib/angularjs/ui-bootstrap-tpls.js"></script>
+<script src="/static/js/lib/angularjs/ui-bootstrap.min.js"></script>
+<script src="/static/js/lib/angularjs/ui-bootstrap-tpls.min.js"></script>
 <script src="/static/js/lib/angularjs/angular-ui-tree.min.js"></script>
 <script src="/static/js/lib/angularjs/angular-cookies.min.js"></script>
 <script src="/static/js/lib/umeditor/meta.umeditor.js"></script>

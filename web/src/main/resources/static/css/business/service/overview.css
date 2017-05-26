@@ -4,21 +4,28 @@ div.overview {
 }
 
 div.filter {
-	width: 300px;
+	opacity: 0.9;
+	z-index: 999;
 	border: 1px #fd6a15 solid;
 	float: left;
 	position: absolute;
+	width: 300px;
 }
 
 div.overview div.advertisement img {
-	height: 400px;
+	
 }
 
 div.overview div.advertisement {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 400px;
 }
 
 div.categories {
 	margin-left: 20px;
+	margin-top: 400px;
 }
 
 div.categories div.category div.separator {

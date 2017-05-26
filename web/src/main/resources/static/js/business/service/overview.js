@@ -12,19 +12,31 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		errorHandler($scope, response);
 	});
 
-	$scope.searchServices =
-			function(category) {
-				var ajaxUrl =
-						"/ajax/service?rsexp=serviceSupplierClient&status=A&searchScope=all&pageIndex=0&pageSize=8&parentCategoryId="
-								+ category.id;
+	$scope.myInterval = 4000;
+	var slides = $scope.slides = [];
+	slides.push({
+		image : '/static/images/banner/1.jpg',
+		text : ''
+	});
+	slides.push({
+		image : '/static/images/banner/2.jpg',
+		text : ''
+	});
+	slides.push({
+		image : '/static/images/banner/3.jpg',
+		text : ''
+	});
 
-				$http({
-					method : "GET",
-					url : ajaxUrl
-				}).success(function(response) {
-					category.services = response.data;
-				}).error(function(response) {
-					errorHandler($scope, response);
-				});
-			};
+	$scope.searchServices = function(category) {
+		var ajaxUrl = "/ajax/service?rsexp=serviceSupplierClient&status=A&searchScope=all&pageIndex=0&pageSize=8&parentCategoryId=" + category.id;
+
+		$http({
+			method : "GET",
+			url : ajaxUrl
+		}).success(function(response) {
+			category.services = response.data;
+		}).error(function(response) {
+			errorHandler($scope, response);
+		});
+	};
 });
