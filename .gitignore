@@ -3,3 +3,5 @@ target
 metamodel
 .svn
 org.eclipse.m2e.core.prefs
+.classpath
+.factorypath
