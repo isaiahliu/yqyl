@@ -21,6 +21,7 @@ import org.trinity.yqyl.common.message.lookup.TransactionType;
 import org.trinity.yqyl.process.controller.base.AbstractAutowiredCrudProcessController;
 import org.trinity.yqyl.process.controller.base.IAccountProcessController;
 import org.trinity.yqyl.process.controller.base.IAccountTransactionProcessController;
+import org.trinity.yqyl.process.controller.base.IPosProcessController;
 import org.trinity.yqyl.process.controller.base.IYiquanProcessController;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceReceiverClientRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IYiquanRepository;
@@ -45,6 +46,9 @@ public class YiquanProcessController
     @Autowired
     private IObjectConverter<AccountBalance, AccountBalanceDto> accountBalanceConverter;
 
+    @Autowired
+    private IPosProcessController posProcessController;
+
     @Override
     @Transactional(rollbackOn = IException.class)
     public void bindMe(final YiquanDto yiquanDto) throws IException {
@@ -54,7 +58,8 @@ public class YiquanProcessController
 
         final String username = getSecurityUtil().getCurrentToken().getUsername();
 
-        final ServiceReceiverClient client = serviceReceiverClientRepository.findOne(yiquanDto.getServiceReceiverClientId());
+        final ServiceReceiverClient client = serviceReceiverClientRepository
+                .findOne(yiquanDto.getServiceReceiverClientId());
 
         if (!client.getUser().getUsername().equals(username)) {
             throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
@@ -92,16 +97,15 @@ public class YiquanProcessController
             yiquan.setAccount(account);
             getDomainEntityRepository().save(yiquan);
 
-            // TODO get the initial yiquan amount
-            final double yiquanBalance = 2000d;
+            final double yiquanBalance = posProcessController.getBalance(yiquanCode);
 
             final AccountTransactionDto transaction = new AccountTransactionDto();
 
             transaction.setType(new LookupDto(TransactionType.BIND));
             final AccountPostingDto accountPostingDto = new AccountPostingDto();
             accountPostingDto.setAmount(yiquanBalance);
-            accountPostingDto.setBalance(accountBalanceConverter
-                    .convert(account.getBalances().stream().filter(item -> item.getCategory() == AccountCategory.YIQUAN).findAny().get()));
+            accountPostingDto.setBalance(accountBalanceConverter.convert(account.getBalances().stream()
+                    .filter(item -> item.getCategory() == AccountCategory.YIQUAN).findAny().get()));
             transaction.getAccountPostings().add(accountPostingDto);
 
             accountTransactionProcessController.processTransaction(transaction);
@@ -141,7 +145,8 @@ public class YiquanProcessController
     public void unbindMe(final YiquanDto yiquanDto) throws IException {
         final String username = getSecurityUtil().getCurrentToken().getUsername();
 
-        final ServiceReceiverClient client = serviceReceiverClientRepository.findOne(yiquanDto.getServiceReceiverClientId());
+        final ServiceReceiverClient client = serviceReceiverClientRepository
+                .findOne(yiquanDto.getServiceReceiverClientId());
 
         if (!client.getUser().getUsername().equals(username)) {
             throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_ACCESSRIGHT);
