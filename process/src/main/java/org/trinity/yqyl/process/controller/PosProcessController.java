@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.net.Socket;
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.crypto.Cipher;
@@ -14,6 +15,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.trinity.common.exception.IException;
 import org.trinity.common.exception.factory.IExceptionFactory;
@@ -23,8 +27,10 @@ import org.trinity.framework.contact.tsykt.TsyktMessageSerializer;
 import org.trinity.framework.contact.tsykt.messages.terminal.request.TsyktTerminalBalanceEnquiryRequest;
 import org.trinity.framework.contact.tsykt.messages.terminal.request.TsyktTerminalKekDownloadRequest;
 import org.trinity.framework.contact.tsykt.messages.terminal.request.TsyktTerminalSignUpRequest;
+import org.trinity.framework.contact.tsykt.messages.terminal.request.TsyktTerminalTransactionEnquiryRequest;
 import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalBalanceEnquiryResponse;
 import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalSignUpResponse;
+import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalTransactionEnquiryResponse;
 import org.trinity.message.exception.GeneralErrorMessage;
 import org.trinity.yqyl.process.controller.base.IPosProcessController;
 
@@ -48,9 +54,9 @@ public class PosProcessController implements IPosProcessController {
     @Value("${args.pos.center.port}")
     private int posCenterPort;
 
-    private String kek = null;
+    private byte[] kek = null;
 
-    private String mak = null;
+    private byte[] mak = null;
 
     private LocalDate lastUpdateDate = LocalDate.now();
 
@@ -75,58 +81,111 @@ public class PosProcessController implements IPosProcessController {
         query.setOperatorCode("operator");
         query.setPassword("password");
 
-        final byte[] codesFromMessages = pool.getCodesFromMessages("", query);
+        final TsyktTerminalBalanceEnquiryResponse queryResponse = (TsyktTerminalBalanceEnquiryResponse) getResponse(
+                query);
 
-        try (ByteArrayOutputStream byteArray = new ByteArrayOutputStream()) {
-            try (Socket socket = new Socket(posCenterUrl, posCenterPort)) {
-                int i;
-                socket.getOutputStream().write(codesFromMessages);
-                while ((i = socket.getInputStream().read()) != -1) {
-                    byteArray.write(i);
-                }
-            }
+        return Double.parseDouble(queryResponse.getAmount().substring(16, 26)) / 100;
+    }
 
-            final List<ITsyktMessage> responses = pool.getMessagesFromCodes("", byteArray.toByteArray());
-            final TsyktTerminalBalanceEnquiryResponse queryResponse = (TsyktTerminalBalanceEnquiryResponse) responses
-                    .get(0);
+    public Page<String> listTransactions(final String account, final LocalDate startDate, final LocalDate endDate)
+            throws IException {
+        final TsyktTerminalTransactionEnquiryRequest transactionRequest = new TsyktTerminalTransactionEnquiryRequest();
 
-            return Double.parseDouble(queryResponse.getAmount());
+        transactionRequest.setAccount(account);
+        transactionRequest.setTransactionCode("957095");
+        transactionRequest.setAmount("0");
+        transactionRequest.setSerialNo("111");
+        transactionRequest.setServiceConditionCode("00");
+        transactionRequest.setTerminalCode(terminalId);
+        transactionRequest.setShopCode(shopId);
+        transactionRequest.setStartDate(startDate.format(DateTimeFormatter.BASIC_ISO_DATE));
+        transactionRequest.setEndDate(endDate.format(DateTimeFormatter.BASIC_ISO_DATE));
+        transactionRequest.setStartIndex(1);
+
+        final TsyktTerminalTransactionEnquiryResponse response = (TsyktTerminalTransactionEnquiryResponse) getResponse(
+                transactionRequest);
+        return new PageImpl<>(null, new PageRequest(1, 10), 10);
+    }
+
+    private byte[] decrypt(final byte[] content, final byte[] key) {
+        try {
+            final DESKeySpec dks = new DESKeySpec(key);
+            final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+            final SecretKey securekey = keyFactory.generateSecret(dks);
+            final Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
+            cipher.init(Cipher.DECRYPT_MODE, securekey, new SecureRandom());
+
+            return cipher.doFinal(content);
         } catch (final Exception e) {
-            throw exceptionFactory.createException(GeneralErrorMessage.UNKNOWN_EXCEPTION);
+            return new byte[0];
+        }
+    }
+
+    private byte[] decrypt2(final byte[] content, final byte[] key) {
+        try {
+            final byte[] firstHalf = new byte[8];
+            final byte[] secondHalf = new byte[8];
+
+            System.arraycopy(key, 0, firstHalf, 0, 8);
+            System.arraycopy(key, 8, secondHalf, 0, 8);
+
+            final byte[] step1 = decrypt(content, firstHalf);
+            final byte[] step2 = encrypt(step1, secondHalf);
+            return decrypt(step2, firstHalf);
+        } catch (final Exception e) {
+            return new byte[0];
         }
     }
 
     private void downloadKek() throws IException {
         final TsyktTerminalKekDownloadRequest kekDownloadMessage = new TsyktTerminalKekDownloadRequest();
 
-        kekDownloadMessage.setTerminalCode("400000000002");// 终端标识码
-        kekDownloadMessage.setShopCode("400020000001");// 商户代码
+        kekDownloadMessage.setTerminalCode(terminalId);// 终端标识码
+        kekDownloadMessage.setShopCode(shopId);// 商户代码
         kekDownloadMessage.setTransactionTypeCode(0);// 交易类型吗
         kekDownloadMessage.setBatchNo(3);// 批次号
         kekDownloadMessage.setManageNo(3800);// 管理信息吗
 
-        final byte[] codesFromMessages = pool.getCodesFromMessages("", kekDownloadMessage);
+        final TsyktTerminalSignUpResponse kekResponse = (TsyktTerminalSignUpResponse) getResponse(kekDownloadMessage);
+
+        kek = decrypt2(parseHex(kekResponse.getPik()), parseHex(tsk));
+    }
+
+    private byte[] encrypt(final byte[] content, final byte[] key) throws Exception {
+        final DESKeySpec dks = new DESKeySpec(key);
+        final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+        final SecretKey securekey = keyFactory.generateSecret(dks);
+        final Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
+        cipher.init(Cipher.ENCRYPT_MODE, securekey, new SecureRandom());
+
+        return cipher.doFinal(content);
+    }
+
+    private ITsyktMessage getResponse(final ITsyktMessage request) throws IException {
+        final byte[] codesFromMessages = pool.getCodesFromMessages("", request);
 
         try (ByteArrayOutputStream byteArray = new ByteArrayOutputStream()) {
             try (Socket socket = new Socket(posCenterUrl, posCenterPort)) {
-                socket.getOutputStream().write(codesFromMessages);
                 int i;
+                socket.getOutputStream().write(codesFromMessages);
                 while ((i = socket.getInputStream().read()) != -1) {
                     byteArray.write(i);
                 }
             }
-            final List<ITsyktMessage> responses = pool.getMessagesFromCodes("", byteArray.toByteArray());
-            final TsyktTerminalSignUpResponse kekResponse = (TsyktTerminalSignUpResponse) responses.get(0);
 
-            final DESKeySpec dks = new DESKeySpec(tsk.getBytes());
-            final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-            final SecretKey securekey = keyFactory.generateSecret(dks);
-            final Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
-            cipher.init(Cipher.DECRYPT_MODE, securekey, new SecureRandom());
-            kek = new String(cipher.doFinal(kekResponse.getPik().getBytes()));
+            final List<ITsyktMessage> responses = pool.getMessagesFromCodes("", byteArray.toByteArray());
+            return responses.get(0);
         } catch (final Exception e) {
             throw exceptionFactory.createException(GeneralErrorMessage.UNKNOWN_EXCEPTION);
         }
+    }
+
+    private byte[] parseHex(final String hex) {
+        final byte[] result = new byte[hex.length() / 2];
+        for (int i = 0; i < hex.length(); i += 2) {
+            result[i / 2] = (byte) Integer.parseInt(hex.substring(i, i + 2), 16);
+        }
+        return result;
     }
 
     private void signUp() throws IException {
@@ -148,34 +207,11 @@ public class PosProcessController implements IPosProcessController {
         message.setPasswordVerifyCode("N");// 密码校验标识
         message.setPassword("123456");// 密码
 
-        final byte[] codesFromMessages = pool.getCodesFromMessages("", message);
+        final TsyktTerminalSignUpResponse response = (TsyktTerminalSignUpResponse) getResponse(message);
 
-        try (ByteArrayOutputStream byteArray = new ByteArrayOutputStream()) {
-            try (Socket socket = new Socket(posCenterUrl, posCenterPort)) {
-                socket.getOutputStream().write(codesFromMessages);
-                int i;
-                while ((i = socket.getInputStream().read()) != -1) {
-                    byteArray.write(i);
-                }
-            } catch (final Exception e) {
-                throw exceptionFactory.createException(GeneralErrorMessage.UNKNOWN_EXCEPTION);
-            }
+        mak = decrypt(parseHex(response.getMak()), kek);
 
-            final byte[] bytes = byteArray.toByteArray();
-
-            final List<ITsyktMessage> responses = pool.getMessagesFromCodes("", bytes);
-            final TsyktTerminalSignUpResponse response = (TsyktTerminalSignUpResponse) responses.get(0);
-
-            final DESKeySpec dks = new DESKeySpec(kek.getBytes());
-            final SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-            final SecretKey securekey = keyFactory.generateSecret(dks);
-            final Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
-            cipher.init(Cipher.DECRYPT_MODE, securekey, new SecureRandom());
-            mak = new String(cipher.doFinal(response.getMak().getBytes()));
-            TsyktMessageSerializer.mak = mak;
-            lastUpdateDate = LocalDate.now();
-        } catch (final Exception ex) {
-            throw exceptionFactory.createException(GeneralErrorMessage.UNKNOWN_EXCEPTION);
-        }
+        TsyktMessageSerializer.mak = mak;
+        lastUpdateDate = LocalDate.now();
     }
 }
