@@ -32,3 +32,12 @@ args:
     cache-seconds: -1
   rest:
     server: http://localhost:8091
+    
+---
+spring: 
+  profiles: prod
+args: 
+  messages: 
+    cache-seconds: -1
+  rest:
+    server: http://rest:8091
