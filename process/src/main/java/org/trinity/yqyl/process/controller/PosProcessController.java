@@ -54,6 +54,8 @@ public class PosProcessController implements IPosProcessController {
     @Value("${args.pos.center.port}")
     private int posCenterPort;
 
+    private int serialNo;
+
     private byte[] kek = null;
 
     private byte[] mak = null;
@@ -70,7 +72,7 @@ public class PosProcessController implements IPosProcessController {
         final TsyktTerminalBalanceEnquiryRequest query = new TsyktTerminalBalanceEnquiryRequest();
         query.setAccount(account);
         query.setTransactionCode("310000");
-        query.setSerialNo("310");
+        query.setSerialNo(String.valueOf(serialNo++));
         query.setServiceConditionCode("00");
         query.setTerminalCode(terminalId);
         query.setShopCode(shopId);
@@ -94,17 +96,17 @@ public class PosProcessController implements IPosProcessController {
         transactionRequest.setAccount(account);
         transactionRequest.setTransactionCode("957095");
         transactionRequest.setAmount("0");
-        transactionRequest.setSerialNo("111");
+        transactionRequest.setSerialNo(String.valueOf(serialNo++));
         transactionRequest.setServiceConditionCode("00");
         transactionRequest.setTerminalCode(terminalId);
         transactionRequest.setShopCode(shopId);
         transactionRequest.setStartDate(startDate.format(DateTimeFormatter.BASIC_ISO_DATE));
         transactionRequest.setEndDate(endDate.format(DateTimeFormatter.BASIC_ISO_DATE));
-        transactionRequest.setStartIndex(1);
+        transactionRequest.setStartIndex("1");
 
         final TsyktTerminalTransactionEnquiryResponse response = (TsyktTerminalTransactionEnquiryResponse) getResponse(
                 transactionRequest);
-        return new PageImpl<>(null, new PageRequest(1, 10), 10);
+        return new PageImpl<>(null, new PageRequest(1, 15), Integer.parseInt(response.getTotalSize()));
     }
 
     private byte[] decrypt(final byte[] content, final byte[] key) {
@@ -197,11 +199,11 @@ public class PosProcessController implements IPosProcessController {
 
         final TsyktTerminalSignUpRequest message = new TsyktTerminalSignUpRequest();
 
-        message.setSerialNo(112);// 系统跟踪号
+        message.setSerialNo(serialNo++);// 系统跟踪号
         message.setTerminalCode(terminalId);// 终端标识码
         message.setShopCode(shopId);// 商户代码
         message.setTransactionTypeCode(0);// 交易类型吗
-        message.setBatchNo(3);// 批次号
+        message.setBatchNo(1);// 批次号
         message.setManageNo(10);// 管理信息吗
         message.setOperatorCode("system");// 操作员
         message.setPasswordVerifyCode("N");// 密码校验标识
