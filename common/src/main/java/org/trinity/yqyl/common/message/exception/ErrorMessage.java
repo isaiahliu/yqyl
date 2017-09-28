@@ -36,7 +36,9 @@ public enum ErrorMessage implements IErrorMessage {
     INCORRECT_SERVICE_RECEIVER_CLIENT_STATUS,
     NEW_PASSWORD_SHOULD_BE_DIFFERENT,
     INCORRECT_STATUS,
-    UNABLE_TO_CONNECT_YKT;
+    UNABLE_TO_CONNECT_YKT,
+    ACCOUNT_LOCKED,
+    PAYMENT_EXCEEDS_ALLOWED_ALLOWANCE;
 
     @Override
     public String getMessageCode() {

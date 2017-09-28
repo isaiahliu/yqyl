@@ -26,12 +26,19 @@ import org.trinity.framework.contact.tsykt.TsyktMessagePool;
 import org.trinity.framework.contact.tsykt.TsyktMessageSerializer;
 import org.trinity.framework.contact.tsykt.messages.terminal.request.TsyktTerminalBalanceEnquiryRequest;
 import org.trinity.framework.contact.tsykt.messages.terminal.request.TsyktTerminalKekDownloadRequest;
+import org.trinity.framework.contact.tsykt.messages.terminal.request.TsyktTerminalPaymentRequest;
 import org.trinity.framework.contact.tsykt.messages.terminal.request.TsyktTerminalSignUpRequest;
+import org.trinity.framework.contact.tsykt.messages.terminal.request.TsyktTerminalTransactionDetailEnquiryRequest;
 import org.trinity.framework.contact.tsykt.messages.terminal.request.TsyktTerminalTransactionEnquiryRequest;
+import org.trinity.framework.contact.tsykt.messages.terminal.response.AbstractTsyktTerminalResponse;
 import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalBalanceEnquiryResponse;
 import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalSignUpResponse;
+import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalTransactionDetailEnquiryResponse;
 import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalTransactionEnquiryResponse;
 import org.trinity.message.exception.GeneralErrorMessage;
+import org.trinity.message.exception.IErrorMessage;
+import org.trinity.yqyl.common.message.dto.domain.PosTxDto;
+import org.trinity.yqyl.common.message.exception.ErrorMessage;
 import org.trinity.yqyl.process.controller.base.IPosProcessController;
 
 @Service
@@ -77,7 +84,7 @@ public class PosProcessController implements IPosProcessController {
         query.setTerminalCode(terminalId);
         query.setShopCode(shopId);
         query.setTransactionTypeCode(1);
-        query.setBatchNo(3);
+        query.setBatchNo(1);
         query.setManageNo(0);
         query.setAccountCode(account);
         query.setOperatorCode("operator");
@@ -89,6 +96,34 @@ public class PosProcessController implements IPosProcessController {
         return Double.parseDouble(queryResponse.getAmount().substring(16, 26)) / 100;
     }
 
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public PosTxDto getTransaction(final int batchNo, final String searchingCode) throws IException {
+        final TsyktTerminalTransactionDetailEnquiryRequest request = new TsyktTerminalTransactionDetailEnquiryRequest();
+
+        request.setAccount("0");
+        request.setAmount("0");
+        request.setBatchNo(1);
+        request.setField60(17);
+        request.setManageNo(0);
+        request.setReferenceCode("1");
+        request.setSerialNo(String.valueOf(serialNo++));
+        request.setServiceConditionCode("00");
+        request.setShopCode(shopId);
+        request.setTerminalCode(terminalId);
+        request.setTransactionCode("957105");
+        request.setSearchingCode(searchingCode);
+        request.setTransactionTypeCode(1);
+
+        final TsyktTerminalTransactionDetailEnquiryResponse response = getResponse(request);
+
+        final PosTxDto dto = new PosTxDto();
+        dto.setAccount(response.getAccount());
+        dto.setAmount(Double.parseDouble(response.getAmount()) / 100);
+        return dto;
+    }
+
+    @Transactional(rollbackOn = IException.class)
     public Page<String> listTransactions(final String account, final LocalDate startDate, final LocalDate endDate)
             throws IException {
         final TsyktTerminalTransactionEnquiryRequest transactionRequest = new TsyktTerminalTransactionEnquiryRequest();
@@ -107,6 +142,43 @@ public class PosProcessController implements IPosProcessController {
         final TsyktTerminalTransactionEnquiryResponse response = (TsyktTerminalTransactionEnquiryResponse) getResponse(
                 transactionRequest);
         return new PageImpl<>(null, new PageRequest(1, 15), Integer.parseInt(response.getTotalSize()));
+    }
+
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public void payment(final String account, final String password, final double amount) throws IException {
+        signUp();
+
+        final TsyktTerminalPaymentRequest payment = new TsyktTerminalPaymentRequest();
+        payment.setAccount(account);
+        payment.setTransactionCode("000000");
+        payment.setPassword(password);
+        payment.setAmount(String.valueOf((int) (amount * 100)));
+        payment.setTerminalCode(terminalId);
+        payment.setShopCode(shopId);
+        payment.setAccountCode(account);
+
+        payment.setSerialNo(String.valueOf(serialNo++));
+        payment.setServiceConditionCode("00");
+        payment.setOperatorCode("operator");
+        payment.setTransactionTypeCode(22);
+        payment.setBatchNo(1);
+        payment.setManageNo(0);
+        getResponse(payment);
+    }
+
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public void verify(final String account, final String password) throws IException {
+        try {
+            payment(account, password, 99999999.99);
+        } catch (final IException e) {
+            final IErrorMessage messageType = e.getErrorMessages().get(0).getItem1();
+            if (messageType != ErrorMessage.INSUFFICIENT_BALANCE
+                    && messageType != ErrorMessage.PAYMENT_EXCEEDS_ALLOWED_ALLOWANCE) {
+                throw e;
+            }
+        }
     }
 
     private byte[] decrypt(final byte[] content, final byte[] key) {
@@ -145,7 +217,7 @@ public class PosProcessController implements IPosProcessController {
         kekDownloadMessage.setTerminalCode(terminalId);// 终端标识码
         kekDownloadMessage.setShopCode(shopId);// 商户代码
         kekDownloadMessage.setTransactionTypeCode(0);// 交易类型吗
-        kekDownloadMessage.setBatchNo(3);// 批次号
+        kekDownloadMessage.setBatchNo(1);// 批次号
         kekDownloadMessage.setManageNo(3800);// 管理信息吗
 
         final TsyktTerminalSignUpResponse kekResponse = (TsyktTerminalSignUpResponse) getResponse(kekDownloadMessage);
@@ -163,7 +235,7 @@ public class PosProcessController implements IPosProcessController {
         return cipher.doFinal(content);
     }
 
-    private ITsyktMessage getResponse(final ITsyktMessage request) throws IException {
+    private <T extends AbstractTsyktTerminalResponse> T getResponse(final ITsyktMessage request) throws IException {
         final byte[] codesFromMessages = pool.getCodesFromMessages("", request);
 
         try (ByteArrayOutputStream byteArray = new ByteArrayOutputStream()) {
@@ -176,7 +248,26 @@ public class PosProcessController implements IPosProcessController {
             }
 
             final List<ITsyktMessage> responses = pool.getMessagesFromCodes("", byteArray.toByteArray());
-            return responses.get(0);
+
+            @SuppressWarnings("unchecked")
+            final T response = (T) responses.get(0);
+
+            switch (response.getResponseCode()) {
+            case "C1":
+                throw exceptionFactory.createException(ErrorMessage.ACCOUNT_LOCKED);
+            case "99":
+                throw exceptionFactory.createException(ErrorMessage.WRONG_PASSWORD);
+            case "51":
+                throw exceptionFactory.createException(ErrorMessage.INSUFFICIENT_BALANCE);
+            case "61":
+                throw exceptionFactory.createException(ErrorMessage.PAYMENT_EXCEEDS_ALLOWED_ALLOWANCE);
+            case "00":
+                break;
+            default:
+                throw exceptionFactory.createException(GeneralErrorMessage.UNKNOWN_EXCEPTION, "请求失败");
+            }
+
+            return response;
         } catch (final Exception e) {
             throw exceptionFactory.createException(GeneralErrorMessage.UNKNOWN_EXCEPTION);
         }

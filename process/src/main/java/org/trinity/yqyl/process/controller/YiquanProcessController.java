@@ -73,12 +73,7 @@ public class YiquanProcessController
             throw getExceptionFactory().createException(ErrorMessage.YIQUAN_IS_ALREADY_BINDED);
         }
 
-        // final String code = yiquanDto.getCode();
-        // final String name = client.getName();
-        // final String password = yiquanDto.getYiquanPassword();
-        // final String identityCard = client.getIdentityCard();
-        // TODO verify yiquan code, password, name, identity card from API.
-        // TODO If verify fails, throw exception.
+        posProcessController.verify(yiquanDto.getCode(), yiquanDto.getYiquanPassword());
 
         client.setYiquan(create(yiquanDto.getCode()));
 
@@ -155,13 +150,6 @@ public class YiquanProcessController
         if (client.getYiquan() == null) {
             return;
         }
-
-        // final String code = client.getYiquan().getCode();
-        // final String name = client.getName();
-        // final String password = yiquanDto.getYiquanPassword();
-        // final String identityCard = client.getIdentityCard();
-        // TODO verify yiquan code, password, name, identity card from API.
-        // TODO If verify fails, throw exception.
 
         client.setYiquan(null);
 

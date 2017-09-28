@@ -20,25 +20,19 @@ public class ServiceOrderDto extends AbstractBusinessDto {
     private String receipt;
     private String comment;
     private LookupDto paymentMethod;
-
     private LookupDto paymentType;
-
     private AccountTransactionDto paymentTransaction;
-
     private AccountTransactionDto drawbackTransaction;
-
     private Double expectedPaymentAmount;
     private Double actualPaymentAmount;
     private ServiceInfoDto serviceInfo;
     private ServiceOrderAppraiseDto appraise;
-
     private ServiceSupplierStaffDto staff;
-
     private List<ServiceOrderOperationDto> operations;
-
     private UserDto user;
-
     private byte[] receiptContent;
+    private int txBatchNo;
+    private String txSerialNo;
 
     public Double getActualPaymentAmount() {
         return actualPaymentAmount;
@@ -137,6 +131,14 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public ServiceSupplierStaffDto getStaff() {
         return staff;
+    }
+
+    public int getTxBatchNo() {
+        return txBatchNo;
+    }
+
+    public String getTxSerialNo() {
+        return txSerialNo;
     }
 
     public String getUid() {
@@ -241,6 +243,14 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public void setStaff(final ServiceSupplierStaffDto staff) {
         this.staff = staff;
+    }
+
+    public void setTxBatchNo(final int txBatchNo) {
+        this.txBatchNo = txBatchNo;
+    }
+
+    public void setTxSerialNo(final String txSerialNo) {
+        this.txSerialNo = txSerialNo;
     }
 
     public void setUid(final String uid) {
