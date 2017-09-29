@@ -1,6 +1,18 @@
 <link rel="stylesheet" href="/static/css/business/login.css"></link>
 
 <div class="tableView login">
+	<div class="ng-hide" ng-show="showAnnouncement"
+		style="padding: 20px 0; border: 5px #eeeeee solid; background: #dddddd; top: 100px; left: 20%; position: fixed; text-align: center; width: 60%; height: 600px; z-index: 999;">
+		<div style="width: 100%; padding: 0; text-align: center;">
+			<span style="font-weight: bold;">养老平台用户服务协议</span>
+		</div>
+		<div style="width: 100%; padding: 10px 20px; text-align: center;">
+			<textarea style="height: 500px; width: 100%" ng-readonly="true">#info("USER_ANNOUNCEMENT")</textarea>
+		</div>
+		<div style="width: 100%; padding: 0; text-align: center;">
+			<a href="javascript:void(0)" ng-click="showAnnouncement=false;">关闭</a>
+		</div>
+	</div>
 	<div>
 		<div>
 			<table>
@@ -84,7 +96,11 @@
 									placeholder='#info("REPEAT_PASSWORD")' />
 							</div>
 							<div class="line">
-								<button class="btn-login" ng-click="register()">#button("REGISTER")</button>
+								<input type="checkbox" style="width: 10px; height: 10px;" ng-model="agreed" /></input><span>我已同意</span><a
+									href="javascript:void(0)" ng-click="showAnnouncement=true;">《养老平台用户服务协议》</a>
+							</div>
+							<div class="line">
+								<button ng-disabled="!agreed" class="btn-login" ng-click="register()">#button("REGISTER")</button>
 							</div>
 						</div>
 					</td>
@@ -92,6 +108,7 @@
 			</table>
 		</div>
 	</div>
+
 </div>
 
 <script src="/static/js/business/login.js"></script>

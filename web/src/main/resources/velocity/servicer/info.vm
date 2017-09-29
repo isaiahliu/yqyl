@@ -7,19 +7,9 @@
 </script>
 
 <div class="info">
-	<div class="applicationStep ng-hide" ng-if="!serviceSupplierClient" ng-show="step=='ANNOUNCEMENT1'">
-		<div class="title">#label("SERVICE_SUPPLIER_ANNOUNCEMENT_1")</div>
-		<textarea ng-readonly="true">#info("SERVICE_SUPPLIER_ANNOUNCEMENT_1")</textarea>
-		<div class="accept">
-			<input type="checkBox" ng-model="announcementAgreed1" /><span>#label("READ_AND_ACCEPT")</span>
-		</div>
-		<div class="next">
-			<button ng-show="announcementAgreed1" ng-click="accept()">#button("NEXT")</button>
-		</div>
-	</div>
-	<div class="applicationStep ng-hide" ng-if="!serviceSupplierClient" ng-show="step=='ANNOUNCEMENT2'">
-		<div class="title">#label("SERVICE_SUPPLIER_ANNOUNCEMENT_2")</div>
-		<textarea ng-readonly="true">#info("SERVICE_SUPPLIER_ANNOUNCEMENT_2")</textarea>
+	<div class="applicationStep ng-hide" ng-if="!serviceSupplierClient" ng-show="step=='ANNOUNCEMENT'">
+		<div class="title">#label("SERVICE_SUPPLIER_ANNOUNCEMENT")</div>
+		<textarea ng-readonly="true">#info("SERVICE_SUPPLIER_ANNOUNCEMENT")</textarea>
 		<div class="accept">
 			<input type="checkBox" ng-model="announcementAgreed2" /><span>#label("READ_AND_ACCEPT")</span>
 		</div>

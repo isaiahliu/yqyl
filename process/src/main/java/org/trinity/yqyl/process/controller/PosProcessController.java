@@ -103,23 +103,23 @@ public class PosProcessController implements IPosProcessController {
 
         request.setAccount("0");
         request.setAmount("0");
-        request.setBatchNo(1);
-        request.setField60(17);
+        request.setBatchNo(batchNo);
+        request.setField60(11);
         request.setManageNo(0);
-        request.setReferenceCode("1");
-        request.setSerialNo(String.valueOf(serialNo++));
+        request.setReferenceCode("0");
+        request.setSerialNo(searchingCode);
         request.setServiceConditionCode("00");
         request.setShopCode(shopId);
         request.setTerminalCode(terminalId);
         request.setTransactionCode("957105");
-        request.setSearchingCode(searchingCode);
         request.setTransactionTypeCode(1);
 
         final TsyktTerminalTransactionDetailEnquiryResponse response = getResponse(request);
 
         final PosTxDto dto = new PosTxDto();
         dto.setAccount(response.getAccount());
-        dto.setAmount(Double.parseDouble(response.getAmount()) / 100);
+        dto.setAmount(Double.parseDouble(
+                org.springframework.util.StringUtils.isEmpty(response.getAmount()) ? "0" : response.getAmount()) / 100);
         return dto;
     }
 
@@ -253,6 +253,8 @@ public class PosProcessController implements IPosProcessController {
             final T response = (T) responses.get(0);
 
             switch (response.getResponseCode()) {
+            case "B1":
+                throw exceptionFactory.createException(ErrorMessage.CANNOT_FIND_TRANSACTION);
             case "C1":
                 throw exceptionFactory.createException(ErrorMessage.ACCOUNT_LOCKED);
             case "99":

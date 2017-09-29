@@ -38,7 +38,8 @@ public enum ErrorMessage implements IErrorMessage {
     INCORRECT_STATUS,
     UNABLE_TO_CONNECT_YKT,
     ACCOUNT_LOCKED,
-    PAYMENT_EXCEEDS_ALLOWED_ALLOWANCE;
+    PAYMENT_EXCEEDS_ALLOWED_ALLOWANCE,
+    CANNOT_FIND_TRANSACTION;
 
     @Override
     public String getMessageCode() {

@@ -44,16 +44,12 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			$scope.audited = $scope.serviceSupplierClient.status.code == 'A' || $scope.serviceSupplierClient.status.code == 'D';
 			$scope.auditing = serviceSupplierClientId > 0;
 		} else if (serviceSupplierClientId == 0) {
-			$scope.step = "ANNOUNCEMENT1";
+			$scope.step = "ANNOUNCEMENT";
 			$scope.serviceSupplierClient = undefined;
 		}
 	}).error(function(response) {
 		errorHandler($scope, response);
 	});
-
-	$scope.accept = function() {
-		$scope.step = "ANNOUNCEMENT2"
-	};
 
 	$http({
 		method : "GET",

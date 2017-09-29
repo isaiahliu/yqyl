@@ -1,8 +1,10 @@
-layoutApp.controller('contentController', function($scope, $http, $window, $cookieStore, errorHandler) {
+layoutApp.controller('contentController', function($scope, $http, $window,
+		$cookieStore, errorHandler) {
 	$scope.isReg = false;
 	$scope.rememberUsername = false;
 	$scope.verifyCodeSent = false;
-
+	$scope.showAnnouncement = false;
+	$scope.agreed = false;
 	$scope.loginData = {
 		username : $cookieStore.get("YQYL_USERNAME"),
 		password : ""

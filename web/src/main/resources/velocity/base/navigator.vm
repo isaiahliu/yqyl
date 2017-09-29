@@ -11,7 +11,7 @@
 				style="line-height: 40px;">#button("SEARCH")</span></button>
 			<button class="publishButton" ng-click="publish()">#button("PUBLISH_SERVICE")</button>
 		</div>
-		<img class="advertisement" src="/static/images/logo/advertisement.jpg" />
+		<img class="advertisement" src="/static/images/logo/contactUs.png" />
 	</div>
 	<div class="navBarItems">
 		<ul>

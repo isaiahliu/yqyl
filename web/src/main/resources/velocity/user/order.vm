@@ -4,15 +4,19 @@
 <div class="order">
 	<div class="result ng-hide" ng-show="orders">
 		<div style="padding: 15px;" class="block">
-			<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("MY_ORDER")</span> <span
-				style="color: #333333; font-size: 16px;"
-			>#label("ALL_ORDERS") : </span> <span style="color: #fd6a15; font-size: 16px; margin-right: 20px;">{{orderPaging.itemCount}}#label("ITEM")</span>
-			<span style="color: #333333; font-size: 16px;">#label("UNPROCESSED_ORDERS") : </span> <span style="color: #fd6a15; font-size: 16px;">{{unprocessedCount}}#label("ITEM")</span>
-			<select ng-model="filter.selectedStatus" style="float: right; height: 35px; border: 1px solid #cccccc; font-size: 16px;">
+			<span style="color: #fd6a15; font-size: 22px; margin-right: 60px;">#label("MY_ORDER")</span>
+			<span style="color: #333333; font-size: 16px;">#label("ALL_ORDERS")
+				: </span> <span
+				style="color: #fd6a15; font-size: 16px; margin-right: 20px;">{{orderPaging.itemCount}}#label("ITEM")</span>
+			<span style="color: #333333; font-size: 16px;">#label("UNPROCESSED_ORDERS")
+				: </span> <span style="color: #fd6a15; font-size: 16px;">{{unprocessedCount}}#label("ITEM")</span>
+			<select ng-model="filter.selectedStatus"
+				style="float: right; height: 35px; border: 1px solid #cccccc; font-size: 16px;">
 				<option value="">#label("ALL_ORDERS")</option>
 				<option ng-repeat="status in statuses" value="{{status.code}}">{{status.message}}</option>
 			</select>
-			<button ng-click="changeCheckingRequirements()" style="float: right; font-size: 16px; height: 35px; margin-right: 20px;">#button("MY_REQUIREMENTS")</button>
+			<button ng-click="changeCheckingRequirements()"
+				style="float: right; font-size: 16px; height: 35px; margin-right: 20px;">#button("MY_REQUIREMENTS")</button>
 		</div>
 		<div style="padding: 15px; text-align: center;" class="block">
 			<table class="data">
@@ -32,35 +36,41 @@
 					<tr ng-repeat="order in orders">
 						<td align="center"><span>{{$index+1}}</span></td>
 						<td align="center"><div class="orderPic">
-								<img alt="#label('NOT_UPLOADED')" ng-src="/ajax/content/image/{{order.serviceInfo.image}}" />
+								<img alt="#label('NOT_UPLOADED')"
+									ng-src="/ajax/content/image/{{order.serviceInfo.image}}" />
 							</div></td>
 						<td align="center"><span>{{order.uid}}</span></td>
 						<td align="center"><span>{{order.serviceInfo.serviceCategory.name}}</span></td>
 						<td align="center"><span>{{order.expectedPaymentAmount|currency:'￥'}}</span></td>
 						<td align="center"><span>{{order.status.message}}</span></td>
 						<td align="center">
-							<div ng-mouseenter="order.editing=true" ng-mouseleave="order.editing=false">
-								<img style="width: 23px; height: 21px;" src="/static/images/icon/edit.png" />
-								<div style="padding: 10px 20px; background: white; margin-left: 20px; position: absolute; border: 1px solid #cccccc;"
-									class="ng-hide" ng-show="order.editing"
-								>
+							<div ng-mouseenter="order.editing=true"
+								ng-mouseleave="order.editing=false">
+								<img style="width: 23px; height: 21px;"
+									src="/static/images/icon/edit.png" />
+								<div
+									style="padding: 10px 20px; background: white; margin-left: 20px; position: absolute; border: 1px solid #cccccc;"
+									class="ng-hide" ng-show="order.editing">
 									<div>
-										<a href="javascript:void(0)" ng-show="order.status.code=='P'" ng-click="appraise(order.uid)"><span>#button("ORDER_APPRAISE")</span></a>
+										<a href="javascript:void(0)" ng-show="order.status.code=='P'"
+											ng-click="appraise(order.uid)"><span>#button("ORDER_APPRAISE")</span></a>
 									</div>
 									<div>
-										<a href="javascript:void(0)" ng-show="order.status.code=='R'" ng-click="confirmRequirement(order)"><span>#button("OK")</span></a>
+										<a href="javascript:void(0)" ng-show="order.status.code=='R'"
+											ng-click="confirmRequirement(order)"><span>#button("OK")</span></a>
 									</div>
 									<div>
-										<a href="javascript:void(0)" ng-show="order.status.code=='R'" ng-click="rejectConfirmRequirement(order)"><span>#button("REJECT")</span></a>
+										<a href="javascript:void(0)" ng-show="order.status.code=='R'"
+											ng-click="rejectConfirmRequirement(order)"><span>#button("REJECT")</span></a>
 									</div>
 									<div>
-										<a ng-href="/user/order/payment/{{order.uid}}" ng-show="order.status.code=='A'"><span>#button("ORDER_PAYMENT")</span></a>
+										<a ng-href="/user/order/payment/{{order.uid}}"
+											ng-show="order.status.code=='A'"><span>#button("ORDER_PAYMENT")</span></a>
 									</div>
 									<div>
 										<a href="javascript:void(0)"
 											ng-show="order.status.code=='I'||order.status.code=='U'||(order.status.code=='A'&&order.paymentMethod.code=='O')"
-											ng-click="cancel(order)"
-										><span>#button("ORDER_CANCEL")</span></a>
+											ng-click="cancel(order)"><span>#button("ORDER_CANCEL")</span></a>
 									</div>
 								</div>
 							</div>
@@ -70,23 +80,27 @@
 					</tr>
 				</tbody>
 			</table>
-			<pagination total-items="orderPaging.itemCount" ng-model="orderPaging.pageIndex" max-size="10" items-per-page="orderPaging.pageSize"
-				class="pagination-sm" boundary-links="true" ng-change="populateOrders()" first-text='#label("FIRST_PAGE")'
-				last-text='#label("LAST_PAGE")' previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'
-			></pagination>
+			<pagination total-items="orderPaging.itemCount"
+				ng-model="orderPaging.pageIndex" max-size="10"
+				items-per-page="orderPaging.pageSize" class="pagination-sm"
+				boundary-links="true" ng-change="populateOrders()"
+				first-text='#label("FIRST_PAGE")' last-text='#label("LAST_PAGE")'
+				previous-text='#label("PREVIOUS_PAGE")'
+				next-text='#label("NEXT_PAGE")'></pagination>
 		</div>
 	</div>
 	<div ng-show="checkingRequirements" class="ng-hide requirements"
-		style="z-index: 99; border: 3px solid #ffc6a6; background: white; position: absolute; top: 260px; width: 600px; right: 150px; min-height: 200px;"
-	>
+		style="z-index: 99; border: 3px solid #ffc6a6; background: white; position: absolute; top: 260px; width: 600px; right: 150px; min-height: 200px;">
 		<div style="background: #fd6a15; padding: 0 20px;">
 			<div style="display: inline-block;">
-				<span style="line-height: 40px; font-weight: normal; font-size: 16px; color: #eeeeee;">#label("MY_REQUIREMENTS")</span>
+				<span
+					style="line-height: 40px; font-weight: normal; font-size: 16px; color: #eeeeee;">#label("MY_REQUIREMENTS")</span>
 			</div>
 			<div style="display: inline-block; float: right;">
-				<a href="javascript:void(0)" ng-click="changeCheckingRequirements()"> <span
-					style="line-height: 40px; font-weight: normal; font-size: 16px; color: #eeeeee;"
-				>#button("CLOSE")</span></a>
+				<a href="javascript:void(0)" ng-click="changeCheckingRequirements()">
+					<span
+					style="line-height: 40px; font-weight: normal; font-size: 16px; color: #eeeeee;">#button("CLOSE")</span>
+				</a>
 			</div>
 		</div>
 		<div>
@@ -101,19 +115,23 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="requirement in requirements">
-						<td align="center"><span>{{requirement.announceTime|date:'yyyy/MM/dd HH:mm:ss'}}</span></td>
-						<td align="center"><span style="text-overflow: ellipsis; overflow: hidden;">{{requirement.comment}}</span></td>
+						<td align="center"><span>{{requirement.announceTime|date:'yyyy/MM/dd
+								HH:mm:ss'}}</span></td>
+						<td align="center"><span
+							style="text-overflow: ellipsis; overflow: hidden;">{{requirement.comment}}</span></td>
 						<td align="center"><span>{{requirement.price|currency:'¥'}}</span></td>
-						<td align="center"><a href="javascript:void(0)" ng-click="cancelRequirement(requirement)"><span>#button("CANCEL")</span></a></td>
+						<td align="center"><a href="javascript:void(0)"
+							ng-click="cancelRequirement(requirement)"><span>#button("CANCEL")</span></a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<div class="paging" style="text-align: center;">
-			<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
-				class="pagination-sm" boundary-links="true" ng-change="populateRequirements()" first-text='<<' last-text='>>' previous-text='<'
-				next-text='>'
-			></pagination>
+			<pagination total-items="pagingData.itemCount"
+				ng-model="pagingData.pageIndex" max-size="10"
+				items-per-page="pagingData.pageSize" class="pagination-sm"
+				boundary-links="true" ng-change="populateRequirements()"
+				first-text='<<' last-text='>>' previous-text='<' next-text='>'></pagination>
 		</div>
 	</div>
 </div>
