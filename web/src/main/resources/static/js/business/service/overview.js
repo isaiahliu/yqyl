@@ -13,16 +13,20 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	});
 
 	$scope.myInterval = 4000;
+	$scope.noWrapSlides = false;
 	var slides = $scope.slides = [];
 	slides.push({
+		id: 0,
 		image : '/static/images/banner/1.jpg',
 		text : ''
 	});
 	slides.push({
+		id: 1,
 		image : '/static/images/banner/2.jpg',
 		text : ''
 	});
 	slides.push({
+		id: 2,
 		image : '/static/images/banner/3.jpg',
 		text : ''
 	});

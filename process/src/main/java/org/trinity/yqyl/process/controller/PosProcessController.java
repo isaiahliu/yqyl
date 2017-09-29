@@ -99,9 +99,11 @@ public class PosProcessController implements IPosProcessController {
     @Override
     @Transactional(rollbackOn = IException.class)
     public PosTxDto getTransaction(final int batchNo, final String searchingCode) throws IException {
+        signUp();
+
         final TsyktTerminalTransactionDetailEnquiryRequest request = new TsyktTerminalTransactionDetailEnquiryRequest();
 
-        request.setAccount("0");
+        request.setAccount("");
         request.setAmount("0");
         request.setBatchNo(batchNo);
         request.setField60(11);
@@ -112,7 +114,7 @@ public class PosProcessController implements IPosProcessController {
         request.setShopCode(shopId);
         request.setTerminalCode(terminalId);
         request.setTransactionCode("957105");
-        request.setTransactionTypeCode(1);
+        request.setTransactionTypeCode(0);
 
         final TsyktTerminalTransactionDetailEnquiryResponse response = getResponse(request);
 
@@ -248,7 +250,6 @@ public class PosProcessController implements IPosProcessController {
             }
 
             final List<ITsyktMessage> responses = pool.getMessagesFromCodes("", byteArray.toByteArray());
-
             @SuppressWarnings("unchecked")
             final T response = (T) responses.get(0);
 
@@ -270,6 +271,8 @@ public class PosProcessController implements IPosProcessController {
             }
 
             return response;
+        } catch (final IException e) {
+            throw e;
         } catch (final Exception e) {
             throw exceptionFactory.createException(GeneralErrorMessage.UNKNOWN_EXCEPTION);
         }

@@ -74,10 +74,10 @@
 					</table>
 				</div>
 				<div class="paging" style="text-align: center;">
-					<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
+					<uib-pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
 						class="pagination-sm" boundary-links="true" ng-change="searchRequirements()" first-text='<<' last-text='>>' previous-text='<'
 						next-text='>'
-					></pagination>
+					></uib-pagination>
 				</div>
 			</div>
 		</div>

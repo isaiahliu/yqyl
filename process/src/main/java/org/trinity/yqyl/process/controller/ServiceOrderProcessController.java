@@ -40,6 +40,7 @@ import org.trinity.yqyl.process.controller.base.IAccountTransactionProcessContro
 import org.trinity.yqyl.process.controller.base.IPosProcessController;
 import org.trinity.yqyl.process.controller.base.IServiceOrderProcessController;
 import org.trinity.yqyl.process.controller.base.IYiquanProcessController;
+import org.trinity.yqyl.repository.business.dataaccess.IAccountTransactionRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IContentRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceInfoRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceInfoStasticRepository;
@@ -48,9 +49,6 @@ import org.trinity.yqyl.repository.business.dataaccess.IServiceOrderRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceOrderRequirementRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IServiceSupplierStaffRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IUserRepository;
-import org.trinity.yqyl.repository.business.dataaccess.IYiquanRepository;
-import org.trinity.yqyl.repository.business.entity.Account;
-import org.trinity.yqyl.repository.business.entity.AccountBalance;
 import org.trinity.yqyl.repository.business.entity.AccountTransaction;
 import org.trinity.yqyl.repository.business.entity.Content;
 import org.trinity.yqyl.repository.business.entity.ServiceInfo;
@@ -100,7 +98,7 @@ public class ServiceOrderProcessController extends
     private IPosProcessController posProcessController;
 
     @Autowired
-    private IYiquanRepository yiquanRepository;
+    private IAccountTransactionRepository accountTransactionRepository;
 
     @Override
     @Transactional(rollbackOn = IException.class)
@@ -630,43 +628,22 @@ public class ServiceOrderProcessController extends
 
             final PosTxDto tx = posProcessController.getTransaction(item.getTxBatchNo(), item.getTxSerialNo());
             final double amount = tx.getAmount();
+            final String txCode = item.getTxBatchNo() + "-" + item.getTxSerialNo();
 
-            final Yiquan fromYiquan = yiquanRepository.findOneByCode(tx.getAccount());
+            final AccountTransaction transaction = new AccountTransaction();
+            transaction.setCode(txCode);
+            transaction.setStatus(RecordStatus.ACTIVE);
+            transaction.setTimestamp(new Date());
+            transaction.setType(TransactionType.ORDER_PAYMENT);
+            accountTransactionRepository.save(transaction);
 
-            final Account toAccount = entity.getServiceInfo().getServiceSupplierClient().getAccount();
-
-            final AccountBalance fromBalance = fromYiquan.getAccount().getBalances().stream()
-                    .filter(balance -> balance.getCategory() == AccountCategory.YIQUAN).findAny().get();
-
-            final AccountBalance toBalance = toAccount.getBalances().stream()
-                    .filter(balance -> balance.getCategory() == AccountCategory.YIQUAN).findAny().get();
-
-            final AccountTransactionDto transaction = new AccountTransactionDto();
-            transaction.setCode(item.getPaymentTransaction().getCode());
-            transaction.setType(new LookupDto(TransactionType.ORDER_PAYMENT));
-
-            AccountPostingDto accountPosting = new AccountPostingDto();
-            AccountBalanceDto balance = new AccountBalanceDto();
-            balance.setId(fromBalance.getId());
-            accountPosting.setBalance(balance);
-            accountPosting.setAmount(0 - amount);
-            transaction.getAccountPostings().add(accountPosting);
-
-            accountPosting = new AccountPostingDto();
-            balance = new AccountBalanceDto();
-            balance.setId(toBalance.getId());
-            accountPosting.setBalance(balance);
-            accountPosting.setAmount(amount);
-            transaction.getAccountPostings().add(accountPosting);
-
-            entity.setPaymentTransaction(accountTransactionProcessController.processTransaction(transaction));
-
+            entity.setPaymentTransaction(transaction);
             entity.setExpectedPaymentAmount(amount);
             entity.setActualPaymentAmount(amount);
 
             final ServiceOrderOperation serviceOrderOperation = new ServiceOrderOperation();
             serviceOrderOperation.setOperation(OrderOperation.PAYED);
-            serviceOrderOperation.setParams(item.getPaymentTransaction().getCode());
+            serviceOrderOperation.setParams(txCode);
             try {
                 serviceOrderOperation.setOperator(getSecurityUtil().getCurrentToken().getUsername());
             } catch (final IException e) {

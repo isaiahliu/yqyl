@@ -26,11 +26,14 @@
 		</div>
 	</div>
 	<div class="advertisement">
-		<carousel interval="myInterval"> <slide ng-repeat="slide in slides" active="slide.active"> <img ng-src="{{slide.image}}" style="margin: auto;">
-		<div class="carousel-caption">
-			<p>{{slide.text}}</p>
-		</div>
-		</slide> </carousel>
+		<uib-carousel interval="myInterval" no-wrap="noWrapSlides"> 
+		  <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id"> 
+		      <img ng-src="{{slide.image}}" style="margin: auto;">
+			<div class="carousel-caption">
+				<p>{{slide.text}}</p>
+			</div>
+		  </uib-slide> 
+		</uib-carousel>
 	</div>
 	<div class="categories">
 		<div class="ng-hide" ng-repeat="category in categories" ng-class="'category ng-hide category_' + $index % 4" ng-show="category.services">

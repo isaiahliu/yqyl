@@ -92,13 +92,11 @@ public class YiquanProcessController
             yiquan.setAccount(account);
             getDomainEntityRepository().save(yiquan);
 
-            final double yiquanBalance = posProcessController.getBalance(yiquanCode);
-
             final AccountTransactionDto transaction = new AccountTransactionDto();
 
             transaction.setType(new LookupDto(TransactionType.BIND));
             final AccountPostingDto accountPostingDto = new AccountPostingDto();
-            accountPostingDto.setAmount(yiquanBalance);
+            accountPostingDto.setAmount(0D);
             accountPostingDto.setBalance(accountBalanceConverter.convert(account.getBalances().stream()
                     .filter(item -> item.getCategory() == AccountCategory.YIQUAN).findAny().get()));
             transaction.getAccountPostings().add(accountPostingDto);

@@ -73,9 +73,9 @@
 						</tbody>
 					</table>
 					<div class="paging" style="text-align: center;">
-						<pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
+						<uib-pagination total-items="pagingData.itemCount" ng-model="pagingData.pageIndex" max-size="10" items-per-page="pagingData.pageSize"
 							class="pagination-sm" boundary-links="true" ng-change="searchTransactions()" first-text='#label("FIRST_PAGE")'
-							last-text='#label("LAST_PAGE")' previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'></pagination>
+							last-text='#label("LAST_PAGE")' previous-text='#label("PREVIOUS_PAGE")' next-text='#label("NEXT_PAGE")'></uib-pagination>
 					</div>
 				</div>
 			</div>
