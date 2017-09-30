@@ -121,7 +121,8 @@ public class PosProcessController implements IPosProcessController {
         final PosTxDto dto = new PosTxDto();
         dto.setAccount(response.getAccount());
         dto.setAmount(Double.parseDouble(
-                org.springframework.util.StringUtils.isEmpty(response.getAmount()) ? "0" : response.getAmount()) / 100);
+                org.springframework.util.StringUtils.isEmpty(response.getTxAmount()) ? "0" : response.getTxAmount())
+                / 100);
         return dto;
     }
 
