@@ -56,9 +56,9 @@ args:
   pos:
     shop: 400020000001
     terminal: 400000000002
-    tsk: AAAAAAAAAABBBBBBBBBBBBBBBBBBBBBB
+    tsk: 05382710000538271000053827100005
     center:
-      url: 172.16.29.200
+      url: 172.16.40.198
       port: 11006
     
 ---

@@ -638,7 +638,7 @@ public class ServiceOrderProcessController extends
             accountTransactionRepository.save(transaction);
 
             entity.setPaymentTransaction(transaction);
-            entity.setExpectedPaymentAmount(amount);
+            // entity.setExpectedPaymentAmount(amount);
             entity.setActualPaymentAmount(amount);
 
             final ServiceOrderOperation serviceOrderOperation = new ServiceOrderOperation();

@@ -23,7 +23,7 @@
 			<li class="navBarItem"><a href="/servicer"><span
 					style="color: #fd6a15;">#button("SERVICE_SUPPLIER_HOME")</span></a></li>
 		    #end
-		    #if(${security.hasAccessRightByName('ADMIN', false)})
+		    #if(${security.hasAccessRightByName('ADMIN', true)})
 			<li class="navBarItem"><a href="/admin"><span
 					style="color: #fd6a15;">#button("ADMIN_HOME")</span></a></li>
 			#end #end #end
