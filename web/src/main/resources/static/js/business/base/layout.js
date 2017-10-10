@@ -1,5 +1,5 @@
-var layoutApp = angular.module('layoutApp', [ 'ui.bootstrap', 'ui.date', 'ngSanitize',
-		'ngCookies', 'meta.umeditor' ]);
+var layoutApp = angular.module('layoutApp', [ 'ui.bootstrap', 'meta.umeditor',
+		'ui.date', 'ngSanitize', 'ngCookies' ]);
 
 layoutApp.value("errorHandler", function(scope, response) {
 	if (response.errors != undefined) {

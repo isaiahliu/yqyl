@@ -27,7 +27,8 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 	} else {
 		url += "&searchScope=me";
 	}
-
+	$scope.config = {};
+	
 	$http({
 		method : "GET",
 		url : url

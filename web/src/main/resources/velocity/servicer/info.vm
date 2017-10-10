@@ -46,7 +46,7 @@
 							<span>#label("COMPANY_DESCRIPTION")</span>
 						</div>
 						<!-- <div text-angular ng-model="serviceSupplierClient.description"></div> -->
-						<textarea ng-model="serviceSupplierClient.description" ng-disabled="auditing" ng-readonly="auditing"></textarea>
+						<div class="textarea" type="text/html" ng-model="serviceSupplierClient.description" meta-umeditor meta-umeditor-config='config' ng-disabled="auditing" ng-readonly="auditing"></div>
 					</div>
 				</div>
 			</div>
