@@ -16,6 +16,12 @@ layoutApp
 		.controller(
 				'contentController',
 				function($scope, $http, $window, errorHandler) {
+					$scope.dateOptions = {
+						dateFormat : 'yy/mm/dd',
+					};
+
+					$scope.inputTxDate = new Date();
+					
 					$http({
 						method : "GET",
 						url : "/ajax/common/lookup/ODSTAT"
@@ -168,8 +174,8 @@ layoutApp
 							data : {
 								data : [ {
 									uid : order.uid,
-									txSerialNo : order.inputTxCode,
-									txBatchNo : order.inputBatch
+									txReferenceCode : order.inputTxReferenceCode,
+									txDate : order.inputTxDate
 								} ]
 							}
 						})

@@ -116,9 +116,9 @@
 							</tr>
 							<tr class="edit ng-hide" ng-show="order.txCodeInputing">
 								<td></td>
-								<td colspan="12" align="left" style="padding-left: 20px;"><span>POS机流水号</span>
-									<input ng-model="order.inputTxCode" /> <span>批次号</span>
-									<input ng-model="order.inputBatch" />
+								<td colspan="12" align="left" style="padding-left: 20px;"><span>交易日期</span>
+									<input ng-model="order.inputTxDate" placeholder="YYYY/MM/DD" ui-date="dateOptions"/> <span>交易参考号</span>
+									<input ng-model="order.inputTxReferenceCode" />
 									<button ng-click="$parent.sendTxCode(order)">#button("APPLY")</button>
 									<button ng-click="$parent.txCodeInputCancel(order)">#button("CANCEL")</button>
 								</td>

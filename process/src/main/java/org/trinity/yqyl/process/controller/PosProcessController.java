@@ -98,23 +98,23 @@ public class PosProcessController implements IPosProcessController {
 
     @Override
     @Transactional(rollbackOn = IException.class)
-    public PosTxDto getTransaction(final int batchNo, final String searchingCode) throws IException {
+    public PosTxDto getTransaction(final String monthAndDay, final String referenceCode) throws IException {
         signUp();
 
         final TsyktTerminalTransactionDetailEnquiryRequest request = new TsyktTerminalTransactionDetailEnquiryRequest();
 
         request.setAccount("");
         request.setAmount("0");
-        request.setBatchNo(batchNo);
         request.setField60(11);
         request.setManageNo(0);
         request.setReferenceCode("0");
-        request.setSerialNo(searchingCode);
         request.setServiceConditionCode("00");
         request.setShopCode(shopId);
         request.setTerminalCode(terminalId);
         request.setTransactionCode("957105");
         request.setTransactionTypeCode(0);
+        request.setMonthAndDay(monthAndDay);
+        request.setReferenceCode(referenceCode);
 
         final TsyktTerminalTransactionDetailEnquiryResponse response = getResponse(request);
 

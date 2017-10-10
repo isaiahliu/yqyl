@@ -1,5 +1,6 @@
 package org.trinity.yqyl.process.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -626,9 +627,11 @@ public class ServiceOrderProcessController extends
                 entity.setStatus(OrderStatus.AWAITING_APPRAISE);
             }
 
-            final PosTxDto tx = posProcessController.getTransaction(item.getTxBatchNo(), item.getTxSerialNo());
+            final SimpleDateFormat df = new SimpleDateFormat("MMdd");
+            final String txMonthAndDay = df.format(item.getTxDate());
+            final PosTxDto tx = posProcessController.getTransaction(txMonthAndDay, item.getTxReferenceCode());
             final double amount = tx.getAmount();
-            final String txCode = item.getTxBatchNo() + "-" + item.getTxSerialNo();
+            final String txCode = txMonthAndDay + "-" + item.getTxReferenceCode();
 
             final AccountTransaction transaction = new AccountTransaction();
             transaction.setCode(txCode);

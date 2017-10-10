@@ -31,8 +31,8 @@ public class ServiceOrderDto extends AbstractBusinessDto {
     private List<ServiceOrderOperationDto> operations;
     private UserDto user;
     private byte[] receiptContent;
-    private int txBatchNo;
-    private String txSerialNo;
+    private Date txDate;
+    private String txReferenceCode;
 
     public Double getActualPaymentAmount() {
         return actualPaymentAmount;
@@ -133,12 +133,12 @@ public class ServiceOrderDto extends AbstractBusinessDto {
         return staff;
     }
 
-    public int getTxBatchNo() {
-        return txBatchNo;
+    public Date getTxDate() {
+        return txDate;
     }
 
-    public String getTxSerialNo() {
-        return txSerialNo;
+    public String getTxReferenceCode() {
+        return txReferenceCode;
     }
 
     public String getUid() {
@@ -245,12 +245,12 @@ public class ServiceOrderDto extends AbstractBusinessDto {
         this.staff = staff;
     }
 
-    public void setTxBatchNo(final int txBatchNo) {
-        this.txBatchNo = txBatchNo;
+    public void setTxDate(final Date txDate) {
+        this.txDate = txDate;
     }
 
-    public void setTxSerialNo(final String txSerialNo) {
-        this.txSerialNo = txSerialNo;
+    public void setTxReferenceCode(final String txReferenceCode) {
+        this.txReferenceCode = txReferenceCode;
     }
 
     public void setUid(final String uid) {
