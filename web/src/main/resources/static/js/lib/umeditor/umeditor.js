@@ -1,7 +1,7 @@
 /*!
  * UEditor Mini版本
  * version: 1.2.2
- * build: Thu Dec 22 2016 16:36:28 GMT+0800 (CST)
+ * build: Fri Feb 10 2017 15:01:51 GMT+0800 (CST)
  */
 
 (function($){
@@ -748,6 +748,15 @@ var utils = UM.utils = {
         } else {
             head.removeChild(node)
         }
+    },
+    /**
+     * etpl 渲染函数
+     * @name render
+     * @grammar UM.utils.render(tpl, data) => string
+     */
+    render: function (tpl, data) {
+        var _render = etpl.compile(tpl);
+        return _render(data);
     }
 
 };
@@ -1686,7 +1695,9 @@ var domUtils = dom.domUtils = {
                     break;
                 case 'style':
                     node.style.cssText = '';
-                    !browser.ie && node.removeAttributeNode(node.getAttributeNode('style'))
+                    if (node.getAttributeNode('style')) {
+                        !browser.ie && node.removeAttributeNode(node.getAttributeNode('style'))
+                    }
             }
             node.removeAttribute(ci);
         }
@@ -8026,7 +8037,7 @@ UM.plugins['autoupload'] = function () {
     var sendAndInsertImage = function (file, editor) {
         //模拟数据
         var fd = new FormData();
-        fd.append(editor.options.imageFieldName || 'IMAGE', file, file.name || ('blob.' + file.type.substr('image/'.length)));
+        fd.append(editor.options.imageFieldName || 'upfile', file, file.name || ('blob.' + file.type.substr('image/'.length)));
         fd.append('type', 'ajax');
         var xhr = new XMLHttpRequest();
         xhr.open("post", me.options.imageUrl, true);
@@ -8194,7 +8205,7 @@ UM.plugins.xssFilter = function() {
 
 		UM.utils.each(attrs, function (val, key) {
 
-			if (whiteList[tagName].indexOf(key) === -1) {
+			if (UM.utils.indexOf(whiteList[tagName], key) === -1) {
 				node.setAttr(key);
 			}
 		});
@@ -8250,6 +8261,7 @@ UM.plugins.xssFilter = function() {
 	}
 
 };
+
 (function ($) {
     //对jquery的扩展
     $.parseTmpl = function parse(str, data) {
@@ -8427,10 +8439,11 @@ UM.plugins.xssFilter = function() {
 })(jQuery);
 //button 类
 UM.ui.define('button', {
-    tpl: '<<%if(!texttype){%>div class="edui-btn edui-btn-<%=icon%> <%if(name){%>edui-btn-name-<%=name%><%}%>" unselectable="on" onmousedown="return false" <%}else{%>a class="edui-text-btn"<%}%><% if(title) {%> data-original-title="<%=title%>" <%};%>> ' +
-        '<% if(icon) {%><div unselectable="on" class="edui-icon-<%=icon%> edui-icon"></div><% }; %><%if(text) {%><span unselectable="on" onmousedown="return false" class="edui-button-label"><%=text%></span><%}%>' +
-        '<%if(caret && text){%><span class="edui-button-spacing"></span><%}%>' +
-        '<% if(caret) {%><span unselectable="on" onmousedown="return false" class="edui-caret"></span><% };%></<%if(!texttype){%>div<%}else{%>a<%}%>>',
+    tpl: '<<%if : !${texttype}%>div class="edui-btn edui-btn-${icon} <%if : ${name}%>edui-btn-name-${name}<%/if%>" unselectable="on" onmousedown="return false" <%else%>a class="edui-text-btn"<%/if%><% if: ${title} %> data-original-title="${title}" <%/if%>> ' +
+        '<% if: ${icon} %><div unselectable="on" class="edui-icon-${icon} edui-icon"></div><%/if%><%if: ${text} %><span unselectable="on" onmousedown="return false" class="edui-button-label">${text}</span><%/if%>' +
+        '<%if: ${caret} && ${text}%><span class="edui-button-spacing"></span><%/if%>' +
+        '<% if: ${caret} %><span unselectable="on" onmousedown="return false" class="edui-caret"></span><%/if%></<%if: !${texttype}%>div<%else%>a<%/if%>>',
+
     defaultOpt: {
         text: '',
         title: '',
@@ -8443,8 +8456,8 @@ UM.ui.define('button', {
     },
     init: function (options) {
         var me = this;
-
-        me.root($($.parseTmpl(me.tpl, options)))
+        
+        me.root($(UM.utils.render(me.tpl, options)))
             .click(function (evt) {
                 me.wrapclick(options.click, evt)
             });
@@ -8571,12 +8584,12 @@ UM.ui.define('menu',{
 //dropmenu 类
 UM.ui.define('dropmenu', {
     tmpl: '<ul class="edui-dropdown-menu" aria-labelledby="dropdownMenu" >' +
-        '<%for(var i=0,ci;ci=data[i++];){%>' +
-        '<%if(ci.divider){%><li class="edui-divider"></li><%}else{%>' +
-        '<li <%if(ci.active||ci.disabled){%>class="<%= ci.active|| \'\' %> <%=ci.disabled||\'\' %>" <%}%> data-value="<%= ci.value%>">' +
-        '<a href="#" tabindex="-1"><em class="edui-dropmenu-checkbox"><i class="edui-icon-ok"></i></em><%= ci.label%></a>' +
-        '</li><%}%>' +
-        '<%}%>' +
+        '<%for: ${data} as ${ci}%>' +
+        '<%if: ${ci.divider}%><li class="edui-divider"></li><%else%>' +
+        '<li class="${ci.active} || ${ci.disabled}" data-value="${ci.value}">' +
+        '<a href="#" tabindex="-1"><em class="edui-dropmenu-checkbox"><i class="edui-icon-ok"></i></em>${ci.label}</a>' +
+        '</li><%/if%>' +
+        '<%/for%>' +
         '</ul>',
     defaultOpt: {
         data: [],
@@ -8592,7 +8605,7 @@ UM.ui.define('dropmenu', {
             mouseout: 1
         };
 
-        this.root($($.parseTmpl(this.tmpl, options))).on('click', 'li[class!="edui-disabled edui-divider edui-dropdown-submenu"]',function (evt) {
+        this.root($(UM.utils.render(this.tmpl, options))).on('click', 'li[class!="edui-disabled edui-divider edui-dropdown-submenu"]',function (evt) {
             $.proxy(options.click, me, evt, $(this).data('value'), $(this))()
         }).find('li').each(function (i, el) {
                 var $this = $(this);
@@ -8655,7 +8668,7 @@ UM.ui.define('dropmenu', {
 //splitbutton 类
 ///import button
 UM.ui.define('splitbutton',{
-    tpl :'<div class="edui-splitbutton <%if (name){%>edui-splitbutton-<%= name %><%}%>"  unselectable="on" <%if(title){%>data-original-title="<%=title%>"<%}%>><div class="edui-btn"  unselectable="on" ><%if(icon){%><div  unselectable="on" class="edui-icon-<%=icon%> edui-icon"></div><%}%><%if(text){%><%=text%><%}%></div>'+
+    tpl :'<div class="edui-splitbutton <%if: ${name}%>edui-splitbutton-${name}<%/if%>"  unselectable="on" <%if: ${title}%>data-original-title="${title}"<%/if%>><div class="edui-btn"  unselectable="on" ><%if: ${icon}%><div  unselectable="on" class="edui-icon-${icon} edui-icon"></div><%/if%><%if: ${text}%>${text}<%/if%></div>'+
             '<div  unselectable="on" class="edui-btn edui-dropdown-toggle" >'+
                 '<div  unselectable="on" class="edui-caret"><\/div>'+
             '</div>'+
@@ -8667,7 +8680,7 @@ UM.ui.define('splitbutton',{
     },
     init : function(options){
         var me = this;
-        me.root( $($.parseTmpl(me.tpl,options)));
+        me.root( $(UM.utils.render(me.tpl, options)));
         me.root().find('.edui-btn:first').click(function(evt){
             if(!me.disabled()){
                 $.proxy(options.click,me)();
@@ -8732,7 +8745,7 @@ UM.ui.define('splitbutton',{
  */
 UM.ui.define('colorsplitbutton',{
 
-    tpl : '<div class="edui-splitbutton <%if (name){%>edui-splitbutton-<%= name %><%}%>"  unselectable="on" <%if(title){%>data-original-title="<%=title%>"<%}%>><div class="edui-btn"  unselectable="on" ><%if(icon){%><div  unselectable="on" class="edui-icon-<%=icon%> edui-icon"></div><%}%><div class="edui-splitbutton-color-label" <%if (color) {%>style="background: <%=color%>"<%}%>></div><%if(text){%><%=text%><%}%></div>'+
+    tpl : '<div class="edui-splitbutton <%if : ${name}%>edui-splitbutton-${name}<%/if%>"  unselectable="on" <%if: ${title}%>data-original-title="${title}"<%/if%>><div class="edui-btn"  unselectable="on" ><%if: ${icon}%><div unselectable="on" class="edui-icon-${icon} edui-icon"></div><%/if%><div class="edui-splitbutton-color-label" <%if: ${color}%>style="background: ${color}"<%/if%>></div><%if: ${text}%>${text}<%/if%></div>'+
             '<div  unselectable="on" class="edui-btn edui-dropdown-toggle" >'+
             '<div  unselectable="on" class="edui-caret"><\/div>'+
             '</div>'+
@@ -8755,8 +8768,8 @@ UM.ui.define('colorsplitbutton',{
 //popup 类
 UM.ui.define('popup', {
     tpl: '<div class="edui-dropdown-menu edui-popup"'+
-        '<%if(!<%=stopprop%>){%>onmousedown="return false"<%}%>'+
-        '><div class="edui-popup-body" unselectable="on" onmousedown="return false"><%=subtpl%></div>' +
+        '<%if:!${stopprop}%>onmousedown="return false"<%/if%>'+
+        '><div class="edui-popup-body" unselectable="on" onmousedown="return false">${subtpl|raw}</div>' +
         '<div class="edui-popup-caret"></div>' +
         '</div>',
     defaultOpt: {
@@ -8766,11 +8779,11 @@ UM.ui.define('popup', {
         height: ''
     },
     init: function (options) {
-        this.root($($.parseTmpl(this.tpl, options)));
+        this.root($(UM.utils.render(this.tpl, options)));
         return this;
     },
     mergeTpl: function (data) {
-        return $.parseTmpl(this.tpl, {subtpl: data});
+        return UM.utils.render(this.tpl, {subtpl: data});
     },
     show: function ($obj, posObj) {
         if (!posObj) posObj = {};
@@ -8834,7 +8847,7 @@ UM.ui.define('scale', {
     init: function (options) {
         if(options.$doc) this.defaultOpt.$doc = options.$doc;
         if(options.$wrap) this.defaultOpt.$wrap = options.$wrap;
-        this.root($($.parseTmpl(this.tpl, options)));
+        this.root($(UM.utils.render(this.tpl, options)));
         this.initStyle();
         this.startPos = this.prePos = {x: 0, y: 0};
         this.dragId = -1;
@@ -8992,7 +9005,7 @@ UM.ui.define('colorpicker', {
                 '7f7f7f,0c0c0c,1d1b10,0f243e,244061,632423,4f6128,3f3151,205867,974806,' +
                 'c00000,ff0000,ffc000,ffff00,92d050,00b050,00b0f0,0070c0,002060,7030a0,').split(',');
 
-        var html = '<div unselectable="on" onmousedown="return false" class="edui-colorpicker<%if (name){%> edui-colorpicker-<%=name%><%}%>" >' +
+        var html = '<div unselectable="on" onmousedown="return false" class="edui-colorpicker<%if : ${name}%> edui-colorpicker-${name}<%/if%>" >' +
             '<table unselectable="on" onmousedown="return false">' +
             '<tr><td colspan="10">'+opt.lang_themeColor+'</td> </tr>' +
             '<tr class="edui-colorpicker-firstrow" >';
@@ -9015,7 +9028,7 @@ UM.ui.define('colorpicker', {
     },
     init: function (options) {
         var me = this;
-        me.root($($.parseTmpl(me.supper.mergeTpl(me.tpl(options)),options)));
+        me.root($(UM.utils.render(me.supper.mergeTpl(me.tpl(options)),options)));
 
         me.root().on("click",function (e) {
             me.trigger('pickcolor',  $(e.target).data('color'));
@@ -9041,25 +9054,26 @@ UM.ui.define('colorpicker', {
     UM.ui.define( widgetName, ( function(){
 
         return {
-            tpl: "<ul class=\"dropdown-menu edui-combobox-menu<%if (comboboxName!=='') {%> edui-combobox-<%=comboboxName%><%}%>\" unselectable=\"on\" onmousedown=\"return false\" role=\"menu\" aria-labelledby=\"dropdownMenu\">" +
-                "<%if(autoRecord) {%>" +
-                "<%for( var i=0, len = recordStack.length; i<len; i++ ) {%>" +
-                "<%var index = recordStack[i];%>" +
-                "<li class=\"<%=itemClassName%><%if( selected == index ) {%> edui-combobox-checked<%}%>\" data-item-index=\"<%=index%>\" unselectable=\"on\" onmousedown=\"return false\">" +
+            tpl: "<ul class=\"dropdown-menu edui-combobox-menu<%if: ${comboboxName} !==''%> edui-combobox-${comboboxName}<%/if%>\" unselectable=\"on\" onmousedown=\"return false\" role=\"menu\" aria-labelledby=\"dropdownMenu\">" +
+                "<%if: ${autoRecord} %>" +
+                "<%for : ${recordStack} as ${recordItem}, ${index}%>" + 
+                "<%var : style = ${itemStyles}[${recordItem}]%><%var : record = ${items}[${recordItem}]%>" +
+                "<li class=\"${itemClassName}<%if: ${selected} == ${recordItem}%> edui-combobox-checked<%/if%>\" data-item-index=\"${recordItem}\" unselectable=\"on\" onmousedown=\"return false\">" +
                 "<span class=\"edui-combobox-icon\" unselectable=\"on\" onmousedown=\"return false\"></span>" +
-                "<label class=\"<%=labelClassName%>\" style=\"<%=itemStyles[ index ]%>\" unselectable=\"on\" onmousedown=\"return false\"><%=items[index]%></label>" +
+                "<label class=\"${labelClassName}\" style=\"${style}\" unselectable=\"on\" onmousedown=\"return false\">${record}</label>" +
                 "</li>" +
-                "<%}%>" +
-                "<%if( i ) {%>" +
+                "<%/for%>" +
+                "<%if: ${index} %>" +
                 "<li class=\"edui-combobox-item-separator\"></li>" +
-                "<%}%>" +
-                "<%}%>" +
-                "<%for( var i=0, label; label = items[i]; i++ ) {%>" +
-                "<li class=\"<%=itemClassName%><%if( selected == i ) {%> edui-combobox-checked<%}%> edui-combobox-item-<%=i%>\" data-item-index=\"<%=i%>\" unselectable=\"on\" onmousedown=\"return false\">" +
+                "<%/if%>" +
+                "<%/if%>" +
+                "<%for: ${items} as ${item}, ${itemIndex}%>" +
+                "<%var : labelStyle = ${itemStyles}[${itemIndex}]%>" + 
+                "<li class=\"${itemClassName}<%if: ${selected} == ${item} %> edui-combobox-checked<%/if%> edui-combobox-item-${itemIndex}\" data-item-index=\"${itemIndex}\" unselectable=\"on\" onmousedown=\"return false\">" +
                 "<span class=\"edui-combobox-icon\" unselectable=\"on\" onmousedown=\"return false\"></span>" +
-                "<label class=\"<%=labelClassName%>\" style=\"<%=itemStyles[ i ]%>\" unselectable=\"on\" onmousedown=\"return false\"><%=label%></label>" +
+                "<label class=\"${labelClassName}\" style=\"${labelStyle}\" unselectable=\"on\" onmousedown=\"return false\">${item}</label>" +
                 "</li>" +
-                "<%}%>" +
+                "<%/for%>" +
                 "</ul>",
             defaultOpt: {
                 //记录栈初始列表
@@ -9086,8 +9100,8 @@ UM.ui.define('colorpicker', {
                 } );
 
                 this._transStack( options );
-
-                me.root( $( $.parseTmpl( me.tpl, options ) ) );
+                
+                me.root( $( UM.utils.render(me.tpl, options) ) );
 
                 this.data( 'options', options ).initEvent();
 
@@ -9282,22 +9296,21 @@ UM.ui.define('colorpicker', {
                 $.each( options.recordStack, function( i, item ){
 
                     if( item != index ) {
-                        newStack.push( item );
+                        newStack.push( +item );
                     }
 
                 } );
 
                 //压入最新的记录
-                newStack.unshift( index );
+                newStack.unshift( +index );
 
                 if( newStack.length > options.recordCount ) {
                     newStack.length = options.recordCount;
                 }
 
                 options.recordStack = newStack;
-                options.selected = index;
-
-                newChilds = $( $.parseTmpl( this.tpl, options ) );
+                options.selected = +index;
+                newChilds = $( UM.utils.render(this.tpl, options ) );
 
                 //重新渲染
                 this.root().html( newChilds.html() );
@@ -9372,18 +9385,18 @@ UM.ui.define('modal', {
     tpl: '<div class="edui-modal" tabindex="-1" >' +
         '<div class="edui-modal-header">' +
         '<div class="edui-close" data-hide="modal"></div>' +
-        '<h3 class="edui-title"><%=title%></h3>' +
+        '<h3 class="edui-title">${title}</h3>' +
         '</div>' +
-        '<div class="edui-modal-body"  style="<%if(width){%>width:<%=width%>px;<%}%>' +
-        '<%if(height){%>height:<%=height%>px;<%}%>">' +
+        '<div class="edui-modal-body"  style="<%if: ${width}%>width:${width}px;<%/if%>' +
+        '<%if: ${height}%>height:${height}px;<%/if%>">' +
         ' </div>' +
-        '<% if(cancellabel || oklabel) {%>' +
+        '<% if: ${cancellabel} || ${oklabel} %>' +
         '<div class="edui-modal-footer">' +
         '<div class="edui-modal-tip"></div>' +
-        '<%if(oklabel){%><div class="edui-btn edui-btn-primary" data-ok="modal"><%=oklabel%></div><%}%>' +
-        '<%if(cancellabel){%><div class="edui-btn" data-hide="modal"><%=cancellabel%></div><%}%>' +
+        '<%if: ${oklabel}%><div class="edui-btn edui-btn-primary" data-ok="modal">${oklabel}</div><%/if%>' +
+        '<%if: ${cancellabel}%><div class="edui-btn" data-hide="modal">${cancellabel}</div><%/if%>' +
         '</div>' +
-        '<%}%></div>',
+        '<%/if%></div>',
     defaultOpt: {
         title: "",
         cancellabel: "",
@@ -9396,7 +9409,7 @@ UM.ui.define('modal', {
     init: function (options) {
         var me = this;
 
-        me.root($($.parseTmpl(me.tpl, options || {})));
+        me.root($(UM.utils.render(me.tpl, options || {})));
 
         me.data("options", options);
         if (options.okFn) {
@@ -9531,7 +9544,7 @@ UM.ui.define('tooltip', {
         '</div>',
     init: function (options) {
         var me = this;
-        me.root($($.parseTmpl(me.tpl, options || {})));
+        me.root($(UM.utils.render(me.tpl, options || {})));
     },
     content: function (e) {
         var me = this,
