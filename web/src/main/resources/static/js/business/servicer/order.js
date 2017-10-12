@@ -64,7 +64,6 @@ layoutApp
 						ajaxUrl += "&pageIndex="
 								+ ($scope.pagingData.pageIndex - 1);
 						ajaxUrl += "&pageSize=" + $scope.pagingData.pageSize;
-						ajaxUrl += "&sortedBy=serviceTime";
 
 						if ($scope.filterData.category != undefined
 								&& $scope.filterData.category != "") {
