@@ -18,6 +18,7 @@ import org.trinity.yqyl.common.message.dto.domain.ServiceOrderDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceOrderOperationDto;
 import org.trinity.yqyl.common.message.dto.domain.ServiceSupplierStaffDto;
 import org.trinity.yqyl.common.message.dto.domain.UserDto;
+import org.trinity.yqyl.common.message.lookup.FlagStatus;
 import org.trinity.yqyl.common.message.lookup.OrderStatus;
 import org.trinity.yqyl.common.message.lookup.PaymentMethod;
 import org.trinity.yqyl.common.message.lookup.PaymentType;
@@ -61,16 +62,20 @@ public class ServiceOrderConverter extends AbstractLookupSupportObjectConverter<
     private IObjectConverter<AccountTransaction, AccountTransactionDto> accountTransactionConverter;
 
     @Autowired
-    public ServiceOrderConverter(final IObjectConverter<Tuple2<ILookupMessage<?>, String[]>, LookupDto> lookupConverter) {
+    public ServiceOrderConverter(
+            final IObjectConverter<Tuple2<ILookupMessage<?>, String[]>, LookupDto> lookupConverter) {
         super(lookupConverter);
     }
 
     @Override
-    protected void convertBackInternal(final ServiceOrderDto source, final ServiceOrder target, final CopyPolicy copyPolicy) {
+    protected void convertBackInternal(final ServiceOrderDto source, final ServiceOrder target,
+            final CopyPolicy copyPolicy) {
         copyObject(source::getUid, target::getUid, target::setUid, copyPolicy);
         copyObject(source::getPrice, target::getPrice, target::setPrice, copyPolicy);
-        copyObject(source::getExpectedPaymentAmount, target::getExpectedPaymentAmount, target::setExpectedPaymentAmount, copyPolicy);
-        copyObject(source::getActualPaymentAmount, target::getActualPaymentAmount, target::setActualPaymentAmount, copyPolicy);
+        copyObject(source::getExpectedPaymentAmount, target::getExpectedPaymentAmount, target::setExpectedPaymentAmount,
+                copyPolicy);
+        copyObject(source::getActualPaymentAmount, target::getActualPaymentAmount, target::setActualPaymentAmount,
+                copyPolicy);
         copyObject(source::getProposalTime, target::getProposalTime, target::setProposalTime, copyPolicy);
         copyObject(source::getApprovalTime, target::getApprovalTime, target::setApprovalTime, copyPolicy);
         copyObject(source::getSettledTime, target::getSettledTime, target::setSettledTime, copyPolicy);
@@ -79,8 +84,12 @@ public class ServiceOrderConverter extends AbstractLookupSupportObjectConverter<
         copyObject(source::getPhone, target::getPhone, target::setPhone, copyPolicy);
         copyObject(source::getReceipt, target::getReceipt, target::setReceipt, copyPolicy);
         copyObject(source::getComment, target::getComment, target::setComment, copyPolicy);
-        copyLookup(source::getPaymentMethod, target::getPaymentMethod, target::setPaymentMethod, PaymentMethod.class, copyPolicy);
-        copyLookup(source::getPaymentType, target::getPaymentType, target::setPaymentType, PaymentType.class, copyPolicy);
+        copyLookup(source::getPaymentMethod, target::getPaymentMethod, target::setPaymentMethod, PaymentMethod.class,
+                copyPolicy);
+        copyLookup(source::getPaymentType, target::getPaymentType, target::setPaymentType, PaymentType.class,
+                copyPolicy);
+        copyLookup(source::getPriceChanged, target::getPriceChanged, target::setPriceChanged, FlagStatus.class,
+                copyPolicy);
         copyObject(() -> {
             final Date serviceDate = source.getServiceDate();
             if (serviceDate == null) {
@@ -100,11 +109,14 @@ public class ServiceOrderConverter extends AbstractLookupSupportObjectConverter<
     }
 
     @Override
-    protected void convertInternal(final ServiceOrder source, final ServiceOrderDto target, final CopyPolicy copyPolicy) {
+    protected void convertInternal(final ServiceOrder source, final ServiceOrderDto target,
+            final CopyPolicy copyPolicy) {
         copyObject(source::getUid, target::getUid, target::setUid, copyPolicy);
         copyObject(source::getPrice, target::getPrice, target::setPrice, copyPolicy);
-        copyObject(source::getExpectedPaymentAmount, target::getExpectedPaymentAmount, target::setExpectedPaymentAmount, copyPolicy);
-        copyObject(source::getActualPaymentAmount, target::getActualPaymentAmount, target::setActualPaymentAmount, copyPolicy);
+        copyObject(source::getExpectedPaymentAmount, target::getExpectedPaymentAmount, target::setExpectedPaymentAmount,
+                copyPolicy);
+        copyObject(source::getActualPaymentAmount, target::getActualPaymentAmount, target::setActualPaymentAmount,
+                copyPolicy);
         copyObject(source::getProposalTime, target::getProposalTime, target::setProposalTime, copyPolicy);
         copyObject(source::getApprovalTime, target::getApprovalTime, target::setApprovalTime, copyPolicy);
         copyObject(source::getSettledTime, target::getSettledTime, target::setSettledTime, copyPolicy);
@@ -116,6 +128,7 @@ public class ServiceOrderConverter extends AbstractLookupSupportObjectConverter<
         copyMessage(source::getStatus, target::getStatus, target::setStatus, copyPolicy);
         copyMessage(source::getPaymentMethod, target::getPaymentMethod, target::setPaymentMethod, copyPolicy);
         copyMessage(source::getPaymentType, target::getPaymentType, target::setPaymentType, copyPolicy);
+        copyMessage(source::getPriceChanged, target::getPriceChanged, target::setPriceChanged, copyPolicy);
         copyObject(() -> {
             final Date serviceTime = source.getServiceTime();
             if (serviceTime == null) {
@@ -133,24 +146,28 @@ public class ServiceOrderConverter extends AbstractLookupSupportObjectConverter<
             final RelationshipExpression relationshipExpression) {
         switch (relationshipExpression.getName(ServiceOrderRelationship.class)) {
         case APPRAISE:
-            copyRelationship(source::getAppraise, target::setAppraise, serviceOrderAppraiseConverter, relationshipExpression);
+            copyRelationship(source::getAppraise, target::setAppraise, serviceOrderAppraiseConverter,
+                    relationshipExpression);
             break;
         case SERVICE_INFO:
-            copyRelationship(source::getServiceInfo, target::setServiceInfo, serviceInfoConverter, relationshipExpression);
+            copyRelationship(source::getServiceInfo, target::setServiceInfo, serviceInfoConverter,
+                    relationshipExpression);
             break;
         case STAFF:
-            copyRelationship(source::getServiceSupplierStaff, target::setStaff, serviceSupplierStaffConverter, relationshipExpression);
+            copyRelationship(source::getServiceSupplierStaff, target::setStaff, serviceSupplierStaffConverter,
+                    relationshipExpression);
             break;
         case OPERATIONS:
-            copyRelationshipList(source::getOperations, target::setOperations, serviceOrderOperationConverter, relationshipExpression);
+            copyRelationshipList(source::getOperations, target::setOperations, serviceOrderOperationConverter,
+                    relationshipExpression);
             break;
         case PAYMENT_TRANSACTION:
             copyRelationship(source::getPaymentTransaction, target::setPaymentTransaction, accountTransactionConverter,
                     relationshipExpression);
             break;
         case DRAWBACK_TRANSACTION:
-            copyRelationship(source::getDrawbackTransaction, target::setDrawbackTransaction, accountTransactionConverter,
-                    relationshipExpression);
+            copyRelationship(source::getDrawbackTransaction, target::setDrawbackTransaction,
+                    accountTransactionConverter, relationshipExpression);
             break;
         case USER:
             copyRelationship(source::getUser, target::setUser, userConverter, relationshipExpression);

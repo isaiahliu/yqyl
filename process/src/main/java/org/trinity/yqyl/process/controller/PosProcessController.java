@@ -66,6 +66,7 @@ public class PosProcessController implements IPosProcessController {
     private byte[] kek = null;
 
     private byte[] mak = null;
+    private byte[] pik = null;
 
     private LocalDate lastUpdateDate = LocalDate.now();
 
@@ -259,7 +260,7 @@ public class PosProcessController implements IPosProcessController {
                 throw exceptionFactory.createException(ErrorMessage.CANNOT_FIND_TRANSACTION);
             case "C1":
                 throw exceptionFactory.createException(ErrorMessage.ACCOUNT_LOCKED);
-            case "99":
+            case "55":
                 throw exceptionFactory.createException(ErrorMessage.WRONG_PASSWORD);
             case "51":
                 throw exceptionFactory.createException(ErrorMessage.INSUFFICIENT_BALANCE);
@@ -309,8 +310,10 @@ public class PosProcessController implements IPosProcessController {
         final TsyktTerminalSignUpResponse response = (TsyktTerminalSignUpResponse) getResponse(message);
 
         mak = decrypt(parseHex(response.getMak()), kek);
+        pik = decrypt(parseHex(response.getPik()), kek);
 
         TsyktMessageSerializer.mak = mak;
+        TsyktMessageSerializer.pik = pik;
         lastUpdateDate = LocalDate.now();
     }
 }

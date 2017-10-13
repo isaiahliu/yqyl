@@ -184,6 +184,8 @@ layoutApp
 											order.price = response.data[0].price;
 											order.expectedPaymentAmount = response.data[0].expectedPaymentAmount;
 											order.actualPaymentAmount = response.data[0].actualPaymentAmount;
+											order.priceChanged = response.data[0].priceChanged;
+											order.paymentTransaction = response.data[0].paymentTransaction;
 											$scope.txCodeInputCancel(order);
 										}).error(function(response) {
 									errorHandler($scope, response);

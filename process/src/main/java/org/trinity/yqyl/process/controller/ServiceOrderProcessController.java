@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.trinity.common.dto.object.LookupDto;
+import org.trinity.common.dto.object.RelationshipExpression;
 import org.trinity.common.exception.IException;
 import org.trinity.message.LookupParser;
 import org.trinity.message.exception.GeneralErrorMessage;
@@ -29,6 +30,7 @@ import org.trinity.yqyl.common.message.dto.domain.ServiceOrderSearchingDto;
 import org.trinity.yqyl.common.message.exception.ErrorMessage;
 import org.trinity.yqyl.common.message.lookup.AccessRight;
 import org.trinity.yqyl.common.message.lookup.AccountCategory;
+import org.trinity.yqyl.common.message.lookup.FlagStatus;
 import org.trinity.yqyl.common.message.lookup.OrderOperation;
 import org.trinity.yqyl.common.message.lookup.OrderStatus;
 import org.trinity.yqyl.common.message.lookup.PaymentMethod;
@@ -621,9 +623,7 @@ public class ServiceOrderProcessController extends
 
             final ServiceOrder entity = getDomainEntityRepository().findOneByUid(item.getUid());
 
-            if (entity.getStatus() != OrderStatus.IN_PROGRESS) {
-                getSecurityUtil().checkAccessRight(AccessRight.SUPER_USER);
-            } else {
+            if (entity.getStatus() == OrderStatus.IN_PROGRESS) {
                 entity.setStatus(OrderStatus.AWAITING_APPRAISE);
             }
 
@@ -633,13 +633,18 @@ public class ServiceOrderProcessController extends
             final double amount = tx.getAmount();
             final String txCode = txMonthAndDay + "-" + item.getTxReferenceCode();
 
-            final AccountTransaction transaction = new AccountTransaction();
+            AccountTransaction transaction;
+            if (entity.getPaymentTransaction() == null) {
+                transaction = new AccountTransaction();
+            } else {
+                transaction = entity.getPaymentTransaction();
+                entity.setPriceChanged(FlagStatus.YES);
+            }
             transaction.setCode(txCode);
             transaction.setStatus(RecordStatus.ACTIVE);
             transaction.setTimestamp(new Date());
             transaction.setType(TransactionType.ORDER_PAYMENT);
             accountTransactionRepository.save(transaction);
-
             entity.setPaymentTransaction(transaction);
             // entity.setExpectedPaymentAmount(amount);
             entity.setActualPaymentAmount(amount);
@@ -661,7 +666,9 @@ public class ServiceOrderProcessController extends
             entities.add(entity);
         }
 
-        return getDomainObjectConverter().convert(getDomainEntityRepository().save(entities));
+        final RelationshipExpression rsexp = new RelationshipExpression("root");
+        rsexp.getChildren().add(new RelationshipExpression("paymentTransaction"));
+        return getDomainObjectConverter().convert(getDomainEntityRepository().save(entities), rsexp);
     }
 
     @Override

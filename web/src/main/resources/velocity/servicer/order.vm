@@ -84,10 +84,15 @@
 											<button ng-hide="order.txCodeInputing"
 												ng-click="$parent.txCodeInput(order)">#button("INPUT")</button>
 										</div>
-										<div class="ng-hide"
-											ng-show="order.paymentTransaction.code&&(order.status.code=='P'||order.status.code=='S')">
-											<span>{{order.paymentTransaction.code}}</span>
-										</div>
+										<div style="display: inline-block;" class="ng-hide"
+                                            ng-show="order.paymentTransaction.code&&(order.status.code=='P'||order.status.code=='S')">
+                                            <span>{{order.paymentTransaction.code}}</span>
+                                        </div>
+                                        <div style="display: inline-block;" class="ng-hide"
+                                            ng-show="order.paymentTransaction.code&&order.priceChanged.code=='N'&&(order.status.code=='P'||order.status.code=='S')">
+                                            <button ng-hide="order.txCodeInputing"
+                                                ng-click="$parent.txCodeInput(order)">修改</button>
+                                        </div>
 									</div></td>
 								<td align="center"><span>{{order.status.message}}</span></td>
 								<td align="center"><button

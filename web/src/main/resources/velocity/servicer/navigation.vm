@@ -7,8 +7,7 @@
 <div class="subNavBar navBar noprint" ng-controller="subNavigatorController">
 	<ul>
 		<li><div style="height: 80px; border-bottom: 1px solid #cccccc;">
-				<span style="line-height: 80px; color: #0a7ef9; font-size: 20px;">${authentication.token.username}
-					#label("SERVICER")</span>
+				<span style="line-height:25px; height: 80px; color: #0a7ef9; font-size: 20px; display: block; padding: 15px 15px 0 15px;">${authentication.token.username}</span>
 			</div></li>
 		<li><a href="/servicer/info">
 				<div class="navBarItem #if($currentPage=='INFO')selected #end">

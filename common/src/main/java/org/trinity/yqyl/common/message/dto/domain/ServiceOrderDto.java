@@ -25,6 +25,7 @@ public class ServiceOrderDto extends AbstractBusinessDto {
     private AccountTransactionDto drawbackTransaction;
     private Double expectedPaymentAmount;
     private Double actualPaymentAmount;
+    private LookupDto priceChanged;
     private ServiceInfoDto serviceInfo;
     private ServiceOrderAppraiseDto appraise;
     private ServiceSupplierStaffDto staff;
@@ -96,6 +97,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public Double getPrice() {
         return price;
+    }
+
+    public LookupDto getPriceChanged() {
+        return priceChanged;
     }
 
     public Date getProposalTime() {
@@ -211,6 +216,10 @@ public class ServiceOrderDto extends AbstractBusinessDto {
 
     public void setPrice(final Double price) {
         this.price = price;
+    }
+
+    public void setPriceChanged(final LookupDto priceChanged) {
+        this.priceChanged = priceChanged;
     }
 
     public void setProposalTime(final Date proposalTime) {

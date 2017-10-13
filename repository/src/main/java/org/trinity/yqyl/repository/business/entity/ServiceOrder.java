@@ -21,6 +21,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.trinity.repository.entity.AbstractAuditableEntity;
+import org.trinity.yqyl.common.message.lookup.FlagStatus;
 import org.trinity.yqyl.common.message.lookup.OrderStatus;
 import org.trinity.yqyl.common.message.lookup.PaymentMethod;
 import org.trinity.yqyl.common.message.lookup.PaymentType;
@@ -85,6 +86,9 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
     @Column(name = "actual_payment_amount")
     private Double actualPaymentAmount;
 
+    @Column(name = "price_changed")
+    private FlagStatus priceChanged;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "settled_time")
     private Date settledTime;
@@ -135,7 +139,7 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
     }
 
     public ServiceOrderAppraise getAppraise() {
-        return this.appraise;
+        return appraise;
     }
 
     public Date getApprovalTime() {
@@ -155,11 +159,11 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
     }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public List<ServiceOrderOperation> getOperations() {
-        return this.operations;
+        return operations;
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -179,7 +183,11 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
     }
 
     public Double getPrice() {
-        return this.price;
+        return price;
+    }
+
+    public FlagStatus getPriceChanged() {
+        return priceChanged;
     }
 
     public Date getProposalTime() {
@@ -191,15 +199,15 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
     }
 
     public ServiceInfo getServiceInfo() {
-        return this.serviceInfo;
+        return serviceInfo;
     }
 
     public ServiceOrderRequirement getServiceOrderRequirement() {
-        return this.serviceOrderRequirement;
+        return serviceOrderRequirement;
     }
 
     public ServiceSupplierStaff getServiceSupplierStaff() {
-        return this.serviceSupplierStaff;
+        return serviceSupplierStaff;
     }
 
     public Date getServiceTime() {
@@ -211,7 +219,7 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
     }
 
     public OrderStatus getStatus() {
-        return this.status;
+        return status;
     }
 
     public String getUid() {
@@ -283,6 +291,10 @@ public class ServiceOrder extends AbstractAuditableEntity implements Serializabl
 
     public void setPrice(final Double price) {
         this.price = price;
+    }
+
+    public void setPriceChanged(final FlagStatus priceChanged) {
+        this.priceChanged = priceChanged;
     }
 
     public void setProposalTime(final Date proposalTime) {
