@@ -1,8 +1,13 @@
 package org.trinity.yqyl.process.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.trinity.common.dto.object.LookupDto;
@@ -10,9 +15,11 @@ import org.trinity.common.exception.IException;
 import org.trinity.process.converter.IObjectConverter;
 import org.trinity.yqyl.common.message.dto.domain.AccountBalanceDto;
 import org.trinity.yqyl.common.message.dto.domain.AccountPostingDto;
+import org.trinity.yqyl.common.message.dto.domain.AccountPostingSearchingDto;
 import org.trinity.yqyl.common.message.dto.domain.AccountTransactionDto;
 import org.trinity.yqyl.common.message.dto.domain.YiquanDto;
 import org.trinity.yqyl.common.message.dto.domain.YiquanSearchingDto;
+import org.trinity.yqyl.common.message.dto.domain.YiquanTxDto;
 import org.trinity.yqyl.common.message.exception.ErrorMessage;
 import org.trinity.yqyl.common.message.lookup.AccountCategory;
 import org.trinity.yqyl.common.message.lookup.RecordStatus;
@@ -107,6 +114,23 @@ public class YiquanProcessController
     }
 
     @Override
+    public Page<YiquanTxDto> listDetails(final AccountPostingSearchingDto request) throws IException {
+        final DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        return posProcessController.listTransactions(request).map(posDto -> {
+            final YiquanTxDto yiquanTxDto = new YiquanTxDto();
+
+            yiquanTxDto.setAmount(Double.parseDouble(posDto.getAmount()) / 100);
+            yiquanTxDto.setShopName(posDto.getShopName());
+            try {
+                yiquanTxDto.setDatetime(df.parse(posDto.getDatetime()));
+            } catch (final ParseException e) {
+            }
+
+            return yiquanTxDto;
+        });
+    }
+
+    @Override
     @Transactional(rollbackOn = IException.class)
     public void topup(final YiquanDto yiquanDto) throws IException {
         if (yiquanDto.getTopUpAmount() == null || yiquanDto.getTopUpAmount() <= 0) {
@@ -148,6 +172,8 @@ public class YiquanProcessController
         if (client.getYiquan() == null) {
             return;
         }
+
+        posProcessController.verify(yiquanDto.getCode(), yiquanDto.getYiquanPassword());
 
         client.setYiquan(null);
 

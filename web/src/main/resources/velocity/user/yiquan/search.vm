@@ -11,27 +11,23 @@
 			<input type="checkbox" ng-model="filter.enableFrom" /> <span>#label("DATE")</span> <input type="text" placeholder="YYYY/MM/DD"
 				ui-date="dateOptions" ng-model="filter.from" /> <input type="checkbox" ng-model="filter.enableTo" /> <span>#label("TO")</span> <input
 				type="text" placeholder="YYYY/MM/DD" ui-date="dateOptions" ng-model="filter.to" /> <span style="margin-left: 10px;">#label("YIQUAN_NO")</span>
-			<select ng-model="filter.yiquanId"><option value="">#label("ALL")</option>
+			<select ng-model="filter.yiquanId">
 				<option value="{{yiquan.id}}" ng-repeat="yiquan in yiquans">{{yiquan.code}}</option></select>
 			<button style="margin: 15px 0" ng-click="search()">#button("SEARCH")</button>
 		</div>
 		<table style="min-height: 100px;">
 			<thead>
 				<tr>
-					<td align="center">#label("TRANSACTION_ID")</td>
-					<td align="center">#label("YIQUAN_NO")</td>
+                    <td align="center">网点</td>
 					<td align="center">#label("TRANSACTION_TIME")</td>
 					<td align="center">#label("TRANSACTION_AMOUNT")</td>
-					<td align="center">#label("TRANSACTION_TYPE")</td>
 				</tr>
 			</thead>
 			<tbody class="ng-hide" ng-show="accountPostings">
 				<tr ng-repeat="accountPosting in accountPostings">
-					<td align="center">{{accountPosting.transaction.id}}</td>
-					<td align="center">{{accountPosting.yiquan.code}}</td>
-					<td align="center">{{accountPosting.transaction.timestamp|date:'yyyy/MM/dd HH:mm:ss'}}</td>
+					<td align="center">{{accountPosting.shopName}}</td>
+					<td align="center">{{accountPosting.datetime|date:'yyyy/MM/dd HH:mm:ss'}}</td>
 					<td align="center">{{accountPosting.amount|currency:"￥"}}</td>
-					<td align="center">{{accountPosting.transaction.type.message}}</td>
 				</tr>
 			</tbody>
 		</table>

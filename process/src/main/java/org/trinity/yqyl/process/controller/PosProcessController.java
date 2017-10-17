@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.net.Socket;
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 
 import javax.crypto.Cipher;
@@ -35,11 +35,15 @@ import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTermi
 import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalSignUpResponse;
 import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalTransactionDetailEnquiryResponse;
 import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalTransactionEnquiryResponse;
+import org.trinity.framework.contact.tsykt.messages.terminal.response.TsyktTerminalTransactionEnquiryResponse.Transaction;
 import org.trinity.message.exception.GeneralErrorMessage;
 import org.trinity.message.exception.IErrorMessage;
+import org.trinity.yqyl.common.message.dto.domain.AccountPostingSearchingDto;
 import org.trinity.yqyl.common.message.dto.domain.PosTxDto;
 import org.trinity.yqyl.common.message.exception.ErrorMessage;
 import org.trinity.yqyl.process.controller.base.IPosProcessController;
+import org.trinity.yqyl.repository.business.dataaccess.IYiquanRepository;
+import org.trinity.yqyl.repository.business.entity.Yiquan;
 
 @Service
 public class PosProcessController implements IPosProcessController {
@@ -71,6 +75,9 @@ public class PosProcessController implements IPosProcessController {
     private LocalDate lastUpdateDate = LocalDate.now();
 
     private final TsyktMessagePool pool = new TsyktMessagePool();
+
+    @Autowired
+    private IYiquanRepository yiquanRepository;
 
     @Override
     @Transactional(rollbackOn = IException.class)
@@ -127,25 +134,39 @@ public class PosProcessController implements IPosProcessController {
         return dto;
     }
 
+    @Override
     @Transactional(rollbackOn = IException.class)
-    public Page<String> listTransactions(final String account, final LocalDate startDate, final LocalDate endDate)
-            throws IException {
+    public Page<Transaction> listTransactions(final AccountPostingSearchingDto request) throws IException {
+        signUp();
+
+        final Yiquan yiquan = yiquanRepository.findOne(request.getYiquanId());
+
         final TsyktTerminalTransactionEnquiryRequest transactionRequest = new TsyktTerminalTransactionEnquiryRequest();
 
-        transactionRequest.setAccount(account);
+        transactionRequest.setAccount(yiquan.getCode());
         transactionRequest.setTransactionCode("957095");
         transactionRequest.setAmount("0");
         transactionRequest.setSerialNo(String.valueOf(serialNo++));
         transactionRequest.setServiceConditionCode("00");
         transactionRequest.setTerminalCode(terminalId);
         transactionRequest.setShopCode(shopId);
-        transactionRequest.setStartDate(startDate.format(DateTimeFormatter.BASIC_ISO_DATE));
-        transactionRequest.setEndDate(endDate.format(DateTimeFormatter.BASIC_ISO_DATE));
-        transactionRequest.setStartIndex("1");
+        transactionRequest.setStartDate(request.getFromDate());
+        transactionRequest.setEndDate(request.getToDate());
+        transactionRequest.setStartIndex(String.valueOf(request.getPageIndex() * 15 + 1));
 
-        final TsyktTerminalTransactionEnquiryResponse response = (TsyktTerminalTransactionEnquiryResponse) getResponse(
-                transactionRequest);
-        return new PageImpl<>(null, new PageRequest(1, 15), Integer.parseInt(response.getTotalSize()));
+        try {
+            final TsyktTerminalTransactionEnquiryResponse response = (TsyktTerminalTransactionEnquiryResponse) getResponse(
+                    transactionRequest);
+            return new PageImpl<>(response.getTransactions(), new PageRequest(request.getPageIndex(), 15),
+                    Integer.parseInt(response.getTotalSize()));
+        } catch (final IException e) {
+            final IErrorMessage messageType = e.getErrorMessages().get(0).getItem1();
+            if (messageType != ErrorMessage.CANNOT_FIND_TRANSACTION) {
+                throw e;
+            }
+
+            return new PageImpl<>(Collections.emptyList(), new PageRequest(0, 15), 0);
+        }
     }
 
     @Override
@@ -263,6 +284,7 @@ public class PosProcessController implements IPosProcessController {
             case "55":
                 throw exceptionFactory.createException(ErrorMessage.WRONG_PASSWORD);
             case "51":
+            case "C2":
                 throw exceptionFactory.createException(ErrorMessage.INSUFFICIENT_BALANCE);
             case "61":
                 throw exceptionFactory.createException(ErrorMessage.PAYMENT_EXCEEDS_ALLOWED_ALLOWANCE);

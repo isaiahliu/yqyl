@@ -54,9 +54,9 @@ args:
     username: root
     password: "!QAZ2wsx"
   pos:
-    shop: 400020000001
-    terminal: 400000000002
-    tsk: 05382710000538271000053827100005
+    shop: 500000000001
+    terminal: 500010000001
+    tsk: AC297420EED4727130CCF2EADD23C188
     center:
       url: 172.16.40.198
       port: 11006
