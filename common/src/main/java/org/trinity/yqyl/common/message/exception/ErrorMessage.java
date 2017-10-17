@@ -39,7 +39,9 @@ public enum ErrorMessage implements IErrorMessage {
     UNABLE_TO_CONNECT_YKT,
     ACCOUNT_LOCKED,
     PAYMENT_EXCEEDS_ALLOWED_ALLOWANCE,
-    CANNOT_FIND_TRANSACTION;
+    CANNOT_FIND_TRANSACTION,
+    SMS_HAS_BEEN_SEND_IN_ONE_MINUTE,
+    SEND_SMS_FAILED;
 
     @Override
     public String getMessageCode() {

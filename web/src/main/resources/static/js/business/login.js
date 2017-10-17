@@ -13,7 +13,10 @@ layoutApp.controller('contentController', function($scope, $http, $window,
 		$http({
 			method : "PUT",
 			url : "/ajax/user/authenticate",
-			data : $scope.loginData
+			data : {
+				username : $scope.loginData.username,
+				password : md5($scope.loginData.password)
+			}
 		}).success(function(response) {
 			if ($scope.rememberUsername) {
 				$cookieStore.put("YQYL_USERNAME", $scope.loginData.username);
@@ -63,7 +66,13 @@ layoutApp.controller('contentController', function($scope, $http, $window,
 		$http({
 			method : "POST",
 			url : "/ajax/user/register",
-			data : $scope.registerData
+			data : {
+				username : $scope.registerData.username,
+				password : md5($scope.registerData.password),
+				cellphone : $scope.registerData.cellphone,
+				verifyCode : $scope.registerData.verifyCode,
+				servicer : $scope.registerData.servicer
+			}
 		}).success(function(response) {
 			$window.location.href = "/login";
 		}).error(function(response) {
@@ -75,7 +84,10 @@ layoutApp.controller('contentController', function($scope, $http, $window,
 		$http({
 			method : "POST",
 			url : "/ajax/user/registerVerify",
-			data : $scope.registerData
+			data : {
+				cellphone : $scope.registerData.cellphone,
+				verifyCode : $scope.registerData.verifyCode
+			}
 		}).success(function(response) {
 			$scope.verifyCodeSent = true;
 		}).error(function(response) {

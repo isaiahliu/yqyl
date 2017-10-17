@@ -21,8 +21,8 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 				url : "/ajax/user/password",
 				data : {
 					id : $scope.id,
-					oldPassword : $scope.oldPassword,
-					newPassword : $scope.newPassword
+					oldPassword : md5($scope.oldPassword),
+					newPassword : md5($scope.newPassword)
 				}
 			}).success(function(response) {
 				$scope.finished = true;

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -24,6 +25,7 @@ import org.trinity.yqyl.common.message.lookup.UserStatus;
 import org.trinity.yqyl.common.message.lookup.VerifyCodeType;
 import org.trinity.yqyl.process.controller.base.IAccountProcessController;
 import org.trinity.yqyl.process.controller.base.ISecurityProcessController;
+import org.trinity.yqyl.process.controller.base.ISmsProcessController;
 import org.trinity.yqyl.repository.business.dataaccess.IOperatorClientRepository;
 import org.trinity.yqyl.repository.business.dataaccess.ISystemAttributeRepository;
 import org.trinity.yqyl.repository.business.dataaccess.ITokenRepository;
@@ -53,6 +55,9 @@ public class SecurityProcessController implements ISecurityProcessController {
     private IAccountProcessController accountProcessController;
     @Autowired
     private IOperatorClientRepository operatorClientRepository;
+
+    @Autowired
+    private ISmsProcessController smsProcessController;
 
     @Override
     @Transactional(rollbackOn = IException.class)
@@ -190,26 +195,33 @@ public class SecurityProcessController implements ISecurityProcessController {
         final Optional<UserVerifycode> anyVerifycode = user.getUserVerifycodes().stream()
                 .filter(item -> item.getType() == VerifyCodeType.REGISTER).findAny();
 
-        // TODO generate code & send to SMS API
-        final String verifyCode = "111111";
+        final String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
+
+        smsProcessController.sendMessage(securityDto.getCellphone(), verifyCode);
+
         UserVerifycode verifyCodeEntity = null;
         if (anyVerifycode.isPresent()) {
             verifyCodeEntity = anyVerifycode.get();
+
+            final Calendar now = Calendar.getInstance();
+            now.add(Calendar.MINUTE, -1);
+            if (now.getTime().compareTo(verifyCodeEntity.getTimestamp()) <= 0) {
+                throw exceptionFactory.createException(ErrorMessage.SMS_HAS_BEEN_SEND_IN_ONE_MINUTE);
+            }
         } else {
             verifyCodeEntity = new UserVerifycode();
             verifyCodeEntity.setCode(verifyCode);
             verifyCodeEntity.setType(VerifyCodeType.REGISTER);
-            verifyCodeEntity.setTimestamp(new Date());
             verifyCodeEntity.setStatus(RecordStatus.ACTIVE);
             verifyCodeEntity.setUser(user);
 
             user.getUserVerifycodes().add(verifyCodeEntity);
         }
-
         verifyCodeEntity.setCode(verifyCode);
         verifyCodeEntity.setTimestamp(new Date());
 
         userRepository.save(user);
         userVerifycodeRepository.save(verifyCodeEntity);
     }
+
 }

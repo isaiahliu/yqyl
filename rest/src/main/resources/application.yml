@@ -42,7 +42,11 @@ args:
     center:
       url: 172.16.29.200
       port: 11006
-    
+  sms:
+    server: api.cloudfeng.com
+    appid: jfl55g1s6vhcogxwvzhcbuhdurzi7ils
+    appsec: 3ae9c724cc23142c7ece99cf9c0f5b6a6650
+    batch: YQYL8888
 ---
 spring: 
   profiles: prod
@@ -60,7 +64,11 @@ args:
     center:
       url: 172.16.40.198
       port: 11006
-    
+  sms:
+    server: api.cloudfeng.com
+    appid: jfl55g1s6vhcogxwvzhcbuhdurzi7ils
+    appsec: 3ae9c724cc23142c7ece99cf9c0f5b6a6650
+    batch: YQYL8888
 ---
 spring: 
   profiles: dev-home
@@ -74,6 +82,11 @@ args:
     center:
       url: 172.16.29.200
       port: 11006
+  sms:
+    server: api.cloudfeng.com
+    appid: jfl55g1s6vhcogxwvzhcbuhdurzi7ils
+    appsec: 3ae9c724cc23142c7ece99cf9c0f5b6a6650
+    batch: YQYL8888
      
 ---
 spring: 
@@ -90,3 +103,8 @@ args:
     center:
       url: 172.16.29.200
       port: 11006
+  sms:
+    server: api.cloudfeng.com
+    appid: jfl55g1s6vhcogxwvzhcbuhdurzi7ils
+    appsec: 3ae9c724cc23142c7ece99cf9c0f5b6a6650
+    batch: YQYL8888

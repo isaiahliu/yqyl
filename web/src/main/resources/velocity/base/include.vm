@@ -31,3 +31,4 @@
 <script src="/static/js/lib/umeditor/meta.umeditor.js"></script>
 <script src="/static/js/lib/umeditor/umeditor.config.js"></script>
 <script src="/static/js/lib/umeditor/umeditor.js"></script>
+<script src="/static/js/lib/md5.min.js"></script>

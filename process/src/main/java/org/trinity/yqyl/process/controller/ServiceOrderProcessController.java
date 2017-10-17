@@ -453,6 +453,7 @@ public class ServiceOrderProcessController extends
             serviceOrder.setPrice(0d);
             serviceOrder.setProposalTime(new Date());
             serviceOrder.setUser(user);
+            serviceOrder.setPriceChanged(FlagStatus.NO);
 
             final ServiceInfo serviceInfo = serviceInfoRepository.findOne(serviceOrderDto.getServiceInfo().getId());
 
