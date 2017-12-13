@@ -1,6 +1,11 @@
-layoutApp.controller('contentController', function($scope, $http, $window, errorHandler, $filter) {
+layoutApp.controller('contentController', function($scope, $http, $window,
+		errorHandler, $filter) {
 	$scope.dateOptions = {
 		dateFormat : 'yy/mm/dd',
+		changeMonth : true,
+		changeYear : true,
+		yearRange : "c-30:c+30",
+		showAnim : "fadeIn"
 	};
 
 	$scope.pagingData = {
@@ -22,16 +27,23 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		ajaxUrl += "&pageIndex=" + ($scope.pagingData.pageIndex - 1);
 		ajaxUrl += "&pageSize=" + $scope.pagingData.pageSize;
 
-		if ($scope.filterData.supplierName != undefined && $scope.filterData.supplierName != "") {
+		if ($scope.filterData.supplierName != undefined
+				&& $scope.filterData.supplierName != "") {
 			ajaxUrl += "&username=" + $scope.filterData.supplierName;
 		}
 
-		if ($scope.filterData.fromServiceTime != undefined && $scope.filterData.fromServiceTime != "") {
-			ajaxUrl += "&fromProposalTime=" + $filter('date')($scope.filterData.fromServiceTime, "yyyyMMdd");
+		if ($scope.filterData.fromServiceTime != undefined
+				&& $scope.filterData.fromServiceTime != "") {
+			ajaxUrl += "&fromProposalTime="
+					+ $filter('date')($scope.filterData.fromServiceTime,
+							"yyyyMMdd");
 		}
 
-		if ($scope.filterData.toServiceTime != undefined && $scope.filterData.toServiceTime != "") {
-			ajaxUrl += "&toProposalTime=" + $filter('date')($scope.filterData.toServiceTime, "yyyyMMdd");
+		if ($scope.filterData.toServiceTime != undefined
+				&& $scope.filterData.toServiceTime != "") {
+			ajaxUrl += "&toProposalTime="
+					+ $filter('date')($scope.filterData.toServiceTime,
+							"yyyyMMdd");
 		}
 
 		$http({

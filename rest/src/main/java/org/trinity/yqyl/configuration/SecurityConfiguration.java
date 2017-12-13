@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.csrf().disable().addFilterAfter(tokenFilter, SecurityContextPersistenceFilter.class).authorizeRequests()
                 .antMatchers("/security/token", "/security/register", "/common/ping", "/security/token/verify",
-                        "/ajax/content/image/**")
+                        "/ajax/content/image/**", "/security/registerVerify", "/security/resetPasswordVerify")
                 .permitAll().antMatchers("/security/authenticate")
                 .hasAuthority(AbstractPreAuthenticationFilter.ROLE_ANONYMOUS_WITH_TOKEN).anyRequest().permitAll();
     }

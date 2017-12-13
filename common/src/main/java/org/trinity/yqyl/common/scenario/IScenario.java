@@ -12,4 +12,7 @@ public interface IScenario {
 
     public static interface IRegisterVerify {
     }
+
+    public static interface IResetPassword {
+    }
 }

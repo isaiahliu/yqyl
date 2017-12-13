@@ -1,9 +1,15 @@
-layoutApp.controller('contentController', function($scope, $http, $window, errorHandler, $filter, serviceSupplierClientId) {
+layoutApp.controller('contentController', function($scope, $http, $window,
+		errorHandler, $filter, serviceSupplierClientId) {
 	$scope.dateOptions = {
 		dateFormat : 'yy/mm/dd',
+		changeMonth : true,
+		changeYear : true,
+		yearRange : "c-30:c+30",
+		showAnim : "fadeIn"
 	};
 
-	$scope.hours = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ];
+	$scope.hours = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+			17, 18, 19, 20, 21, 22, 23 ];
 
 	$http({
 		method : "GET",
@@ -14,10 +20,12 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 		errorHandler($scope, response);
 	});
 
-	$http({
-		method : "GET",
-		url : "/ajax/service/supplier/" + serviceSupplierClientId + "/services?rsexp=serviceCategory"
-	}).success(function(response) {
+	$http(
+			{
+				method : "GET",
+				url : "/ajax/service/supplier/" + serviceSupplierClientId
+						+ "/services?rsexp=serviceCategory"
+			}).success(function(response) {
 		$scope.services = response.data;
 		$scope.selectedServiceInfo = $scope.services[0];
 	}).error(function(response) {
@@ -62,13 +70,16 @@ layoutApp.controller('contentController', function($scope, $http, $window, error
 			data : {
 				data : [ order ]
 			}
-		}).success(function(response) {
-			if (serviceInfo.paymentMethod.code == 'O') {
-				$window.location.href = "/user/order/payment/" + response.data[0].uid;
-			} else {
-				$window.location.href = "/user/order/" + response.data[0].uid;
-			}
-		}).error(function(response) {
+		}).success(
+				function(response) {
+					if (serviceInfo.paymentMethod.code == 'O') {
+						$window.location.href = "/user/order/payment/"
+								+ response.data[0].uid;
+					} else {
+						$window.location.href = "/user/order/"
+								+ response.data[0].uid;
+					}
+				}).error(function(response) {
 			errorHandler($scope, response);
 		});
 	};

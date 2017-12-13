@@ -11,7 +11,6 @@ import org.trinity.process.converter.IObjectConverter;
 import org.trinity.yqyl.common.message.dto.domain.AccountPostingDto;
 import org.trinity.yqyl.common.message.dto.domain.AccountTransactionDto;
 import org.trinity.yqyl.common.message.dto.domain.AccountTransactionSearchingDto;
-import org.trinity.yqyl.common.message.exception.ErrorMessage;
 import org.trinity.yqyl.common.message.lookup.AccountPostingStatus;
 import org.trinity.yqyl.common.message.lookup.RecordStatus;
 import org.trinity.yqyl.process.controller.base.AbstractAutowiredCrudProcessController;
@@ -55,13 +54,10 @@ public class AccountTransactionProcessController extends
             accountPosting.setStatus(AccountPostingStatus.ACTIVE);
             accountPosting.setAccountTransaction(accountTransaction);
 
-            final AccountBalance accountBalance = accountBalanceRepository.findOne(accountPostingDto.getBalance().getId());
+            final AccountBalance accountBalance = accountBalanceRepository
+                    .findOne(accountPostingDto.getBalance().getId());
 
             final double balance = accountBalance.getAmount() + accountPosting.getAmount();
-
-            if (balance < 0) {
-                throw getExceptionFactory().createException(ErrorMessage.INSUFFICIENT_BALANCE);
-            }
 
             accountBalance.setAmount(balance);
             accountBalanceRepository.save(accountBalance);

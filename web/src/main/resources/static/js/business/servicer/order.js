@@ -18,10 +18,14 @@ layoutApp
 				function($scope, $http, $window, errorHandler) {
 					$scope.dateOptions = {
 						dateFormat : 'yy/mm/dd',
+						changeMonth : true,
+						changeYear : true,
+						yearRange : "c-30:c+30",
+						showAnim : "fadeIn"
 					};
 
 					$scope.inputTxDate = new Date();
-					
+
 					$http({
 						method : "GET",
 						url : "/ajax/common/lookup/ODSTAT"
@@ -167,17 +171,18 @@ layoutApp
 					};
 
 					$scope.sendTxCode = function(order) {
-						$http({
-							method : "POST",
-							url : "/ajax/user/order/transaction",
-							data : {
-								data : [ {
-									uid : order.uid,
-									txReferenceCode : order.inputTxReferenceCode,
-									txDate : order.inputTxDate
-								} ]
-							}
-						})
+						$http(
+								{
+									method : "POST",
+									url : "/ajax/user/order/transaction",
+									data : {
+										data : [ {
+											uid : order.uid,
+											txReferenceCode : order.inputTxReferenceCode,
+											txDate : order.inputTxDate
+										} ]
+									}
+								})
 								.success(
 										function(response) {
 											order.status = response.data[0].status;

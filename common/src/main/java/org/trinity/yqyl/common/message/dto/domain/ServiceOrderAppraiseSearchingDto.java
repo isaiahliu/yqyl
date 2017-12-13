@@ -12,6 +12,8 @@ public class ServiceOrderAppraiseSearchingDto extends AbstractSearchingDto {
     private Integer level;
     private boolean requireTotal = false;
 
+    private boolean hideName;
+
     @Override
     @Deprecated
     public Long getId() {
@@ -30,8 +32,16 @@ public class ServiceOrderAppraiseSearchingDto extends AbstractSearchingDto {
         return uid;
     }
 
+    public boolean isHideName() {
+        return hideName;
+    }
+
     public boolean isRequireTotal() {
         return requireTotal;
+    }
+
+    public void setHideName(final boolean hideName) {
+        this.hideName = hideName;
     }
 
     @Override

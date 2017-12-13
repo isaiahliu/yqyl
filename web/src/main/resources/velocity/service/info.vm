@@ -9,7 +9,7 @@
 			<img alt="#label('NOT_UPLOADED')"
 				ng-src="/ajax/content/image/{{imageBar.selectedImage}}" />
 			<div class="imageBar ng-hide" ng-show="serviceSupplierClient.images">
-				<div style="display: inline-block; width: 21px;">
+				<div style="display: inline-block; width: 20px;">
 					<a href="javascript:void(0)" ng-click="imageBar.previous()"><span>&lt;</span></a>
 				</div>
 				<div style="display: inline-block; width: 200px;">
@@ -19,7 +19,7 @@
 						href="javascript:void(0)" ng-click="imageBar.selectedImage=image"><img
 						alt="{{$index}}" ng-src="/ajax/content/image/{{image}}" /></a>
 				</div>
-				<div style="display: inline-block; width: 21px; text-align: right;">
+				<div style="display: inline-block; width: 20px; text-align: right;">
 					<a href="javascript:void(0)" ng-click="imageBar.next()"><span>&gt;</span></a>
 				</div>
 			</div>

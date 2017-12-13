@@ -20,19 +20,19 @@
 					<td rowspan="2"><img class="logo" alt="Login"
 						src="/static/images/pic/login.jpg" /></td>
 					<td class="tab"
-						ng-class="{true: 'tabUnselected', false: 'tabSelected'}[isReg]"><a
-						href="javascript:void(0)" ng-click="isReg=false"><div>
+						ng-class="{true: 'tabSelected', false: 'tabUnselected'}[mode=='login']"><a
+						href="javascript:void(0)" ng-click="mode='login'"><div>
 								<span>#label("LOGIN")</span>
 							</div></a></td>
 					<td class="tab"
-						ng-class="{true: 'tabSelected', false: 'tabUnselected'}[isReg]"><a
-						href="javascript:void(0)" ng-click="isReg=true"><div>
+						ng-class="{true: 'tabSelected', false: 'tabUnselected'}[mode=='register']"><a
+						href="javascript:void(0)" ng-click="mode='register'"><div>
 								<span>#label("REGISTER")</span>
 							</div></a></td>
 				</tr>
 				<tr>
 					<td colspan="2" valign="top">
-						<div class="loginTab" ng-show="!isReg">
+						<div class="loginTab" ng-show="mode=='login'">
 							<div class="line">
 								<img class="logo" src="/static/images/logo/user.png" /> <input
 									ng-model="loginData.username" placeholder='#label("USERNAME")' />
@@ -54,12 +54,13 @@
 								<input class="check" type="checkbox" ng-model="rememberUsername" />
 								<span
 									style="font-size: 14px; color: #333333; display: inline-block; width: 140px; text-align: left;">#label("REMEMBER_USERNAME")</span>
-								<span style="font-size: 14px; color: #333333;">#label("FORGET_PASSWORD")</span>
-								<a href="javascript:void(0)" ng-click="isReg=true"><span
+								<a href="javascript:void(0)" ng-click="mode='forget'"><span
+									style="font-size: 14px; color: #fd6a15;">#label("FORGET_PASSWORD")</span></a>
+								<a href="javascript:void(0)" ng-click="mode='register'"><span
 									style="font-size: 14px; color: #fd6a15;">#label("REGISTER")</span></a>
 							</div>
 						</div>
-						<div class="registerTab ng-hide" ng-show="isReg">
+						<div class="registerTab ng-hide" ng-show="mode=='register'">
 							<div class="line">
 								<span>#label("PHONE")</span> <input
 									ng-model="registerData.cellphone" placeholder='#info("PHONE")' />
@@ -96,11 +97,43 @@
 									placeholder='#info("REPEAT_PASSWORD")' />
 							</div>
 							<div class="line">
-								<input type="checkbox" style="width: 10px; height: 10px;" ng-model="agreed" /></input><span>我已同意</span><a
+								<input type="checkbox" style="width: 10px; height: 10px;"
+									ng-model="agreed" /></input><span>我已同意</span><a
 									href="javascript:void(0)" ng-click="showAnnouncement=true;">《养老平台用户服务协议》</a>
 							</div>
 							<div class="line">
-								<button ng-disabled="!agreed" class="btn-login" ng-click="register()">#button("REGISTER")</button>
+								<button ng-disabled="!agreed" class="btn-login"
+									ng-click="register()">#button("REGISTER")</button>
+							</div>
+						</div>
+						<div class="registerTab ng-hide" ng-show="mode=='forget'">
+							<div class="line">
+								<span>#label("PHONE")</span> <input
+									ng-model="resetPasswordData.cellphone"
+									placeholder='#info("PHONE")' />
+							</div>
+							<div class="line">
+								<span>#label("VERIFY_CODE")</span> <input
+									ng-model="resetPasswordData.verifyCode" style="width: 150px;" />
+								<button style="width: 130px;" ng-click="resetPasswordVerify()"
+									ng-hide="resetPasswordVerifyCodeSent">#button("SEND_VERIFY_CODE")</button>
+								<button
+									style="width: 130px; color: #cccccc; background-color: #333333;"
+									disabled class="ng-hide" ng-show="resetPasswordVerifyCodeSent">#button("SENT_VERIFY_CODE")</button>
+							</div>
+							<div class="line">
+								<span>#label("PASSWORD")</span> <input type="password"
+									ng-model="resetPasswordData.password"
+									placeholder='#info("PASSWORD")' />
+							</div>
+							<div class="line">
+								<span>#label("REPEAT_PASSWORD")</span> <input type="password"
+									ng-model="repeatResetPasswordPassword"
+									ng-keydown="resetPasswordKeydown($event)"
+									placeholder='#info("REPEAT_PASSWORD")' />
+							</div>
+							<div class="line">
+								<button class="btn-login" ng-click="resetPassword()">重置密码</button>
 							</div>
 						</div>
 					</td>

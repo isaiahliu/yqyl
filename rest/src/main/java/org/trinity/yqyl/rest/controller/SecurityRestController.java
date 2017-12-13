@@ -26,57 +26,77 @@ import org.trinity.yqyl.process.controller.base.ISecurityProcessController;
 @RestController
 @RequestMapping("/security")
 public class SecurityRestController extends AbstractRestController {
-	@Autowired
-	private ISecurityProcessController securityProcessController;
+    @Autowired
+    private ISecurityProcessController securityProcessController;
 
-	@Autowired
-	private ISecurityUtil<AccessRight> securityUtil;
+    @Autowired
+    private ISecurityUtil<AccessRight> securityUtil;
 
-	@RequestMapping(value = "/authenticate", method = RequestMethod.PUT)
-	public @ResponseBody ResponseEntity<SecurityResponse> authenticate(
-			@RequestBody @OnValid(IAuthenticate.class) @OnWash(IAuthenticate.class) final AuthenticateRequest request) throws IException {
-		final SecurityResponse response = new SecurityResponse();
-		final SecurityDto user = securityProcessController.authenticate(securityUtil.getCurrentToken().getToken(),
-				request.getUser().getUsername(), request.getUser().getPassword());
+    @RequestMapping(value = "/authenticate", method = RequestMethod.PUT)
+    public @ResponseBody ResponseEntity<SecurityResponse> authenticate(
+            @RequestBody @OnValid(IAuthenticate.class) @OnWash(IAuthenticate.class) final AuthenticateRequest request)
+            throws IException {
+        final SecurityResponse response = new SecurityResponse();
+        final SecurityDto user = securityProcessController.authenticate(securityUtil.getCurrentToken().getToken(),
+                request.getUser().getUsername(), request.getUser().getPassword());
 
-		response.addData(user);
+        response.addData(user);
 
-		return createResponseEntity(response);
-	}
+        return createResponseEntity(response);
+    }
 
-	@RequestMapping(value = "/logout", method = RequestMethod.PUT)
-	public ResponseEntity<SecurityResponse> logout() throws IException {
-		final SecurityResponse response = new SecurityResponse();
+    @RequestMapping(value = "/logout", method = RequestMethod.PUT)
+    public ResponseEntity<SecurityResponse> logout() throws IException {
+        final SecurityResponse response = new SecurityResponse();
 
-		final SecurityDto token = securityProcessController.logout(securityUtil.getCurrentToken().getToken());
+        final SecurityDto token = securityProcessController.logout(securityUtil.getCurrentToken().getToken());
 
-		response.addData(token);
+        response.addData(token);
 
-		return createResponseEntity(response);
-	}
+        return createResponseEntity(response);
+    }
 
-	@RequestMapping(value = "/authorities", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<DefaultResponse> register() throws IException {
-		final DefaultResponse response = new DefaultResponse();
+    @RequestMapping(value = "/authorities", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<DefaultResponse> register() throws IException {
+        final DefaultResponse response = new DefaultResponse();
 
-		response.addData(securityUtil.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList()));
+        response.addData(
+                securityUtil.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList()));
 
-		return createResponseEntity(response);
-	}
+        return createResponseEntity(response);
+    }
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<DefaultResponse> register(
-			@RequestBody @OnValid(IScenario.IRegister.class) final AuthenticateRequest request) throws IException {
-		securityProcessController.register(request.getUser());
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<DefaultResponse> register(
+            @RequestBody @OnValid(IScenario.IRegister.class) final AuthenticateRequest request) throws IException {
+        securityProcessController.register(request.getUser());
 
-		return createResponseEntity();
-	}
+        return createResponseEntity();
+    }
 
-	@RequestMapping(value = "/registerVerify", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<DefaultResponse> registerVerify(
-			@RequestBody @OnValid(IScenario.IRegisterVerify.class) final AuthenticateRequest request) throws IException {
-		securityProcessController.registerVerify(request.getUser());
+    @RequestMapping(value = "/registerVerify", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<DefaultResponse> registerVerify(
+            @RequestBody @OnValid(IScenario.IRegisterVerify.class) final AuthenticateRequest request)
+            throws IException {
+        securityProcessController.registerVerify(request.getUser());
 
-		return createResponseEntity();
-	}
+        return createResponseEntity();
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<DefaultResponse> resetPassword(
+            @RequestBody @OnValid(IScenario.IResetPassword.class) final AuthenticateRequest request) throws IException {
+        securityProcessController.resetPassword(request.getUser());
+
+        return createResponseEntity();
+    }
+
+    @RequestMapping(value = "/resetPasswordVerify", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<DefaultResponse> resetPasswordVerify(
+            @RequestBody @OnValid(IScenario.IRegisterVerify.class) final AuthenticateRequest request)
+            throws IException {
+        securityProcessController.resetPasswordVerify(request.getUser());
+
+        return createResponseEntity();
+    }
 }

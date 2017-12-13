@@ -1,9 +1,15 @@
-layoutApp.controller('contentController', function($scope, $http, $window, errorHandler) {
+layoutApp.controller('contentController', function($scope, $http, $window,
+		errorHandler) {
 	$scope.dateOptions = {
 		dateFormat : 'yy/mm/dd',
+		changeMonth : true,
+		changeYear : true,
+		yearRange : "c-30:c+30",
+		showAnim : "fadeIn"
 	};
 
-	$scope.hours = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ];
+	$scope.hours = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+			17, 18, 19, 20, 21, 22, 23 ];
 
 	$scope.apply = function() {
 		$http({

@@ -43,7 +43,7 @@ layoutApp
 					$scope.searchLevel = 0;
 
 					$scope.searchAppraises = function(level) {
-						var ajaxUrl = "/ajax/user/order/appraise?rsexp=serviceOrder[user,serviceInfo[serviceCategory]],&requireTotal=true&searchScope=all&serviceSupplierClientId="
+						var ajaxUrl = "/ajax/user/order/appraise?rsexp=serviceOrder[user,serviceInfo[serviceCategory]],&hideName=true&requireTotal=true&searchScope=all&serviceSupplierClientId="
 								+ serviceSupplierClientId;
 
 						if (level == 0) {

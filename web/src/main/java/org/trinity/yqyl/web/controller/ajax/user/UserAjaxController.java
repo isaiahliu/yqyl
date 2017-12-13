@@ -35,121 +35,144 @@ import org.trinity.yqyl.web.util.Url;
 @RestController
 @RequestMapping("/ajax/user")
 public class UserAjaxController extends AbstractRestController {
-	@Autowired
-	private IRestfulServiceUtil restfulServiceUtil;
+    @Autowired
+    private IRestfulServiceUtil restfulServiceUtil;
 
-	@RequestMapping(value = "/password", method = RequestMethod.PUT)
-	public ResponseEntity<DefaultResponse> ajaxChangePassword(@RequestBody final ChangePasswordRequest request)
-			throws IException {
-		final DefaultResponse response = restfulServiceUtil.callRestService(Url.USER_CHANGE_PASSWORD, null, request,
-				null, DefaultResponse.class);
+    @RequestMapping(value = "/password", method = RequestMethod.PUT)
+    public ResponseEntity<DefaultResponse> ajaxChangePassword(@RequestBody final ChangePasswordRequest request)
+            throws IException {
+        final DefaultResponse response = restfulServiceUtil.callRestService(Url.USER_CHANGE_PASSWORD, null, request,
+                null, DefaultResponse.class);
 
-		return createResponseEntity(response);
-	}
+        return createResponseEntity(response);
+    }
 
-	@RequestMapping(value = "/help/answer", method = RequestMethod.GET)
-	public @ResponseBody DefaultResponse ajaxGetAnswerInfo() throws IException {
-		return restfulServiceUtil.callRestService(Url.SYSTEM_ATTRIBUTE_GET,
-				SystemAttributeKey.ABOUT_US.getMessageCode(), null, null, DefaultResponse.class);
-	}
+    @RequestMapping(value = "/help/answer", method = RequestMethod.GET)
+    public @ResponseBody DefaultResponse ajaxGetAnswerInfo() throws IException {
+        return restfulServiceUtil.callRestService(Url.SYSTEM_ATTRIBUTE_GET,
+                SystemAttributeKey.ABOUT_US.getMessageCode(), null, null, DefaultResponse.class);
+    }
 
-	@RequestMapping(value = "/help/about", method = RequestMethod.GET)
-	public @ResponseBody DefaultResponse ajaxGetHelpInfo() throws IException {
-		return restfulServiceUtil.callRestService(Url.SYSTEM_ATTRIBUTE_GET,
-				SystemAttributeKey.ABOUT_US.getMessageCode(), null, null, DefaultResponse.class);
-	}
+    @RequestMapping(value = "/help/about", method = RequestMethod.GET)
+    public @ResponseBody DefaultResponse ajaxGetHelpInfo() throws IException {
+        return restfulServiceUtil.callRestService(Url.SYSTEM_ATTRIBUTE_GET,
+                SystemAttributeKey.ABOUT_US.getMessageCode(), null, null, DefaultResponse.class);
+    }
 
-	@RequestMapping(value = "/help/join", method = RequestMethod.GET)
-	public @ResponseBody DefaultResponse ajaxGetJoinInfo() throws IException {
-		return restfulServiceUtil.callRestService(Url.SYSTEM_ATTRIBUTE_GET, SystemAttributeKey.JOIN_US.getMessageCode(),
-				null, null, DefaultResponse.class);
-	}
+    @RequestMapping(value = "/help/join", method = RequestMethod.GET)
+    public @ResponseBody DefaultResponse ajaxGetJoinInfo() throws IException {
+        return restfulServiceUtil.callRestService(Url.SYSTEM_ATTRIBUTE_GET, SystemAttributeKey.JOIN_US.getMessageCode(),
+                null, null, DefaultResponse.class);
+    }
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	@Authorize(AccessRight.ADMINISTRATOR)
-	public @ResponseBody UserResponse ajaxGetServiceInfoMe(final UserSearchingDto dto) throws IException {
-		return restfulServiceUtil.callRestService(Url.USER, null, null, dto, UserResponse.class);
-	}
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    @Authorize(AccessRight.ADMINISTRATOR)
+    public @ResponseBody UserResponse ajaxGetServiceInfoMe(final UserSearchingDto dto) throws IException {
+        return restfulServiceUtil.callRestService(Url.USER, null, null, dto, UserResponse.class);
+    }
 
-	@RequestMapping(value = "/userinfo", method = RequestMethod.GET)
-	public ResponseEntity<UserResponse> ajaxGetUserinfo() throws IException {
-		final UserResponse response = restfulServiceUtil.callRestService(Url.USER_ME, null, null, null,
-				UserResponse.class);
+    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+    public ResponseEntity<UserResponse> ajaxGetUserinfo() throws IException {
+        final UserResponse response = restfulServiceUtil.callRestService(Url.USER_ME, null, null, null,
+                UserResponse.class);
 
-		return createResponseEntity(response);
-	}
+        return createResponseEntity(response);
+    }
 
-	@RequestMapping(value = "/authenticate", method = RequestMethod.PUT)
-	public ResponseEntity<AbstractResponse<?>> ajaxLogin(@RequestBody final SecurityDto dto,
-			final HttpServletResponse httpResponse) throws IException {
-		final AuthenticateRequest authenticateRequest = new AuthenticateRequest();
-		authenticateRequest.setUser(dto);
-		final TokenRequest tokenRequest = new TokenRequest();
-		tokenRequest.setIdentity(UUID.randomUUID().toString());
-		final TokenResponse tokenRespose = restfulServiceUtil.callRestService(Url.TOKEN_NEW, null, tokenRequest, null,
-				TokenResponse.class);
+    @RequestMapping(value = "/authenticate", method = RequestMethod.PUT)
+    public ResponseEntity<AbstractResponse<?>> ajaxLogin(@RequestBody final SecurityDto dto,
+            final HttpServletResponse httpResponse) throws IException {
+        final AuthenticateRequest authenticateRequest = new AuthenticateRequest();
+        authenticateRequest.setUser(dto);
+        final TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.setIdentity(UUID.randomUUID().toString());
+        final TokenResponse tokenRespose = restfulServiceUtil.callRestService(Url.TOKEN_NEW, null, tokenRequest, null,
+                TokenResponse.class);
 
-		if (!tokenRespose.getErrors().isEmpty()) {
-			return createResponseEntity(tokenRespose);
-		}
+        if (!tokenRespose.getErrors().isEmpty()) {
+            return createResponseEntity(tokenRespose);
+        }
 
-		final String newToken = tokenRespose.getData().get(0).getToken();
+        final String newToken = tokenRespose.getData().get(0).getToken();
 
-		final SecurityResponse securityResponse = restfulServiceUtil.callRestService(newToken, Url.AUTHENTICATE, null,
-				authenticateRequest, null, SecurityResponse.class);
+        final SecurityResponse securityResponse = restfulServiceUtil.callRestService(newToken, Url.AUTHENTICATE, null,
+                authenticateRequest, null, SecurityResponse.class);
 
-		if (securityResponse.getErrors().isEmpty()) {
-			final Cookie cookie = new Cookie(SessionFilter.COOKIE_NAME, newToken);
-			cookie.setPath("/");
-			httpResponse.addCookie(cookie);
-			return createResponseEntity(securityResponse);
-		}
+        if (securityResponse.getErrors().isEmpty()) {
+            final Cookie cookie = new Cookie(SessionFilter.COOKIE_NAME, newToken);
+            cookie.setPath("/");
+            httpResponse.addCookie(cookie);
+            return createResponseEntity(securityResponse);
+        }
 
-		return createResponseEntity(securityResponse);
-	}
+        return createResponseEntity(securityResponse);
+    }
 
-	@RequestMapping(value = "/logout", method = RequestMethod.PUT)
-	public ResponseEntity<SecurityResponse> ajaxLogout(final HttpServletResponse httpResponse) throws IException {
-		final SecurityResponse response = restfulServiceUtil.callRestService(Url.LOGOUT, null, null, null,
-				SecurityResponse.class);
+    @RequestMapping(value = "/logout", method = RequestMethod.PUT)
+    public ResponseEntity<SecurityResponse> ajaxLogout(final HttpServletResponse httpResponse) throws IException {
+        final SecurityResponse response = restfulServiceUtil.callRestService(Url.LOGOUT, null, null, null,
+                SecurityResponse.class);
 
-		if (response.getErrors().isEmpty()) {
-			final Cookie cookie = new Cookie(SessionFilter.COOKIE_NAME, "");
-			cookie.setPath("/");
-			httpResponse.addCookie(cookie);
-		}
+        if (response.getErrors().isEmpty()) {
+            final Cookie cookie = new Cookie(SessionFilter.COOKIE_NAME, "");
+            cookie.setPath("/");
+            httpResponse.addCookie(cookie);
+        }
 
-		return createResponseEntity(response);
-	}
+        return createResponseEntity(response);
+    }
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<DefaultResponse> ajaxRegister(@RequestBody final SecurityDto dto) throws IException {
-		final AuthenticateRequest authenticateRequest = new AuthenticateRequest();
-		authenticateRequest.setUser(dto);
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<DefaultResponse> ajaxRegister(@RequestBody final SecurityDto dto) throws IException {
+        final AuthenticateRequest authenticateRequest = new AuthenticateRequest();
+        authenticateRequest.setUser(dto);
 
-		final DefaultResponse response = restfulServiceUtil.callRestService(Url.REGISTER, null, authenticateRequest,
-				null, DefaultResponse.class);
+        final DefaultResponse response = restfulServiceUtil.callRestService(Url.REGISTER, null, authenticateRequest,
+                null, DefaultResponse.class);
 
-		return createResponseEntity(response);
-	}
+        return createResponseEntity(response);
+    }
 
-	@RequestMapping(value = "/registerVerify", method = RequestMethod.POST)
-	public ResponseEntity<DefaultResponse> ajaxRegisterVerify(@RequestBody final SecurityDto dto) throws IException {
-		final AuthenticateRequest authenticateRequest = new AuthenticateRequest();
-		authenticateRequest.setUser(dto);
+    @RequestMapping(value = "/registerVerify", method = RequestMethod.POST)
+    public ResponseEntity<DefaultResponse> ajaxRegisterVerify(@RequestBody final SecurityDto dto) throws IException {
+        final AuthenticateRequest authenticateRequest = new AuthenticateRequest();
+        authenticateRequest.setUser(dto);
 
-		final DefaultResponse response = restfulServiceUtil.callRestService(Url.REGISTER_VERIFY, null,
-				authenticateRequest, null, DefaultResponse.class);
+        final DefaultResponse response = restfulServiceUtil.callRestService(Url.REGISTER_VERIFY, null,
+                authenticateRequest, null, DefaultResponse.class);
 
-		return createResponseEntity(response);
-	}
+        return createResponseEntity(response);
+    }
 
-	@RequestMapping(value = "/userinfo", method = RequestMethod.PUT)
-	public ResponseEntity<DefaultResponse> ajaxUpdateUserinfo(@RequestBody final UserRequest request)
-			throws IException {
-		final DefaultResponse response = restfulServiceUtil.callRestService(Url.USER_INFO, null, request, null,
-				DefaultResponse.class);
+    @RequestMapping(value = "/resetpwd", method = RequestMethod.POST)
+    public ResponseEntity<DefaultResponse> ajaxResetPassword(@RequestBody final SecurityDto dto) throws IException {
+        final AuthenticateRequest authenticateRequest = new AuthenticateRequest();
+        authenticateRequest.setUser(dto);
 
-		return createResponseEntity(response);
-	}
+        final DefaultResponse response = restfulServiceUtil.callRestService(Url.RESET_PASSWORD, null,
+                authenticateRequest, null, DefaultResponse.class);
+
+        return createResponseEntity(response);
+    }
+
+    @RequestMapping(value = "/resetPasswordVerify", method = RequestMethod.POST)
+    public ResponseEntity<DefaultResponse> ajaxResetPasswordVerify(@RequestBody final SecurityDto dto)
+            throws IException {
+        final AuthenticateRequest authenticateRequest = new AuthenticateRequest();
+        authenticateRequest.setUser(dto);
+
+        final DefaultResponse response = restfulServiceUtil.callRestService(Url.RESET_PASSWORD_VERIFY, null,
+                authenticateRequest, null, DefaultResponse.class);
+
+        return createResponseEntity(response);
+    }
+
+    @RequestMapping(value = "/userinfo", method = RequestMethod.PUT)
+    public ResponseEntity<DefaultResponse> ajaxUpdateUserinfo(@RequestBody final UserRequest request)
+            throws IException {
+        final DefaultResponse response = restfulServiceUtil.callRestService(Url.USER_INFO, null, request, null,
+                DefaultResponse.class);
+
+        return createResponseEntity(response);
+    }
 }

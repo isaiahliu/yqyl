@@ -224,4 +224,70 @@ public class SecurityProcessController implements ISecurityProcessController {
         userVerifycodeRepository.save(verifyCodeEntity);
     }
 
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public void resetPassword(final SecurityDto securityDto) throws IException {
+        final String password = securityDto.getPassword();
+        final String cellphone = securityDto.getCellphone();
+        final String verifyCode = securityDto.getVerifyCode();
+
+        final User user = userRepository.findOneByCellphone(cellphone);
+        if (user == null) {
+            throw exceptionFactory.createException(ErrorMessage.UNABLE_TO_FIND_USER);
+        }
+
+        final UserVerifycode verifyCodeEntity = user.getUserVerifycodes().stream()
+                .filter(item -> item.getType() == VerifyCodeType.FORGET_PASSWORD).findFirst()
+                .orElseThrow(() -> exceptionFactory.createException(ErrorMessage.VERIFY_CODE_IS_EXPIRED));
+
+        if (!verifyCode.equals(verifyCodeEntity.getCode())) {
+            throw exceptionFactory.createException(ErrorMessage.INCORRECT_VERIFY_CODE);
+        }
+
+        userVerifycodeRepository.delete(verifyCodeEntity);
+
+        user.setPassword(password);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional(rollbackOn = IException.class)
+    public void resetPasswordVerify(final SecurityDto securityDto) throws IException {
+        final User user = userRepository.findOneByCellphone(securityDto.getCellphone());
+        if (user == null) {
+            throw exceptionFactory.createException(ErrorMessage.UNABLE_TO_FIND_USER);
+        }
+
+        final Optional<UserVerifycode> anyVerifycode = user.getUserVerifycodes().stream()
+                .filter(item -> item.getType() == VerifyCodeType.FORGET_PASSWORD).findAny();
+
+        final String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
+
+        smsProcessController.sendMessage(securityDto.getCellphone(), verifyCode);
+
+        UserVerifycode verifyCodeEntity = null;
+        if (anyVerifycode.isPresent()) {
+            verifyCodeEntity = anyVerifycode.get();
+
+            final Calendar now = Calendar.getInstance();
+            now.add(Calendar.MINUTE, -1);
+            if (now.getTime().compareTo(verifyCodeEntity.getTimestamp()) <= 0) {
+                throw exceptionFactory.createException(ErrorMessage.SMS_HAS_BEEN_SEND_IN_ONE_MINUTE);
+            }
+        } else {
+            verifyCodeEntity = new UserVerifycode();
+            verifyCodeEntity.setCode(verifyCode);
+            verifyCodeEntity.setType(VerifyCodeType.FORGET_PASSWORD);
+            verifyCodeEntity.setStatus(RecordStatus.ACTIVE);
+            verifyCodeEntity.setUser(user);
+
+            user.getUserVerifycodes().add(verifyCodeEntity);
+        }
+        verifyCodeEntity.setCode(verifyCode);
+        verifyCodeEntity.setTimestamp(new Date());
+
+        userRepository.save(user);
+        userVerifycodeRepository.save(verifyCodeEntity);
+    }
 }

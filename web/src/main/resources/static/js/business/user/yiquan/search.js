@@ -9,6 +9,10 @@ layoutApp
 
 					$scope.dateOptions = {
 						dateFormat : 'yy/mm/dd',
+						changeMonth : true,
+						changeYear : true,
+						yearRange : "c-30:c+30",
+						showAnim : "fadeIn"
 					};
 
 					$scope.filter = {
@@ -59,7 +63,8 @@ layoutApp
 										function(response) {
 											$scope.accountPostings = response.data;
 											for (var index = 0; index < $scope.accountPostings.length; index++) {
-												$scope.accountPostings[index].datetime = new Date($scope.accountPostings[index].datetime);
+												$scope.accountPostings[index].datetime = new Date(
+														$scope.accountPostings[index].datetime);
 											}
 
 											response.meta.paging.pageIndex++;

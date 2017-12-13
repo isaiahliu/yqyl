@@ -4,6 +4,9 @@ logging:
   level: DEBUG
   config: classpath:log4j2.xml  
 spring:
+  devtools:
+    restart:
+      exclude:  message/**
   profiles: 
     active: '@profileActive@'
   messages:
@@ -93,9 +96,7 @@ spring:
   profiles: dev-work
 args:
   datasource: 
-    url: jdbc:mysql://localhost:3306/yqyl_business?characterEncoding=utf-8&serverTimezone=GMT%2b8
-    username: devrw
-    password: "!QAZ2wsx"
+    url: jdbc:mysql://58.58.116.68:8099/yqyl_business?characterEncoding=utf-8&serverTimezone=GMT%2b8
   pos:
     shop: 400020000001
     terminal: 400000000002

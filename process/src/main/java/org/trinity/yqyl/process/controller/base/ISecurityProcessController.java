@@ -12,4 +12,8 @@ public interface ISecurityProcessController extends IProcessController {
     void register(SecurityDto securityDto) throws IException;
 
     void registerVerify(SecurityDto user) throws IException;
+
+    void resetPassword(SecurityDto securityDto) throws IException;
+
+    void resetPasswordVerify(SecurityDto securityDto) throws IException;
 }

@@ -41,7 +41,6 @@ public class ServiceInfo extends AbstractAuditableEntity implements Serializable
 	@TableGenerator(name = "Service_PK_IdGenerator", table = "id_table", pkColumnName = "type", pkColumnValue = "Service_PK", valueColumnName = "value", initialValue = 1, allocationSize = 1)
 	private Long id;
 
-	// bi-directional many-to-many association to UserGroup
 	@ElementCollection
 	@CollectionTable(name = "service_info_image", joinColumns = @JoinColumn(name = "service_info_id"))
 	@Column(name = "uuid")

@@ -1,6 +1,5 @@
 package org.trinity.yqyl.batch.test;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.batch.core.Job;
@@ -39,7 +38,8 @@ public class TestJob {
 
     @Bean
     public Job importUserJob() {
-        return jobBuilderFactory.get("testJob").incrementer(new RunIdIncrementer()).listener(listener()).flow(testStep()).end().build();
+        return jobBuilderFactory.get("testJob").incrementer(new RunIdIncrementer()).listener(listener())
+                .flow(testStep()).end().build();
     }
 
     @Bean
@@ -51,7 +51,6 @@ public class TestJob {
 
             @Override
             public void beforeJob(final JobExecution jobExecution) {
-                System.out.println(Calendar.getInstance().get(Calendar.SECOND));
             }
         };
     }
@@ -68,8 +67,8 @@ public class TestJob {
 
     // @Scheduled(cron = "0,15,30,45 * * * * *")
     @Scheduled(fixedDelay = 5000)
-    public void startJob() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException,
-            JobParametersInvalidException {
+    public void startJob() throws JobExecutionAlreadyRunningException, JobRestartException,
+            JobInstanceAlreadyCompleteException, JobParametersInvalidException {
         final JobParameters jobParameters = new JobParameters();
         jobParameters.getParameters().put("timestamp", new JobParameter(new Date()));
         jobLauncher.run(importUserJob(), jobParameters);
@@ -77,8 +76,8 @@ public class TestJob {
 
     @Bean
     public Step testStep() {
-        return stepBuilderFactory.get("step1").<String, String> chunk(1).reader(reader()).processor(processor()).writer(writer())
-                .allowStartIfComplete(true).build();
+        return stepBuilderFactory.get("step1").<String, String>chunk(1).reader(reader()).processor(processor())
+                .writer(writer()).allowStartIfComplete(true).build();
     }
 
     @Bean

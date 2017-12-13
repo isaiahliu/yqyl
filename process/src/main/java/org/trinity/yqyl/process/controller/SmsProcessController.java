@@ -56,9 +56,7 @@ public class SmsProcessController implements ISmsProcessController {
         final String str = String.format(
                 "app_key=%s&batch_num=%s&content=%s&dest_id=%s&mission_num=%s&nonce_str=%s&sms_type=verify_code&time_stamp=%s&app_secret=%s",
                 appid, batch, content, cellphone, no, nonceStr, timestamp, appsec);
-        System.out.println(str);
         final String sign = md5(str);
-        System.out.println(sign);
         final Document document = DocumentFactory.getInstance().createDocument();
         document.setXMLEncoding("UTF-8");
 
@@ -80,7 +78,6 @@ public class SmsProcessController implements ISmsProcessController {
         body.addElement("content").setText(content);
 
         final String xml = root.asXML();
-        System.out.println(xml);
         final List<HttpMessageConverter<?>> converters = new ArrayList<>();
         final HttpMessageConverter<String> converter = new StringHttpMessageConverter(Charset.forName("UTF-8"));
         converters.add(converter);

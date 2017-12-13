@@ -7,6 +7,9 @@ security:
   basic: 
     enabled: false
 spring:
+  devtools:
+    restart:
+      exclude:  message/**,static/**,velocity/**
   profiles: 
     active: '@profileActive@'
   messages:
