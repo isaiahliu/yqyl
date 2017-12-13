@@ -94,8 +94,6 @@
 			<groupId>org.trinity.framework.springboot</groupId>
 			<artifactId>core</artifactId>
 		</dependency>
-		
-
 	</dependencies>
 
 	<properties>
