@@ -19,7 +19,6 @@ import org.trinity.yqyl.common.message.exception.ErrorMessage;
 import org.trinity.yqyl.common.message.lookup.AccessRight;
 import org.trinity.yqyl.common.message.lookup.OperatorClientStatus;
 import org.trinity.yqyl.common.message.lookup.RecordStatus;
-import org.trinity.yqyl.common.message.lookup.SystemAttributeKey;
 import org.trinity.yqyl.common.message.lookup.TokenStatus;
 import org.trinity.yqyl.common.message.lookup.UserStatus;
 import org.trinity.yqyl.common.message.lookup.VerifyCodeType;
@@ -27,12 +26,10 @@ import org.trinity.yqyl.process.controller.base.IAccountProcessController;
 import org.trinity.yqyl.process.controller.base.ISecurityProcessController;
 import org.trinity.yqyl.process.controller.base.ISmsProcessController;
 import org.trinity.yqyl.repository.business.dataaccess.IOperatorClientRepository;
-import org.trinity.yqyl.repository.business.dataaccess.ISystemAttributeRepository;
 import org.trinity.yqyl.repository.business.dataaccess.ITokenRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IUserRepository;
 import org.trinity.yqyl.repository.business.dataaccess.IUserVerifycodeRepository;
 import org.trinity.yqyl.repository.business.entity.OperatorClient;
-import org.trinity.yqyl.repository.business.entity.SystemAttribute;
 import org.trinity.yqyl.repository.business.entity.Token;
 import org.trinity.yqyl.repository.business.entity.User;
 import org.trinity.yqyl.repository.business.entity.UserVerifycode;
@@ -45,8 +42,6 @@ public class SecurityProcessController implements ISecurityProcessController {
     private IUserRepository userRepository;
     @Autowired
     private IUserVerifycodeRepository userVerifycodeRepository;
-    @Autowired
-    private ISystemAttributeRepository systemAttributeRepository;
     @Autowired
     private IExceptionFactory exceptionFactory;
     @Autowired
@@ -121,7 +116,6 @@ public class SecurityProcessController implements ISecurityProcessController {
         final String username = securityDto.getUsername();
         final String password = securityDto.getPassword();
         final String cellphone = securityDto.getCellphone();
-        final String verifyCode = securityDto.getVerifyCode();
         final boolean isServicer = securityDto.isServicer();
 
         User user = userRepository.findOneByUsername(username);
@@ -131,25 +125,15 @@ public class SecurityProcessController implements ISecurityProcessController {
             }
         } else {
             user = userRepository.findOneByCellphone(cellphone);
-        }
-        int expireMinutes = Integer.parseInt(SystemAttributeKey.VERIFY_CODE_EXPIRE_MINUTES.getDefaultValue());
-        final SystemAttribute expireMinutesAttribute = systemAttributeRepository
-                .findOneByKey(SystemAttributeKey.VERIFY_CODE_EXPIRE_MINUTES);
-        if (expireMinutesAttribute != null) {
-            expireMinutes = Integer.parseInt(expireMinutesAttribute.getValue());
-        }
 
-        final List<UserVerifycode> userVerifycodes = user.getUserVerifycodes();
-        final UserVerifycode verifyCodeEntity = userVerifycodes.stream()
-                .filter(item -> item.getType() == VerifyCodeType.REGISTER).findAny().get();
-
-        final Calendar now = Calendar.getInstance();
-        now.add(Calendar.MINUTE, 0 - expireMinutes);
-        if (now.getTime().after(verifyCodeEntity.getTimestamp())) {
-            throw exceptionFactory.createException(ErrorMessage.VERIFY_CODE_IS_EXPIRED);
-        }
-        if (!verifyCode.equals(verifyCodeEntity.getCode())) {
-            throw exceptionFactory.createException(ErrorMessage.INCORRECT_VERIFY_CODE);
+            if (user != null) {
+                throw exceptionFactory.createException(ErrorMessage.CELLPHONE_IS_REGISTERED);
+            } else {
+                user = new User();
+                user.setCellphone(securityDto.getCellphone());
+                user.setStatus(UserStatus.UNREGISTERED);
+                user.setUserVerifycodes(new ArrayList<>());
+            }
         }
 
         user.setAccount(accountProcessController.createAccount());

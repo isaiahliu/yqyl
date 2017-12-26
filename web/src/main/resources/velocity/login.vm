@@ -66,15 +66,6 @@
 									ng-model="registerData.cellphone" placeholder='#info("PHONE")' />
 							</div>
 							<div class="line">
-								<span>#label("VERIFY_CODE")</span> <input
-									ng-model="registerData.verifyCode" style="width: 150px;" />
-								<button style="width: 130px;" ng-click="registerVerify()"
-									ng-hide="verifyCodeSent">#button("SEND_VERIFY_CODE")</button>
-								<button
-									style="width: 130px; color: #cccccc; background-color: #333333;"
-									disabled class="ng-hide" ng-show="verifyCodeSent">#button("SENT_VERIFY_CODE")</button>
-							</div>
-							<div class="line">
 								<span>#label("I_AM")</span> <input class="rd" name="userType"
 									type="radio" ng-value="false" ng-model="registerData.servicer" />
 								<span>#label("PERSONAL_USER")</span> <input name="userType"

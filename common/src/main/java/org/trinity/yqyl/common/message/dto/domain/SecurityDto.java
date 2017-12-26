@@ -9,7 +9,7 @@ import org.trinity.yqyl.common.scenario.IScenario.IAuthenticate;
 import org.trinity.yqyl.common.validation.IValidationMessage;
 
 public class SecurityDto {
-    @Length(min = 2, max = 40, groups = { IScenario.IAuthenticate.class, IScenario.IRegister.class }, message = IValidationMessage.LENGTH)
+    @Length(min = 2, max = 40, groups = { IScenario.IAuthenticate.class, IScenario.IRegister.class }, message = IValidationMessage.USERNAME)
     private String username;
 
     @NotNull(groups = { IScenario.IResetPassword.class })
@@ -18,10 +18,9 @@ public class SecurityDto {
     private boolean servicer = false;
 
     @Length(min = 11, max = 11, groups = { IScenario.IRegister.class, IScenario.IResetPassword.class,
-            IScenario.IRegisterVerify.class }, message = IValidationMessage.LENGTH)
+            IScenario.IRegisterVerify.class }, message = IValidationMessage.CELLPHONE)
     private String cellphone;
 
-    @NotNull(groups = { IScenario.IRegister.class, IScenario.IResetPassword.class })
     private String verifyCode;
 
     public String getCellphone() {
