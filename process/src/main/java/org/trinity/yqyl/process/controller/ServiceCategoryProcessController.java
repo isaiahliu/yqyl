@@ -26,7 +26,7 @@ public class ServiceCategoryProcessController extends
             entity.setParent(getDomainEntityRepository().findOne(dto.getParent().getId()));
         }
 
-        if (dto.getParent() == null) {
+        if (dto.getParent() == null || dto.getParent().getId() == null || dto.getParent().getId().equals(0L)) {
             entity.setImage(contentProcessController.create());
         }
     }
