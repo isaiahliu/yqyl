@@ -2,33 +2,27 @@
 
 <div class="footer" ng-controller="footerController">
 	<div class="navBar">
-		<ul>
-			<li class="navBarItem"><a href="/help/about"><span>#button("ABOUT_US")</span></a></li>
+		<ul style="text-align: center;">
+			<li class="navBarItem" style="float: none;"><a href="/help/about"><span>#button("ABOUT_US")</span></a></li>
 
-			<li class="navBarItem"><a href="/help/join"><span>#button("JOIN_AS_A_SERVICE_SUPPLIER")</span></a>
+			<li class="navBarItem" style="float: none;"><a href="/help/join"><span>#button("JOIN_AS_A_SERVICE_SUPPLIER")</span></a>
 			</li>
-			<li class="navBarItem"><a href="/help/join"><span>#button("JOIN_AS_A_SERVICE_RECEIVER")</span></a>
+			<li class="navBarItem" style="float: none;"><a href="/help/join"><span>#button("JOIN_AS_A_SERVICE_RECEIVER")</span></a>
 			</li>
-			<li class="navBarItem"><a href="/help/answer"><span>#button("COMMON_PROBLEMS")</span></a>
+			<li class="navBarItem" style="float: none;"><a href="/help/answer"><span>#button("COMMON_PROBLEMS")</span></a>
 			</li>
-			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("CONTACT_US")</span></a>
-			</li>
-			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("APP_DOWNLOAD")</span></a>
-			</li>
-			<li class="navBarItem"><a href="javascript:void(0)"><span>#button("WECHAT_QR_CODE")</span></a>
+			<li class="navBarItem" style="float: none;"><a href="javascript:void(0)"><span>#button("CONTACT_US")</span></a>
 			</li>
 			#if(${authentication}) 
 			#if(${authentication.token.authenticated}) 
 			#if(${security.hasAccessRightByName('SUPPLIER', false)})
-			<li class="navBarItem"><a href="/servicer"><span
+			<li class="navBarItem" style="float: none;"><a href="/servicer"><span
 					style="color: #fd6a15;">#button("SERVICE_SUPPLIER_HOME")</span></a></li>
 		    #end
 		    #if(${security.hasAccessRightByName('ADMIN', true)})
-			<li class="navBarItem"><a href="/admin"><span
+			<li class="navBarItem" style="float: none;"><a href="/admin"><span
 					style="color: #fd6a15;">#button("ADMIN_HOME")</span></a></li>
 			#end #end #end
-			<li class="navBarItem"><img class="QRCode"
-				src="/static/images/logo/QRCode.jpg" alt="QR Code" /></li>
 		</ul>
 	</div>
 	<div class="navBar">
